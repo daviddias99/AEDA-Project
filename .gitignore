@@ -34,5 +34,6 @@
 # Eclipse stuff
 /.settings/
 /Debug/
+/.metadata/
 
 
