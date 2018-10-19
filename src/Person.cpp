@@ -25,6 +25,8 @@ Address Person::getAddress() const
 bool Person::changeAddress(Address newAddress)
 {
 	this->address = newAddress;
+
+	return true;
 }
 
 Employee::Employee(unsigned int sal, Pharmacy * pharm, string pos):salary(sal), workPlace(pharm),position(pos)
@@ -78,9 +80,9 @@ Client::Client()
 {
 }
 
-bool Client::addSale(Sale *)
+bool Client::addSale(Sale * newSale)
 {
-	this->saleHistory.push_back(Sale);
+	this->saleHistory.push_back(newSale);
 
 	return true;
 }

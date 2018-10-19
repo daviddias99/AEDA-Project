@@ -14,4 +14,11 @@
 
 
 
-Address::Address(string streetName, string zipCode, int doorNumber, string city);
+Address::Address(string streetName, string zipCode, int doorNumber, string city){
+
+	this->city = city;
+	this->doorNumber = doorNumber;
+	this->zipCode = zipCode;
+	this->streetName = streetName;
+
+}
