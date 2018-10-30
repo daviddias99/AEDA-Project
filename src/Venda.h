@@ -1,13 +1,14 @@
 #ifndef VENDA_H
 #define VENDA_H
 
-class Sale {
+#include "Produto.h"
+
+class Venda {
 public:
-
-
+	Venda();
+	void addProduto(const Produto &prod, unsigned int quant);
+	void getProdutos();
 private:
-
-
 
 };
 

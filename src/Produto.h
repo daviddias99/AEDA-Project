@@ -6,13 +6,14 @@ using namespace std;
 
 
 class Produto {
+public:
 	Produto(long int code, string n, string desc, float pr);
 	long int getCodigo() const;
 	string getNome() const;
 	string getDesc() const;
 	float getPreco() const;
 	int alteraPreco(float novoPreco);
-private:
+protected:
 	const long int codigo;
 	const string nome;
 	const string descricao;
