@@ -1,54 +1,36 @@
-#include "product.h"
+#include "Produto.h"
 
-Product::Product(long int code, string n, string desc, float pr) {
-	codeNo = code;
-	name = n;
-	description = desc;
-	price = pr;
+Produto::Produto(long int cod, string n, string desc, float pr) {
+	codigo = cod;
+	nome = n;
+	descricao = desc;
+	preco = pr;
 }
 
-long int Product::getCodeNo() const {
-	return codeNo;
+long int Produto::getCodigo() const {
+	return codigo;
 }
 
-string Product::getName() const {
-	return name;
+string Produto::getNome() const {
+	return nome;
 }
 
-string Product::getDesc() const {
-	return description;
+string Produto::getDesc() const {
+	return descricao;
 }
 
-float Product::getPrice() const {
-	return price;
+float Produto::getPreco() const {
+	return preco;
 }
 
-int Product::changePrice(float newPrice) {
+int Produto::alteraPreco(float novoPreco) {
 
-	if (newPrice > 0) {
-		price = newPrice;
+	if (novoPreco > 0) {
+		preco = novoPreco;
 		return 0;
 	}
 	else
 		return 1;
 }
 
-//////////////////////////////////////////////////////////////
 
-Medicine::Medicine(long int code, string n, string desc, float pr, bool soldWithNoPresc, bool possiblePresc, float discountIfPresc) : Product(code, n, desc, pr) {
-	canBeSoldWithNoPresc = soldWithNoPresc;
-	canBePresc = possiblePresc;
-	discountWhenPresc = discountIfPresc;
-}
-
-float Medicine::discountIfPrescripted() const {
-	return discountWhenPresc;
-}
-
-bool Medicine::canBePrescripted() const {
-	return canBePresc;
-}
-
-bool Medicine::canBeSoldWithNoPrescription() const {
-	return canBeSoldWithNoPresc;
-}

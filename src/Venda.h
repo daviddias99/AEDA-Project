@@ -1,5 +1,5 @@
-#ifndef SALE_H
-#define SALE_H
+#ifndef VENDA_H
+#define VENDA_H
 
 class Sale {
 public:
@@ -11,4 +11,4 @@ private:
 
 };
 
-#endif /* SALE_H */
+#endif /* VENDA_H */

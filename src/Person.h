@@ -5,7 +5,7 @@
 #include <vector>
 #include "util.h"
 #include "Pharmacy.h"
-#include <Sale.h>
+#include "Venda.h"
 
 using namespace std;
 
