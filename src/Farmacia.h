@@ -15,8 +15,9 @@ class Farmacia {
 public:
 	Farmacia(string nome, Morada Morada, Empregado gerente);
 	virtual ~Farmacia();
-	bool addProduto(Produto produto);
-	Produto removeProduto(Product product, int quantity);
+	void addProduto(Produto produto, int quantidade);
+	void removeProduto(Produto produto);
+	void removeQuantidade(Produto produto, int quantidade);
 	string getNome() const;
 	Morada getMorada() const;
 	Empregado getGerente() const;
