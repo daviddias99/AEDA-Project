@@ -50,7 +50,7 @@ private:
 public:
 	Time();
 	Time(uint hora, uint minuto, uint segundo = 0);
-	string getTime();
+	string getTime(bool mostraSegundos = false);
 	uint getHora() const;
 	uint getMin() const;
 	uint getSeg() const;
