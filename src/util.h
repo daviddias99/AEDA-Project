@@ -19,6 +19,23 @@ private:
 	string cidade;
 };
 
+class Data {
+
+public:
+	Data();
+	Data(unsigned int dia, unsigned int mes, unsigned int ano);
+	string getData();
+	unsigned int getAno();
+	unsigned int getMes();
+	unsigned int getDia();
+
+private:
+	unsigned int dia;
+	unsigned int mes;
+	unsigned int ano;
+
+};
+
 template< class T>
 int procura(const vector<T> &v, T x)
 {
