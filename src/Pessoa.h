@@ -33,45 +33,9 @@ private:
 	float altura;
 	string nacionalidade;
 
-
-
 	Morada morada;
-
-
 };
 
-class Empregado :protected Pessoa {
-public:
-	Empregado(unsigned int sal, Farmacia* farm, string cargo);
-
-	unsigned int getSalario() const;
-	string getNomeFarmacia() const;
-	string getCargo() const;
-
-	bool setSalario(unsigned int novoSalario);
-	bool setFarmacia(Farmacia* novaFarmacia);
-	bool setCargo(string novoCargo);
-
-
-private:
-	unsigned int salario;
-	Farmacia* farmacia;
-	string cargo;
-	vector<Venda*> historicoVendas;
-};
-
-class Cliente :protected Pessoa {
-public:
-
-	Cliente();
-
-	bool adicionaVenda(Venda*);
-	bool verHistorico();
-
-
-private:
-	vector<Venda*> historicoVendas;
-};
 
 
 #endif

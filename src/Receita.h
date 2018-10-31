@@ -3,7 +3,7 @@
 
 #include <string>
 #include <map>
-#include "Pessoa.h"
+#include "Cliente.h"
 #include "Produto.h"
 
 using namespace std;
