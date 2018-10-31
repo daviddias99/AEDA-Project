@@ -3,8 +3,10 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "Farmacia.h"
 #include "Pessoa.h"
+#include "util.h"
 
 using namespace std;
 
@@ -16,21 +18,20 @@ public:
 	bool addFarmacias(vector <Farmacia> Farmacias);
 	bool addCliente(Cliente cliente);
 	bool addClientes(vector<Cliente> clientes);
-	bool addEmpregado(Empregado empregado);
+	bool addEmpregado(Empregado *empregado);
 	bool addEmpregados(vector <Empregado *> empregados);
-	Farmacia removeFarmacia(Farmacia farmacia);
-	Farmacia removeFarmacia(string pharmacyName);
-	Cliente removeCliente(Cliente cliente);
-	Cliente removeCliente(string nome);
-	Empregado* removeEmpregado(Empregado empregado);
-	Empregado* removeEmpregado(string name);
-	int getNumFarmacias() const;
-	int getNumEmpregados() const;
-	int getNumClientes() const;
+	void removeFarmacia(Farmacia farmacia);
+	void removeCliente(Cliente cliente);
+	void removeEmpregado(Empregado empregado);
+	unsigned int procuraFarmacia(string nome) const;
+	unsigned int getNumFarmacias() const;
+	unsigned int getNumEmpregados() const;
+	unsigned int getNumClientes() const;
 private:
 	vector< Farmacia > farmacias;
 	vector< Cliente > clientes;
 	vector< Empregado *> empregados;
 };
+
 
 #endif /* SRC_CADEIA_H_ */

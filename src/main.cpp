@@ -1,15 +1,8 @@
-#include <iostream>
-#include "Person.h"
-
-using namespace std;
-
+#include "Sistema.h"
 
 int main() {
-
-	Person *p = new Person("TOZE");
-
-	cout << p->getName() << endl;
-
+	Sistema s;
+	s.start();
 	return 0;
 }
 

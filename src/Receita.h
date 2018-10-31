@@ -10,14 +10,15 @@ using namespace std;
 
 class Receita {
 public:
-	Receita(const int numReceita, Cliente cliente, const string nomeMedico);
-	void addProduto(Produto product, int quantidade);
+	Receita(Cliente cliente, string nomeMedico);
+	void addProduto(Produto produto, int quantidade);
 	void addProdutos(map<Produto, int> produtos);
+	int getNumReceita() const;
 	Cliente getCliente() const;
 	string getMedico() const;
 	virtual ~Receita();
 private:
-	const int numReceita;
+	int numReceita;
 	const Cliente cliente;
 	const string nomeMedico;
 	map< Produto, int> produtos;
