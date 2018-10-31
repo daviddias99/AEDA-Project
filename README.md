@@ -11,3 +11,6 @@
 -ordenar pessoas por ordem alfabetica;\
 -adicionar outros "modos" de ordenação\
 -mostrar fatura\
+-horario farmacia\
+-dia de serviço constante\
+
