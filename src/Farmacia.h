@@ -22,6 +22,7 @@ public:
 	Morada getMorada() const;
 	Empregado getGerente() const;
 	bool operator == (const Farmacia & ph1);
+	bool operator < (const Farmacia & ph); //Ordenado alfabeticamente
 private:
 	string nome;
 	Morada morada;

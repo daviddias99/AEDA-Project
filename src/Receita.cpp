@@ -1,12 +1,7 @@
 #include "Receita.h"
 
-int Receita::numId = 0;
-
-Receita::Receita(Cliente cliente, string nomeMedico) : cliente(cliente), nomeMedico(nomeMedico)
-{
-	numId++;
-	numReceita = numId;
-}
+Receita::Receita(int numReceita, Cliente cliente, string nomeMedico)
+: numReceita(numReceita), cliente(cliente), nomeMedico(nomeMedico) {}
 
 void Receita::addProduto(Produto produto, int quantidade)
 {
@@ -24,6 +19,11 @@ void Receita::addProdutos(map<Produto, int> p)
 	for (it = p.begin(); it != p.end(); it++) {
 		addProduto(it->first, it->second);
 	}
+}
+
+int Receita::getNumReceita() const
+{
+	return numReceita;
 }
 
 Cliente Receita::getCliente() const

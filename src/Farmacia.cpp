@@ -60,4 +60,10 @@ bool Farmacia::operator == (const Farmacia & ph1)
 	else return false;
 }
 
+bool Farmacia::operator < (const Farmacia & ph)
+{
+	if(this->nome < ph.getNome()) return true;
+	else return false;
+}
+
 

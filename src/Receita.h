@@ -13,6 +13,7 @@ public:
 	Receita(Cliente cliente, string nomeMedico);
 	void addProduto(Produto produto, int quantidade);
 	void addProdutos(map<Produto, int> produtos);
+	int getNumReceita() const;
 	Cliente getCliente() const;
 	string getMedico() const;
 	virtual ~Receita();
@@ -21,7 +22,6 @@ private:
 	const Cliente cliente;
 	const string nomeMedico;
 	map< Produto, int> produtos;
-	static int numId;
 };
 
 #endif /* SRC_RECEIPT_H_ */

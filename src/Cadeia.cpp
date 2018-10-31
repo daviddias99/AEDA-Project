@@ -2,9 +2,11 @@
 
 bool Cadeia::addFarmacia(Farmacia farmacia)
 {
-	if(procura(farmacias, farmacia) == -1) return false;
+	if(procura(farmacias, farmacia) != -1) return false;
 
 	farmacias.push_back(farmacia);
+
+	sort(farmacias.begin(), farmacias.end());
 	return true;
 }
 
@@ -20,7 +22,7 @@ bool Cadeia::addFarmacias(vector <Farmacia> v1)
 
 bool Cadeia::addCliente(Cliente cliente);
 {
-	if(procura(clientes, cliente) == -1) return false;
+	if(procura(clientes, cliente) != -1) return false;
 
 	clientes.push_back(cliente);
 	return true;
@@ -38,7 +40,7 @@ bool Cadeia::addClientes(vector<Cliente> v1)
 bool Cadeia::addEmpregado(Empregado *empregado)
 {
 
-	if(procura(empregados, empregado) == -1) return false;
+	if(procura(empregados, empregado) != -1) return false;
 
 	farmacias.push_back(empregado);
 	return true;
@@ -80,6 +82,11 @@ void Cadeia::removeEmpregado(Empregado empregado)
 	throw EmpregadoNaoExiste(empregado.getNome());
 }
 
+unsigned int Cadeia::procuraFarmacia(string nome) const
+{
+
+}
+
 unsigned int Cadeia::getNumFarmacias() const
 {
 	return farmacias.size();
@@ -92,5 +99,5 @@ unsigned int Cadeia::getNumEmpregados() const
 
 unsigned int Cadeia::getNumClientes() const
 {
-	return clientes.size(;)
+	return clientes.size();
 }

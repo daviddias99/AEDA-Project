@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <algorithm>
 #include "Farmacia.h"
 #include "Pessoa.h"
 #include "util.h"
@@ -22,6 +23,7 @@ public:
 	void removeFarmacia(Farmacia farmacia);
 	void removeCliente(Cliente cliente);
 	void removeEmpregado(Empregado empregado);
+	unsigned int procuraFarmacia(string nome) const;
 	unsigned int getNumFarmacias() const;
 	unsigned int getNumEmpregados() const;
 	unsigned int getNumClientes() const;
