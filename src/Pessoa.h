@@ -26,6 +26,9 @@ private:
 	const string nome;
 	const Data dataNascimento;
 	const unsigned int NIF;
+	const unsigned int NCC;
+	char sexo;
+	string nacionalidade;
 	Morada morada;
 
 

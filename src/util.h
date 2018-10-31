@@ -6,6 +6,9 @@
 
 using namespace std;
 
+typedef unsigned int uint;
+
+// ----------Classes----------
 
 class Morada {
 
@@ -23,52 +26,62 @@ class Data {
 
 public:
 	Data();
-	Data(unsigned int dia, unsigned int mes, unsigned int ano);
-	string getData();
-	unsigned int getAno();
-	unsigned int getMes();
-	unsigned int getDia();
+	Data(uint dia,uint mes,uint ano);
+	string getData(bool dmy = true);
+	uint getAno() const;
+	uint getMes() const;
+	uint getDia() const;
 
 private:
-	unsigned int dia;
-	unsigned int mes;
-	unsigned int ano;
+	uint dia;
+	uint mes;
+	uint ano;
 
 };
 
+class Time {
+
+private:
+
+	uint segundo;
+	uint minuto;
+	uint hora;
+
+public:
+	Time();
+	Time(uint hora, uint minuto, uint segundo = 0);
+	string getTime();
+	uint getHora() const;
+	uint getMin() const;
+	uint getSeg() const;
+
+};
+
+class Timestamp: public Time, public Data {
+
+public:
+
+	Timestamp();
+	Timestamp(Data data, Time time);
+	string getTstamp();
+};
+
+
+// ----------Funções----------
+
+bool isLeap(int year);
+int daysInMonth(int month, int year);
+
 template< class T>
-int procura(const vector<T> &v, T x)
-{
-	int left = 0, right = v.size() - 1;
-	while (left <= right)
-	{
-		int middle = (left + right) / 2;
-		if(v[middle] < x)
-			left = middle + 1;
-		else if(x < v[middle])
-			right = middle - 1;
-		else return middle;
+int procura(const vector<T> &v, T x);
 
-	}
-	return -1;
-}
 
 template< class T>
-int procura(const vector<T*> &v, T x)
-{
-	int left = 0, right = v.size() - 1;
-	while (left <= right)
-	{
-		int middle = (left + right) / 2;
-		if(*v[middle] < x)
-			left = middle + 1;
-		else if(x < *v[middle])
-			right = middle - 1;
-		else return middle;
+int procura(const vector<T*> &v, T x);
 
-	}
-	return -1;
-}
+
+// ----------Exceções----------
+
 
 class FarmaciaNaoExiste {
 	string nome;
@@ -98,5 +111,12 @@ public:
 	string getNome() const {return nome;}
 };
 
+class DataInvalida {
+
+};
+
+class TimeInvalido {
+
+};
 
 #endif /* SRC_UTIL_H_ */
