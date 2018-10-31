@@ -27,8 +27,14 @@ private:
 	const Data dataNascimento;
 	const unsigned int NIF;
 	const unsigned int NCC;
+	const unsigned int NSS;
+	const unsigned int NUS;
 	char sexo;
+	float altura;
 	string nacionalidade;
+
+
+
 	Morada morada;
 
 
@@ -51,6 +57,7 @@ private:
 	unsigned int salario;
 	Farmacia* farmacia;
 	string cargo;
+	vector<Venda*> historicoVendas;
 };
 
 class Cliente :protected Pessoa {

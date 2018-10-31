@@ -71,11 +71,14 @@ Time::Time(uint hora, uint minuto, uint segundo) : hora(hora), minuto(minuto), s
 
 }
 
-string Time::getTime()
+string Time::getTime(bool mostraSegundos)
 {
 	string result;
 
-	result = this->getHora() + ':' + this->getMin() + ':' + this->getSeg();
+	result = this->getHora() + ':' + this->getMin();
+
+	if(mostraSegundos)
+		result += ':' + this->getSeg();
 
 	return result;
 }
