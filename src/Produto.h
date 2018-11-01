@@ -6,6 +6,7 @@ using namespace std;
 
 
 class Produto {
+public:
 	Produto(long int code, string n, string desc, float pr);
 	long int getCodigo() const;
 	string getNome() const;

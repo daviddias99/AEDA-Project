@@ -4,9 +4,8 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "Cliente.h"
+#include "Pessoa.h"
 #include "Produto.h"
-#include "Empregado.h"
 #include "util.h"
 
 using namespace std;

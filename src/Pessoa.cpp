@@ -68,7 +68,9 @@ uint Empregado::getSalario() const
 
 string Empregado::getNomeFarmacia() const
 {
+	
 	return this->farmacia->getNome();
+
 }
 
 string Empregado::getCargo() const

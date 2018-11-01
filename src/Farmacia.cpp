@@ -23,7 +23,7 @@ void Farmacia::removeQuantidade(Produto produto, int quantidade)
 		}
 	}
 
-	throw ProdutoNaoExiste(produto.getName());
+	throw ProdutoNaoExiste(produto.getNome());
 }
 
 void Farmacia::removeProduto(Produto produto)
@@ -35,7 +35,7 @@ void Farmacia::removeProduto(Produto produto)
 		return;
 	}
 
-	throw ProdutoNaoExiste(produto.getName());
+	throw ProdutoNaoExiste(produto.getNome());
 }
 
 

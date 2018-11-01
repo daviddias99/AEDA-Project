@@ -3,8 +3,8 @@
 #include <ctime>
 
 
-Morada::Morada(string rua, string codigoPostal, int porta, string cidade) :
-	rua(rua), codigoPostal(codigoPostal), porta(porta), cidade(cidade) {}
+Morada::Morada(string morada_linha1 , string morada_linha2 , string codigoPostal, string cidade) :
+	morada_linha1(morada_linha1), morada_linha2(morada_linha2), codigoPostal(codigoPostal), cidade(cidade) {}
 
 
 Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {

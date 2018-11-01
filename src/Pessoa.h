@@ -4,11 +4,12 @@
 #include <string>
 #include <vector>
 #include "util.h"
-#include "Farmacia.h"
+//#include "Farmacia.h"
 #include "Venda.h"
 
 using namespace std;
 
+class Farmacia;
 
 class Pessoa {
 public:
@@ -43,7 +44,7 @@ private:
 
 };
 
-class Empregado :protected Pessoa {
+class Empregado :public Pessoa {
 public:
 	Empregado(uint  sal, Farmacia* farm, string cargo);
 
@@ -63,7 +64,7 @@ private:
 	vector<Venda*> historicoVendas;
 };
 
-class Cliente :protected Pessoa {
+class Cliente :public Pessoa {
 public:
 
 	Cliente();

@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 #include "Cadeia.h"
-#include <util.h>
+#include "util.h"
 
 using namespace std;
 

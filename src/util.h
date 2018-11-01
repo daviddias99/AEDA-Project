@@ -13,12 +13,12 @@ typedef unsigned int uint;
 class Morada {
 
 public:
-	Morada(string rua = "RUA_DEFAULT", string codigoPostal = "0000-000", int porta = 000, string cidade = "CIDADE_DEFAULT");
+	Morada(string morada_linha1 = "RUA_DEFAULT", string morada_linha2 = "PORTA 0, 3º ANDAR DIREITO", string codigoPostal = "0000-000", string cidade = "CIDADE_DEFAULT");
 	bool mudaMorada(Morada novaMorada);
 private:
-	string rua;
+	string morada_linha1;
+	string morada_linha2;
 	string codigoPostal;
-	int porta;
 	string cidade;
 };
 

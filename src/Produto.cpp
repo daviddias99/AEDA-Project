@@ -1,9 +1,9 @@
 #include "Produto.h"
 
-Produto::Produto(long int cod, string n, string desc, float pr) {
-	codigo = cod;
-	nome = n;
-	descricao = desc;
+Produto::Produto(long int cod, string n, string desc, float pr): codigo(cod), nome(n),descricao(desc) {
+	//codigo = cod;
+	//nome = n;
+	//descricao = desc;
 	preco = pr;
 }
 

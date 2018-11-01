@@ -20,7 +20,7 @@ bool Cadeia::addFarmacias(vector <Farmacia> v1)
 	return true;
 }
 
-bool Cadeia::addCliente(Cliente cliente);
+bool Cadeia::addCliente(Cliente cliente)
 {
 	if(procura(clientes, cliente) != -1) return false;
 
@@ -42,15 +42,15 @@ bool Cadeia::addEmpregado(Empregado *empregado)
 
 	if(procura(empregados, empregado) != -1) return false;
 
-	farmacias.push_back(empregado);
+	empregados.push_back(empregado);
 	return true;
 }
 
 bool Cadeia::addEmpregados(vector <Empregado *> v1)
 {
-	vector<Emregado*>::iterator it;
+	vector<Empregado*>::iterator it;
 		for(it = v1.begin(); it != v1.end(); it++) {
-			if(!addEmregado(*it)) return false;
+			if(!addEmpregado(*it)) return false;
 		}
 		return true;
 }
