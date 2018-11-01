@@ -3,7 +3,11 @@
 using namespace std;
 
 
-Pessoa::Pessoa(string n, unsigned int nif, Morada add) :nome(n), NIF(nif), morada(add) {
+Pessoa::Pessoa(string n ,  Morada morada , uint  nif, uint ncc , uint nss , uint nus , char sex , float altura, string nacionalidade):nome(n), NIF(nif), morada(morada), NCC(ncc),NSS(nss),NUS(nus){
+
+	this->sexo = sex;
+	this->nacionalidade = nacionalidade;
+	this->altura = altura;
 
 }
 
@@ -12,7 +16,7 @@ string Pessoa::getNome() const
 	return this->nome;
 }
 
-unsigned int Pessoa::getNIF() const
+uint  Pessoa::getNIF() const
 {
 	return this->NIF;
 }
@@ -20,6 +24,28 @@ unsigned int Pessoa::getNIF() const
 Morada Pessoa::getMorada() const
 {
 	return this->morada;
+}
+uint Pessoa::getIdade() const
+{
+
+	Data atual = Data();
+	uint anoA = atual.getAno();
+	uint anoN = this->dataNascimento.getAno();
+	uint mesA = atual.getMes();
+	uint mesN = this->dataNascimento.getMes();
+	uint diaA = atual.getDia();
+	uint diaN = this->dataNascimento.getDia();
+
+	uint idade = anoA - anoN;
+	if (mesA < mesN)
+		idade--;
+	else if (mesA == mesN) {
+		if (diaA < diaN)
+			idade--;
+	}
+
+	return idade;
+
 }
 
 bool Pessoa::setMorada(Morada newMorada)
@@ -29,13 +55,13 @@ bool Pessoa::setMorada(Morada newMorada)
 	return true;
 }
 
-Empregado::Empregado(unsigned int sal, Farmacia * pharm, string pos) :salario(sal), farmacia(pharm), cargo(pos)
+Empregado::Empregado(uint sal, Farmacia * pharm, string pos) :salario(sal), farmacia(pharm), cargo(pos)
 {
 
 
 }
 
-unsigned int Empregado::getSalario() const
+uint Empregado::getSalario() const
 {
 	return this->salario;
 }
@@ -50,7 +76,7 @@ string Empregado::getCargo() const
 	return this->cargo;
 }
 
-bool Empregado::setSalario(unsigned int novoSalario)
+bool Empregado::setSalario(uint novoSalario)
 {
 	if (novoSalario < 0)
 		return false;

@@ -12,12 +12,15 @@ using namespace std;
 
 class Pessoa {
 public:
-	Pessoa(string n, unsigned int nif, Morada morada);
+	
+	//NIF- 9 NCC- 8 NSS- 11 NUS- 9
+
+	Pessoa(string n = "NOME_DEFAULT" , Morada morada = Morada(), uint  nif = 0, uint ncc = 0, uint nss = 0, uint nus = 0, char sex = 'D', float altura = 0.00, string nacionalidade = "DFT");
 
 	string getNome() const;
-	unsigned int getNIF() const;
+	uint  getNIF() const;
 	Morada getMorada() const;
-	unsigned int getIdade() const;
+	uint  getIdade() const;
 
 	bool setMorada(Morada novaMorada);
 
@@ -25,10 +28,10 @@ public:
 private:
 	const string nome;
 	const Data dataNascimento;
-	const unsigned int NIF;
-	const unsigned int NCC;
-	const unsigned int NSS;
-	const unsigned int NUS;
+	const uint  NIF;
+	const uint  NCC;
+	const uint  NSS;
+	const uint  NUS;
 	char sexo;
 	float altura;
 	string nacionalidade;
@@ -42,19 +45,19 @@ private:
 
 class Empregado :protected Pessoa {
 public:
-	Empregado(unsigned int sal, Farmacia* farm, string cargo);
+	Empregado(uint  sal, Farmacia* farm, string cargo);
 
-	unsigned int getSalario() const;
+	uint  getSalario() const;
 	string getNomeFarmacia() const;
 	string getCargo() const;
 
-	bool setSalario(unsigned int novoSalario);
+	bool setSalario(uint  novoSalario);
 	bool setFarmacia(Farmacia* novaFarmacia);
 	bool setCargo(string novoCargo);
 
 
 private:
-	unsigned int salario;
+	uint  salario;
 	Farmacia* farmacia;
 	string cargo;
 	vector<Venda*> historicoVendas;

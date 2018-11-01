@@ -58,6 +58,28 @@ uint Data::getDia() const
 	return this->dia;
 }
 
+bool Data::operator<(Data & d2) const
+{
+	if (this->ano < d2.ano)
+		return true;
+	else if (this->ano == d2.ano) {
+
+		if (this->mes < d2.mes)
+			return true;
+		else if (this->mes == d2.mes) {
+
+			if (this->dia < d2.dia)
+				return true;
+			else return false;
+
+
+		}
+		else return false;
+	}
+	else return false;
+
+}
+
 
 
 Time::Time(uint hora, uint minuto, uint segundo) : hora(hora), minuto(minuto), segundo(segundo) {

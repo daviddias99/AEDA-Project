@@ -13,7 +13,7 @@ typedef unsigned int uint;
 class Morada {
 
 public:
-	Morada(string rua, string codigoPostal, int porta, string cidade);
+	Morada(string rua = "RUA_DEFAULT", string codigoPostal = "0000-000", int porta = 000, string cidade = "CIDADE_DEFAULT");
 	bool mudaMorada(Morada novaMorada);
 private:
 	string rua;
@@ -31,6 +31,7 @@ public:
 	uint getAno() const;
 	uint getMes() const;
 	uint getDia() const;
+	bool operator < (Data& d2) const;
 
 private:
 	uint dia;
