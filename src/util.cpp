@@ -12,7 +12,7 @@ Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
 	if (mes > 12)
 		throw DataInvalida();
 
-	if (dia > daysInMonth(mes, ano))
+	if (dia > (unsigned int)daysInMonth(mes, ano))
 		throw DataInvalida();
 
 }
@@ -35,7 +35,8 @@ Data::Data() {
 
 	time_t tempoAtual = time(NULL);
 
-	tm* tempAtualStruct = localtime(&tempoAtual);
+	tm* tempAtualStruct =  NULL;
+	localtime_s(tempAtualStruct,&tempoAtual);
 
 	this->ano = tempAtualStruct->tm_year;
 	this->mes = tempAtualStruct->tm_mon;
@@ -124,7 +125,8 @@ Time::Time() {
 
 	time_t tempoAtual = time(NULL);
 
-	tm* tempAtualStruct = localtime(&tempoAtual);
+	tm* tempAtualStruct = NULL;
+	localtime_s(tempAtualStruct,&tempoAtual);
 
 	this->hora = tempAtualStruct->tm_hour;
 	this->minuto = tempAtualStruct->tm_min;
