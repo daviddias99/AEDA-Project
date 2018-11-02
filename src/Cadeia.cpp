@@ -40,7 +40,7 @@ bool Cadeia::addClientes(vector<Cliente> v1)
 bool Cadeia::addEmpregado(Empregado *empregado)
 {
 
-	if(procura(empregados, empregado) != -1) return false;
+	if(procura(empregados, *empregado) != -1) return false;
 
 	empregados.push_back(empregado);
 	return true;
@@ -82,9 +82,12 @@ void Cadeia::removeEmpregado(Empregado empregado)
 	throw EmpregadoNaoExiste(empregado.getNome());
 }
 
-unsigned int Cadeia::procuraFarmacia(string nome) const
+Farmacia Cadeia::getFarmacia(string nome) const
 {
+	unsigned int i = procura(farmacias, nome);
+	if(i != -1) return farmacias[i];
 
+	throw FarmaciaNaoExiste(nome);
 }
 
 unsigned int Cadeia::getNumFarmacias() const

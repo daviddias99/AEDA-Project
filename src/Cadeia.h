@@ -23,14 +23,17 @@ public:
 	void removeFarmacia(Farmacia farmacia);
 	void removeCliente(Cliente cliente);
 	void removeEmpregado(Empregado empregado);
-	unsigned int procuraFarmacia(string nome) const;
+	Farmacia getFarmacia(string nome) const;
+	Cliente getCliente(string nome) const;
+	Empregado* getEmpregado(string nome) const;
 	unsigned int getNumFarmacias() const;
 	unsigned int getNumEmpregados() const;
 	unsigned int getNumClientes() const;
+	void guardarDados();
 private:
 	vector< Farmacia > farmacias;
 	vector< Cliente > clientes;
-	vector< Empregado *> empregados;
+	vector< Empregado* > empregados;
 };
 
 

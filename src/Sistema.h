@@ -22,6 +22,9 @@ private:
 
 	void gerirFarmacias();
 	void gerirFarmacia();
+	void adicionarFarmacia();
+	void removerFarmacia();
+	void consultarFarmacia();
 
 	void gerirClientes();
 	void gerirEmpregados();

@@ -2,7 +2,7 @@
 
 void Sistema::start()
 {
-	menuGerencia();
+	menu();
 }
 
 void Sistema::menu()
@@ -182,7 +182,7 @@ void Sistema::sair()
 		cin >> opcao;
 
 		if(opcao == "sim") {
-			guardarDados();
+			cadeia.guardarDados();
 			exit(0);
 		}
 		else if(opcao == "nao")
@@ -195,6 +195,8 @@ void Sistema::sair()
 
 void Sistema::gerirFarmacia()
 {
+	cout << endl << "GERIR FARMACIA" << endl;
+
 	if(cadeia.getNumFarmacias() == 0) {
 		cout << "Nenhuma farmacia nesta cadeia. Adicione uma farmacia primeiro." << endl;
 		gerirFarmacias();
@@ -206,7 +208,20 @@ void Sistema::gerirFarmacia()
 	cout << "Nome da farmacia: ";
 	cin >> nome;
 
+	try {
+		Farmacia f = cadeia.getFarmacia(nome);
+		f.gerir();
+	}
+	catch(FarmaciaNaoExiste)
+	{
+		cout << "A farmacia " << nome << " nao existe.";
+		gerirFarmacias();
+	}
+}
 
+void Sistema::adicionarFarmacia()
+{
+	cout << endl << "ADICIONAR FARMACIA" << endl;
 
 
 }

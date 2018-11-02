@@ -10,7 +10,7 @@ using namespace std;
 
 class Receita {
 public:
-	Receita(Cliente cliente, string nomeMedico);
+	Receita(int numReceita, Cliente cliente, string nomeMedico);
 	void addProduto(Produto produto, int quantidade);
 	void addProdutos(map<Produto, int> produtos);
 	int getNumReceita() const;
@@ -24,4 +24,4 @@ private:
 	map< Produto, int> produtos;
 };
 
-#endif /* SRC_RECEIPT_H_ */
+#endif
