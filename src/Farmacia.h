@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iomanip>
 
 #include "Pessoa.h"
 #include "Produto.h"
@@ -14,32 +15,45 @@ using namespace std;
 
 class Farmacia : public Sistema{
 public:
-	Farmacia(string nome, Morada Morada, Empregado gerente);
+	Farmacia(string nome, Morada Morada);
 	virtual ~Farmacia();
-	void addProduto(Produto produto, int quantidade);
-	void addEmpregado(Empregado empregado);
-	void remProduto(Produto produto);
+	void addProduto(Produto *produto, int quantidade);
+	bool addEmpregado(Empregado empregado);
 	void remProduto(int codigo);
-	void removeQuantidade(Produto produto, int quantidade);
+	void remGerente();
+	bool addGerente(Empregado empregado);
+	bool removeQuantidade(int codigo, int quantidade);
+	void remEmpregado(int nif);
 	string getNome() const;
 	Morada getMorada() const;
 	Empregado getGerente() const;
+	vector<Empregado> getEmpregados(string nome);
+	Produto* getProduto(int codigo);
+	int getTotalProdutos();
+
 	bool operator == (const Farmacia & ph1);
 	bool operator < (const Farmacia & ph); //Ordenado alfabeticamente
+
 	void gerir();
 	void adicionar();
 	void remover();
 	void consultar();
+
 	void adicionarProduto();
 	void adicionarEmpregado();
+
 	void removerProduto();
 	void removerEmpregado();
+
+	void consultarEmpregado();
+	void consultarStock();
+	void consultarProduto();
 private:
 	string nome;
 	Morada morada;
 	Empregado gerente;
 	vector< Empregado > empregados;
-	map<Produto, int> stock;
+	map< Produto *, int> stock;
 };
 
 #endif

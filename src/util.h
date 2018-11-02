@@ -76,9 +76,14 @@ int daysInMonth(int month, int year);
 template< class T>
 int procura(const vector<T> &v, T x);
 
-
 template< class T>
 int procura(const vector<T*> &v, T x);
+
+template< class T>
+int procura(const vector <T> &v, string nome);
+
+template < class T>
+int procura(const vector <T> &v, int nif);
 
 
 // ----------Exceções----------
@@ -99,17 +104,17 @@ public:
 };
 
 class EmpregadoNaoExiste {
-	string nome;
+	int nif;
 public:
-	EmpregadoNaoExiste(string nome) {this->nome = nome;}
-	string getNome() const {return nome;}
+	EmpregadoNaoExiste(int nif) {this->nif = nif;}
+	string getNIF() const {return nif;}
 };
 
 class ProdutoNaoExiste {
-	string nome;
+	int codigo;
 public:
-	ProdutoNaoExiste(string nome) {this->nome = nome;}
-	string getNome() const {return nome;}
+	ProdutoNaoExiste(int codigo) {this->codigo = codigo;}
+	string getCodigo() const {return codigo;}
 };
 
 class DataInvalida {

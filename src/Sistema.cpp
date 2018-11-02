@@ -212,9 +212,9 @@ void Sistema::gerirFarmacia()
 		Farmacia f = cadeia.getFarmacia(nome);
 		f.gerir();
 	}
-	catch(FarmaciaNaoExiste)
+	catch(FarmaciaNaoExiste &f1)
 	{
-		cout << "A farmacia " << nome << " nao existe.";
+		cout << "A farmacia " << f1.getNome() << " nao existe.";
 		gerirFarmacias();
 	}
 }
@@ -223,7 +223,39 @@ void Sistema::adicionarFarmacia()
 {
 	cout << endl << "ADICIONAR FARMACIA" << endl;
 
+	string nome;
+	Morada morada;
 
+	cout << "Nome: ";
+	cin >> nome;
+	cout << "Morada: ";
+	cin >> morada;
+
+	Farmacia f = Farmacia(nome, morada);
+
+	if(cadeia.addFarmacia(f)) cout << "Farmacia adicionada." << endl;
+	else cout << "Ja existe uma farmacia com o nome " << nome << endl;
+
+	gerirFarmacias();
+}
+
+void Sistema::removerFarmacia()
+{
+	cout << endl << "REMOVER FARMACIA" << endl;
+
+	string nome;
+
+	cout << "Nome: ";
+	cin >> nome;
+
+	try {
+		cadeia.removeFarmacia(nome);
+		cout << "Farmacia removida." << endl;
+	} catch (FarmaciaNaoExiste &f) {
+		cout << "A farmacia " << f.getNome() << " nao existe." << endl;
+	}
+
+	gerirFarmacias();
 }
 
 

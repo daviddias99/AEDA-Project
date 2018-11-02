@@ -28,7 +28,7 @@ bool Cadeia::addCliente(Cliente cliente)
 	return true;
 }
 
-bool Cadeia::addClientes(vector<Cliente> v1)
+bool Cadeia::addClientes(const vector<Cliente> &v1)
 {
 	vector<Cliente>::iterator it;
 	for(it = v1.begin(); it != v1.end(); it++) {
@@ -37,49 +37,49 @@ bool Cadeia::addClientes(vector<Cliente> v1)
 	return true;
 }
 
-bool Cadeia::addEmpregado(Empregado *empregado)
+bool Cadeia::addEmpregado(Empregado empregado)
 {
 
-	if(procura(empregados, *empregado) != -1) return false;
+	if(procura(empregados, empregado) != -1) return false;
 
 	empregados.push_back(empregado);
 	return true;
 }
 
-bool Cadeia::addEmpregados(vector <Empregado *> v1)
+bool Cadeia::addEmpregados(const vector <Empregado > &v1)
 {
-	vector<Empregado*>::iterator it;
+	vector<Empregado>::iterator it;
 		for(it = v1.begin(); it != v1.end(); it++) {
 			if(!addEmpregado(*it)) return false;
 		}
 		return true;
 }
 
-void Cadeia::removeFarmacia(Farmacia farmacia)
+void Cadeia::removeFarmacia(string nome)
 {
-	int i = procura(farmacias, farmacia);
+	int i = procura(farmacias, nome);
 	if(i != -1)
 		farmacias.erase(farmacias.begin() + i);
 
-	throw FarmaciaNaoExiste(farmacia.getNome());
+	throw FarmaciaNaoExiste(nome);
 }
 
-void Cadeia::removeCliente(Cliente cliente)
+void Cadeia::removeCliente(int nif)
 {
-	int i = procura(clientes, cliente);
+	int i = procura(clientes, nif);
 	if(i != -1)
 		clientes.erase(clientes.begin() +i);
 
-	throw ClienteNaoExiste(cliente.getNome());
+	throw ClienteNaoExiste(nif);
 }
 
-void Cadeia::removeEmpregado(Empregado empregado)
+void Cadeia::removeEmpregado(int nif)
 {
-	int i = procura(empregados, empregado);
+	int i = procura(empregados, nif);
 	if(i != -1)
 		empregados.erase(empregados.begin()+i);
 
-	throw EmpregadoNaoExiste(empregado.getNome());
+	throw EmpregadoNaoExiste(nif);
 }
 
 Farmacia Cadeia::getFarmacia(string nome) const

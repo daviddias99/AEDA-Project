@@ -1,46 +1,88 @@
 #include "Farmacia.h"
 
-Farmacia::Farmacia(string nome, Morada morada, Empregado gerente) :nome(nome), morada(morada), gerente(gerente) {}
+Farmacia::Farmacia(string nome, Morada morada) :nome(nome), morada(morada) {}
 
-void Farmacia::addProduto(Produto produto, int quantidade)
+void Farmacia::addProduto(Produto *produto, int quantidade)
 {
-	map<Produto, int>::iterator it;
-	it = stock.find(produto);
-	if(it != stock.end())
-		it->second += quantidade;
-	else
-		stock[produto] = quantidade;
+	map<Produto *, int>::iterator it;
+	for (it = stock.begin(); it != stock.end(); it++) {
+		if( *(it->first) == *produto ) {
+			it->second += quantidade;
+			return;
+		}
+	}
+	stock[*produto] = quantidade;
 }
 
-void addEmpregado(Empregado empregado)
+bool Farmacia::addGerente(Empregado empregado)
 {
+	if(gerente.nome == "") {
+		gerente = empregado;
+		return true;
+	}
+	else return false;
 
 }
 
-void Farmacia::removeQuantidade(Produto produto, int quantidade)
+bool Farmacia::addEmpregado(Empregado empregado)
+{
+	int i = procura(empregados, empregado);
+
+	if (i != -1) {
+		if(empregado.getCargo() == "gerente")
+			if(!addGerente(empregado)) return false;
+		empregados.push_back(empregado);
+		return true;
+	}
+	else return false;
+}
+
+void Farmacia::remGerente()
+{
+	gerente.nome = "";
+	gerente.NIF = 0;
+}
+
+void Farmacia::remEmpregado(int nif)
+{
+	int i = procura(empregados, nif);
+	if( i != -1) {
+		if(empregados[i].getCargo() == "gerente") remGerente();
+		empregados.erase(empregados.begin() + i);
+		return;
+	}
+	throw EmpregadoNaoExiste(nif);
+}
+
+bool Farmacia::removeQuantidade(int codigo, int quantidade)
 {
 	map<Produto, int>::iterator it;
-	it = stock.find(produto);
-	if(it != stock.end()) {
-		if(it->second >= quantidade) {
-			it->second -= quantidade;
+	for(it = stock.begin(); it != stock.end(); it++) {
+		if(it->first.getCodigo() == codigo) {
+			if(it->second <= quantidade) {
+				return true;
+			}
+			else {
+				it->second -= quantidade;
+				return false;
+			}
+		}
+	}
+
+	throw ProdutoNaoExiste(codigo);
+}
+
+void Farmacia::remProduto(int codigo)
+{
+	map<Produto *, int>::iterator it;
+	for(it = stock.begin(); it != stock.end(); it++) {
+		if( (*it->first).getCodigo() == codigo) {
+			stock.erase(it);
 			return;
 		}
 	}
 
-	throw ProdutoNaoExiste(produto.getNome());
-}
-
-void Farmacia::remProduto(Produto produto)
-{
-	map<Produto, int>::iterator it;
-	it = stock.find(produto);
-	if(it != stock.end()) {
-		stock.erase(it);
-		return;
-	}
-
-	throw ProdutoNaoExiste(produto.getNome());
+	throw ProdutoNaoExiste(codigo);
 
 }
 
@@ -58,6 +100,38 @@ Morada Farmacia::getMorada() const
 Empregado Farmacia::getGerente() const
 {
 	return gerente;
+}
+
+vector<Empregado> Farmacia::getEmpregados(string nome)
+{
+	vector<Empregado> v1;
+	vector<Empregado>::iterator it;
+
+	for(it = empregados.begin(); it != empregados.end(); it++) {
+		if( (*it).getNome() == nome) v1.push_back(*it);
+	}
+
+	return v1;
+}
+
+Produto* Farmacia::getProduto(int codigo)
+{
+	map<Produto*, int>::iterator it;
+	for(it = stock.begin(); it != stock.end(); it++) {
+		if( (*it->first).getCodigo() == codigo)
+			return (it->first);
+	}
+	throw ProdutoNaoExiste(codigo);
+}
+
+int Farmacia::getTotalProdutos()
+{
+	int soma;
+	map<Produto, int>::iterator it;
+	for (it = stock.begin(); it != stock.end(); it++) {
+		soma += it->second;
+	}
+	return soma;
 }
 
 bool Farmacia::operator == (const Farmacia & ph1)
@@ -160,7 +234,7 @@ void Farmacia::adicionarProduto()
 	cout << "Quantidade a adicionar: ";
 	cin >> quantidade;
 
-	Produto p1(codigo, nome, descricao, preco);
+	Produto* p1 = new Produto(codigo, nome, descricao, preco);
 	addProduto(p1, quantidade);
 
 	cout << "Produto adicionado" << endl;
@@ -228,11 +302,166 @@ void Farmacia::removerProduto()
 {
 	cout << endl << "REMOVER PRODUTO" << endl;
 
-	int codigo;
+	int codigo, quantidade;
+	bool erro;
 
 	cout << "Codigo do produto: ";
 	cin >> codigo;
+	cout << "Quantidade a remover( '0' para remover a quantidade total): ";
+	cin >> quantidade;
 
+	try {
+		if(quantidade == 0) {
+			remProduto(codigo);
+			cout << "Produto removido." << endl;
+		}
+		else {
+			erro = removeQuantidade(codigo, quantidade);
+			if(!erro) cout << "Quantidade removida;" << endl;
+			else cout << "Erro! Se pretende remover a quantidade total do protudo, responda '0' a quantidade;" << endl;
+		}
+	} catch(ProdutoNaoExiste &p1) {
+		cout << "O produto de codigo " << p1.getCodigo() << " nao existe." << endl;
+	}
 
+	remover();
+}
 
+void Farmacia::removerEmpregado()
+{
+	cout << endl << "REMOVER EMPREGADO" << endl;
+
+	int nif;
+	cout << "NIF: ";
+	cin >> nif;
+
+	try {
+		remEmpregado(nif);
+		cout << "Empregado removido." << endl;
+	} catch (EmpregadoNaoExiste &e) {
+		cout << "Nao existe nenhum empregado com o nif " << nif << ".\n";
+	}
+	remover();
+}
+
+void Farmacia::consultar()
+{
+	cout << endl << "CONSULTAR FARMACIA" << endl;
+
+	cout << "Nome: " << setw(4) << nome << endl;
+	cout << "Morada: " << setw(4) << morada << endl;
+	cout << "Gerente: " << setw(4) << "Nome: " << gerente.getNome() << endl;
+	cout << setw(12) << "NIF: " << gerente.getNIF() << endl;
+	cout << "Numero de empregados(incluindo gerente): " << empregados.size() << endl << endl;
+
+	cout << "1 - Consultar empregado" << endl;
+	cout << "2 - Consultar stock" << endl;
+	cout << "3 - Menu anterior" << endl;
+	cout << "4 - Sair" << endl;
+
+	char opcao;
+
+	cout << "Opcao: ";
+	cin >> opcao;
+
+	switch (opcao) {
+	case '1':
+		consultarEmpregado();
+		break;
+	case '2':
+		consultarStock();
+		break;
+	case '3':
+		gerir();
+		break;
+	case '4':
+		sair();
+		break;
+	default:
+		cerr << "Opcao Invalida!" << endl;
+		consultar();
+		break;
+	}
+}
+
+void Farmacia::consultarEmpregado()
+{
+	cout << endl << "CONSULTAR EMPREGADO" << endl;
+
+	if(!empregados.size()) {
+		cout << "Nenhum empregado nesta farmacia. Adicione um primeiro." << endl;
+		consultar();
+	}
+
+	string name;
+
+	cout << "Name: ";
+	cin >> name;
+
+	vector<Empregado> v1 = getEmpregados(nome);
+
+	if(!v1.size()) {
+		cout << "Nao existe nenhum empregado com esse nome." << endl;
+		consultar();
+	}
+	else {
+		vector<Empregado>::iterator it;
+		for(it = v1.begin(); it != v1.end(); it++)
+				cout << (*it) << endl;
+	}
+	consultar();
+}
+
+void Farmacia::consultarStock()
+{
+	cout << endl << "CONSULTAR STOCK" << endl;
+
+	cout << "Numero de produtos diferentes: " << stock.size() << endl;
+	cout << "Numero total de produtos: " << getTotalProdutos() << endl << endl;
+
+	cout << "1 - Consultar Produto" << endl;
+	cout << "2 - Consultar quantidades de todos os produtos";
+	cout << "3 - Menu anterior" << endl;
+	cout << "4 - Sair" << endl;
+
+	char opcao;
+
+	cout << "Opcao: ";
+	cin >> opcao;
+
+	switch (opcao) {
+	case '1':
+		consultarProduto();
+		break;
+	case '2':
+		consultar();
+		break;
+	case '3':
+		sair();
+		break;
+	default:
+		cerr << "Opcao invalida!" << endl;
+		consultarStock();
+	}
+}
+
+void Farmacia::consultarProduto()
+{
+	cout << endl << "CONSULTAR PRODUTO" << endl;
+
+	int codigo;
+
+	cout << "Codigo: ";
+	cin >> codigo;
+
+	Produto * p1;
+	try {
+		p1 = getProduto(codigo);
+	} catch(ProdutoNaoExiste &p) {
+		cout << "O produto com o codigo " << p.getCodigo() << " nao existe." << endl;
+		consultarStock();
+	}
+
+	cout << p1;
+	consultarStock();
 }
