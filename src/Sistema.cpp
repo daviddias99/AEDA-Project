@@ -22,7 +22,7 @@ void Sistema::menu()
 		menuGerencia();
 		break;
 	case '2':
-		carregarCadeia();
+		//carregarCadeia();
 		break;
 	case '0':
 		exit(0);
@@ -57,7 +57,7 @@ void Sistema::menuGerencia()
 		gerirEmpregados();
 		break;
 	case '0':
-		exit(0);
+		sair();
 		break;
 	default:
 		cout << "Opcao Invalida!\n";
@@ -256,6 +256,109 @@ void Sistema::removerFarmacia()
 	}
 
 	gerirFarmacias();
+}
+
+void Sistema::gerirCliente()
+{
+	cout << endl << "GERIR CLIENTE" << endl;
+
+	int nif;
+
+	cout << "NIF: ";
+	cin >> nif;
+
+	try {
+		Cliente c = cadeia.getCliente(nif);
+		//c.gerir();
+	} catch (ClienteNaoExiste &c1) {
+		cout << "O cliente com o nif " << c1.getNIF() << " nao existe." << endl;
+		gerirClientes();
+	}
+}
+
+void Sistema::adicionarCliente()
+{
+	cout << endl << "ADICIONAR CLIENTE" << endl;
+
+	Cliente c;
+
+	cin >> c;
+
+	if(cadeia.addCliente(c)) cout << "Cliente adicionado." << endl;
+	else cout << "O cliente " << c.getNome() << " com o nif " << c.getNIF() << " ja existe." << endl;
+
+	gerirClientes();
+}
+
+void Sistema::removerCliente()
+{
+	cout << endl << "REMOVER CLIENTE" << endl;
+
+	int nif;
+
+	cout << "NIF: ";
+	cin >> nif;
+
+	try {
+		cadeia.removeCliente(nif);
+		cout << "Cliente removido" << endl;
+	} catch (ClienteNaoExiste &c1) {
+		cout << "O cliente com o nif " << c1.getNIF() << " nao existe." << endl;
+	}
+
+	gerirClientes();
+}
+
+void Sistema::gerirEmpregado()
+{
+	cout << endl << "GERIR EMPREGADO" << endl;
+
+	int nif;
+
+	cout << "NIF: ";
+	cin >> nif;
+
+	try {
+		Empregado e = cadeia.getEmpregado(nif);
+		//e.gerir();
+	} catch (EmpregadoNaoExiste &e1) {
+		cout << "O empregado com o nif " << e1.getNIF() << " nao existe." << endl;
+	}
+
+	gerirEmpregados();
+}
+
+void Sistema::adicionarEmpregado()
+{
+	cout << endl << "ADICIONAR EMPREGADO" << endl;
+
+	Empregado e;
+
+	cin >> e;
+
+	if(cadeia.addEmpregado(e)) cout << "Empregado adicionado." << endl;
+	else cout << "O empregado " << e.getNome() << " com o nif " << e.getNIF << " ja existe." << endl;
+
+	gerirEmpregados();
+}
+
+void Sistema::removerEmpregado()
+{
+	cout << endl << "REMOVER EMPREGADO" << endl;
+
+	int nif;
+
+	cout << "NIF: ";
+	cin >> nif;
+
+	try {
+		cadeia.removeEmpregado(nif);
+		cout << "Empregado removido." << endl;
+	} catch (EmpregadoNaoExiste &e1) {
+		cout << "O empregado com o nif " << e1.getNIF() << " nao existe." << endl;
+	}
+
+	gerirEmpregados();
 }
 
 

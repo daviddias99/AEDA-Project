@@ -25,8 +25,8 @@ public:
 	void removeCliente(int clienteNIF);
 	void removeEmpregado(int empregadoNIF);
 	Farmacia getFarmacia(string nome) const;
-	Cliente getCliente(string nome) const;
-	Empregado getEmpregado(string nome) const;
+	Cliente getCliente(int nif) const;
+	Empregado getEmpregado(int nif) const;
 	unsigned int getNumFarmacias() const;
 	unsigned int getNumEmpregados() const;
 	unsigned int getNumClientes() const;

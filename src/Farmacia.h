@@ -48,6 +48,7 @@ public:
 	void consultarEmpregado();
 	void consultarStock();
 	void consultarProduto();
+	void consultarQuantidades();
 private:
 	string nome;
 	Morada morada;

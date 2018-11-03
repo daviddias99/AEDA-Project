@@ -90,6 +90,22 @@ Farmacia Cadeia::getFarmacia(string nome) const
 	throw FarmaciaNaoExiste(nome);
 }
 
+Cliente Cadeia::getCliente(int nif) const
+{
+	int i = procura(clientes, nif);
+	if(i != -1) return clientes[i];
+
+	throw ClienteNaoExiste(nif);
+}
+
+Empregado Cadeia::getEmpregado(int nif) const
+{
+	int i = procura(empregados, nif);
+	if(i != -1) return empregados[i];
+
+	throw EmpregadoNaoExiste(nif);
+}
+
 unsigned int Cadeia::getNumFarmacias() const
 {
 	return farmacias.size();

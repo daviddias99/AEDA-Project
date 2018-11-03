@@ -4,8 +4,8 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include "Cadeia.h"
 #include "util.h"
+#include "Cadeia.h"
 
 using namespace std;
 
@@ -27,7 +27,14 @@ private:
 	void consultarFarmacia();
 
 	void gerirClientes();
+	void gerirCliente();
+	void adicionarCliente();
+	void removerCliente();
+
 	void gerirEmpregados();
+	void gerirEmpregado();
+	void adicionarEmpregado();
+	void removerEmpregado();
 };
 
 #endif

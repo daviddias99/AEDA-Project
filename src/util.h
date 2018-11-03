@@ -97,10 +97,10 @@ public:
 };
 
 class ClienteNaoExiste {
-	string nome;
+	int nif;
 public:
-	ClienteNaoExiste(string nome) {this->nome = nome;}
-	string getNome() const {return nome;}
+	ClienteNaoExiste(int nif) {this->nif = nif;}
+	string getNIF() const {return nif;}
 };
 
 class EmpregadoNaoExiste {

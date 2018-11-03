@@ -434,9 +434,12 @@ void Farmacia::consultarStock()
 		consultarProduto();
 		break;
 	case '2':
-		consultar();
+		consultarQuantidades();
 		break;
 	case '3':
+		consultar();
+		break;
+	case '4':
 		sair();
 		break;
 	default:
@@ -464,4 +467,12 @@ void Farmacia::consultarProduto()
 
 	cout << p1;
 	consultarStock();
+}
+
+void Farmacia::consultarQuantidades()
+{
+	map<Produto*, int>::iterator it;
+	for(it = stock.begin(); it != stock.end(); it++) {
+		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second;
+	}
 }
