@@ -13,7 +13,7 @@ class Pessoa {
 public:
 	
 	//NIF- 9 NCC- 8 NSS- 11 NUS- 9
-	Pessoa(CartaoCidadao cc, Morada morada);
+	Pessoa(CartaoCidadao cc = CartaoCidadao(), Morada morada = Morada());
 
 	string getNome() const;
 	uint  getNIF() const;
@@ -31,7 +31,7 @@ private:
 
 class Empregado :public Pessoa {
 public:
-	Empregado(CartaoCidadao cc, Morada morada, uint  sal, string farmaciaNome, string cargo);
+	Empregado(CartaoCidadao cc = CartaoCidadao(), Morada morada = Morada(), uint  sal = 0, string farmaciaNome = "FARMACIA_DEFAULT", string cargo = "CARGO_DEFAULT");
 
 	uint  getSalario() const;
 	string getNomeFarmacia() const;
@@ -53,7 +53,7 @@ private:
 class Cliente :public Pessoa {
 public:
 
-	Cliente(CartaoCidadao cc, Morada morada);
+	Cliente(CartaoCidadao cc = CartaoCidadao(), Morada morada = Morada());
 
 	bool adicionaCompra(Venda*);
 	uint getNumCompras();
