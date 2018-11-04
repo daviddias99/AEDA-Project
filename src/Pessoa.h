@@ -88,8 +88,8 @@ bool Cliente_SortFunc_Nome_Crescente(Cliente& p1, Cliente& p2);
 bool Cliente_SortFunc_Nome_Decrescente(Cliente& p1, Cliente& p2);
 bool Cliente_SortFunc_NIF_Crescente(Cliente& p1, Cliente& p2);
 bool Cliente_SortFunc_NIF_Decrescente(Cliente& p1, Cliente& p2);
-bool Cliente_SortFunc_numVendas_Crescente(Cliente& p1, Cliente& p2);
-bool Cliente_SortFunc_numVendas_Decrescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_numCompras_Crescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_numCompras_Decrescente(Cliente& p1, Cliente& p2);
 
 
 
