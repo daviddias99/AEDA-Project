@@ -118,21 +118,21 @@ class ClienteNaoExiste {
 	int nif;
 public:
 	ClienteNaoExiste(int nif) {this->nif = nif;}
-	string getNIF() const {return nif;}
+	string getNIF() const {return to_string(nif);}
 };
 
 class EmpregadoNaoExiste {
 	int nif;
 public:
 	EmpregadoNaoExiste(int nif) {this->nif = nif;}
-	string getNIF() const {return nif;}
+	string getNIF() const {return to_string(nif);}
 };
 
 class ProdutoNaoExiste {
 	int codigo;
 public:
 	ProdutoNaoExiste(int codigo) {this->codigo = codigo;}
-	string getCodigo() const {return codigo;}
+	string getCodigo() const {return  to_string(codigo);}
 };
 
 class DataInvalida {

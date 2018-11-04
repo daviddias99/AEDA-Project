@@ -36,6 +36,7 @@ public:
 	uint  getSalario() const;
 	string getNomeFarmacia() const;
 	string getCargo() const;
+	uint getNumVendas();
 
 	bool setSalario(uint  novoSalario);
 	bool setFarmacia(string novaFarmacia);
@@ -54,13 +55,42 @@ public:
 
 	Cliente(CartaoCidadao cc, Morada morada);
 
-	bool adicionaVenda(Venda*);
+	bool adicionaCompra(Venda*);
+	uint getNumCompras();
 	bool verHistorico();
 
 
 private:
-	vector<Venda*> historicoVendas;
+	vector<Venda*> historicoCompras;
 };
+
+bool Pessoa_SortFunc_Idade_Crescente(Pessoa& p1, Pessoa& p2);
+bool Pessoa_SortFunc_Idade_Decrescente(Pessoa& p1, Pessoa& p2);
+bool Pessoa_SortFunc_Nome_Crescente(Pessoa& p1, Pessoa& p2);
+bool Pessoa_SortFunc_Nome_Decrescente(Pessoa& p1, Pessoa& p2);
+bool Pessoa_SortFunc_NIF_Crescente(Pessoa& p1, Pessoa& p2);
+bool Pessoa_SortFunc_NIF_Decrescente(Pessoa& p1, Pessoa& p2);
+
+bool Empregado_SortFunc_Idade_Crescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_Idade_Decrescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_Nome_Crescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_Nome_Decrescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_NIF_Crescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_NIF_Decrescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_Salario_Crescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_Salario_Decrescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_numVendas_Crescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_numVendas_Decrescente(Empregado& p1, Empregado& p2);
+
+bool Cliente_SortFunc_Idade_Crescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_Idade_Decrescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_Nome_Crescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_Nome_Decrescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_NIF_Crescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_NIF_Decrescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_numVendas_Crescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_numVendas_Decrescente(Cliente& p1, Cliente& p2);
+
 
 
 #endif
