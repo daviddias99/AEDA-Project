@@ -17,6 +17,14 @@ Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
 
 }
 
+Data::Data(string dataDMY)
+{
+	this->dia = stoi(dataDMY.substr(0, 2));
+	this->mes = stoi(dataDMY.substr(3, 2));
+	this->ano = stoi(dataDMY.substr(6, 4));
+
+}
+
 string Data::getData(bool dmy)
 {
 	string result;

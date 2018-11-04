@@ -30,7 +30,7 @@ bool Cadeia::addCliente(Cliente cliente)
 
 bool Cadeia::addClientes(const vector<Cliente> &v1)
 {
-	vector<Cliente>::iterator it;
+	vector<Cliente>::const_iterator it;
 	for(it = v1.begin(); it != v1.end(); it++) {
 		if(!addCliente(*it)) return false;
 	}
@@ -48,7 +48,7 @@ bool Cadeia::addEmpregado(Empregado empregado)
 
 bool Cadeia::addEmpregados(const vector <Empregado > &v1)
 {
-	vector<Empregado>::iterator it;
+	vector<Empregado>::const_iterator it;
 		for(it = v1.begin(); it != v1.end(); it++) {
 			if(!addEmpregado(*it)) return false;
 		}

@@ -4,7 +4,6 @@
 #include <string>
 #include <vector>
 #include "util.h"
-//#include "Farmacia.h"
 #include "Venda.h"
 
 using namespace std;
@@ -14,8 +13,7 @@ class Pessoa {
 public:
 	
 	//NIF- 9 NCC- 8 NSS- 11 NUS- 9
-
-	Pessoa(string n = "NOME_DEFAULT" , Morada morada = Morada(), uint  nif = 0, uint ncc = 0, uint nss = 0, uint nus = 0, char sex = 'D', float altura = 0.00, string nacionalidade = "DFT");
+	Pessoa(CartaoCidadao cc, Morada morada);
 
 	string getNome() const;
 	uint  getNIF() const;
@@ -26,39 +24,27 @@ public:
 
 
 private:
-	const string nome;
-	const Data dataNascimento;
-	const uint  NIF;
-	const uint  NCC;
-	const uint  NSS;
-	const uint  NUS;
-	char sexo;
-	float altura;
-	string nacionalidade;
 
-
-
+	CartaoCidadao pessoaId;
 	Morada morada;
-
-
 };
 
 class Empregado :public Pessoa {
 public:
-	Empregado(uint  sal, Farmacia* farm, string cargo);
+	Empregado(CartaoCidadao cc, Morada morada, uint  sal, string farmaciaNome, string cargo);
 
 	uint  getSalario() const;
 	string getNomeFarmacia() const;
 	string getCargo() const;
 
 	bool setSalario(uint  novoSalario);
-	bool setFarmacia(Farmacia* novaFarmacia);
+	bool setFarmacia(string novaFarmacia);
 	bool setCargo(string novoCargo);
 
 
 private:
 	uint  salario;
-	Farmacia* farmacia;
+	string farmaciaNome;
 	string cargo;
 	vector<Venda*> historicoVendas;
 };
@@ -66,7 +52,7 @@ private:
 class Cliente :public Pessoa {
 public:
 
-	Cliente();
+	Cliente(CartaoCidadao cc, Morada morada);
 
 	bool adicionaVenda(Venda*);
 	bool verHistorico();

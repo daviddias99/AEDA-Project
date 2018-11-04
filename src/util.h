@@ -27,6 +27,7 @@ class Data {
 public:
 	Data();
 	Data(uint dia,uint mes,uint ano);
+	Data(string dataDMY);
 	string getData(bool dmy = true);
 	uint getAno() const;
 	uint getMes() const;
@@ -67,10 +68,27 @@ public:
 	string getTstamp();
 };
 
+class CartaoCidadao {
+
+public:
+
+	CartaoCidadao(string n = "NOME_DEFAULT",Data dNasc = Data(), uint  nif = 0, uint ncc = 0, uint nss = 0, uint nus = 0, char sex = 'D', float altura = 0.00, string nacionalidade = "DFT");
+
+	const string nome;
+	const Data dataNascimento;
+	const uint  NIF;
+	const uint  NCC;
+	const uint  NSS;
+	const uint  NUS;
+	char sexo;
+	float altura;
+	string nacionalidade;
+};
 
 // ----------Funções----------
 
 bool isLeap(int year);
+
 int daysInMonth(int month, int year);
 
 template< class T>
