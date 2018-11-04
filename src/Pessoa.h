@@ -9,7 +9,6 @@
 
 using namespace std;
 
-class Farmacia;
 
 class Pessoa {
 public:

@@ -55,7 +55,7 @@ bool Pessoa::setMorada(Morada newMorada)
 	return true;
 }
 
-Empregado::Empregado(uint sal, Farmacia * pharm, string pos) :salario(sal), farmacia(pharm), cargo(pos)
+Empregado::Empregado(uint sal, string pharm, string pos) :salario(sal), farmaciaNome(pharm), cargo(pos)
 {
 
 
@@ -69,7 +69,7 @@ uint Empregado::getSalario() const
 string Empregado::getNomeFarmacia() const
 {
 	
-	return this->farmacia->getNome();
+	return this->farmaciaNome;
 
 }
 
@@ -89,9 +89,9 @@ bool Empregado::setSalario(uint novoSalario)
 	return true;
 }
 
-bool Empregado::setFarmacia(Farmacia * novaFarmacia)
+bool Empregado::setFarmacia(string  novaFarmacia)
 {
-	this->farmacia = novaFarmacia;
+	this->farmaciaNome = novaFarmacia;
 
 	return true;
 }
