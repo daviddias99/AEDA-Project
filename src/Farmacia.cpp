@@ -16,7 +16,7 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 
 bool Farmacia::addGerente(Empregado empregado)
 {
-	if(gerente.nome == "") {
+	if(gerente.getNome() == "") {
 		gerente = empregado;
 		return true;
 	}
@@ -245,26 +245,27 @@ void Farmacia::adicionarEmpregado()
 {
 	cout << endl << "ADICIONAR EMPREGADO" << endl;
 
-	string nome, cargo;;
-	Data dataNascimento;
+	string nome, cargo, dataNascimentoStr;
 	unsigned int NIF, salario;
 	Morada morada;
-	Farmacia* farmacia;
+
 
 	cout << "Nome: ";
 	getline(cin, nome) >> nome;
 	cout << "NIF: ";
 	cin >> NIF;
 	cout << "Data de Nascimento: ";
-	cin >> dataNascimento;
+	cin >> dataNascimentoStr;
 	cout << "Salario: ";
 	cin >> salario;
 	cout << "Morada: ";
 	cin >> morada;
 
-	farmacia = this;
+	Data dataNascimento = Data(dataNascimentoStr);
+	CartaoCidadao cc = CartaoCidadao(nome, dataNascimento, NIF);
+	
 
-	Empregado e(nome, dataNascimento, NIF, morada, salario, farmacia, cargo);
+	Empregado e(cc, morada, salario, this->getNome(), cargo);
 }
 
 void Farmacia::remover()
