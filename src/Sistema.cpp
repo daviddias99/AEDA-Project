@@ -209,14 +209,338 @@ void Sistema::gerirFarmacia()
 	cin >> nome;
 
 	try {
-		Farmacia f = cadeia.getFarmacia(nome);
-		f.gerir();
+		f = cadeia.getFarmacia(nome);
+		farmacia_gerir();
 	}
 	catch(FarmaciaNaoExiste &f1)
 	{
 		cout << "A farmacia " << f1.getNome() << " nao existe.";
 		gerirFarmacias();
 	}
+}
+
+void Sistema::farmacia_gerir()
+{
+	cout << "FARMACIA " << f.getNome() << endl;
+
+	char opcao;
+
+	cout << "1 - Adicionar" << endl;
+	cout << "2 - Remover" << endl;
+	cout << "3 - Consultar" << endl;
+	cout << "4 - Menu anterior" << endl;
+	cout << "0 - Sair da aplicacao" << endl;
+
+	cout << "Opcao; ";
+	cin >> opcao;
+
+	switch (opcao) {
+	case '1':
+		farmacia_menuAdicionar();
+		break;
+	case '2':
+		farmacia_menuRemover();
+		break;
+	case '3':
+		farmacia_menuConsultar();
+		break;
+	case '4':
+		menuGerencia();
+		break;
+	case '0':
+		sair();
+		break;
+	default:
+		cout << "Opcao Invalida!" << endl;
+		menuGerencia();
+	}
+}
+
+void Sistema::farmacia_menuAdicionar()
+{
+	char opcao;
+
+	cout << "1 - Adicionar produto" << endl;
+	cout << "2 - Adicionar empregado" << endl;
+	cout << "3 - Menu anterior" << endl;
+	cout << "0 - Sair da aplicacao" << endl;
+
+	cout << "Opcao; ";
+	cin >> opcao;
+
+	switch (opcao) {
+	case '1':
+		farmacia_adicionarProduto();
+		break;
+	case '2':
+		farmacia_adicionarEmpregado();
+		break;
+	case '3':
+		farmacia_gerir();
+		break;
+	case '0':
+		sair();
+		break;
+	default:
+		cout << "Opcao Invalida!" << endl;
+		farmacia_menuAdicionar();
+	}
+}
+
+void Sistema::farmacia_adicionarEmpregado()
+{
+	cout << endl << "ADICIONAR EMPREGADO" << endl;
+
+	string nome, cargo;;
+	Data dataNascimento;
+	unsigned int NIF, salario;
+	Morada morada;
+	Farmacia* farmacia;
+
+	cout << "Nome: ";
+	getline(cin, nome) >> nome;
+	cout << "NIF: ";
+	cin >> NIF;
+	cout << "Data de Nascimento: ";
+	cin >> dataNascimento;
+	cout << "Salario: ";
+	cin >> salario;
+	cout << "Morada: ";
+	cin >> morada;
+
+	farmacia = this;
+
+	Empregado e(nome, dataNascimento, NIF, morada, salario, farmacia, cargo);
+}
+
+void Sistema::farmacia_removerProduto()
+{
+	cout << endl << "REMOVER PRODUTO" << endl;
+
+	int codigo, quantidade;
+	bool erro;
+
+	cout << "Codigo do produto: ";
+	cin >> codigo;
+	cout << "Quantidade a remover( '0' para remover a quantidade total): ";
+	cin >> quantidade;
+
+	try {
+		if(quantidade == 0) {
+			f.remProduto(codigo);
+			cout << "Produto removido." << endl;
+		}
+		else {
+			erro = f.removeQuantidade(codigo, quantidade);
+			if(!erro) cout << "Quantidade removida;" << endl;
+			else cout << "Erro! Se pretende remover a quantidade total do protudo, responda '0' a quantidade;" << endl;
+		}
+	} catch(ProdutoNaoExiste &p1) {
+		cout << "O produto de codigo " << p1.getCodigo() << " nao existe." << endl;
+	}
+
+	farmacia_menuRemover();
+}
+
+void Sistema::farmacia_removerEmpregado()
+{
+	cout << endl << "REMOVER EMPREGADO" << endl;
+
+	int nif;
+	cout << "NIF: ";
+	cin >> nif;
+
+	try {
+		f.remEmpregado(nif);
+		cout << "Empregado removido." << endl;
+	} catch (EmpregadoNaoExiste &e) {
+		cout << "Nao existe nenhum empregado com o nif " << nif << ".\n";
+	}
+	farmacia_menuRemover();
+}
+
+void Sistema::farmacia_menuConsultar()
+{
+	cout << endl << "CONSULTAR FARMACIA" << endl;
+
+	cout << "Nome: " << setw(4) << f.getNome() << endl;
+	cout << "Morada: " << setw(4) << f.getMorada() << endl;
+	cout << "Gerente: " << setw(4) << "Nome: " << f.getGerente().getNome() << endl;
+	cout << setw(12) << "NIF: " << f.getGerente().getNIF() << endl;
+	cout << "Numero de empregados(incluindo gerente): " << f.numEmpregados() << endl << endl;
+
+	cout << "1 - Consultar empregado" << endl;
+	cout << "2 - Consultar stock" << endl;
+	cout << "3 - Menu anterior" << endl;
+	cout << "4 - Sair" << endl;
+
+	char opcao;
+
+	cout << "Opcao: ";
+	cin >> opcao;
+
+	switch (opcao) {
+		case '1':
+		farmacia_consultarEmpregado();
+		break;
+	case '2':
+		farmacia_consultarStock();
+		break;
+	case '3':
+		farmacia_gerir();
+		break;
+	case '4':
+		sair();
+		break;
+	default:
+		cerr << "Opcao Invalida!" << endl;
+		farmacia_menuConsultar();
+		break;
+	}
+}
+
+void Sistema::farmacia_consultarEmpregado()
+{
+	cout << endl << "CONSULTAR EMPREGADO" << endl;
+
+	if(!f.numEmpregados) {
+		cout << "Nenhum empregado nesta farmacia. Adicione um primeiro." << endl;
+		farmacia_menuConsultar();
+	}
+
+	string nome;
+
+	cout << "Nome: ";
+	cin >> nome;
+
+	vector<Empregado> v1 = f.getEmpregados(nome);
+
+	if(!v1.size()) {
+		cout << "Nao existe nenhum empregado com esse nome." << endl;
+		farmacia_menuConsultar();
+	}
+	else {
+		vector<Empregado>::iterator it;
+		for(it = v1.begin(); it != v1.end(); it++)
+				cout << (*it) << endl;
+	}
+	farmacia_menuConsultar();
+}
+
+void Sistema::farmacia_consultarStock()
+{
+	cout << endl << "CONSULTAR STOCK" << endl;
+
+	cout << "Numero de produtos diferentes: " << f.tamanhoStock() << endl;
+	cout << "Numero total de produtos: " << f.getTotalProdutos() << endl << endl;
+
+	cout << "1 - Consultar Produto" << endl;
+	cout << "2 - Consultar quantidades de todos os produtos";
+	cout << "3 - Menu anterior" << endl;
+	cout << "4 - Sair" << endl;
+
+	char opcao;
+
+	cout << "Opcao: ";
+	cin >> opcao;
+
+	switch (opcao) {
+	case '1':
+		farmacia_consultarProduto();
+		break;
+	case '2':
+		f.consultarQuantidades();
+		break;
+	case '3':
+		farmacia_menuConsultar();
+		break;
+	case '4':
+		sair();
+		break;
+	default:
+		cerr << "Opcao invalida!" << endl;
+		farmacia_consultarStock();
+	}
+}
+
+void Sistema::farmacia_consultarProduto()
+{
+	cout << endl << "CONSULTAR PRODUTO" << endl;
+
+	int codigo;
+
+	cout << "Codigo: ";
+	cin >> codigo;
+
+	Produto * p1;
+	try {
+		p1 = f.getProduto(codigo);
+	} catch(ProdutoNaoExiste &p) {
+		cout << "O produto com o codigo " << p.getCodigo() << " nao existe." << endl;
+		farmacia_consultarStock();
+	}
+
+	cout << p1;
+	farmacia_consultarStock();
+}
+
+void Sistema::farmacia_menuRemover()
+{
+	char opcao;
+
+	cout << "1 - Remover Produto" << endl;
+	cout << "2 - Remover Empregado" << endl;
+	cout << "3 - Menu anterior" << endl;
+	cout << "0 - Sair da aplicacao" << endl;
+
+	cout << "Opcao; ";
+	cin >> opcao;
+
+	switch (opcao) {
+	case '1':
+		farmacia_removerProduto();
+		break;
+	case '2':
+		farmacia_removerEmpregado();
+		break;
+	case '3':
+		farmacia_gerir();
+		break;
+	case '0':
+		sair();
+		break;
+	default:
+		cout << "Opcao Invalida!" << endl;
+		farmacia_menuRemover();
+	}
+}
+
+void Sistema::farmacia_adicionarProduto()
+{
+
+	cout << endl << "ADICIONAR PRODUTO" << endl;
+
+	long int codigo;
+	string nome, descricao;
+	float preco;
+	int quantidade;
+
+	cout << "Codigo: ";
+	cin >> codigo;
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "Descricao: ";
+	getline(cin, nome);
+	cout << "Preco: ";
+	cin >> preco;
+	cout << "Quantidade a adicionar: ";
+	cin >> quantidade;
+
+	Produto* p1 = new Produto(codigo, nome, descricao, preco);
+	f.addProduto(p1, quantidade);
+
+	cout << "Produto adicionado" << endl;
+	farmacia_menuAdicionar();
 }
 
 void Sistema::adicionarFarmacia()
@@ -256,6 +580,7 @@ void Sistema::removerFarmacia()
 	}
 
 	gerirFarmacias();
+
 }
 
 void Sistema::gerirCliente()
