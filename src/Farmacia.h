@@ -5,15 +5,15 @@
 #include <vector>
 #include <map>
 #include <iomanip>
+#include <iostream>
 
 #include "Pessoa.h"
 #include "Produto.h"
 #include "util.h"
-#include "Sistema.h"
 
 using namespace std;
 
-class Farmacia : public Sistema{
+class Farmacia {
 public:
 	Farmacia(string nome, Morada Morada);
 	virtual ~Farmacia();
@@ -27,27 +27,15 @@ public:
 	string getNome() const;
 	Morada getMorada() const;
 	Empregado getGerente() const;
-	vector<Empregado> getEmpregados(string nome);
-	Produto* getProduto(int codigo);
-	int getTotalProdutos();
+	vector<Empregado> getEmpregados(string nome) const;
+	Produto* getProduto(int codigo) const;
+	unsigned int getTotalProdutos() const;
+	unsigned int tamanhoStock() const;
+	unsigned int numEmpregados() const;
 
 	bool operator == (const Farmacia & ph1);
 	bool operator < (const Farmacia & ph); //Ordenado alfabeticamente
 
-	void gerir();
-	void adicionar();
-	void remover();
-	void consultar();
-
-	void adicionarProduto();
-	void adicionarEmpregado();
-
-	void removerProduto();
-	void removerEmpregado();
-
-	void consultarEmpregado();
-	void consultarStock();
-	void consultarProduto();
 	void consultarQuantidades();
 private:
 	string nome;
