@@ -13,6 +13,7 @@ public:
 	string getDesc() const;
 	float getPreco() const;
 	int alteraPreco(float novoPreco);
+	bool operator==(const Produto &prod);
 protected:
 	const long int codigo;
 	const string nome;

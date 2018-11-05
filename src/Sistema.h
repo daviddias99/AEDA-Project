@@ -12,6 +12,7 @@ using namespace std;
 class Sistema {
 public:
 	void start();
+	Sistema();
 private:
 	Cadeia cadeia;
 	Farmacia f;

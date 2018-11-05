@@ -126,6 +126,9 @@ uint Cliente::getNumCompras()
 	return this->historicoCompras.size();
 }
 
+bool Cliente::verHistorico() {}
+
+
 bool Pessoa_SortFunc_Idade_Crescente(Pessoa& p1, Pessoa& p2) {
 
 	if (p1.getIdade() < p2.getIdade())

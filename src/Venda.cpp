@@ -1,12 +1,13 @@
 #include "Venda.h"
 
-Venda::Venda(const Cliente & comp, const Empregado & vend) {
-	cliente = comp;
-	empregado = vend;
+Venda::Venda(string client, string empreg) : nomeCliente(client), nomeEmpregado(empreg) {}
+
+map<Produto, unsigned int> Venda::addReceita(const Receita & receita) {
+
 }
 
-map<Produto, unsigned int> Venda::addReceita(const Receita & receita);
+void Venda::addProduto(const Produto &prod, unsigned int quant) {
 
-void Venda::addProduto(const Produto &prod, unsigned int quant);
+}
 
 

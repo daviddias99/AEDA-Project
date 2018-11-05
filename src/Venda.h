@@ -1,22 +1,23 @@
 #ifndef VENDA_H
 #define VENDA_H
 
-
 #include <map>
 #include <vector>
+#include <string>
 #include "Produto.h"
 #include "Receita.h"
 
+using namespace std;
 
 
 class Venda {
 public:
-	Venda(const Cliente & comp, const Empregado & vend);
+	Venda(string client, string empreg);
 	map<Produto, unsigned int> addReceita(const Receita & receita);
 	void addProduto(const Produto &prod, unsigned int quant);
 private:
-	Cliente cliente;
-	Empregado empregado;
+	const string nomeCliente;
+	const string nomeEmpregado;
 	map<Produto, unsigned int> produtos;
 };
 

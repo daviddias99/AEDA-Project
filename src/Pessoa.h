@@ -4,10 +4,9 @@
 #include <string>
 #include <vector>
 #include "util.h"
-//#include "Venda.h"
+#include "Venda.h"
 
 using namespace std;
-
 
 class Pessoa {
 public:
@@ -54,7 +53,7 @@ private:
 	vector<Venda*> historicoVendas;
 };
 
-class Cliente :public Pessoa {
+class Cliente:public Pessoa {
 public:
 
 	Cliente(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada());

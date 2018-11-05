@@ -31,4 +31,8 @@ int Produto::alteraPreco(float novoPreco) {
 		return 1;
 }
 
+bool Produto::operator==(const Produto &prod) {
+	return codigo == prod.codigo;
+}
+
 

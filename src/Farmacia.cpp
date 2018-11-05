@@ -11,7 +11,8 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 			return;
 		}
 	}
-	stock[*produto] = quantidade;
+
+	stock[produto] = quantidade;
 }
 
 

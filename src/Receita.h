@@ -1,26 +1,24 @@
-#ifndef RECEITA_H_
-#define RECEITA_H_
+#ifndef RECEITA_H
+#define RECEITA_H
 
 #include <string>
 #include <map>
-#include "Cliente.h"
 #include "Produto.h"
 
 using namespace std;
 
 class Receita {
 public:
-	Receita(int numReceita, Cliente cliente, string nomeMedico);
-	void addProduto(Produto produto, int quantidade);
+	Receita(int numReceita, string cliente, string Medico);
+	void addProduto(Produto * produto, int quantidade);
 	int getNumReceita() const;
-	Cliente getCliente() const;
+	string getCliente() const;
 	string getMedico() const;
-	virtual ~Receita();
 private:
 	int numReceita;
-	const Cliente cliente;
+	const string nomeCliente;
 	const string nomeMedico;
-	map< Produto, int> produtos;
+	map<Produto *, int> produtos;
 };
 
 #endif
