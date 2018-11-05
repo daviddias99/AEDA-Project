@@ -228,6 +228,24 @@ int procura(const vector<T*> &v, T x)
 	return -1;
 }
 
+
+template< class T>
+int procura(const vector<T*> &v, T* x)
+{
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (*v[middle] < *x)
+			left = middle + 1;
+		else if (*x < *v[middle])
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
+
 template< class T>
 int procura(const vector <T> &v, string nome)
 {
@@ -255,6 +273,23 @@ int procura(const vector <T> &v, int nif)
 		if (v[middle].getNIF() < nif)
 			left = middle + 1;
 		else if (nif < v[middle].getNIF())
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
+
+template < class T>
+int procura(const vector <T*> &v, int nif)
+{
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (v[middle]->getNIF() < nif)
+			left = middle + 1;
+		else if (nif < v[middle]->getNIF())
 			right = middle - 1;
 		else return middle;
 

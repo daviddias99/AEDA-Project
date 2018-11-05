@@ -99,10 +99,16 @@ template< class T>
 int procura(const vector<T*> &v, T x);
 
 template< class T>
+int procura(const vector<T*> &v, T* x);
+
+template< class T>
 int procura(const vector <T> &v, string nome);
 
 template < class T>
 int procura(const vector <T> &v, int nif);
+
+template < class T>
+int procura(const vector <T*> &v, int nif);
 
 
 // ----------Exceções----------

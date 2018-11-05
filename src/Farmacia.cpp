@@ -14,38 +14,31 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 	stock[*produto] = quantidade;
 }
 
-bool Farmacia::addGerente(Empregado empregado)
-{
-	if(gerente.getNome() == "") {
-		gerente = empregado;
-		return true;
-	}
-	else return false;
-}
 
-bool Farmacia::addEmpregado(Empregado empregado)
+
+bool Farmacia::addEmpregado(Empregado* empregado)
 {
 	int i = procura(empregados, empregado);
 
 	if (i != -1) {
-		if(empregado.getCargo() == "gerente")
+		/*if(empregado->getCargo() == "gerente")
 			if(!addGerente(empregado)) return false;
 		empregados.push_back(empregado);
-		return true;
+		return true; */
+		empregados.push_back(empregado);
 	}
 	else return false;
 }
 
-void Farmacia::remGerente()
-{
-
-}
 
 void Farmacia::remEmpregado(int nif)
 {
 	int i = procura(empregados, nif);
 	if( i != -1) {
-		if(empregados[i].getCargo() == "gerente") remGerente();
+		if(empregados[i]->getCargo() == "gerente") 
+			this->setGerente(NULL);
+		Empregado * temp = empregados.at(i);
+		delete temp;
 		empregados.erase(empregados.begin() + i);
 		return;
 	}
@@ -81,6 +74,16 @@ void Farmacia::remProduto(int codigo)
 	throw ProdutoNaoExiste(codigo);
 }
 
+bool Farmacia::setGerente(Empregado * novoGerente)
+{
+	if(this->gerente != NULL)
+		this->gerente->setCargo("empregado");
+	novoGerente->setCargo("gerente");
+	this->gerente = novoGerente;
+
+	return true;
+}
+
 
 string Farmacia::getNome() const
 {
@@ -92,7 +95,7 @@ Morada Farmacia::getMorada() const
 	return morada;
 }
 
-Empregado Farmacia::getGerente() const
+Empregado* Farmacia::getGerente() const
 {
 	return gerente;
 }
@@ -100,10 +103,10 @@ Empregado Farmacia::getGerente() const
 vector<Empregado> Farmacia::getEmpregados(string nome) const
 {
 	vector<Empregado> v1;
-	vector<Empregado>::const_iterator it;
+	vector<Empregado*>::const_iterator it;
 
 	for(it = empregados.begin(); it != empregados.end(); it++) {
-		if( (*it).getNome() == nome) v1.push_back(*it);
+		if( (*it)->getNome() == nome) v1.push_back(**it);
 	}
 
 	return v1;
