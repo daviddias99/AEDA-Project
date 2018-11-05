@@ -1,5 +1,7 @@
 #include "Sistema.h"
 
+Sistema::Sistema()  {}
+
 void Sistema::start()
 {
 	menu();

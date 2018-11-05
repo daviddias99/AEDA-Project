@@ -122,7 +122,7 @@ Produto* Farmacia::getProduto(int codigo) const
 unsigned int Farmacia::getTotalProdutos() const
 {
 	int soma;
-	map<Produto, int>::iterator it;
+	map<Produto*, int>::const_iterator it;
 	for (it = stock.begin(); it != stock.end(); it++) {
 		soma += it->second;
 	}

@@ -34,7 +34,6 @@ private:
 	void farmacia_adicionarEmpregado();
 	void farmacia_removerProduto();
 	void farmacia_removerEmpregado();
-	void farmacia_menuConsultar();
 	void farmacia_consultarEmpregado();
 	void farmacia_consultarStock();
 	void farmacia_consultarProduto();
