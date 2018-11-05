@@ -12,7 +12,6 @@ class Receita {
 public:
 	Receita(int numReceita, Cliente cliente, string nomeMedico);
 	void addProduto(Produto produto, int quantidade);
-	void addProdutos(map<Produto, int> &produtos);
 	int getNumReceita() const;
 	Cliente getCliente() const;
 	string getMedico() const;
