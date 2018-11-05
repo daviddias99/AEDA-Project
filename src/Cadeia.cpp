@@ -10,30 +10,11 @@ bool Cadeia::addFarmacia(Farmacia farmacia)
 	return true;
 }
 
-bool Cadeia::addFarmacias(vector <Farmacia> v1)
-{
-	vector<Farmacia>::iterator it;
-	for(it = v1.begin(); it != v1.end(); it++) {
-		if(!addFarmacia(*it)) return false;
-	}
-
-	return true;
-}
-
 bool Cadeia::addCliente(Cliente cliente)
 {
 	if(procura(clientes, cliente) != -1) return false;
 
 	clientes.push_back(cliente);
-	return true;
-}
-
-bool Cadeia::addClientes(const vector<Cliente> &v1)
-{
-	vector<Cliente>::const_iterator it;
-	for(it = v1.begin(); it != v1.end(); it++) {
-		if(!addCliente(*it)) return false;
-	}
 	return true;
 }
 
@@ -44,15 +25,6 @@ bool Cadeia::addEmpregado(Empregado empregado)
 
 	empregados.push_back(empregado);
 	return true;
-}
-
-bool Cadeia::addEmpregados(const vector <Empregado > &v1)
-{
-	vector<Empregado>::const_iterator it;
-		for(it = v1.begin(); it != v1.end(); it++) {
-			if(!addEmpregado(*it)) return false;
-		}
-		return true;
 }
 
 void Cadeia::removeFarmacia(string nome)
