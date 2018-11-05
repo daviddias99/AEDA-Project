@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 #include "util.h"
-#include "Venda.h"
+//#include "Venda.h"
 
 using namespace std;
 
@@ -13,7 +13,7 @@ class Pessoa {
 public:
 	
 	//NIF- 9 NCC- 8 NSS- 11 NUS- 9
-	Pessoa(CartaoCidadao cc = CartaoCidadao(), Morada morada = Morada());
+	Pessoa(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada());
 
 	string getNome() const;
 	uint  getNIF() const;
@@ -26,13 +26,7 @@ public:
 private:
 	const string nome;
 	const Data dataNascimento;
-	const unsigned int NIF;
-	const unsigned int NCC;
-	const unsigned int NSS;
-	const unsigned int NUS;
-	char sexo;
-	float altura;
-	string nacionalidade;
+	const uint NIF;
 
 	Morada morada;
 };
@@ -41,7 +35,7 @@ private:
 
 class Empregado :public Pessoa {
 public:
-	Empregado(CartaoCidadao cc = CartaoCidadao(), Morada morada = Morada(), uint  sal = 0, string farmaciaNome = "FARMACIA_DEFAULT", string cargo = "CARGO_DEFAULT");
+	Empregado(string nome = "NOME_DEFAULT",uint nif = 0, Data dataNasc = Data(), Morada morada = Morada(), uint  sal = 0, string farmaciaNome = "FARMACIA_DEFAULT", string cargo = "CARGO_DEFAULT");
 
 	uint  getSalario() const;
 	string getNomeFarmacia() const;
@@ -63,7 +57,7 @@ private:
 class Cliente :public Pessoa {
 public:
 
-	Cliente(CartaoCidadao cc = CartaoCidadao(), Morada morada = Morada());
+	Cliente(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada());
 
 	bool adicionaCompra(Venda*);
 	uint getNumCompras();

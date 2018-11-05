@@ -3,18 +3,18 @@
 using namespace std;
 
 
-Pessoa::Pessoa(CartaoCidadao cc, Morada morada):pessoaId(cc), morada(morada){
-
+Pessoa::Pessoa(string nome, uint nif, Data dataNasc, Morada morada): nome(nome), NIF(nif),dataNascimento(dataNasc),morada(morada)
+{
 }
 
 string Pessoa::getNome() const
 {
-	return this->pessoaId.nome;
+	return this->nome;
 }
 
 uint  Pessoa::getNIF() const
 {
-	return this->pessoaId.NIF;
+	return this->NIF;
 }
 
 Morada Pessoa::getMorada() const
@@ -26,11 +26,11 @@ uint Pessoa::getIdade() const
 
 	Data atual = Data();
 	uint anoA = atual.getAno();
-	uint anoN = this->pessoaId.dataNascimento.getAno();
+	uint anoN = this->dataNascimento.getAno();
 	uint mesA = atual.getMes();
-	uint mesN = this->pessoaId.dataNascimento.getMes();
+	uint mesN = this->dataNascimento.getMes();
 	uint diaA = atual.getDia();
-	uint diaN = this->pessoaId.dataNascimento.getDia();
+	uint diaN = this->dataNascimento.getDia();
 
 	uint idade = anoA - anoN;
 	if (mesA < mesN)
@@ -51,10 +51,10 @@ bool Pessoa::setMorada(Morada newMorada)
 	return true;
 }
 
-Empregado::Empregado(CartaoCidadao cc, Morada morada, uint sal, string pharm, string pos) : Pessoa(cc,morada),salario(sal), farmaciaNome(pharm), cargo(pos)
+
+
+Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo): Pessoa(nome,nif,dataNasc,morada), farmaciaNome(farmaciaNome), salario(sal), cargo(cargo)
 {
-
-
 }
 
 uint Empregado::getSalario() const
@@ -97,12 +97,20 @@ bool Empregado::setFarmacia(string  novaFarmacia)
 	return true;
 }
 
-
+bool Empregado::setCargo(string novoCargo)
+{
+	this->cargo = novoCargo;
 
 	return true;
 }
 
-Cliente::Cliente(CartaoCidadao cc, Morada morada): Pessoa(cc,morada)
+
+
+
+
+
+
+Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada): Pessoa(nome,nif,dataNasc,morada)
 {
 }
 

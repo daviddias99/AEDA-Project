@@ -68,6 +68,7 @@ public:
 	string getTstamp();
 };
 
+/*
 class CartaoCidadao {
 
 public:
@@ -83,7 +84,7 @@ public:
 	char sexo;
 	float altura;
 	string nacionalidade;
-};
+}; */
 
 // ----------Funções----------
 

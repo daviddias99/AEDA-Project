@@ -5,10 +5,8 @@
 #include <map>
 #include <vector>
 #include "Produto.h"
-#include "Cliente.h"
-#include "Empregado.h"
-#include "Pessoa.h"
 #include "Receita.h"
+
 
 
 class Venda {
