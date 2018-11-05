@@ -54,9 +54,9 @@ void Farmacia::remEmpregado(int nif)
 
 bool Farmacia::removeQuantidade(int codigo, int quantidade)
 {
-	map<Produto, int>::iterator it;
+	map<Produto*, int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
-		if(it->first.getCodigo() == codigo) {
+		if(it->first->getCodigo() == codigo) {
 			if(it->second <= quantidade) {
 				return true;
 			}
@@ -100,7 +100,7 @@ Empregado Farmacia::getGerente() const
 vector<Empregado> Farmacia::getEmpregados(string nome) const
 {
 	vector<Empregado> v1;
-	vector<Empregado>::iterator it;
+	vector<Empregado>::const_iterator it;
 
 	for(it = empregados.begin(); it != empregados.end(); it++) {
 		if( (*it).getNome() == nome) v1.push_back(*it);
@@ -111,7 +111,7 @@ vector<Empregado> Farmacia::getEmpregados(string nome) const
 
 Produto* Farmacia::getProduto(int codigo) const
 {
-	map<Produto*, int>::iterator it;
+	map<Produto*, int>::const_iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		if( (*it->first).getCodigo() == codigo)
 			return (it->first);
