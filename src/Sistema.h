@@ -14,6 +14,9 @@ public:
 	void start();
 private:
 	Cadeia cadeia;
+	Farmacia f;
+	Cliente c;
+	Empregado e;
 
 	void menu();
 	void sair();
@@ -21,7 +24,21 @@ private:
 	void menuGerencia();
 
 	void gerirFarmacias();
+
 	void gerirFarmacia();
+	void farmacia_gerir();
+	void farmacia_menuAdicionar();
+	void farmacia_menuRemover();
+	void farmacia_menuConsultar();
+	void farmacia_adicionarProduto();
+	void farmacia_adicionarEmpregado();
+	void farmacia_removerProduto();
+	void farmacia_removerEmpregado();
+	void farmacia_menuConsultar();
+	void farmacia_consultarEmpregado();
+	void farmacia_consultarStock();
+	void farmacia_consultarProduto();
+
 	void adicionarFarmacia();
 	void removerFarmacia();
 	void consultarFarmacia();
