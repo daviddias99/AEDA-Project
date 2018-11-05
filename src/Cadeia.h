@@ -16,11 +16,8 @@ public:
 	Cadeia();
 	virtual ~Cadeia();
 	bool addFarmacia(Farmacia Farmacia);
-	bool addFarmacias(vector <Farmacia> Farmacias);
 	bool addCliente(Cliente cliente);
-	bool addClientes(const vector<Cliente> &clientes);
 	bool addEmpregado(Empregado empregado);
-	bool addEmpregados(const vector <Empregado > &empregados);
 	void removeFarmacia(string nome);
 	void removeCliente(int clienteNIF);
 	void removeEmpregado(int empregadoNIF);
