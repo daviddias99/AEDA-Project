@@ -4,31 +4,45 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "Cliente.h"
+#include <iomanip>
+#include <iostream>
+
+#include "Pessoa.h"
 #include "Produto.h"
-#include "Empregado.h"
 #include "util.h"
 
 using namespace std;
 
 class Farmacia {
 public:
-	Farmacia(string nome, Morada Morada, Empregado gerente);
+	Farmacia(string nome, Morada Morada);
 	virtual ~Farmacia();
-	void addProduto(Produto produto, int quantidade);
-	void removeProduto(Produto produto);
-	void removeQuantidade(Produto produto, int quantidade);
+	void addProduto(Produto *produto, int quantidade);
+	bool addEmpregado(Empregado empregado);
+	void remProduto(int codigo);
+	void remGerente();
+	bool addGerente(Empregado empregado);
+	bool removeQuantidade(int codigo, int quantidade);
+	void remEmpregado(int nif);
 	string getNome() const;
 	Morada getMorada() const;
 	Empregado getGerente() const;
+	vector<Empregado> getEmpregados(string nome) const;
+	Produto* getProduto(int codigo) const;
+	unsigned int getTotalProdutos() const;
+	unsigned int tamanhoStock() const;
+	unsigned int numEmpregados() const;
+
 	bool operator == (const Farmacia & ph1);
 	bool operator < (const Farmacia & ph); //Ordenado alfabeticamente
+
+	void consultarQuantidades();
 private:
 	string nome;
 	Morada morada;
 	Empregado gerente;
 	vector< Empregado > empregados;
-	map<Produto, int> stock;
+	map< Produto *, int> stock;
 };
 
 #endif

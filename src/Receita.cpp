@@ -13,14 +13,6 @@ void Receita::addProduto(Produto produto, int quantidade)
 			produtos[produto] = quantidade;
 }
 
-void Receita::addProdutos(map<Produto, int> p)
-{
-	map<Produto, int>::iterator it;
-	for (it = p.begin(); it != p.end(); it++) {
-		addProduto(it->first, it->second);
-	}
-}
-
 int Receita::getNumReceita() const
 {
 	return numReceita;

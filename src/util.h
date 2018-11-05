@@ -13,12 +13,12 @@ typedef unsigned int uint;
 class Morada {
 
 public:
-	Morada(string rua, string codigoPostal, int porta, string cidade);
+	Morada(string morada_linha1 = "RUA_DEFAULT", string morada_linha2 = "PORTA 0, 3º ANDAR DIREITO", string codigoPostal = "0000-000", string cidade = "CIDADE_DEFAULT");
 	bool mudaMorada(Morada novaMorada);
 private:
-	string rua;
+	string morada_linha1;
+	string morada_linha2;
 	string codigoPostal;
-	int porta;
 	string cidade;
 };
 
@@ -27,10 +27,12 @@ class Data {
 public:
 	Data();
 	Data(uint dia,uint mes,uint ano);
+	Data(string dataDMY);
 	string getData(bool dmy = true);
 	uint getAno() const;
 	uint getMes() const;
 	uint getDia() const;
+	bool operator < (Data& d2) const;
 
 private:
 	uint dia;
@@ -66,18 +68,40 @@ public:
 	string getTstamp();
 };
 
+class CartaoCidadao {
+
+public:
+
+	CartaoCidadao(string n = "NOME_DEFAULT",Data dNasc = Data(), uint  nif = 0, uint ncc = 0, uint nss = 0, uint nus = 0, char sex = 'D', float altura = 0.00, string nacionalidade = "DFT");
+
+	const string nome;
+	const Data dataNascimento;
+	const uint  NIF;
+	const uint  NCC;
+	const uint  NSS;
+	const uint  NUS;
+	char sexo;
+	float altura;
+	string nacionalidade;
+};
 
 // ----------Funções----------
 
 bool isLeap(int year);
+
 int daysInMonth(int month, int year);
 
 template< class T>
 int procura(const vector<T> &v, T x);
 
-
 template< class T>
 int procura(const vector<T*> &v, T x);
+
+template< class T>
+int procura(const vector <T> &v, string nome);
+
+template < class T>
+int procura(const vector <T> &v, int nif);
 
 
 // ----------Exceções----------
@@ -91,24 +115,24 @@ public:
 };
 
 class ClienteNaoExiste {
-	string nome;
+	int nif;
 public:
-	ClienteNaoExiste(string nome) {this->nome = nome;}
-	string getNome() const {return nome;}
+	ClienteNaoExiste(int nif) {this->nif = nif;}
+	string getNIF() const {return to_string(nif);}
 };
 
 class EmpregadoNaoExiste {
-	string nome;
+	int nif;
 public:
-	EmpregadoNaoExiste(string nome) {this->nome = nome;}
-	string getNome() const {return nome;}
+	EmpregadoNaoExiste(int nif) {this->nif = nif;}
+	string getNIF() const {return to_string(nif);}
 };
 
 class ProdutoNaoExiste {
-	string nome;
+	int codigo;
 public:
-	ProdutoNaoExiste(string nome) {this->nome = nome;}
-	string getNome() const {return nome;}
+	ProdutoNaoExiste(int codigo) {this->codigo = codigo;}
+	string getCodigo() const {return  to_string(codigo);}
 };
 
 class DataInvalida {

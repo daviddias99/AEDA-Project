@@ -1,11 +1,15 @@
 #ifndef VENDA_H
 #define VENDA_H
 
+
 #include <map>
 #include <vector>
 #include "Produto.h"
+#include "Cliente.h"
+#include "Empregado.h"
 #include "Pessoa.h"
 #include "Receita.h"
+
 
 class Venda {
 public:

@@ -3,8 +3,8 @@
 #include <ctime>
 
 
-Morada::Morada(string rua, string codigoPostal, int porta, string cidade) :
-	rua(rua), codigoPostal(codigoPostal), porta(porta), cidade(cidade) {}
+Morada::Morada(string morada_linha1 , string morada_linha2 , string codigoPostal, string cidade) :
+	morada_linha1(morada_linha1), morada_linha2(morada_linha2), codigoPostal(codigoPostal), cidade(cidade) {}
 
 
 Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
@@ -12,8 +12,16 @@ Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
 	if (mes > 12)
 		throw DataInvalida();
 
-	if (dia > daysInMonth(mes, ano))
+	if (dia > (unsigned int)daysInMonth(mes, ano))
 		throw DataInvalida();
+
+}
+
+Data::Data(string dataDMY)
+{
+	this->dia = stoi(dataDMY.substr(0, 2));
+	this->mes = stoi(dataDMY.substr(3, 2));
+	this->ano = stoi(dataDMY.substr(6, 4));
 
 }
 
@@ -35,7 +43,8 @@ Data::Data() {
 
 	time_t tempoAtual = time(NULL);
 
-	tm* tempAtualStruct = localtime(&tempoAtual);
+	tm* tempAtualStruct =  NULL;
+	localtime_s(tempAtualStruct,&tempoAtual);
 
 	this->ano = tempAtualStruct->tm_year;
 	this->mes = tempAtualStruct->tm_mon;
@@ -56,6 +65,28 @@ uint Data::getMes() const
 uint Data::getDia() const
 {
 	return this->dia;
+}
+
+bool Data::operator<(Data & d2) const
+{
+	if (this->ano < d2.ano)
+		return true;
+	else if (this->ano == d2.ano) {
+
+		if (this->mes < d2.mes)
+			return true;
+		else if (this->mes == d2.mes) {
+
+			if (this->dia < d2.dia)
+				return true;
+			else return false;
+
+
+		}
+		else return false;
+	}
+	else return false;
+
 }
 
 
@@ -102,7 +133,8 @@ Time::Time() {
 
 	time_t tempoAtual = time(NULL);
 
-	tm* tempAtualStruct = localtime(&tempoAtual);
+	tm* tempAtualStruct = NULL;
+	localtime_s(tempAtualStruct,&tempoAtual);
 
 	this->hora = tempAtualStruct->tm_hour;
 	this->minuto = tempAtualStruct->tm_min;
@@ -194,4 +226,47 @@ int procura(const vector<T*> &v, T x)
 
 	}
 	return -1;
+}
+
+template< class T>
+int procura(const vector <T> &v, string nome)
+{
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (v[middle].getNome() < nome)
+			left = middle + 1;
+		else if (nome < v[middle].getNome())
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
+
+template < class T>
+int procura(const vector <T> &v, int nif)
+{
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (v[middle].getNIF() < nif)
+			left = middle + 1;
+		else if (nif < v[middle].getNIF())
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
+
+
+CartaoCidadao::CartaoCidadao(string n, Data dNasc, uint nif, uint ncc, uint nss, uint nus, char sex, float altura, string nacionalidade) :nome(n), NIF(nif), NCC(ncc), NSS(nss), NUS(nus) {
+
+	this->sexo = sex;
+	this->nacionalidade = nacionalidade;
+	this->altura = altura;
+
 }
