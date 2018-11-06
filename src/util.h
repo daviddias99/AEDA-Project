@@ -15,6 +15,8 @@ class Morada {
 public:
 	Morada(string morada_linha1 = "RUA_DEFAULT", string morada_linha2 = "PORTA 0, 3º ANDAR DIREITO", string codigoPostal = "0000-000", string cidade = "CIDADE_DEFAULT");
 	// bool mudaMorada(Morada novaMorada);
+	friend ostream& operator<< (ostream& os, const Morada& mor);
+	
 private:
 	string morada_linha1;
 	string morada_linha2;

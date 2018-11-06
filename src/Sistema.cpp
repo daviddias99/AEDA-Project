@@ -38,6 +38,7 @@ void Sistema::menu()
 void Sistema::menuGerencia()
 {
 	char opcao;
+	this->cadeia = Cadeia();
 
 	cout << endl << "GERIR CADEIA DE FARMACIAS" << endl;
 	cout << "1 - Gerir Farmacias" << endl;
@@ -223,7 +224,7 @@ void Sistema::gerirFarmacia()
 
 void Sistema::farmacia_gerir()
 {
-	cout << "FARMACIA " << f.getNome() << endl;
+	cout << "FARMACIA " << f->getNome() << endl;
 
 	char opcao;
 
@@ -294,25 +295,29 @@ void Sistema::farmacia_adicionarEmpregado()
 	cout << endl << "ADICIONAR EMPREGADO" << endl;
 
 	string nome, cargo;;
-	Data dataNascimento;
+	
+	string dnStr, moradaStr;
 	unsigned int NIF, salario;
-	Morada morada;
-	Farmacia* farmacia;
+	//Morada morada;
 
 	cout << "Nome: ";
 	getline(cin, nome) >> nome;
 	cout << "NIF: ";
 	cin >> NIF;
 	cout << "Data de Nascimento: ";
-	cin >> dataNascimento;
+	cin >> dnStr;
+	cout << "Morada: ";
+	cin >> moradaStr;
 	cout << "Salario: ";
 	cin >> salario;
-	cout << "Morada: ";
-	cin >> morada;
+	cout << "Cargo: ";
+	cin >> cargo;
 
-	farmacia = this;
 
-	Empregado e(nome, dataNascimento, NIF, morada, salario, farmacia, cargo);
+
+	Data dataNascimento = Data(dnStr);
+
+	Empregado newEmp = Empregado(nome, NIF, dataNascimento, Morada(), salario, this->f->getNome(), cargo);
 }
 
 void Sistema::farmacia_removerProduto()
@@ -329,11 +334,11 @@ void Sistema::farmacia_removerProduto()
 
 	try {
 		if(quantidade == 0) {
-			f.remProduto(codigo);
+			f->remProduto(codigo);
 			cout << "Produto removido." << endl;
 		}
 		else {
-			erro = f.removeQuantidade(codigo, quantidade);
+			erro = f->removeQuantidade(codigo, quantidade);
 			if(!erro) cout << "Quantidade removida;" << endl;
 			else cout << "Erro! Se pretende remover a quantidade total do protudo, responda '0' a quantidade;" << endl;
 		}
@@ -353,7 +358,7 @@ void Sistema::farmacia_removerEmpregado()
 	cin >> nif;
 
 	try {
-		f.remEmpregado(nif);
+		f->remEmpregado(nif);
 		cout << "Empregado removido." << endl;
 	} catch (EmpregadoNaoExiste &e) {
 		cout << "Nao existe nenhum empregado com o nif " << nif << ".\n";
@@ -365,11 +370,11 @@ void Sistema::farmacia_menuConsultar()
 {
 	cout << endl << "CONSULTAR FARMACIA" << endl;
 
-	cout << "Nome: " << setw(4) << f.getNome() << endl;
-	cout << "Morada: " << setw(4) << f.getMorada() << endl;
-	cout << "Gerente: " << setw(4) << "Nome: " << f.getGerente().getNome() << endl;
-	cout << setw(12) << "NIF: " << f.getGerente().getNIF() << endl;
-	cout << "Numero de empregados(incluindo gerente): " << f.numEmpregados() << endl << endl;
+	cout << "Nome: " << setw(4) << f->getNome() << endl;
+	cout << "Morada: " << setw(4) << f->getMorada() << endl;
+	cout << "Gerente: " << setw(4) << "Nome: " << f->getGerente()->getNome() << endl;
+	cout << setw(12) << "NIF: " << f->getGerente()->getNIF() << endl;
+	cout << "Numero de empregados(incluindo gerente): " << f->numEmpregados() << endl << endl;
 
 	cout << "1 - Consultar empregado" << endl;
 	cout << "2 - Consultar stock" << endl;
@@ -405,7 +410,7 @@ void Sistema::farmacia_consultarEmpregado()
 {
 	cout << endl << "CONSULTAR EMPREGADO" << endl;
 
-	if(!f.numEmpregados) {
+	if(!f->numEmpregados()) {
 		cout << "Nenhum empregado nesta farmacia. Adicione um primeiro." << endl;
 		farmacia_menuConsultar();
 	}
@@ -415,14 +420,14 @@ void Sistema::farmacia_consultarEmpregado()
 	cout << "Nome: ";
 	cin >> nome;
 
-	vector<Empregado> v1 = f.getEmpregados(nome);
+	vector<Empregado*> v1 = f->getEmpregados(nome);
 
 	if(!v1.size()) {
 		cout << "Nao existe nenhum empregado com esse nome." << endl;
 		farmacia_menuConsultar();
 	}
 	else {
-		vector<Empregado>::iterator it;
+		vector<Empregado*>::iterator it;
 		for(it = v1.begin(); it != v1.end(); it++)
 				cout << (*it) << endl;
 	}
@@ -557,7 +562,7 @@ void Sistema::adicionarFarmacia()
 	cout << "Morada: ";
 	cin >> morada;
 
-	Farmacia f = Farmacia(nome, morada);
+	Farmacia* f = new Farmacia(nome, morada);
 
 	if(cadeia.addFarmacia(f)) cout << "Farmacia adicionada." << endl;
 	else cout << "Ja existe uma farmacia com o nome " << nome << endl;

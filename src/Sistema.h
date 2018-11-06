@@ -15,9 +15,9 @@ public:
 	Sistema();
 private:
 	Cadeia cadeia;
-	Farmacia f;
-	Cliente c;
-	Empregado e;
+	Farmacia* f;
+	Cliente* c;
+	Empregado* e;
 
 	void menu();
 	void sair();

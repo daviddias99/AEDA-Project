@@ -158,6 +158,14 @@ string Timestamp::getTstamp()
 	return result;
 }
 
+ostream & operator<<(ostream & os, const Morada & mor)
+{
+	os << mor.morada_linha1 << endl << mor.morada_linha2 << endl << mor.codigoPostal << " " << mor.cidade << endl;
+
+	return os;
+
+}
+
 //This function returns true if the given year is a Leap Year and false otherwise
 bool isLeap(int year)
 {

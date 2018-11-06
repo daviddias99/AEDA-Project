@@ -1,5 +1,10 @@
 #include "Cadeia.h"
 
+Cadeia::Cadeia()
+{
+	
+}
+
 bool Cadeia::addFarmacia(Farmacia* farmacia)
 {
 	if(procura(farmacias, farmacia) != -1) return false;
@@ -54,26 +59,26 @@ void Cadeia::removeEmpregado(int nif)
 	throw EmpregadoNaoExiste(nif);
 }
 
-Farmacia Cadeia::getFarmacia(string nome) const
+Farmacia* Cadeia::getFarmacia(string nome) const
 {
 	unsigned int i = procura(farmacias, nome);
-	if(i != -1) return *farmacias[i];
+	if(i != -1) return farmacias[i];
 
 	throw FarmaciaNaoExiste(nome);
 }
 
-Cliente Cadeia::getCliente(int nif) const
+Cliente* Cadeia::getCliente(int nif) const
 {
 	int i = procura(clientes, nif);
-	if(i != -1) return *clientes[i];
+	if(i != -1) return clientes[i];
 
 	throw ClienteNaoExiste(nif);
 }
 
-Empregado Cadeia::getEmpregado(int nif) const
+Empregado* Cadeia::getEmpregado(int nif) const
 {
 	int i = procura(empregados, nif);
-	if(i != -1) return *empregados[i];
+	if(i != -1) return empregados[i];
 
 	throw EmpregadoNaoExiste(nif);
 }

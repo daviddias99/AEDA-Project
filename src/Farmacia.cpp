@@ -40,8 +40,8 @@ void Farmacia::remEmpregado(int nif)
 		if(empregados[i]->getCargo() == "gerente") 
 			this->setGerente(NULL);
 		Empregado * temp = empregados.at(i);
-		delete temp;
 		empregados.erase(empregados.begin() + i);
+		delete temp;
 		return;
 	}
 	throw EmpregadoNaoExiste(nif);
@@ -69,7 +69,9 @@ void Farmacia::remProduto(int codigo)
 	map<Produto *, int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		if( (*it->first).getCodigo() == codigo) {
+			Produto* prod = it->first;
 			stock.erase(it);
+			delete prod;
 			return;
 		}
 	}
@@ -102,13 +104,13 @@ Empregado* Farmacia::getGerente() const
 	return gerente;
 }
 
-vector<Empregado> Farmacia::getEmpregados(string nome) const
+vector<Empregado*> Farmacia::getEmpregados(string nome) const
 {
-	vector<Empregado> v1;
+	vector<Empregado*> v1;
 	vector<Empregado*>::const_iterator it;
 
 	for(it = empregados.begin(); it != empregados.end(); it++) {
-		if( (*it)->getNome() == nome) v1.push_back(**it);
+		if( (*it)->getNome() == nome) v1.push_back(*it);
 	}
 
 	return v1;
