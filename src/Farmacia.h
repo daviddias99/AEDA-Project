@@ -26,7 +26,7 @@ public:
 	string getNome() const;
 	Morada getMorada() const;
 	Empregado* getGerente() const;
-	vector<Empregado> getEmpregados(string nome) const;
+	vector<Empregado*> getEmpregados(string nome) const;
 	Produto* getProduto(int codigo) const;
 	unsigned int getTotalProdutos() const;
 	unsigned int tamanhoStock() const;
