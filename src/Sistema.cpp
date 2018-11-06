@@ -429,7 +429,7 @@ void Sistema::farmacia_consultarEmpregado()
 	else {
 		vector<Empregado*>::iterator it;
 		for(it = v1.begin(); it != v1.end(); it++)
-				cout << (*it) << endl;
+				cout << **it << endl;
 	}
 	farmacia_menuConsultar();
 }
@@ -456,7 +456,7 @@ void Sistema::farmacia_consultarStock()
 		farmacia_consultarProduto();
 		break;
 	case '2':
-		f.consultarQuantidades();
+		farmacia_consultarQuantidades();
 		break;
 	case '3':
 		farmacia_menuConsultar();
@@ -481,7 +481,7 @@ void Sistema::farmacia_consultarProduto()
 
 	Produto * p1;
 	try {
-		p1 = f.getProduto(codigo);
+		p1 = f->getProduto(codigo);
 	} catch(ProdutoNaoExiste &p) {
 		cout << "O produto com o codigo " << p.getCodigo() << " nao existe." << endl;
 		farmacia_consultarStock();
@@ -544,7 +544,7 @@ void Sistema::farmacia_adicionarProduto()
 	cin >> quantidade;
 
 	Produto* p1 = new Produto(codigo, nome, descricao, preco);
-	f.addProduto(p1, quantidade);
+	f->addProduto(p1, quantidade);
 
 	cout << "Produto adicionado" << endl;
 	farmacia_menuAdicionar();
@@ -600,7 +600,7 @@ void Sistema::gerirCliente()
 	cin >> nif;
 
 	try {
-		Cliente c = cadeia.getCliente(nif);
+		Cliente* c = cadeia.getCliente(nif);
 		//c.gerir();
 	} catch (ClienteNaoExiste &c1) {
 		cout << "O cliente com o nif " << c1.getNIF() << " nao existe." << endl;
@@ -612,12 +612,12 @@ void Sistema::adicionarCliente()
 {
 	cout << endl << "ADICIONAR CLIENTE" << endl;
 
-	Cliente c;
+	Cliente* c;
 
 	cin >> c;
 
 	if(cadeia.addCliente(c)) cout << "Cliente adicionado." << endl;
-	else cout << "O cliente " << c.getNome() << " com o nif " << c.getNIF() << " ja existe." << endl;
+	else cout << "O cliente " << c->getNome() << " com o nif " << c->getNIF() << " ja existe." << endl;
 
 	gerirClientes();
 }
@@ -651,7 +651,7 @@ void Sistema::gerirEmpregado()
 	cin >> nif;
 
 	try {
-		Empregado e = cadeia.getEmpregado(nif);
+		Empregado* e = this->cadeia.getEmpregado(nif);
 		//e.gerir();
 	} catch (EmpregadoNaoExiste &e1) {
 		cout << "O empregado com o nif " << e1.getNIF() << " nao existe." << endl;
@@ -664,12 +664,12 @@ void Sistema::adicionarEmpregado()
 {
 	cout << endl << "ADICIONAR EMPREGADO" << endl;
 
-	Empregado e;
+	Empregado* e;
 
 	cin >> e;
 
 	if(cadeia.addEmpregado(e)) cout << "Empregado adicionado." << endl;
-	else cout << "O empregado " << e.getNome() << " com o nif " << e.getNIF << " ja existe." << endl;
+	else cout << "O empregado " << e->getNome() << " com o nif " << e->getNIF << " ja existe." << endl;
 
 	gerirEmpregados();
 }
