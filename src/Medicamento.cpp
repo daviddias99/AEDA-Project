@@ -1,6 +1,6 @@
 #include "Medicamento.h"
 
-Medicamento::Medicamento(long int cod, string n, string desc, float pr, bool vendSemRec, bool pdSerRec, float descRec): Produto(cod, n, desc, pr), VendidoSemRec(vendSemRec), podeSerRec(pdSerRec), descComReceita(descRec) {
+Medicamento::Medicamento(long int cod, string n, string desc, float pr, bool vendSemRec, bool pdSerRec, float descRec): Produto(cod, n, desc, pr), vendidoSemRec(vendSemRec), podeSerRec(pdSerRec), descComReceita(descRec) {
 }
 
 

@@ -11,7 +11,7 @@ using namespace std;
 class Pessoa {
 public:
 	
-	//NIF- 9 NCC- 8 NSS- 11 NUS- 9
+	//NIF- 9 
 	Pessoa(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada());
 
 	string getNome() const;

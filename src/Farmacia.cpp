@@ -27,6 +27,7 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 		empregados.push_back(empregado);
 		return true; */
 		empregados.push_back(empregado);
+		return true;
 	}
 	else return false;
 }
@@ -125,7 +126,7 @@ Produto* Farmacia::getProduto(int codigo) const
 
 unsigned int Farmacia::getTotalProdutos() const
 {
-	int soma;
+	int soma = 0;
 	map<Produto*, int>::const_iterator it;
 	for (it = stock.begin(); it != stock.end(); it++) {
 		soma += it->second;

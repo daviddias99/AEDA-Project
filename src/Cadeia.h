@@ -15,9 +15,9 @@ class Cadeia{
 public:
 	Cadeia();
 	virtual ~Cadeia();
-	bool addFarmacia(Farmacia Farmacia);
-	bool addCliente(Cliente cliente);
-	bool addEmpregado(Empregado empregado);
+	bool addFarmacia(Farmacia* Farmacia);
+	bool addCliente(Cliente* cliente);
+	bool addEmpregado(Empregado* empregado);
 	void removeFarmacia(string nome);
 	void removeCliente(int clienteNIF);
 	void removeEmpregado(int empregadoNIF);
@@ -29,9 +29,9 @@ public:
 	unsigned int getNumClientes() const;
 	void guardarDados();
 private:
-	vector< Farmacia > farmacias; //Ordenadas por nome
-	vector< Cliente > clientes;
-	vector< Empregado > empregados; //Ordenados por nif
+	vector< Farmacia* > farmacias; //Ordenadas por nome
+	vector< Cliente* > clientes;
+	vector< Empregado* > empregados; //Ordenados por nif
 };
 
 
