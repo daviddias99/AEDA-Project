@@ -1,6 +1,6 @@
 #include "Cadeia.h"
 
-bool Cadeia::addFarmacia(Farmacia farmacia)
+bool Cadeia::addFarmacia(Farmacia* farmacia)
 {
 	if(procura(farmacias, farmacia) != -1) return false;
 
@@ -10,7 +10,7 @@ bool Cadeia::addFarmacia(Farmacia farmacia)
 	return true;
 }
 
-bool Cadeia::addCliente(Cliente cliente)
+bool Cadeia::addCliente(Cliente* cliente)
 {
 	if(procura(clientes, cliente) != -1) return false;
 
@@ -18,7 +18,7 @@ bool Cadeia::addCliente(Cliente cliente)
 	return true;
 }
 
-bool Cadeia::addEmpregado(Empregado empregado)
+bool Cadeia::addEmpregado(Empregado* empregado)
 {
 
 	if(procura(empregados, empregado) != -1) return false;
@@ -57,7 +57,7 @@ void Cadeia::removeEmpregado(int nif)
 Farmacia Cadeia::getFarmacia(string nome) const
 {
 	unsigned int i = procura(farmacias, nome);
-	if(i != -1) return farmacias[i];
+	if(i != -1) return *farmacias[i];
 
 	throw FarmaciaNaoExiste(nome);
 }
@@ -65,7 +65,7 @@ Farmacia Cadeia::getFarmacia(string nome) const
 Cliente Cadeia::getCliente(int nif) const
 {
 	int i = procura(clientes, nif);
-	if(i != -1) return clientes[i];
+	if(i != -1) return *clientes[i];
 
 	throw ClienteNaoExiste(nif);
 }
@@ -73,7 +73,7 @@ Cliente Cadeia::getCliente(int nif) const
 Empregado Cadeia::getEmpregado(int nif) const
 {
 	int i = procura(empregados, nif);
-	if(i != -1) return empregados[i];
+	if(i != -1) return *empregados[i];
 
 	throw EmpregadoNaoExiste(nif);
 }
