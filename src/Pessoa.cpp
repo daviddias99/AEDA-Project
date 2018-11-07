@@ -132,6 +132,15 @@ bool Cliente::verHistorico() {
 }
 
 
+ostream & operator<<(ostream & os, const Empregado & emp)
+{
+	os << "COUT DE UM EMPREGADO- WIP" << endl;
+
+	return os;
+}
+
+
+
 bool Pessoa_SortFunc_Idade_Crescente(Pessoa& p1, Pessoa& p2) {
 
 	if (p1.getIdade() < p2.getIdade())
@@ -490,3 +499,4 @@ bool Cliente_SortFunc_numCompras_Decrescente(Cliente& p1, Cliente& p2) {
 	else
 		return false;
 }
+

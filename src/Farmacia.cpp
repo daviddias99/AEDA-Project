@@ -19,7 +19,7 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 
 bool Farmacia::addEmpregado(Empregado* empregado)
 {
-	int i = procura(empregados, empregado);
+	int i = procura2(empregados, empregado);
 
 	if (i != -1) {
 		/*if(empregado->getCargo() == "gerente")
@@ -35,7 +35,7 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 
 void Farmacia::remEmpregado(int nif)
 {
-	int i = procura(empregados, nif);
+	int i = procura2(empregados, nif);
 	if( i != -1) {
 		if(empregados[i]->getCargo() == "gerente") 
 			this->setGerente(NULL);

@@ -16,7 +16,7 @@ using namespace std;
 class Farmacia {
 public:
 	Farmacia(string nome, Morada Morada);
-	virtual ~Farmacia();
+	//virtual ~Farmacia();
 	void addProduto(Produto *produto, int quantidade);
 	bool addEmpregado(Empregado* empregado);
 	void remProduto(int codigo);

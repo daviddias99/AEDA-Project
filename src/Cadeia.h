@@ -27,7 +27,7 @@ public:
 	unsigned int getNumFarmacias() const;
 	unsigned int getNumEmpregados() const;
 	unsigned int getNumClientes() const;
-	void guardarDados();
+	//void guardarDados();
 private:
 	vector< Farmacia* > farmacias; //Ordenadas por nome
 	vector< Cliente* > clientes;

@@ -35,4 +35,8 @@ bool Produto::operator==(const Produto &prod) {
 	return codigo == prod.codigo;
 }
 
-
+ostream & operator<<(ostream & os, const Produto & prod)
+{
+	os << "COUT DE UM PRODUTO- WIP" << endl;
+	return os;
+}

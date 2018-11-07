@@ -93,7 +93,7 @@ public:
 bool isLeap(int year);
 
 int daysInMonth(int month, int year);
-
+/*
 template< class T>
 int procura(const vector<T> &v, T x);
 
@@ -111,6 +111,17 @@ int procura(const vector <T> &v, int nif);
 
 template < class T>
 int procura(const vector <T*> &v, int nif);
+*/
+
+/*template< class T>
+int procura2(vector<T> &v, T x);
+
+template< class T>
+int procura2(const  vector <T> &v, string nome);
+
+template < class T>
+int procura2( const vector <T> &v, int nif);*/
+
 
 
 // ----------Exceções----------
@@ -153,3 +164,5 @@ class TimeInvalido {
 };
 
 #endif /* SRC_UTIL_H_ */
+
+

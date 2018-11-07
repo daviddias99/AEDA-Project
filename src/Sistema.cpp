@@ -185,7 +185,7 @@ void Sistema::sair()
 		cin >> opcao;
 
 		if(opcao == "sim") {
-			cadeia.guardarDados();
+			//cadeia.guardarDados();
 			exit(0);
 		}
 		else if(opcao == "nao")
@@ -301,13 +301,13 @@ void Sistema::farmacia_adicionarEmpregado()
 	//Morada morada;
 
 	cout << "Nome: ";
-	getline(cin, nome) >> nome;
+	getline(cin, nome);
 	cout << "NIF: ";
 	cin >> NIF;
 	cout << "Data de Nascimento: ";
-	cin >> dnStr;
+	getline(cin, dnStr);
 	cout << "Morada: ";
-	cin >> moradaStr;
+	getline(cin, moradaStr);
 	cout << "Salario: ";
 	cin >> salario;
 	cout << "Cargo: ";
@@ -317,7 +317,8 @@ void Sistema::farmacia_adicionarEmpregado()
 
 	Data dataNascimento = Data(dnStr);
 
-	Empregado newEmp = Empregado(nome, NIF, dataNascimento, Morada(), salario, this->f->getNome(), cargo);
+	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, Morada(), salario, this->f->getNome(), cargo);
+	this->f->addEmpregado(newEmp);
 }
 
 void Sistema::farmacia_removerProduto()
@@ -456,7 +457,7 @@ void Sistema::farmacia_consultarStock()
 		farmacia_consultarProduto();
 		break;
 	case '2':
-		farmacia_consultarQuantidades();
+		//farmacia_consultarQuantidades();
 		break;
 	case '3':
 		farmacia_menuConsultar();
@@ -479,7 +480,7 @@ void Sistema::farmacia_consultarProduto()
 	cout << "Codigo: ";
 	cin >> codigo;
 
-	Produto * p1;
+	Produto * p1 = NULL;
 	try {
 		p1 = f->getProduto(codigo);
 	} catch(ProdutoNaoExiste &p) {
@@ -487,7 +488,7 @@ void Sistema::farmacia_consultarProduto()
 		farmacia_consultarStock();
 	}
 
-	cout << p1;
+	cout << *p1;
 	farmacia_consultarStock();
 }
 
@@ -537,7 +538,7 @@ void Sistema::farmacia_adicionarProduto()
 	cout << "Nome: ";
 	getline(cin, nome);
 	cout << "Descricao: ";
-	getline(cin, nome);
+	getline(cin, descricao);
 	cout << "Preco: ";
 	cin >> preco;
 	cout << "Quantidade a adicionar: ";
@@ -554,14 +555,14 @@ void Sistema::adicionarFarmacia()
 {
 	cout << endl << "ADICIONAR FARMACIA" << endl;
 
-	string nome;
-	Morada morada;
+	string nome, moradaStr;
 
+	cin.ignore(1);
 	cout << "Nome: ";
-	cin >> nome;
+	getline(cin, nome);
 	cout << "Morada: ";
-	cin >> morada;
-
+	getline(cin, moradaStr);
+	Morada morada = Morada(moradaStr);
 	Farmacia* f = new Farmacia(nome, morada);
 
 	if(cadeia.addFarmacia(f)) cout << "Farmacia adicionada." << endl;
@@ -612,9 +613,26 @@ void Sistema::adicionarCliente()
 {
 	cout << endl << "ADICIONAR CLIENTE" << endl;
 
-	Cliente* c;
+	string nome;
 
-	cin >> c;
+	string dnStr, moradaStr;
+	unsigned int NIF;
+	//Morada morada;
+
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "NIF: ";
+	cin >> NIF;
+	cout << "Data de Nascimento: ";
+	cin >> dnStr;
+	cout << "Morada: ";
+	getline(cin, moradaStr);
+
+
+	Data dataNascimento = Data(dnStr);
+
+	Cliente* newCli= new Cliente(nome, NIF, dataNascimento, Morada());
+
 
 	if(cadeia.addCliente(c)) cout << "Cliente adicionado." << endl;
 	else cout << "O cliente " << c->getNome() << " com o nif " << c->getNIF() << " ja existe." << endl;
@@ -664,11 +682,37 @@ void Sistema::adicionarEmpregado()
 {
 	cout << endl << "ADICIONAR EMPREGADO" << endl;
 
-	Empregado* e;
+	cout << endl << "ADICIONAR EMPREGADO" << endl;
 
-	cin >> e;
+	string nome, cargo;;
 
-	if(cadeia.addEmpregado(e)) cout << "Empregado adicionado." << endl;
+	string dnStr, moradaStr;
+	unsigned int NIF, salario;
+	//Morada morada;
+
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "NIF: ";
+	cin >> NIF;
+	cout << "Data de Nascimento: ";
+	cin >> dnStr;
+	cout << "Morada: ";
+	getline(cin, moradaStr);
+	cout << "Salario: ";
+	cin >> salario;
+	cout << "Cargo: ";
+	cin >> cargo;
+
+
+
+	Data dataNascimento = Data(dnStr);
+
+	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, Morada(), salario, this->f->getNome(), cargo);
+	this->f->addEmpregado(newEmp);
+
+
+
+	if(cadeia.addEmpregado(newEmp)) cout << "Empregado adicionado." << endl;
 	else cout << "O empregado " << e->getNome() << " com o nif " << e->getNIF() << " ja existe." << endl;
 
 	gerirEmpregados();

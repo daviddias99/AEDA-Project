@@ -202,6 +202,9 @@ int daysInMonth(int month, int year)
 	return numDays;
 }
 
+
+
+/*
 template< class T>
 int procura(const vector<T> &v, T x)
 {
@@ -304,7 +307,7 @@ int procura(const vector <T*> &v, int nif)
 	}
 	return -1;
 }
-
+*/
 
 /*CartaoCidadao::CartaoCidadao(string n, Data dNasc, uint nif, uint ncc, uint nss, uint nus, char sex, float altura, string nacionalidade) :nome(n), NIF(nif), NCC(ncc), NSS(nss), NUS(nus) {
 

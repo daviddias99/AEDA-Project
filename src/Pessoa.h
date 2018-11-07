@@ -45,6 +45,11 @@ public:
 	bool setFarmacia(string novaFarmacia);
 	bool setCargo(string novoCargo);
 
+	friend ostream& operator<< (ostream& os, const Empregado& mor);
+	friend bool operator<(const  Empregado& e1, const Empregado & e2)
+	{
+		return false;
+	}
 
 private:
 	uint  salario;
@@ -62,6 +67,10 @@ public:
 	uint getNumCompras();
 	bool verHistorico();
 
+	friend bool operator<(const Cliente & e1, const Cliente & e2)
+	{
+		return false;
+	}
 
 private:
 	vector<Venda*> historicoCompras;
@@ -95,5 +104,58 @@ bool Cliente_SortFunc_numCompras_Crescente(Cliente& p1, Cliente& p2);
 bool Cliente_SortFunc_numCompras_Decrescente(Cliente& p1, Cliente& p2);
 
 
+
+
+
+template<class T>
+int procura2(vector<T>& v, T x)
+{
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (*v[middle] < *x)
+			left = middle + 1;
+		else if (*x < *v[middle])
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
+
+template<class X>
+int procura2(const vector<X>& v, string nome)
+{
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (v[middle]->getNome() < nome)
+			left = middle + 1;
+		else if (nome < v[middle]->getNome())
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
+
+template<class X>
+int procura2(const vector<X>& v, int nif)
+{
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (v[middle]->getNIF() < nif)
+			left = middle + 1;
+		else if (nif < v[middle]->getNIF())
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
 
 #endif

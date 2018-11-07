@@ -5,9 +5,20 @@ Cadeia::Cadeia()
 	
 }
 
+Cadeia::~Cadeia()
+{
+	for (size_t i = 0; i < this->clientes.size(); i++)
+		delete this->clientes.at(i);
+	for (size_t i = 0; i < this->farmacias.size(); i++)
+		delete this->farmacias.at(i);
+	for (size_t i = 0; i < this->empregados.size(); i++)
+		delete this->empregados.at(i);
+
+}
+
 bool Cadeia::addFarmacia(Farmacia* farmacia)
 {
-	if(procura(farmacias, farmacia) != -1) return false;
+	if(procura2(farmacias, farmacia) != -1) return false;
 
 	farmacias.push_back(farmacia);
 
@@ -17,7 +28,7 @@ bool Cadeia::addFarmacia(Farmacia* farmacia)
 
 bool Cadeia::addCliente(Cliente* cliente)
 {
-	if(procura(clientes, cliente) != -1) return false;
+	if(procura2(clientes, cliente) != -1) return false;
 
 	clientes.push_back(cliente);
 	return true;
@@ -26,7 +37,7 @@ bool Cadeia::addCliente(Cliente* cliente)
 bool Cadeia::addEmpregado(Empregado* empregado)
 {
 
-	if(procura(empregados, empregado) != -1) return false;
+	if(procura2(empregados, empregado) != -1) return false;
 
 	empregados.push_back(empregado);
 	return true;
@@ -34,7 +45,7 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 
 void Cadeia::removeFarmacia(string nome)
 {
-	int i = procura(farmacias, nome);
+	int i = procura2(farmacias, nome);
 	if(i != -1)
 		farmacias.erase(farmacias.begin() + i);
 
@@ -43,7 +54,7 @@ void Cadeia::removeFarmacia(string nome)
 
 void Cadeia::removeCliente(int nif)
 {
-	int i = procura(clientes, nif);
+	int i = procura2(clientes, nif);
 	if(i != -1)
 		clientes.erase(clientes.begin() +i);
 
@@ -52,7 +63,7 @@ void Cadeia::removeCliente(int nif)
 
 void Cadeia::removeEmpregado(int nif)
 {
-	int i = procura(empregados, nif);
+	int i = procura2(empregados, nif);
 	if(i != -1)
 		empregados.erase(empregados.begin()+i);
 
@@ -61,7 +72,7 @@ void Cadeia::removeEmpregado(int nif)
 
 Farmacia* Cadeia::getFarmacia(string nome) const
 {
-	unsigned int i = procura(farmacias, nome);
+	unsigned int i = procura2(farmacias, nome);
 	if(i != -1) return farmacias[i];
 
 	throw FarmaciaNaoExiste(nome);
@@ -69,7 +80,7 @@ Farmacia* Cadeia::getFarmacia(string nome) const
 
 Cliente* Cadeia::getCliente(int nif) const
 {
-	int i = procura(clientes, nif);
+	int i = procura2(clientes, nif);
 	if(i != -1) return clientes[i];
 
 	throw ClienteNaoExiste(nif);
@@ -77,7 +88,7 @@ Cliente* Cadeia::getCliente(int nif) const
 
 Empregado* Cadeia::getEmpregado(int nif) const
 {
-	int i = procura(empregados, nif);
+	int i = procura2(empregados, nif);
 	if(i != -1) return empregados[i];
 
 	throw EmpregadoNaoExiste(nif);
