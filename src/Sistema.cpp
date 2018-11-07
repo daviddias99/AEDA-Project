@@ -18,6 +18,7 @@ void Sistema::menu()
 
 	cout << "Opcao: ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
@@ -48,6 +49,7 @@ void Sistema::menuGerencia()
 
 	cout << "Opcao: ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
@@ -81,6 +83,7 @@ void Sistema::gerirFarmacias()
 
 	cout << "Opcao; ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
@@ -117,6 +120,7 @@ void Sistema::gerirClientes()
 
 	cout << "Opcao; ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
@@ -153,6 +157,7 @@ void Sistema::gerirEmpregados()
 
 	cout << "Opcao; ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
@@ -183,6 +188,7 @@ void Sistema::sair()
 	do {
 		cout << "Deseja guardar os seus dados num ficheiro? (sim/nao) ";
 		cin >> opcao;
+		cin.ignore(MAX_STREAM_SIZE, '\n');
 
 		if(opcao == "sim") {
 			//cadeia.guardarDados();
@@ -209,7 +215,8 @@ void Sistema::gerirFarmacia()
 	unsigned int i;
 
 	cout << "Nome da farmacia: ";
-	cin >> nome;
+	getline(cin, nome);
+	
 
 	try {
 		f = cadeia.getFarmacia(nome);
@@ -236,6 +243,7 @@ void Sistema::farmacia_gerir()
 
 	cout << "Opcao; ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
@@ -270,6 +278,7 @@ void Sistema::farmacia_menuAdicionar()
 
 	cout << "Opcao; ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
@@ -304,21 +313,30 @@ void Sistema::farmacia_adicionarEmpregado()
 	getline(cin, nome);
 	cout << "NIF: ";
 	cin >> NIF;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 	cout << "Data de Nascimento: ";
 	getline(cin, dnStr);
 	cout << "Morada: ";
 	getline(cin, moradaStr);
 	cout << "Salario: ";
 	cin >> salario;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 	cout << "Cargo: ";
-	cin >> cargo;
+	getline(cin,cargo);
 
+	
 
 
 	Data dataNascimento = Data(dnStr);
 
 	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, Morada(), salario, this->f->getNome(), cargo);
 	this->f->addEmpregado(newEmp);
+	if (cargo == "gerente") {
+		this->f->setGerente(newEmp);
+	}
+
+
+	farmacia_menuAdicionar();
 }
 
 void Sistema::farmacia_removerProduto()
@@ -330,8 +348,10 @@ void Sistema::farmacia_removerProduto()
 
 	cout << "Codigo do produto: ";
 	cin >> codigo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 	cout << "Quantidade a remover( '0' para remover a quantidade total): ";
 	cin >> quantidade;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	try {
 		if(quantidade == 0) {
@@ -357,6 +377,7 @@ void Sistema::farmacia_removerEmpregado()
 	int nif;
 	cout << "NIF: ";
 	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	try {
 		f->remEmpregado(nif);
@@ -386,6 +407,7 @@ void Sistema::farmacia_menuConsultar()
 
 	cout << "Opcao: ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 		case '1':
@@ -419,7 +441,7 @@ void Sistema::farmacia_consultarEmpregado()
 	string nome;
 
 	cout << "Nome: ";
-	cin >> nome;
+	getline(cin, nome);
 
 	vector<Empregado*> v1 = f->getEmpregados(nome);
 
@@ -451,6 +473,7 @@ void Sistema::farmacia_consultarStock()
 
 	cout << "Opcao: ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
@@ -479,6 +502,7 @@ void Sistema::farmacia_consultarProduto()
 
 	cout << "Codigo: ";
 	cin >> codigo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	Produto * p1 = NULL;
 	try {
@@ -503,6 +527,7 @@ void Sistema::farmacia_menuRemover()
 
 	cout << "Opcao; ";
 	cin >> opcao;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
@@ -535,14 +560,17 @@ void Sistema::farmacia_adicionarProduto()
 
 	cout << "Codigo: ";
 	cin >> codigo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 	cout << "Nome: ";
 	getline(cin, nome);
 	cout << "Descricao: ";
 	getline(cin, descricao);
 	cout << "Preco: ";
 	cin >> preco;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 	cout << "Quantidade a adicionar: ";
 	cin >> quantidade;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	Produto* p1 = new Produto(codigo, nome, descricao, preco);
 	f->addProduto(p1, quantidade);
@@ -557,7 +585,6 @@ void Sistema::adicionarFarmacia()
 
 	string nome, moradaStr;
 
-	cin.ignore(1);
 	cout << "Nome: ";
 	getline(cin, nome);
 	cout << "Morada: ";
@@ -578,7 +605,7 @@ void Sistema::removerFarmacia()
 	string nome;
 
 	cout << "Nome: ";
-	cin >> nome;
+	getline(cin, nome);
 
 	try {
 		cadeia.removeFarmacia(nome);
@@ -599,6 +626,7 @@ void Sistema::gerirCliente()
 
 	cout << "NIF: ";
 	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	try {
 		Cliente* c = cadeia.getCliente(nif);
@@ -623,8 +651,9 @@ void Sistema::adicionarCliente()
 	getline(cin, nome);
 	cout << "NIF: ";
 	cin >> NIF;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 	cout << "Data de Nascimento: ";
-	cin >> dnStr;
+	getline(cin, dnStr);
 	cout << "Morada: ";
 	getline(cin, moradaStr);
 
@@ -648,6 +677,7 @@ void Sistema::removerCliente()
 
 	cout << "NIF: ";
 	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	try {
 		cadeia.removeCliente(nif);
@@ -667,6 +697,7 @@ void Sistema::gerirEmpregado()
 
 	cout << "NIF: ";
 	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	try {
 		Empregado* e = this->cadeia.getEmpregado(nif);
@@ -694,21 +725,24 @@ void Sistema::adicionarEmpregado()
 	getline(cin, nome);
 	cout << "NIF: ";
 	cin >> NIF;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 	cout << "Data de Nascimento: ";
-	cin >> dnStr;
+	getline(cin, dnStr);
 	cout << "Morada: ";
 	getline(cin, moradaStr);
 	cout << "Salario: ";
 	cin >> salario;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 	cout << "Cargo: ";
 	cin >> cargo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 
 
 	Data dataNascimento = Data(dnStr);
 
 	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, Morada(), salario, this->f->getNome(), cargo);
-	this->f->addEmpregado(newEmp);
+
 
 
 
@@ -726,6 +760,7 @@ void Sistema::removerEmpregado()
 
 	cout << "NIF: ";
 	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	try {
 		cadeia.removeEmpregado(nif);

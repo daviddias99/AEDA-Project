@@ -18,6 +18,7 @@ private:
 	Farmacia* f;
 	Cliente* c;
 	Empregado* e;
+	const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 
 	void menu();
 	void sair();
