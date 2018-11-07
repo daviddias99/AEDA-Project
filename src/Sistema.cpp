@@ -438,8 +438,8 @@ void Sistema::farmacia_consultarStock()
 {
 	cout << endl << "CONSULTAR STOCK" << endl;
 
-	cout << "Numero de produtos diferentes: " << f.tamanhoStock() << endl;
-	cout << "Numero total de produtos: " << f.getTotalProdutos() << endl << endl;
+	cout << "Numero de produtos diferentes: " << f->tamanhoStock() << endl;
+	cout << "Numero total de produtos: " << f->getTotalProdutos() << endl << endl;
 
 	cout << "1 - Consultar Produto" << endl;
 	cout << "2 - Consultar quantidades de todos os produtos";
@@ -669,7 +669,7 @@ void Sistema::adicionarEmpregado()
 	cin >> e;
 
 	if(cadeia.addEmpregado(e)) cout << "Empregado adicionado." << endl;
-	else cout << "O empregado " << e->getNome() << " com o nif " << e->getNIF << " ja existe." << endl;
+	else cout << "O empregado " << e->getNome() << " com o nif " << e->getNIF() << " ja existe." << endl;
 
 	gerirEmpregados();
 }
