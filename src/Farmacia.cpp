@@ -165,3 +165,63 @@ unsigned int Farmacia::tamanhoStock() const
 {
 	return stock.size();
 }
+
+bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2)
+{
+	if(f1.getNome() < f2.getNome())
+		return true;
+	else if(f1.getNome() == f2.getNome())
+	{
+		if(f1.tamanhoStock() < f2.tamanhoStock())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool farmacia_SortFunc_Nome_Decrescente(Farmacia &f1, Farmacia &f2)
+{
+	if(f1.getNome() > f2.getNome())
+		return true;
+	else if(f1.getNome() == f2.getNome())
+	{
+		if(f1.tamanhoStock() < f2.tamanhoStock())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia &f1, Farmacia &f2)
+{
+	if(f1.tamanhoStock() < f2.tamanhoStock())
+		return true;
+	else if(f1.tamanhoStock() == f2.tamanhoStock())
+	{
+		if(f1.getNome() < f2.getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia &f1, Farmacia &f2)
+{
+	if(f1.tamanhoStock() > f2.tamanhoStock())
+		return true;
+	else if(f1.tamanhoStock() == f2.tamanhoStock())
+	{
+		if(f1.getNome() < f2.getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}

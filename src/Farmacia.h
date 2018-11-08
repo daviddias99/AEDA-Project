@@ -33,7 +33,7 @@ public:
 	unsigned int numEmpregados() const;
 
 	bool operator == (const Farmacia & ph1);
-	bool operator < (const Farmacia & ph); //Ordenado alfabeticamente
+	friend ostream& operator<< (ostream& os, const Farmacia& f1);
 
 	void consultarQuantidades();
 private:
@@ -43,5 +43,10 @@ private:
 	vector< Empregado* > empregados;
 	map< Produto *, int> stock;
 };
+
+bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2);
+bool farmacia_SortFunc_Nome_Decrescente(Farmacia &f1, Farmacia &f2);
+bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia &f1, Farmacia &f2);
+bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia &f1, Farmacia &f2);
 
 #endif
