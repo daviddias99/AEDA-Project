@@ -1,6 +1,6 @@
 #include "Farmacia.h"
 
-Farmacia::Farmacia(string nome, Morada morada) :nome(nome), morada(morada) {}
+Farmacia::Farmacia(string nome, Morada* morada) :nome(nome), morada(morada) {}
 
 Farmacia:: ~Farmacia()
 {
@@ -108,7 +108,7 @@ string Farmacia::getNome() const
 	return nome;
 }
 
-Morada Farmacia::getMorada() const
+Morada* Farmacia::getMorada() const
 {
 	return morada;
 }
@@ -150,29 +150,60 @@ unsigned int Farmacia::getTotalProdutos() const
 	return soma;
 }
 
-bool Farmacia::operator == (const Farmacia & ph1)
+bool Farmacia::operator == (const Farmacia & ph1) const
 {
 	if(this->nome == ph1.getNome()) return true;
 	else return false;
 }
 
-bool Farmacia::operator<(const Farmacia & ph)
+bool Farmacia::operator < (const Farmacia & ph1) const
 {
-	return vendas.size() < ph.vendas.size();
+	if(this->nome < ph1.getNome())
+		return true;
+	else if(this->nome == ph1.getNome())
+	{
+		if(this->tamanhoStock() < ph1.tamanhoStock())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
 }
 
-void Farmacia::consultarQuantidades()
+void Farmacia::consultarQuantidades() const
 {
-	map<Produto*, unsigned int>::iterator it;
+	map<Produto*, unsigned int>::const_iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second;
 	}
 }
 
-ostream& operator<< (ostream& os, const Farmacia& f1)
+void Farmacia::mostrarVendas() const
+{
+	for(size_t i = 0; i < vendas.size(); i++)
+		cout << *(vendas.at(i)) << endl;
+}
+
+ostream& escreve (ostream& os, const Farmacia& f1, int modo) //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
 {
 	os << "Nome: " << f1.getNome() << endl;
-	//...
+	os << "Morada: " << f1.getMorada() << endl;
+
+	if(modo == 0) {
+		os << "Numero de Empregados: " << f1.numEmpregados() << endl;
+		os << "Tamanho Stock: " << f1.tamanhoStock() << endl;
+		os << "Numero de Vendas: " << f1.numVendas() << endl;
+	}
+	else if(modo == 1) {
+		for(size_t i = 0; i < f1.empregados.size(); i++)
+			os << f1.empregados.at(i) << endl;
+		map<Produto*, int>::iterator it;
+		for(it = f1.stock.begin(); it != f1.stock.end(); it++)
+			os << (*it->first) << endl << it->second;
+		for (size_t i = 0; i < f1.vendas.size(); i++)
+			os << f1.vendas.at(i) << endl;
+	}
 
 	return os;
 }
@@ -293,6 +324,21 @@ bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2)
 	else if (f1->numVendas() == f2->numVendas())
 	{
 		if (f1->getNome() > f2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia &f1, Farmacia &f2)
+{
+	if(f1.numVendas() < f2.numVendas())
+		return true;
+	else if(f1.numVendas() == f2.numVendas())
+	{
+		if(f1.getNome() < f2.getNome())
 			return true;
 		else
 			return false;

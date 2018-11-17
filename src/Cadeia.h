@@ -21,15 +21,25 @@ public:
 	bool addFarmacia(Farmacia* Farmacia);
 	bool addCliente(Cliente* cliente);
 	bool addEmpregado(Empregado* empregado);
+
 	void removeFarmacia(string nome);
 	void removeCliente(int clienteNIF);
 	void removeEmpregado(int empregadoNIF);
+
 	Farmacia* getFarmacia(string nome) const;
 	Cliente* getCliente(int nif) const;
 	Empregado* getEmpregado(int nif) const;
+
 	unsigned int getNumFarmacias() const;
 	unsigned int getNumEmpregados() const;
 	unsigned int getNumClientes() const;
+
+	void sortFarmacias(char modo);
+	void sortClientes(char modo);
+	void sortEmpregados(char modo);
+
+	void mostrarFarmacias() const;
+
 	void guardarDados();
 	void carregarDados();
 private:
@@ -43,6 +53,5 @@ private:
 
 	//const string nome;
 };
-
 
 #endif /* SRC_CADEIA_H_ */
