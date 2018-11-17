@@ -115,6 +115,21 @@ unsigned int Cadeia::getNumClientes() const
 	return clientes.size();
 }
 
+/*
+void Cadeia::carregarDados() {
+
+	ifstream fichFarmacias;
+	fichFarmacias.open("farmacias.txt");
+
+	string linha;
+	getline(fichFarmacias, linha);
+
+
+
+
+}
+*/
+
 void Cadeia::guardarDados()
 {
 	string nomeFichFarmacias = "farmacias.txt";

@@ -212,7 +212,7 @@ void Sistema::gerirFarmacia()
 	}
 
 	string nome;
-	unsigned int i;
+	//unsigned int i;
 
 	cout << "Nome da farmacia: ";
 	getline(cin, nome);
@@ -379,12 +379,14 @@ void Sistema::farmacia_removerEmpregado()
 	cin >> nif;
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
+	/*
 	try {
 		f->remEmpregado(nif);
 		cout << "Empregado removido." << endl;
 	} catch (EmpregadoNaoExiste &e) {
 		cout << "Nao existe nenhum empregado com o nif " << nif << ".\n";
 	}
+	*/
 	farmacia_menuRemover();
 }
 

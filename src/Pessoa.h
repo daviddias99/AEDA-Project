@@ -82,32 +82,32 @@ private:
 	vector<Venda*> historicoCompras;
 };
 
-bool Pessoa_SortFunc_Idade_Crescente(Pessoa& p1, Pessoa& p2);
-bool Pessoa_SortFunc_Idade_Decrescente(Pessoa& p1, Pessoa& p2);
-bool Pessoa_SortFunc_Nome_Crescente(Pessoa& p1, Pessoa& p2);
-bool Pessoa_SortFunc_Nome_Decrescente(Pessoa& p1, Pessoa& p2);
-bool Pessoa_SortFunc_NIF_Crescente(Pessoa& p1, Pessoa& p2);
-bool Pessoa_SortFunc_NIF_Decrescente(Pessoa& p1, Pessoa& p2);
+bool Pessoa_SortFunc_Idade_Crescente(Pessoa* p1, Pessoa* p2);
+bool Pessoa_SortFunc_Idade_Decrescente(Pessoa* p1, Pessoa* p2);
+bool Pessoa_SortFunc_Nome_Crescente(Pessoa* p1, Pessoa* p2);
+bool Pessoa_SortFunc_Nome_Decrescente(Pessoa* p1, Pessoa* p2);
+bool Pessoa_SortFunc_NIF_Crescente(Pessoa* p1, Pessoa* p2);
+bool Pessoa_SortFunc_NIF_Decrescente(Pessoa* p1, Pessoa* p2);
 
-bool Empregado_SortFunc_Idade_Crescente(Empregado& p1, Empregado& p2);
-bool Empregado_SortFunc_Idade_Decrescente(Empregado& p1, Empregado& p2);
-bool Empregado_SortFunc_Nome_Crescente(Empregado& p1, Empregado& p2);
-bool Empregado_SortFunc_Nome_Decrescente(Empregado& p1, Empregado& p2);
-bool Empregado_SortFunc_NIF_Crescente(Empregado& p1, Empregado& p2);
-bool Empregado_SortFunc_NIF_Decrescente(Empregado& p1, Empregado& p2);
-bool Empregado_SortFunc_Salario_Crescente(Empregado& p1, Empregado& p2);
-bool Empregado_SortFunc_Salario_Decrescente(Empregado& p1, Empregado& p2);
-bool Empregado_SortFunc_numVendas_Crescente(Empregado& p1, Empregado& p2);
-bool Empregado_SortFunc_numVendas_Decrescente(Empregado& p1, Empregado& p2);
+bool Empregado_SortFunc_Idade_Crescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_Idade_Decrescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_Nome_Crescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_Nome_Decrescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_NIF_Crescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_NIF_Decrescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_Salario_Crescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_Salario_Decrescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_numVendas_Crescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_numVendas_Decrescente(Empregado* p1, Empregado* p2);
 
-bool Cliente_SortFunc_Idade_Crescente(Cliente& p1, Cliente& p2);
-bool Cliente_SortFunc_Idade_Decrescente(Cliente& p1, Cliente& p2);
-bool Cliente_SortFunc_Nome_Crescente(Cliente& p1, Cliente& p2);
-bool Cliente_SortFunc_Nome_Decrescente(Cliente& p1, Cliente& p2);
-bool Cliente_SortFunc_NIF_Crescente(Cliente& p1, Cliente& p2);
-bool Cliente_SortFunc_NIF_Decrescente(Cliente& p1, Cliente& p2);
-bool Cliente_SortFunc_numCompras_Crescente(Cliente& p1, Cliente& p2);
-bool Cliente_SortFunc_numCompras_Decrescente(Cliente& p1, Cliente& p2);
+bool Cliente_SortFunc_Idade_Crescente(Cliente* p1, Cliente* p2);
+bool Cliente_SortFunc_Idade_Decrescente(Cliente* p1, Cliente* p2);
+bool Cliente_SortFunc_Nome_Crescente(Cliente* p1, Cliente* p2);
+bool Cliente_SortFunc_Nome_Decrescente(Cliente* p1, Cliente* p2);
+bool Cliente_SortFunc_NIF_Crescente(Cliente* p1, Cliente* p2);
+bool Cliente_SortFunc_NIF_Decrescente(Cliente* p1, Cliente* p2);
+bool Cliente_SortFunc_numCompras_Crescente(Cliente* p1, Cliente* p2);
+bool Cliente_SortFunc_numCompras_Decrescente(Cliente* p1, Cliente* p2);
 
 
 

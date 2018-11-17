@@ -52,11 +52,12 @@ private:
 	vector <Venda *> vendas;
 };
 
-bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2);
-bool farmacia_SortFunc_Nome_Decrescente(Farmacia &f1, Farmacia &f2);
-bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia &f1, Farmacia &f2);
-bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia &f1, Farmacia &f2);
-bool farmacia_SortFunc_NumVendas_Crescente(Farmacia &f1, Farmacia &f2);
-bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia &f1, Farmacia &f2);
+
+bool farmacia_SortFunc_Nome_Crescente(Farmacia * f1, Farmacia * f2);
+bool farmacia_SortFunc_Nome_Decrescente(Farmacia *f1, Farmacia *f2);
+bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia *f1, Farmacia *f2);
+bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia *f1, Farmacia *f2);
+bool farmacia_SortFunc_NumVendas_Crescente(Farmacia *f1, Farmacia *f2);
+bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2);
 
 #endif

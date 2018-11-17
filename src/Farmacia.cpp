@@ -4,7 +4,7 @@ Farmacia::Farmacia(string nome, Morada morada) :nome(nome), morada(morada) {}
 
 Farmacia:: ~Farmacia()
 {
-	map< Produto *, int>::const_iterator it;
+	map< Produto *, uint>::const_iterator it;
 
 	delete gerente;
 	for (size_t i = 0; i < this->empregados.size(); i++)
@@ -156,6 +156,11 @@ bool Farmacia::operator == (const Farmacia & ph1)
 	else return false;
 }
 
+bool Farmacia::operator<(const Farmacia & ph)
+{
+	return vendas.size() < ph.vendas.size();
+}
+
 void Farmacia::consultarQuantidades()
 {
 	map<Produto*, unsigned int>::iterator it;
@@ -168,6 +173,8 @@ ostream& operator<< (ostream& os, const Farmacia& f1)
 {
 	os << "Nome: " << f1.getNome() << endl;
 	//...
+
+	return os;
 }
 
 unsigned int Farmacia::numEmpregados() const
@@ -185,13 +192,14 @@ unsigned int Farmacia::numVendas() const
 	return vendas.size();
 }
 
-bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2)
+
+bool farmacia_SortFunc_Nome_Crescente(Farmacia * f1, Farmacia * f2)
 {
-	if(f1.getNome() < f2.getNome())
+	if(f1->getNome() < f2->getNome())
 		return true;
-	else if(f1.getNome() == f2.getNome())
+	else if(f1->getNome() == f2->getNome())
 	{
-		if(f1.tamanhoStock() < f2.tamanhoStock())
+		if(f1->tamanhoStock() < f2->tamanhoStock())
 			return true;
 		else
 			return false;
@@ -200,13 +208,13 @@ bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2)
 		return false;
 }
 
-bool farmacia_SortFunc_Nome_Decrescente(Farmacia &f1, Farmacia &f2)
+bool farmacia_SortFunc_Nome_Decrescente(Farmacia *f1, Farmacia *f2)
 {
-	if(f1.getNome() > f2.getNome())
+	if(f1->getNome() > f2->getNome())
 		return true;
-	else if(f1.getNome() == f2.getNome())
+	else if(f1->getNome() == f2->getNome())
 	{
-		if(f1.tamanhoStock() < f2.tamanhoStock())
+		if(f1->tamanhoStock() < f2->tamanhoStock())
 			return true;
 		else
 			return false;
@@ -215,13 +223,13 @@ bool farmacia_SortFunc_Nome_Decrescente(Farmacia &f1, Farmacia &f2)
 		return false;
 }
 
-bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia &f1, Farmacia &f2)
+bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia *f1, Farmacia *f2)
 {
-	if(f1.tamanhoStock() < f2.tamanhoStock())
+	if(f1->tamanhoStock() < f2->tamanhoStock())
 		return true;
-	else if(f1.tamanhoStock() == f2.tamanhoStock())
+	else if(f1->tamanhoStock() == f2->tamanhoStock())
 	{
-		if(f1.getNome() < f2.getNome())
+		if(f1->getNome() < f2->getNome())
 			return true;
 		else
 			return false;
@@ -230,13 +238,13 @@ bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia &f1, Farmacia &f2)
 		return false;
 }
 
-bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia &f1, Farmacia &f2)
+bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia *f1, Farmacia *f2)
 {
-	if(f1.tamanhoStock() > f2.tamanhoStock())
+	if(f1->tamanhoStock() > f2->tamanhoStock())
 		return true;
-	else if(f1.tamanhoStock() == f2.tamanhoStock())
+	else if(f1->tamanhoStock() == f2->tamanhoStock())
 	{
-		if(f1.getNome() < f2.getNome())
+		if(f1->getNome() < f2->getNome())
 			return true;
 		else
 			return false;
@@ -263,13 +271,28 @@ ostream& Farmacia::printSimp(ostream& os) const {
 	return os;
 }
 
-bool farmacia_SortFunc_NumVendas_Crescente(Farmacia &f1, Farmacia &f2)
+bool farmacia_SortFunc_NumVendas_Crescente(Farmacia *f1, Farmacia *f2)
 {
-	if(f1.numVendas() > f2.numVendas())
+	if(f1->numVendas() > f2->numVendas())
 		return true;
-	else if(f1.numVendas() == f2.numVendas())
+	else if(f1->numVendas() == f2->numVendas())
 	{
-		if(f1.getNome() < f2.getNome())
+		if(f1->getNome() < f2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2)
+{
+	if (f1->numVendas() < f2->numVendas())
+		return true;
+	else if (f1->numVendas() == f2->numVendas())
+	{
+		if (f1->getNome() > f2->getNome())
 			return true;
 		else
 			return false;
