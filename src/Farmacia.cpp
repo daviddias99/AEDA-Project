@@ -1,6 +1,6 @@
 #include "Farmacia.h"
 
-Farmacia::Farmacia(string nome, Morada morada) :nome(nome), morada(morada) {}
+Farmacia::Farmacia(string nome, Morada* morada) :nome(nome), morada(morada) {}
 
 Farmacia:: ~Farmacia()
 {
@@ -173,7 +173,7 @@ bool Farmacia::operator < (const Farmacia & ph1) const
 
 void Farmacia::consultarQuantidades() const
 {
-	map<Produto*, unsigned int>::iterator it;
+	map<Produto*, unsigned int>::const_iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second;
 	}
@@ -182,7 +182,7 @@ void Farmacia::consultarQuantidades() const
 void Farmacia::mostrarVendas() const
 {
 	for(size_t i = 0; i < vendas.size(); i++)
-		cout << *vendas.at(i) << endl;
+		cout << *(vendas.at(i)) << endl;
 }
 
 ostream& escreve (ostream& os, const Farmacia& f1, int modo) //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
