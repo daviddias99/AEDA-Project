@@ -3,6 +3,8 @@
 
 #include <string>
 #include <vector>
+#include <fstream>
+#include <sstream>
 #include <algorithm>
 
 #include "Farmacia.h"
@@ -14,6 +16,7 @@ using namespace std;
 class Cadeia{
 public:
 	Cadeia();
+	//Cadeia(string n);
 	virtual ~Cadeia();
 	bool addFarmacia(Farmacia* Farmacia);
 	bool addCliente(Cliente* cliente);
@@ -27,11 +30,13 @@ public:
 	unsigned int getNumFarmacias() const;
 	unsigned int getNumEmpregados() const;
 	unsigned int getNumClientes() const;
-	//void guardarDados();
+	void guardarDados();
 private:
 	vector< Farmacia* > farmacias; //Ordenadas por nome
 	vector< Cliente* > clientes;
 	vector< Empregado* > empregados; //Ordenados por nif
+
+	//const string nome;
 };
 
 

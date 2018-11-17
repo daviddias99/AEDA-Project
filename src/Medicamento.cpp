@@ -16,4 +16,12 @@ bool Medicamento::podeSerReceitado() const {
 	return podeSerRec;
 }
 
+ostream& Medicamento::printSimp(ostream& os) const {
+	
+	Produto::printSimp(os);
+
+	os << "&" << vendidoSemRec << "&" << podeSerRec << "&" << descComReceita;
+
+	return os;
+}
 

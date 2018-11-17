@@ -21,7 +21,7 @@ public:
 	bool addEmpregado(Empregado* empregado);
 	void remProduto(int codigo);
 	bool setGerente(Empregado* novoGerente);
-	bool removeQuantidade(int codigo, int quantidade);
+	bool removeQuantidade(int codigo, uint quantidade);
 	void remEmpregado(int nif);
 	string getNome() const;
 	Morada getMorada() const;
@@ -33,7 +33,10 @@ public:
 	unsigned int numEmpregados() const;
 
 	bool operator == (const Farmacia & ph1);
+	bool operator < (const Farmacia & ph);
 	friend ostream& operator<< (ostream& os, const Farmacia& f1);
+
+	ostream& printSimp(ostream& os) const;
 
 	void consultarQuantidades();
 private:
@@ -41,7 +44,7 @@ private:
 	Morada morada;
 	Empregado* gerente;
 	vector< Empregado* > empregados;
-	map< Produto *, int> stock;
+	map< Produto *, unsigned int> stock;
 };
 
 bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2);

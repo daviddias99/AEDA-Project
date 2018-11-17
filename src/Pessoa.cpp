@@ -44,6 +44,14 @@ uint Pessoa::getIdade() const
 
 }
 
+ostream& Pessoa::printSimp(ostream & os)
+{
+	os << nome << "\\" << dataNascimento << "\\" << NIF << "\\";
+	morada.printSimp(os);
+
+	return os;
+}
+
 bool Pessoa::setMorada(Morada newMorada)
 {
 	this->morada = newMorada;
@@ -102,6 +110,31 @@ bool Empregado::setCargo(string novoCargo)
 	this->cargo = novoCargo;
 
 	return true;
+}
+
+ostream & Empregado::printSimp(ostream & os)
+{
+	Pessoa::printSimp(os);
+
+	os << "\\" << farmaciaNome << "\\" << cargo << "\\" << salario << "\\";
+
+	for (vector<Venda*>::const_iterator it = historicoVendas.begin(); it != historicoVendas.end(); it++) {
+		(*it)->printSimp(os);
+	}
+
+	return os;
+}
+
+ostream & Cliente::printSimp(ostream & os)
+{
+	Pessoa::printSimp(os);
+
+
+	for (vector<Venda*>::const_iterator it = historicoCompras.begin(); it != historicoCompras.end(); it++) {
+		(*it)->printSimp(os);
+	}
+
+	return os;
 }
 
 

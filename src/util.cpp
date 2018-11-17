@@ -3,9 +3,16 @@
 #include <ctime>
 
 
-Morada::Morada(string morada_linha1 , string morada_linha2 , string codigoPostal, string cidade) :
-	morada_linha1(morada_linha1), morada_linha2(morada_linha2), codigoPostal(codigoPostal), cidade(cidade) {}
+Morada::Morada(string mor, string codigoPostal, string cidade) :
+	morada(mor), codigoPostal(codigoPostal), cidade(cidade) {}
 
+
+ostream& Morada::printSimp(ostream& os) const {
+
+	os << morada << "&" << codigoPostal << "&" << cidade;
+
+	return os;
+}
 
 Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
 
@@ -160,10 +167,17 @@ string Timestamp::getTstamp()
 
 ostream & operator<<(ostream & os, const Morada & mor)
 {
-	os << mor.morada_linha1 << endl << mor.morada_linha2 << endl << mor.codigoPostal << " " << mor.cidade << endl;
+	os << mor.morada << endl << mor.codigoPostal << " " << mor.cidade << endl;
 
 	return os;
 
+}
+
+ostream & operator<<(ostream & os, const Data & d)
+{
+	os << setw(4) << d.ano << setfill('0') << setw(2) << d.mes << setfill('0') << setw(2) << d.dia;
+
+	return os;
 }
 
 //This function returns true if the given year is a Leap Year and false otherwise

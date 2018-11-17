@@ -191,7 +191,7 @@ void Sistema::sair()
 		cin.ignore(MAX_STREAM_SIZE, '\n');
 
 		if(opcao == "sim") {
-			//cadeia.guardarDados();
+			cadeia.guardarDados();
 			exit(0);
 		}
 		else if(opcao == "nao")

@@ -4,7 +4,7 @@ Farmacia::Farmacia(string nome, Morada morada) :nome(nome), morada(morada) {}
 
 void Farmacia::addProduto(Produto *produto, int quantidade)
 {
-	map<Produto *, int>::iterator it;
+	map<Produto *, unsigned int>::iterator it;
 	for (it = stock.begin(); it != stock.end(); it++) {
 		if( *(it->first) == *produto ) {
 			it->second += quantidade;
@@ -47,9 +47,9 @@ void Farmacia::remEmpregado(int nif)
 	throw EmpregadoNaoExiste(nif);
 }
 
-bool Farmacia::removeQuantidade(int codigo, int quantidade)
+bool Farmacia::removeQuantidade(int codigo, uint quantidade)
 {
-	map<Produto*, int>::iterator it;
+	map<Produto*, unsigned int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		if(it->first->getCodigo() == codigo) {
 			if(it->second <= quantidade) {
@@ -66,7 +66,7 @@ bool Farmacia::removeQuantidade(int codigo, int quantidade)
 
 void Farmacia::remProduto(int codigo)
 {
-	map<Produto *, int>::iterator it;
+	map<Produto *, unsigned int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		if( (*it->first).getCodigo() == codigo) {
 			Produto* prod = it->first;
@@ -118,7 +118,7 @@ vector<Empregado*> Farmacia::getEmpregados(string nome) const
 
 Produto* Farmacia::getProduto(int codigo) const
 {
-	map<Produto*, int>::const_iterator it;
+	map<Produto*, unsigned int>::const_iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		if( (*it->first).getCodigo() == codigo)
 			return (it->first);
@@ -129,7 +129,7 @@ Produto* Farmacia::getProduto(int codigo) const
 unsigned int Farmacia::getTotalProdutos() const
 {
 	int soma = 0;
-	map<Produto*, int>::const_iterator it;
+	map<Produto*, unsigned int>::const_iterator it;
 	for (it = stock.begin(); it != stock.end(); it++) {
 		soma += it->second;
 	}
@@ -150,7 +150,7 @@ bool Farmacia::operator < (const Farmacia & ph)
 
 void Farmacia::consultarQuantidades()
 {
-	map<Produto*, int>::iterator it;
+	map<Produto*, unsigned int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second;
 	}
@@ -224,4 +224,22 @@ bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia &f1, Farmacia &f2)
 	}
 	else
 		return false;
+}
+
+ostream& Farmacia::printSimp(ostream& os) const {
+
+	os << nome << "\\";
+	morada.printSimp(os);
+	os << "\\";
+	
+	for (map<Produto *, unsigned int>::const_iterator it = stock.begin(); it != stock.end(); it++) {
+
+		os << "!";
+		it->first->printSimp(os);
+		os << "#" << it->second;
+	}
+
+	os << "\\" << endl;
+
+	return os;
 }

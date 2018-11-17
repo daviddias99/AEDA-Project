@@ -9,6 +9,7 @@ public:
 	float descontoComReceita() const;
 	bool podeSerReceitado() const;
 	bool vendidoSemReceita() const;
+	ostream& printSimp(ostream& os) const;
 private:
 	const bool vendidoSemRec;
 	const bool podeSerRec;

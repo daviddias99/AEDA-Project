@@ -5,6 +5,8 @@ Cadeia::Cadeia()
 	
 }
 
+//Cadeia::Cadeia(string n) : nome(n) {}
+
 Cadeia::~Cadeia()
 {
 	for (size_t i = 0; i < this->clientes.size(); i++)
@@ -107,4 +109,36 @@ unsigned int Cadeia::getNumEmpregados() const
 unsigned int Cadeia::getNumClientes() const
 {
 	return clientes.size();
+}
+
+void Cadeia::guardarDados()
+{
+	string nomeFichFarmacias = "farmacias.txt";
+
+	ofstream fichFarmacias;
+	fichFarmacias.open(nomeFichFarmacias);
+
+	for (vector<Farmacia *>::const_iterator it = farmacias.begin(); it != farmacias.end(); it++) {
+
+		(*it)->printSimp(fichFarmacias) << endl;
+	}
+
+	string nomeFichClientes = "clientes.txt";
+
+	ofstream fichClientes;
+	fichClientes.open(nomeFichClientes);
+
+	for (vector<Cliente *>::const_iterator it = clientes.begin(); it != clientes.end(); it++) {
+
+		(*it)->printSimp(fichClientes) << endl;
+	}
+
+	string nomeFichEmpregados = "empregados.txt";
+
+	ofstream fichEmpregados;
+	fichEmpregados.open(nomeFichEmpregados);
+
+	for (vector<Empregado *>::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
+		(*it)->printSimp(fichEmpregados) << endl;
+	}
 }

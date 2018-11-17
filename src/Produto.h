@@ -15,6 +15,8 @@ public:
 	int alteraPreco(float novoPreco);
 	bool operator==(const Produto &prod);
 	friend ostream& operator<< (ostream& os, const Produto& prod);
+
+	virtual ostream& printSimp(ostream& os) const;
 protected:
 	const long int codigo;
 	const string nome;

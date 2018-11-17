@@ -11,4 +11,19 @@ void Venda::addProduto(const Produto &prod, unsigned int quant) {
 
 }
 
+ostream & Venda::printSimp(ostream & os)
+{
+	os << nomeCliente << "&" << nomeEmpregado << "&";
+
+	for (map<Produto *, unsigned int>::const_iterator it = produtos.begin(); it != produtos.end(); it++) {
+
+		os << "!";
+		it->first->printSimp(os);
+		os << "#" << it->second;
+	}
+	
+
+	return os;
+}
+
 

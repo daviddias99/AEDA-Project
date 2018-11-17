@@ -40,3 +40,10 @@ ostream & operator<<(ostream & os, const Produto & prod)
 	os << "COUT DE UM PRODUTO- WIP" << endl;
 	return os;
 }
+
+ostream& Produto::printSimp(ostream& os) const {
+
+	os << codigo << "&" << nome << "&" << descricao << "&" << preco;
+
+	return os;
+}

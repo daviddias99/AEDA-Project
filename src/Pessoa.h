@@ -19,6 +19,8 @@ public:
 	Morada getMorada() const;
 	uint  getIdade() const;
 
+	virtual ostream& printSimp(ostream& os);
+
 	bool setMorada(Morada novaMorada);
 
 
@@ -45,6 +47,8 @@ public:
 	bool setFarmacia(string novaFarmacia);
 	bool setCargo(string novoCargo);
 
+	ostream& printSimp(ostream& os);
+
 	friend ostream& operator<< (ostream& os, const Empregado& mor);
 	friend bool operator<(const  Empregado& e1, const Empregado & e2)
 	{
@@ -66,6 +70,8 @@ public:
 	bool adicionaCompra(Venda*);
 	uint getNumCompras();
 	bool verHistorico();
+
+	ostream& printSimp(ostream& os);
 
 	friend bool operator<(const Cliente & e1, const Cliente & e2)
 	{
@@ -142,7 +148,7 @@ int procura2(const vector<X>& v, string nome)
 }
 
 template<class X>
-int procura2(const vector<X>& v, int nif)
+int procura2(const vector<X>& v, uint nif)
 {
 	int left = 0, right = v.size() - 1;
 	while (left <= right)
