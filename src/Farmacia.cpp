@@ -150,18 +150,39 @@ unsigned int Farmacia::getTotalProdutos() const
 	return soma;
 }
 
-bool Farmacia::operator == (const Farmacia & ph1)
+bool Farmacia::operator == (const Farmacia & ph1) const
 {
 	if(this->nome == ph1.getNome()) return true;
 	else return false;
 }
 
-void Farmacia::consultarQuantidades()
+bool Farmacia::operator < (const Farmacia & ph1) const
+{
+	if(this->nome < ph1.getNome())
+		return true;
+	else if(this->nome == ph1.getNome())
+	{
+		if(this->tamanhoStock() < ph1.tamanhoStock())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+void Farmacia::consultarQuantidades() const
 {
 	map<Produto*, unsigned int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second;
 	}
+}
+
+void Farmacia::mostrarVendas() const
+{
+	for(size_t i = 0; i < vendas.size(); i++)
+		cout << *vendas.at(i) << endl;
 }
 
 ostream& escreve (ostream& os, const Farmacia& f1, int modo) //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt

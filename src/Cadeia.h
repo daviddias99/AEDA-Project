@@ -38,6 +38,8 @@ public:
 	void sortClientes(char modo);
 	void sortEmpregados(char modo);
 
+	void mostrarFarmacias() const;
+
 	void guardarDados();
 private:
 	vector< Farmacia* > farmacias; //Default: Ordenadas por nome crescente

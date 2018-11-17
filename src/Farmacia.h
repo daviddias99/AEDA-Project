@@ -15,7 +15,7 @@ using namespace std;
 
 class Farmacia {
 public:
-	Farmacia(string nome, Morada Morada);
+	Farmacia(string nome, Morada* Morada);
 	virtual ~Farmacia();
 	void addProduto(Produto *produto, int quantidade);
 	bool addEmpregado(Empregado* empregado);
@@ -36,12 +36,14 @@ public:
 	unsigned int numEmpregados() const;
 	unsigned int numVendas() const;
 
-	bool operator == (const Farmacia & ph1);
+	bool operator == (const Farmacia & ph1) const;
+	bool operator < (const Farmacia & ph1) const;
 	friend ostream& escreve(ostream& os, const Farmacia& f1, int modo); //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
 
 	ostream& printSimp(ostream& os) const;
 
-	void consultarQuantidades();
+	void consultarQuantidades() const;
+	void mostrarVendas() const;
 private:
 	string nome;
 	Morada* morada;

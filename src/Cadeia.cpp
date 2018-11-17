@@ -139,6 +139,12 @@ void Cadeia::sortFarmacias(char modo)
 	}
 }
 
+void Cadeia::mostrarFarmacias() const
+{
+	for(size_t i = 0; i < farmacias.size(); i++)
+		escreve(cout, *farmacias.at(i), 0);
+}
+
 void Cadeia::guardarDados()
 {
 	string nomeFichFarmacias = "farmacias.txt";

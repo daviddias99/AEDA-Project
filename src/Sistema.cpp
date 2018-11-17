@@ -225,8 +225,7 @@ void Sistema::consultarFarmacias()
 
 	cadeia.sortFarmacias(opcao);
 
-	for(size_t i = 0; i < cadeia.getNumFarmacias(); i++)
-		escreve(cout, *cadeia.farmacias.at(i), 0);
+	cadeia.mostrarFarmacias();
 
 	gerirFarmacias();
 }
@@ -573,8 +572,7 @@ void Sistema::farmacia_consultarVendas()
 {
 	cout << endl << "CONSULTAR VENDAS" << endl;
 
-	for(size_t i = 0; i < f->numVendas(); i++)
-		cout << f->vendas.at(i) << endl;
+	f->mostrarVendas();
 
 	farmacia_menuConsultar();
 }
