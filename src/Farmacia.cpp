@@ -108,7 +108,7 @@ string Farmacia::getNome() const
 	return nome;
 }
 
-Morada Farmacia::getMorada() const
+Morada* Farmacia::getMorada() const
 {
 	return morada;
 }
@@ -164,10 +164,27 @@ void Farmacia::consultarQuantidades()
 	}
 }
 
-ostream& operator<< (ostream& os, const Farmacia& f1)
+ostream& escreve (ostream& os, const Farmacia& f1, int modo) //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
 {
 	os << "Nome: " << f1.getNome() << endl;
-	//...
+	os << "Morada: " << f1.getMorada() << endl;
+
+	if(modo == 0) {
+		os << "Numero de Empregados: " << f1.numEmpregados() << endl;
+		os << "Tamanho Stock: " << f1.tamanhoStock() << endl;
+		os << "Numero de Vendas: " << f1.numVendas() << endl;
+	}
+	else if(modo == 1) {
+		for(size_t i = 0; i < f1.empregados.size(); i++)
+			os << f1.empregados.at(i) << endl;
+		map<Produto*, int>::iterator it;
+		for(it = f1.stock.begin(); it != f1.stock.end(); it++)
+			os << (*it->first) << endl << it->second;
+		for (size_t i = 0; i < f1.vendas.size(); i++)
+			os << f1.vendas.at(i) << endl;
+	}
+
+	return os;
 }
 
 unsigned int Farmacia::numEmpregados() const
@@ -266,6 +283,21 @@ ostream& Farmacia::printSimp(ostream& os) const {
 bool farmacia_SortFunc_NumVendas_Crescente(Farmacia &f1, Farmacia &f2)
 {
 	if(f1.numVendas() > f2.numVendas())
+		return true;
+	else if(f1.numVendas() == f2.numVendas())
+	{
+		if(f1.getNome() < f2.getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia &f1, Farmacia &f2)
+{
+	if(f1.numVendas() < f2.numVendas())
 		return true;
 	else if(f1.numVendas() == f2.numVendas())
 	{

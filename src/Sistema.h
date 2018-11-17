@@ -34,18 +34,23 @@ private:
 	void farmacia_menuConsultar();
 	void farmacia_adicionarProduto();
 	void farmacia_adicionarEmpregado();
+	void farmacia_adicionarVenda();
 	void farmacia_removerProduto();
 	void farmacia_removerEmpregado();
 	void farmacia_consultarEmpregado();
 	void farmacia_consultarStock();
+	void farmacia_consultarQuantidades();
 	void farmacia_consultarProduto();
+	void farmacia_consultarVendas();
 
 	void adicionarFarmacia();
 	void removerFarmacia();
-	void consultarFarmacia();
+	void consultarFarmacias();
 
 	void gerirClientes();
 	void gerirCliente();
+	void cliente_gerir();
+
 	void adicionarCliente();
 	void removerCliente();
 

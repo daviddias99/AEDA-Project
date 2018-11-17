@@ -26,7 +26,7 @@ public:
 	void adicionarVenda(Venda* v1);
 
 	string getNome() const;
-	Morada getMorada() const;
+	Morada* getMorada() const;
 	Empregado* getGerente() const;
 	vector<Empregado*> getEmpregados(string nome) const;
 	Produto* getProduto(int codigo) const;
@@ -37,15 +37,14 @@ public:
 	unsigned int numVendas() const;
 
 	bool operator == (const Farmacia & ph1);
-	bool operator < (const Farmacia & ph);
-	friend ostream& operator<< (ostream& os, const Farmacia& f1);
+	friend ostream& escreve(ostream& os, const Farmacia& f1, int modo); //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
 
 	ostream& printSimp(ostream& os) const;
 
 	void consultarQuantidades();
 private:
 	string nome;
-	Morada morada;
+	Morada* morada;
 	Empregado* gerente;
 	vector< Empregado* > empregados;
 	map< Produto *, unsigned int> stock;
