@@ -3,13 +3,28 @@
 #include <ctime>
 
 
+Morada::Morada()
+{
+	cidade = "SEM_CIDADE";
+	endereco = "SEM_ENDERECO";
+	codigoPostal = "0000-000";
+}
+
 Morada::Morada(string mor, string codigoPostal, string cidade) :
-	morada(mor), codigoPostal(codigoPostal), cidade(cidade) {}
+	endereco(mor), codigoPostal(codigoPostal), cidade(cidade) {}
+
+Morada::Morada(string simp) {
+	endereco = simp.substr(0, simp.find_first_of('&'));
+	simp = simp.substr(simp.find_first_of('&') + 1, simp.length() - 1);
+	codigoPostal = simp.substr(0, simp.find_first_of('&'));
+	simp = simp.substr(simp.find_first_of('&') + 1, simp.length() - 1);
+	cidade = simp;
+}
 
 
 ostream& Morada::printSimp(ostream& os) const {
 
-	os << morada << "&" << codigoPostal << "&" << cidade;
+	os << endereco << "&" << codigoPostal << "&" << cidade;
 
 	return os;
 }
@@ -175,7 +190,7 @@ ostream & operator<<(ostream & os, const Morada & mor)
 
 ostream & operator<<(ostream & os, const Data & d)
 {
-	os << setw(4) << d.ano << setfill('0') << setw(2) << d.mes << setfill('0') << setw(2) << d.dia;
+	os << setw(4) << d.ano << "-" << setfill('0') << setw(2) << d.mes << "-" << setfill('0') << setw(2) << d.dia;
 
 	return os;
 }

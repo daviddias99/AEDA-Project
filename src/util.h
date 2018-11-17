@@ -4,7 +4,9 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include <algorithm>
 #include <iostream>
+
 
 using namespace std;
 
@@ -15,13 +17,14 @@ typedef unsigned int uint;
 class Morada {
 
 public:
-	Morada(string morada = "RUA_DEFAULT PORTA 0, 3º ANDAR DIREITO", string codigoPostal = "0000-000", string cidade = "CIDADE_DEFAULT");
+	Morada();
+	Morada(string morada, string codigoPostal, string cidade);
+	Morada(string simp);
 	// bool mudaMorada(Morada novaMorada);
 	friend ostream& operator<< (ostream& os, const Morada& mor);
 	ostream& printSimp(ostream& os) const;
-
 private:
-	string morada;
+	string endereco;
 	string codigoPostal;
 	string cidade;
 };

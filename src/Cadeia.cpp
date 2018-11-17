@@ -115,20 +115,43 @@ unsigned int Cadeia::getNumClientes() const
 	return clientes.size();
 }
 
-/*
+
 void Cadeia::carregarDados() {
 
-	ifstream fichFarmacias;
-	fichFarmacias.open("farmacias.txt");
+	carregarFarmacias();
 
+	carregarEmpregados();
+
+	carregarClientes();
+}
+
+void Cadeia::carregarFarmacias() {
+
+
+	ifstream ficheiro;
+	ficheiro.open("farmacias.txt");
+	Morada morada;
+	string nome;
 	string linha;
-	getline(fichFarmacias, linha);
 
+	getline(ficheiro, linha);
+	if (linha != "") {
 
+		nome = linha.substr(0, linha.find_first_of("\\"));
+		linha = linha.substr(linha.find_first_of("\\") + 1, linha.length() - 1);
+		morada = Morada(linha.substr(0, linha.find_first_of("\\")));
+
+		
+
+	}
+
+	while (!ficheiro.eof()) {
+
+	}
 
 
 }
-*/
+
 
 void Cadeia::guardarDados()
 {

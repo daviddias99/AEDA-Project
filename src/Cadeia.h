@@ -31,8 +31,12 @@ public:
 	unsigned int getNumEmpregados() const;
 	unsigned int getNumClientes() const;
 	void guardarDados();
-	//void carregarDados();
+	void carregarDados();
 private:
+	void carregarClientes();
+	void carregarEmpregados();
+	void carregarFarmacias();
+
 	vector< Farmacia* > farmacias; //Ordenadas por nome
 	vector< Cliente* > clientes;
 	vector< Empregado* > empregados; //Ordenados por nif
