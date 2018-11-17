@@ -1,9 +1,6 @@
 #include "Cadeia.h"
 
-Cadeia::Cadeia()
-{
-	
-}
+Cadeia::Cadeia() {}
 
 //Cadeia::Cadeia(string n) : nome(n) {}
 
@@ -15,7 +12,6 @@ Cadeia::~Cadeia()
 		delete this->farmacias.at(i);
 	for (size_t i = 0; i < this->empregados.size(); i++)
 		delete this->empregados.at(i);
-
 }
 
 bool Cadeia::addFarmacia(Farmacia* farmacia)
@@ -24,7 +20,7 @@ bool Cadeia::addFarmacia(Farmacia* farmacia)
 
 	farmacias.push_back(farmacia);
 
-	sort(farmacias.begin(), farmacias.end());
+	sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
 	return true;
 }
 
@@ -33,23 +29,26 @@ bool Cadeia::addCliente(Cliente* cliente)
 	if(procura2(clientes, cliente) != -1) return false;
 
 	clientes.push_back(cliente);
+	sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Idade_Crescente);
 	return true;
 }
 
 bool Cadeia::addEmpregado(Empregado* empregado)
 {
-
 	if(procura2(empregados, empregado) != -1) return false;
 
 	empregados.push_back(empregado);
+	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Idade_Crescente);
 	return true;
 }
 
 void Cadeia::removeFarmacia(string nome)
 {
 	int i = procura2(farmacias, nome);
-	if(i != -1)
+	if(i != -1) {
 		farmacias.erase(farmacias.begin() + i);
+		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
+	}
 
 	throw FarmaciaNaoExiste(nome);
 }
@@ -57,8 +56,10 @@ void Cadeia::removeFarmacia(string nome)
 void Cadeia::removeCliente(int nif)
 {
 	int i = procura2(clientes, nif);
-	if(i != -1)
+	if(i != -1) {
 		clientes.erase(clientes.begin() +i);
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Idade_Crescente);
+	}
 
 	throw ClienteNaoExiste(nif);
 }
@@ -66,8 +67,11 @@ void Cadeia::removeCliente(int nif)
 void Cadeia::removeEmpregado(int nif)
 {
 	int i = procura2(empregados, nif);
-	if(i != -1)
+	if(i != -1) {
 		empregados.erase(empregados.begin()+i);
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Idade_Crescente);
+	}
+
 
 	throw EmpregadoNaoExiste(nif);
 }

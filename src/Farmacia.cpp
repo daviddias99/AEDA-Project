@@ -2,6 +2,19 @@
 
 Farmacia::Farmacia(string nome, Morada morada) :nome(nome), morada(morada) {}
 
+Farmacia:: ~Farmacia()
+{
+	map< Produto *, int>::const_iterator it;
+
+	delete gerente;
+	for (size_t i = 0; i < this->empregados.size(); i++)
+		delete this->empregados.at(i);
+	for(it = stock.begin(); it != stock.end(); it++)
+		delete it->first;
+	for (size_t i = 0; i < this->vendas.size(); i++)
+		delete this->vendas.at(i);
+}
+
 void Farmacia::addProduto(Produto *produto, int quantidade)
 {
 	map<Produto *, unsigned int>::iterator it;
@@ -14,8 +27,6 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 
 	stock[produto] = quantidade;
 }
-
-
 
 bool Farmacia::addEmpregado(Empregado* empregado)
 {
@@ -31,7 +42,6 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 	}
 	else return false;
 }
-
 
 void Farmacia::remEmpregado(int nif)
 {
@@ -88,6 +98,10 @@ bool Farmacia::setGerente(Empregado * novoGerente)
 	return true;
 }
 
+void Farmacia::adicionarVenda(Venda* v1)
+{
+	vendas.push_back(v1);
+}
 
 string Farmacia::getNome() const
 {
@@ -142,18 +156,18 @@ bool Farmacia::operator == (const Farmacia & ph1)
 	else return false;
 }
 
-bool Farmacia::operator < (const Farmacia & ph)
-{
-	if(this->nome < ph.getNome()) return true;
-	else return false;
-}
-
 void Farmacia::consultarQuantidades()
 {
 	map<Produto*, unsigned int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second;
 	}
+}
+
+ostream& operator<< (ostream& os, const Farmacia& f1)
+{
+	os << "Nome: " << f1.getNome() << endl;
+	//...
 }
 
 unsigned int Farmacia::numEmpregados() const
@@ -164,6 +178,11 @@ unsigned int Farmacia::numEmpregados() const
 unsigned int Farmacia::tamanhoStock() const
 {
 	return stock.size();
+}
+
+unsigned int Farmacia::numVendas() const
+{
+	return vendas.size();
 }
 
 bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2)
@@ -242,4 +261,19 @@ ostream& Farmacia::printSimp(ostream& os) const {
 	os << "\\" << endl;
 
 	return os;
+}
+
+bool farmacia_SortFunc_NumVendas_Crescente(Farmacia &f1, Farmacia &f2)
+{
+	if(f1.numVendas() > f2.numVendas())
+		return true;
+	else if(f1.numVendas() == f2.numVendas())
+	{
+		if(f1.getNome() < f2.getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
 }
