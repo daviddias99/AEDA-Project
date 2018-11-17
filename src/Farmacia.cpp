@@ -15,8 +15,6 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 	stock[produto] = quantidade;
 }
 
-
-
 bool Farmacia::addEmpregado(Empregado* empregado)
 {
 	int i = procura2(empregados, empregado);
@@ -31,7 +29,6 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 	}
 	else return false;
 }
-
 
 void Farmacia::remEmpregado(int nif)
 {
@@ -142,18 +139,18 @@ bool Farmacia::operator == (const Farmacia & ph1)
 	else return false;
 }
 
-bool Farmacia::operator < (const Farmacia & ph)
-{
-	if(this->nome < ph.getNome()) return true;
-	else return false;
-}
-
 void Farmacia::consultarQuantidades()
 {
 	map<Produto*, int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second;
 	}
+}
+
+ostream& operator<< (ostream& os, const Farmacia& f1)
+{
+	os << "Nome: " << f1.getNome() << endl;
+	//...
 }
 
 unsigned int Farmacia::numEmpregados() const

@@ -42,6 +42,7 @@ private:
 	Empregado* gerente;
 	vector< Empregado* > empregados;
 	map< Produto *, int> stock;
+	vector <Venda *> vendas;
 };
 
 bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2);
