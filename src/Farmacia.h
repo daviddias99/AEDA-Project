@@ -16,18 +16,21 @@ using namespace std;
 class Farmacia {
 public:
 	Farmacia(string nome, Morada Morada);
-	//virtual ~Farmacia();
+	virtual ~Farmacia();
 	void addProduto(Produto *produto, int quantidade);
 	bool addEmpregado(Empregado* empregado);
 	void remProduto(int codigo);
 	bool setGerente(Empregado* novoGerente);
 	bool removeQuantidade(int codigo, int quantidade);
 	void remEmpregado(int nif);
+	void adicionarVenda(const Venda &v1);
+
 	string getNome() const;
 	Morada getMorada() const;
 	Empregado* getGerente() const;
 	vector<Empregado*> getEmpregados(string nome) const;
 	Produto* getProduto(int codigo) const;
+
 	unsigned int getTotalProdutos() const;
 	unsigned int tamanhoStock() const;
 	unsigned int numEmpregados() const;

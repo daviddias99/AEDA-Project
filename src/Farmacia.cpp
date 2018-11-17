@@ -2,6 +2,19 @@
 
 Farmacia::Farmacia(string nome, Morada morada) :nome(nome), morada(morada) {}
 
+Farmacia:: ~Farmacia()
+{
+	map< Produto *, int>::const_iterator it;
+
+	delete gerente;
+	for (size_t i = 0; i < this->empregados.size(); i++)
+		delete this->empregados.at(i);
+	for(it = stock.begin(); it != stock.end(); it++)
+		delete it->first;
+	for (size_t i = 0; i < this->vendas.size(); i++)
+		delete this->vendas.at(i);
+}
+
 void Farmacia::addProduto(Produto *produto, int quantidade)
 {
 	map<Produto *, int>::iterator it;
