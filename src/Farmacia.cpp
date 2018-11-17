@@ -98,6 +98,10 @@ bool Farmacia::setGerente(Empregado * novoGerente)
 	return true;
 }
 
+void Farmacia::adicionarVenda(Venda* v1)
+{
+	vendas.push_back(v1);
+}
 
 string Farmacia::getNome() const
 {
@@ -176,6 +180,11 @@ unsigned int Farmacia::tamanhoStock() const
 	return stock.size();
 }
 
+unsigned int Farmacia::numVendas() const
+{
+	return vendas.size();
+}
+
 bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2)
 {
 	if(f1.getNome() < f2.getNome())
@@ -226,6 +235,21 @@ bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia &f1, Farmacia &f2)
 	if(f1.tamanhoStock() > f2.tamanhoStock())
 		return true;
 	else if(f1.tamanhoStock() == f2.tamanhoStock())
+	{
+		if(f1.getNome() < f2.getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool farmacia_SortFunc_NumVendas_Crescente(Farmacia &f1, Farmacia &f2)
+{
+	if(f1.numVendas() > f2.numVendas())
+		return true;
+	else if(f1.numVendas() == f2.numVendas())
 	{
 		if(f1.getNome() < f2.getNome())
 			return true;

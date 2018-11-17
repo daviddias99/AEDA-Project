@@ -23,7 +23,7 @@ public:
 	bool setGerente(Empregado* novoGerente);
 	bool removeQuantidade(int codigo, int quantidade);
 	void remEmpregado(int nif);
-	void adicionarVenda(const Venda &v1);
+	void adicionarVenda(Venda* v1);
 
 	string getNome() const;
 	Morada getMorada() const;
@@ -34,6 +34,7 @@ public:
 	unsigned int getTotalProdutos() const;
 	unsigned int tamanhoStock() const;
 	unsigned int numEmpregados() const;
+	unsigned int numVendas() const;
 
 	bool operator == (const Farmacia & ph1);
 	friend ostream& operator<< (ostream& os, const Farmacia& f1);
@@ -52,5 +53,7 @@ bool farmacia_SortFunc_Nome_Crescente(Farmacia &f1, Farmacia &f2);
 bool farmacia_SortFunc_Nome_Decrescente(Farmacia &f1, Farmacia &f2);
 bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia &f1, Farmacia &f2);
 bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia &f1, Farmacia &f2);
+bool farmacia_SortFunc_NumVendas_Crescente(Farmacia &f1, Farmacia &f2);
+bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia &f1, Farmacia &f2);
 
 #endif
