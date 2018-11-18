@@ -30,9 +30,6 @@ bool Cliente::verHistorico() {
 	return true;
 }
 
-
-
-
 ostream & Cliente::printSimp(ostream & os)
 {
 	Pessoa::printSimp(os);

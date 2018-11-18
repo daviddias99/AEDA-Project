@@ -86,7 +86,7 @@ void Sistema::gerirFarmacias()
 	cout << "5 - Menu anterior" << endl;
 	cout << "0 - Sair da aplicacao" << endl;
 
-	cout << "Opcao; ";
+	cout << "Opcao: ";
 	cin >> opcao;
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
@@ -125,13 +125,11 @@ void Sistema::gerirClientes()
 
 	cout << endl << "GERIR CLIENTES" << endl;
 	cout << "1 - Gerir Cliente" << endl;
-	cout << "2 - Adicionar Cliente" << endl;
-	cout << "3 - Remover Cliente" << endl;
-	cout << "4 - Consultar clientes" << endl;
-	cout << "5 - Menu anterior" << endl;
+	cout << "2 - Consultar clientes" << endl;
+	cout << "3 - Menu anterior" << endl;
 	cout << "0 - Sair da aplicacao" << endl;
 
-	cout << "Opcao; ";
+	cout << "Opcao: ";
 	cin >> opcao;
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
@@ -140,15 +138,9 @@ void Sistema::gerirClientes()
 		//gerirCliente();
 		break;
 	case '2':
-		//adicionarCliente();
-		break;
-	case '3':
-		//removerCliente();
-		break;
-	case '4':
 		consultarClientes();
 		break;
-	case '5':
+	case '3':
 		menuGerencia();
 		break;
 	case '0':
@@ -172,7 +164,7 @@ void Sistema::gerirEmpregados()
 	cout << "5 - Menu anterior" << endl;
 	cout << "0 - Sair da aplicacao" << endl;
 
-	cout << "Opcao; ";
+	cout << "Opcao: ";
 	cin >> opcao;
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
@@ -310,12 +302,10 @@ void Sistema::gerirFarmacia()
 	}
 
 	string nome;
-	//unsigned int i;
 
 	cout << "Nome da farmacia: ";
 	getline(cin, nome);
 	
-
 	try {
 		f = cadeia.getFarmacia(nome);
 		farmacia_gerir();
@@ -329,26 +319,26 @@ void Sistema::gerirFarmacia()
 
 void Sistema::farmacia_gerir()
 {
-	cout << "FARMACIA " << f->getNome() << endl;
+	cout << endl << "FARMACIA " << f->getNome() << endl;
 
 	char opcao;
 
-	cout << "1 - Adicionar" << endl;
-	cout << "2 - Remover" << endl;
+	cout << "1 - Adicionar Produto" << endl;
+	cout << "2 - Remover Produto" << endl;
 	cout << "3 - Consultar" << endl;
 	cout << "4 - Menu anterior" << endl;
 	cout << "0 - Sair da aplicacao" << endl;
 
-	cout << "Opcao; ";
+	cout << "Opcao: ";
 	cin >> opcao;
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
 	case '1':
-		farmacia_menuAdicionar();
+		farmacia_adicionarProduto();
 		break;
 	case '2':
-		farmacia_menuRemover();
+		farmacia_removerProduto();
 		break;
 	case '3':
 		farmacia_menuConsultar();
@@ -362,42 +352,6 @@ void Sistema::farmacia_gerir()
 	default:
 		cout << "Opcao Invalida!" << endl;
 		menuGerencia();
-	}
-}
-
-void Sistema::farmacia_menuAdicionar()
-{
-	char opcao;
-
-	cout << "1 - Adicionar venda" << endl;
-	cout << "2 - Adicionar produto" << endl;
-	cout << "3 - Adicionar empregado" << endl;
-	cout << "4 - Menu anterior" << endl;
-	cout << "0 - Sair da aplicacao" << endl;
-
-	cout << "Opcao; ";
-	cin >> opcao;
-	cin.ignore(MAX_STREAM_SIZE, '\n');
-
-	switch (opcao) {
-	case '1':
-		farmacia_adicionarVenda();
-		break;
-	case '2':
-		farmacia_adicionarProduto();
-		break;
-	case '3':
-		farmacia_adicionarEmpregado();
-		break;
-	case '4':
-		farmacia_gerir();
-		break;
-	case '0':
-		sair();
-		break;
-	default:
-		cout << "Opcao Invalida!" << endl;
-		farmacia_menuAdicionar();
 	}
 }
 
@@ -447,22 +401,15 @@ void Sistema::farmacia_adicionarVenda()
 
 }
 
-
-//sem efeito
-void Sistema::farmacia_adicionarEmpregado()
-{
-
-} 
-
 //Luis
 void Sistema::farmacia_menuConsultar()
 {
 	cout << endl << "CONSULTAR FARMACIA" << endl;
 
-	//escreve(cout, *f, 0);
+	//cout << *f;
 
-	cout << "1 - Consultar empregado" << endl;
-	cout << "2 - Consultar stock" << endl;
+	cout << "1 - Consultar Empregado" << endl;
+	cout << "2 - Consultar Stock" << endl;
 	cout << "3 - Consultar Vendas" << endl;
 	cout << "4 - Menu anterior" << endl;
 	cout << "5 - Sair" << endl;
@@ -506,7 +453,33 @@ void Sistema::farmacia_consultarEmpregado()
 //Gaspar
 void Sistema::farmacia_removerProduto()
 {
+	cout << endl << "REMOVER PRODUTO" << endl;
 
+	int codigo, quantidade;
+	bool erro;
+
+	cout << "Codigo do produto: ";
+	cin >> codigo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Quantidade a remover( '0' para remover a quantidade total): ";
+	cin >> quantidade;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	try {
+		if(quantidade == 0) {
+			f->remProduto(codigo);
+			cout << "Produto removido." << endl;
+		}
+		else {
+			erro = f->removeQuantidade(codigo, quantidade);
+			if(!erro) cout << "Quantidade removida;" << endl;
+			else cout << "Erro! Se pretende remover a quantidade total do protudo, responda '0' a quantidade;" << endl;
+		}
+	} catch(ProdutoNaoExiste &p1) {
+		cout << "O produto de codigo " << p1.getCodigo() << " nao existe." << endl;
+	}
+
+	farmacia_gerir();
 }
 
 //Gaspar
@@ -514,11 +487,18 @@ void Sistema::farmacia_consultarStock()
 {
 	cout << endl << "CONSULTAR STOCK" << endl;
 
+	unsigned int totalProdutos = f->getTotalProdutos();
+
 	cout << "Numero de produtos diferentes: " << f->tamanhoStock() << endl;
-	cout << "Numero total de produtos: " << f->getTotalProdutos() << endl << endl;
+	cout << "Numero total de produtos: " << totalProdutos << endl << endl;
+
+	if (totalProdutos == 0) {
+		cout << "Stock vazio. Adicione produtos" << endl;
+		farmacia_gerir();
+	}
 
 	cout << "1 - Consultar Produto" << endl;
-	cout << "2 - Consultar quantidades de todos os produtos";
+	cout << "2 - Consultar quantidades de todos os produtos" << endl;
 	cout << "3 - Menu anterior" << endl;
 	cout << "4 - Sair" << endl;
 
@@ -559,50 +539,45 @@ void Sistema::farmacia_consultarQuantidades()
 
 }
 
-void Sistema::farmacia_consultarVendas(){
-
-}
-
-//Gaspar
-void Sistema::farmacia_menuRemover()
+void Sistema::farmacia_consultarVendas()
 {
-	char opcao;
 
-	cout << "1 - Remover Produto" << endl;
-	cout << "2 - Remover Empregado" << endl;
-	cout << "3 - Menu anterior" << endl;
-	cout << "0 - Sair da aplicacao" << endl;
-
-	cout << "Opcao; ";
-	cin >> opcao;
-	cin.ignore(MAX_STREAM_SIZE, '\n');
-
-	switch (opcao) {
-	case '1':
-		farmacia_removerProduto();
-		break;
-	case '2':
-
-		break;
-	case '3':
-		farmacia_gerir();
-		break;
-	case '0':
-		sair();
-		break;
-	default:
-		cout << "Opcao Invalida!" << endl;
-		farmacia_menuRemover();
-	}
 }
+
 
 //Gaspar
 void Sistema::farmacia_adicionarProduto()
 {
+	cout << endl << "ADICIONAR PRODUTO" << endl;
 
+	long int codigo;
+	string nome, descricao;
+	float preco, iva;
+	int quantidade;
+
+	cout << "Codigo: ";
+	cin >> codigo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "Descricao: ";
+	getline(cin, descricao);
+	cout << "Preco (euros): ";
+	cin >> preco;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Quantidade a adicionar: ";
+	cin >> quantidade;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "IVA (percentagem): ";
+	cin >> iva;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	Produto* p1 = new Produto(codigo, nome, descricao, preco, iva);
+	f->addProduto(p1, quantidade);
+
+	cout << "Produto adicionado" << endl;
+	farmacia_gerir();
 }
-
-
 
 //David
 void Sistema::gerirCliente()
