@@ -459,7 +459,6 @@ void Sistema::farmacia_consultarEmpregado()
 }
 
 
-//Gaspar
 void Sistema::farmacia_removerProduto()
 {
 	cout << endl << "REMOVER PRODUTO" << endl;
@@ -491,7 +490,6 @@ void Sistema::farmacia_removerProduto()
 	farmacia_gerir();
 }
 
-//Gaspar
 void Sistema::farmacia_consultarStock()
 {
 	cout << endl << "CONSULTAR STOCK" << endl;
@@ -536,16 +534,35 @@ void Sistema::farmacia_consultarStock()
 	}
 }
 
-//Gaspar
 void Sistema::farmacia_consultarProduto()
 {
+	cout << endl << "CONSULTAR PRODUTO" << endl;
 
+	int codigo;
+
+	cout << "Codigo: ";
+	cin >> codigo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	Produto * p1 = NULL;
+	try {
+		p1 = f->getProduto(codigo);
+	}
+	catch (ProdutoNaoExiste &p) {
+		cout << "O produto com o codigo " << p.getCodigo() << " nao existe." << endl;
+		farmacia_consultarStock();
+	}
+
+	cout << *p1;
+	farmacia_consultarStock();
 }
 
-//Gaspar
 void Sistema::farmacia_consultarQuantidades()
 {
+	cout << endl << "CONSULTAR QUANTIDADES" << endl;
 
+	f->consultarQuantidades();
+	farmacia_consultarStock();
 }
 
 void Sistema::farmacia_consultarVendas()
@@ -553,8 +570,6 @@ void Sistema::farmacia_consultarVendas()
 
 }
 
-
-//Gaspar
 void Sistema::farmacia_adicionarProduto()
 {
 	cout << endl << "ADICIONAR PRODUTO" << endl;
@@ -563,6 +578,9 @@ void Sistema::farmacia_adicionarProduto()
 	string nome, descricao;
 	float preco, iva;
 	int quantidade;
+	bool vendidoSemRec;
+	bool podeSerRec = false;
+	float descComReceita = 0;
 
 	cout << "Codigo: ";
 	cin >> codigo;
@@ -581,7 +599,39 @@ void Sistema::farmacia_adicionarProduto()
 	cin >> iva;
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
-	Produto* p1 = new Produto(codigo, nome, descricao, preco, iva);
+	Produto* p1;
+
+	string resposta;
+	cout << "O produto que deseja adicionar e um medicamento (sim/nao)? ";
+	cin >> resposta;
+
+	do {
+		if (resposta == "sim") {
+			cout << "Pode ser vendido sem receita (sim/nao)? ";
+			cin >> resposta;
+			vendidoSemRec = (resposta == "sim");
+
+			cout << "Pode ser receitado (sim/nao)? ";
+			cin >> resposta;
+			if (resposta == "sim") {
+				podeSerRec = true;
+				cout << "Desconto com receita: ";
+				cin >> descComReceita;
+			}
+
+			p1 = new Medicamento(codigo, nome, descricao, preco, iva, vendidoSemRec, podeSerRec, descComReceita);
+			break;
+		}
+		else if (resposta == "nao") {
+			p1 = new Produto(codigo, nome, descricao, preco, iva);
+			break;
+		}
+			
+		else
+			cerr << "Resposta invalida!" << endl;
+
+	} while (true);
+		
 	f->addProduto(p1, quantidade);
 
 	cout << "Produto adicionado" << endl;
