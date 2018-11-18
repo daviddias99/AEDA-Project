@@ -119,7 +119,8 @@ void Sistema::gerirClientes()
 	cout << "1 - Gerir Cliente" << endl;
 	cout << "2 - Adicionar Cliente" << endl;
 	cout << "3 - Remover Cliente" << endl;
-	cout << "4 - Menu anterior" << endl;
+	cout << "4 - Consultar clientes" << endl;
+	cout << "5 - Menu anterior" << endl;
 	cout << "0 - Sair da aplicacao" << endl;
 
 	cout << "Opcao; ";
@@ -137,6 +138,9 @@ void Sistema::gerirClientes()
 		removerCliente();
 		break;
 	case '4':
+		consultarClientes();
+		break;
+	case '5':
 		menuGerencia();
 		break;
 	case '0':
@@ -156,7 +160,8 @@ void Sistema::gerirEmpregados()
 	cout << "1 - Gerir Empregado" << endl;
 	cout << "2 - Adicionar Empregado" << endl;
 	cout << "3 - Remover Empregado" << endl;
-	cout << "4 - Menu anterior" << endl;
+	cout << "4 - Consultar empregados" << endl;
+	cout << "5 - Menu anterior" << endl;
 	cout << "0 - Sair da aplicacao" << endl;
 
 	cout << "Opcao; ";
@@ -174,6 +179,9 @@ void Sistema::gerirEmpregados()
 		removerEmpregado();
 		break;
 	case '4':
+		consultarEmpregados();
+		break;
+	case '5':
 		menuGerencia();
 		break;
 	case '0':
@@ -213,12 +221,12 @@ void Sistema::consultarFarmacias()
 	char opcao;
 
 	cout << "Ordenar por: " << endl;
-	cout << "1 - Nome - Crescente" << endl;
-	cout << "2 - Nome - Decrescente" << endl;
-	cout << "3 - Tamanho stock - Crescente" << endl;
-	cout << "4 - Tamanho stock - Decrescente" << endl;
-	cout << "5 - Numero de vendas - Crescente" << endl;
-	cout << "6 - Numero de vendas - Decrescente" << endl;
+	cout << "0 - Nome - Crescente" << endl;
+	cout << "1 - Nome - Decrescente" << endl;
+	cout << "2 - Tamanho stock - Crescente" << endl;
+	cout << "3 - Tamanho stock - Decrescente" << endl;
+	cout << "4 - Numero de vendas - Crescente" << endl;
+	cout << "5 - Numero de vendas - Decrescente" << endl;
 
 	cout << "Opcao: ";
 	cin >> opcao;
@@ -228,6 +236,60 @@ void Sistema::consultarFarmacias()
 	cadeia.mostrarFarmacias();
 
 	gerirFarmacias();
+}
+
+void Sistema::consultarClientes()
+{
+	cout << endl << "CONSULTAR CLIENTES" << endl;
+
+	char opcao;
+
+	cout << "Ordenar por: " << endl;
+	cout << "0 - Idade - Crescente" << endl;
+	cout << "1 - Idade - Decrescente" << endl;
+	cout << "2 - Nome - Crescente" << endl;
+	cout << "3 - Nome - Decrescente" << endl;
+	cout << "4 - NIF - Crescente" << endl;
+	cout << "5 - NIF - Decrescente" << endl;
+	cout << "6 - Numero de Compras - Crescente" << endl;
+	cout << "7 - Numero de Compras - Decrescente" << endl;
+
+	cout << "Opcao: ";
+	cin >> opcao;
+
+	cadeia.sortClientes(opcao);
+
+	cadeia.mostrarClientes();
+
+	gerirClientes();
+}
+
+void Sistema::consultarEmpregados()
+{
+	cout << endl << "CONSULTAR EMPREGADOS" << endl;
+
+	char opcao;
+
+	cout << "Ordenar por: " << endl;
+	cout << "0 - Idade - Crescente" << endl;
+	cout << "1 - Idade - Decrescente" << endl;
+	cout << "2 - Nome - Crescente" << endl;
+	cout << "3 - Nome - Decrescente" << endl;
+	cout << "4 - NIF - Crescente" << endl;
+	cout << "5 - NIF - Decrescente" << endl;
+	cout << "6 - Salario - Crescente" << endl;
+	cout << "7 - Salario - Decrescente" << endl;
+	cout << "8 - Numero de vendas - Crescente" << endl;
+	cout << "9 - Numero de vendas - Decrescente" << endl;
+
+	cout << "Opcao: ";
+	cin >> opcao;
+
+	cadeia.sortEmpregados(opcao);
+
+	cadeia.mostrarEmpregados();
+
+	gerirEmpregados();
 }
 
 void Sistema::gerirFarmacia()
