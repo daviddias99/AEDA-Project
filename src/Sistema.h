@@ -53,11 +53,14 @@ private:
 
 	void adicionarCliente();
 	void removerCliente();
+	void consultarClientes();
 
 	void gerirEmpregados();
 	void gerirEmpregado();
+
 	void adicionarEmpregado();
 	void removerEmpregado();
+	void consultarEmpregados();
 };
 
 #endif

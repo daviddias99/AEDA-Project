@@ -35,12 +35,13 @@ public:
 	unsigned int getNumClientes() const;
 
 	void sortFarmacias(char modo);
-	/*
+	
 	void sortClientes(char modo);
 	void sortEmpregados(char modo);
 
-	void mostrarFarmacias() const;
-	*/
+	void mostrarFarmacias();
+	void mostrarClientes();
+	void mostrarEmpregados();
 
 	void guardarDados();
 	void carregarDados();

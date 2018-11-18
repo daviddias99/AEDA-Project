@@ -179,11 +179,94 @@ void Cadeia::sortFarmacias(char modo)
 	}
 }
 
-/*
-void Cadeia::mostrarFarmacias() const
+void Cadeia::sortClientes(char modo)
+{
+	switch (modo) {
+	case '0':
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Idade_Crescente);
+		break;
+	case '1':
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Idade_Decrescente);
+		break;
+	case '2':
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Nome_Crescente);
+		break;
+	case '3':
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Nome_Decrescente);
+		break;
+	case '4':
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_NIF_Crescente);
+		break;
+	case '5':
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_NIF_Decrescente);
+		break;
+	case '6':
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_numCompras_Crescente);
+		break;
+	case '7':
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_numCompras_Decrescente);
+		break;
+	}
+}
+
+void Cadeia::sortEmpregados(char modo)
+{
+	switch (modo) {
+	case '0':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Idade_Crescente);
+		break;
+	case '1':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Idade_Decrescente);
+		break;
+	case '2':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Nome_Crescente);
+		break;
+	case '3':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Nome_Decrescente);
+		break;
+	case '4':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
+		break;
+	case '5':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Decrescente);
+		break;
+	case '6':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Crescente);
+		break;
+	case '7':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Decrescente);
+		break;
+	case '8':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Crescente);
+		break;
+	case '9':
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Decrescente);
+		break;
+	}
+}
+
+void Cadeia::mostrarFarmacias()
 {
 	for(size_t i = 0; i < farmacias.size(); i++)
 		escreve(cout, *farmacias.at(i), 0);
+
+	sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
+}
+
+void Cadeia::mostrarClientes()
+{
+	for(size_t i = 0; i < clientes.size(); i++)
+		//escreve(cout, *clientes.at(i), 0);
+
+	sort(clientes.begin(), clientes.end(), Cliente_SortFunc_NIF_Crescente);
+}
+
+void Cadeia::mostrarEmpregados()
+{
+	for(size_t i = 0; i < empregados.size(); i++)
+		//escreve(cout, *clientes.at(i), 0);
+
+	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
 }
 */
 
