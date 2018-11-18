@@ -8,7 +8,9 @@
 #include <iostream>
 #include <sstream>
 
-#include "Pessoa.h"
+
+#include "Empregado.h"
+#include "Cliente.h"
 #include "Produto.h"
 #include "Medicamento.h"
 #include "util.h"
