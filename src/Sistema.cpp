@@ -405,13 +405,41 @@ void Sistema::farmacia_menuAdicionar()
 
 void Sistema::adicionarFarmacia()
 {
+	cout << endl << "ADICIONAR FARMACIA" << endl;
 
+	string nome, moradaStr;
+
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "Morada: ";
+	getline(cin, moradaStr);
+	Morada morada = Morada(moradaStr);
+	Farmacia* f = new Farmacia(nome, morada);
+
+	if (cadeia.addFarmacia(f)) cout << "Farmacia adicionada." << endl;
+	else cout << "Ja existe uma farmacia com o nome " << nome << endl;
+
+	gerirFarmacias();
 }
 
 void Sistema::removerFarmacia()
 {
+	cout << endl << "REMOVER FARMACIA" << endl;
 
+	string nome;
 
+	cout << "Nome: ";
+	getline(cin, nome);
+
+	try {
+		cadeia.removeFarmacia(nome);
+		cout << "Farmacia removida." << endl;
+	}
+	catch (FarmaciaNaoExiste &f) {
+		cout << "A farmacia " << f.getNome() << " nao existe." << endl;
+	}
+
+	gerirFarmacias();
 }
 
 void Sistema::farmacia_adicionarVenda()

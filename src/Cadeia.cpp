@@ -42,38 +42,34 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 	return true;
 }
 
-bool Cadeia::removeFarmacia(string nome)
+void Cadeia::removeFarmacia(string nome)
 {
 	int i = procura2(farmacias, nome);
 	if(i != -1) {
 		farmacias.erase(farmacias.begin() + i);
 		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
 	}
-
-	throw FarmaciaNaoExiste(nome);
+	else throw FarmaciaNaoExiste(nome);
 }
 
-bool Cadeia::removeCliente(int nif)
+void Cadeia::removeCliente(uint ID)
 {
-	int i = procura2(clientes, nif);
+	int i = procura2(clientes, ID);
 	if(i != -1) {
 		clientes.erase(clientes.begin() +i);
 		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_NIF_Crescente);
-	}
-
-	throw ClienteNaoExiste(nif);
+	} 
+	else throw ClienteNaoExiste(ID);
 }
 
-bool Cadeia::removeEmpregado(int nif)
+void Cadeia::removeEmpregado(uint ID)
 {
-	int i = procura2(empregados, nif);
+	int i = procura2(empregados, ID);
 	if(i != -1) {
 		empregados.erase(empregados.begin()+i);
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
 	}
-
-
-	throw EmpregadoNaoExiste(nif);
+	else throw EmpregadoNaoExiste(ID);
 }
 
 Farmacia* Cadeia::getFarmacia(string nome) const

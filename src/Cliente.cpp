@@ -20,6 +20,11 @@ uint Cliente::getNumCompras()
 	return this->historicoCompras.size();
 }
 
+uint Cliente::getID() const
+{
+	return this->ID;
+}
+
 bool Cliente::verHistorico() {
 
 	return true;

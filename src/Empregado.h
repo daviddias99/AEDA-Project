@@ -11,6 +11,7 @@ public:
 	string getNomeFarmacia() const;
 	string getCargo() const;
 	uint getNumVendas();
+	uint getID() const;
 
 	bool setSalario(uint  novoSalario);
 	bool setFarmacia(string novaFarmacia);

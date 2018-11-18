@@ -33,6 +33,11 @@ uint Empregado::getNumVendas()
 	return this->historicoVendas.size();
 }
 
+uint Empregado::getID() const
+{
+	return this->ID;
+}
+
 bool Empregado::setSalario(uint novoSalario)
 {
 	if (novoSalario < 0)

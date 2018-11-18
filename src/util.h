@@ -124,17 +124,17 @@ public:
 };
 
 class ClienteNaoExiste {
-	int nif;
+	uint ID;
 public:
-	ClienteNaoExiste(int nif) {this->nif = nif;}
-	string getNIF() const {return to_string(nif);}
+	ClienteNaoExiste(uint ID) {this->ID = ID;}
+	string getID() const {return to_string(ID);}
 };
 
 class EmpregadoNaoExiste {
-	int nif;
+	uint ID;
 public:
-	EmpregadoNaoExiste(int nif) {this->nif = nif;}
-	string getNIF() const {return to_string(nif);}
+	EmpregadoNaoExiste(uint ID) {this->ID = ID;}
+	string getID() const {return to_string(ID);}
 };
 
 class ProdutoNaoExiste {

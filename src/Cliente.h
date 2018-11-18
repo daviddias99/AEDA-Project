@@ -10,6 +10,7 @@ public:
 
 	bool adicionaCompra(Venda*);
 	uint getNumCompras();
+	uint getID() const;
 	bool verHistorico();
 
 	ostream& printSimp(ostream& os);

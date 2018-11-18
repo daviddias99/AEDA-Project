@@ -76,15 +76,15 @@ int procura2(const vector<X>& v, string nome)
 }
 
 template<class X>
-int procura2(const vector<X>& v, uint nif)
+int procura2(const vector<X>& v, uint ID)
 {
 	int left = 0, right = v.size() - 1;
 	while (left <= right)
 	{
 		int middle = (left + right) / 2;
-		if (v[middle]->getNIF() < nif)
+		if (v[middle]->getID() < ID)
 			left = middle + 1;
-		else if (nif < v[middle]->getNIF())
+		else if (ID < v[middle]->getID())
 			right = middle - 1;
 		else return middle;
 

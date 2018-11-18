@@ -22,9 +22,9 @@ public:
 	bool addCliente(Cliente* cliente);
 	bool addEmpregado(Empregado* empregado);
 
-	bool removeFarmacia(string nome);
-	bool removeCliente(int clienteNIF);
-	bool removeEmpregado(int empregadoNIF);
+	void removeFarmacia(string nome);
+	void removeCliente(uint ID);
+	void removeEmpregado(uint ID);
 
 	Farmacia* getFarmacia(string nome) const;
 	Cliente* getCliente(int nif) const;
