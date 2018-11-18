@@ -8,8 +8,11 @@
 #include <algorithm>
 
 #include "Farmacia.h"
-#include "Pessoa.h"
+#include "Cliente.h"
+#include "Empregado.h"
 #include "util.h"
+
+enum ord_pessoas { id_cres = 0, id_dec, idade_cres, idade_dec, nome_cres, nome_dec, nif_cres, nif_dec, n_comp_cres, n_comp_dec, sal_cres, sal_dec };
 
 using namespace std;
 
@@ -36,8 +39,8 @@ public:
 
 	void sortFarmacias(char modo);
 	
-	void sortClientes(char modo);
-	void sortEmpregados(char modo);
+	void sortClientes(ord_pessoas modo);
+	void sortEmpregados(ord_pessoas modo);
 
 	void mostrarFarmacias();
 	void mostrarClientes();

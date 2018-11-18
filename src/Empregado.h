@@ -34,12 +34,16 @@ private:
 	static uint currentID;
 };
 	
+/*
 bool Empregado_SortFunc_Idade_Crescente(Empregado* p1, Empregado* p2);
 bool Empregado_SortFunc_Idade_Decrescente(Empregado* p1, Empregado* p2);
 bool Empregado_SortFunc_Nome_Crescente(Empregado* p1, Empregado* p2);
 bool Empregado_SortFunc_Nome_Decrescente(Empregado* p1, Empregado* p2);
 bool Empregado_SortFunc_NIF_Crescente(Empregado* p1, Empregado* p2);
 bool Empregado_SortFunc_NIF_Decrescente(Empregado* p1, Empregado* p2);
+*/
+bool Empregado_SortFunc_ID_Crescente(Empregado* p1, Empregado* p2);
+bool Empregado_SortFunc_ID_Decrescente(Empregado* p1, Empregado* p2);
 bool Empregado_SortFunc_Salario_Crescente(Empregado* p1, Empregado* p2);
 bool Empregado_SortFunc_Salario_Decrescente(Empregado* p1, Empregado* p2);
 bool Empregado_SortFunc_numVendas_Crescente(Empregado* p1, Empregado* p2);

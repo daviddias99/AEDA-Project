@@ -1,9 +1,6 @@
 #include "Sistema.h"
 
-Sistema::Sistema(): cadeia(Cadeia()) {
-
-
-}
+Sistema::Sistema() {}
 
 void Sistema::start()
 {
@@ -23,11 +20,19 @@ void Sistema::menu()
 	cin >> opcao;
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
+	string nome;
+
 	switch (opcao) {
 	case '1':
+		cout << "Qual o nome da nova cadeia? "; cin >> nome;
+		cadeia = Cadeia(nome);
 		menuGerencia();
 		break;
 	case '2':
+		cout << "Qual o nome da cadeia existente? "; cin >> nome;
+		cadeia = Cadeia(nome);
+		cadeia.carregarDados();
+		menuGerencia();
 		break;
 	case '0':
 		exit(0);
@@ -242,22 +247,24 @@ void Sistema::consultarClientes()
 {
 	cout << endl << "CONSULTAR CLIENTES" << endl;
 
-	char opcao;
+	uint opcao;
 
 	cout << "Ordenar por: " << endl;
-	cout << "0 - Idade - Crescente" << endl;
-	cout << "1 - Idade - Decrescente" << endl;
-	cout << "2 - Nome - Crescente" << endl;
-	cout << "3 - Nome - Decrescente" << endl;
-	cout << "4 - NIF - Crescente" << endl;
-	cout << "5 - NIF - Decrescente" << endl;
-	cout << "6 - Numero de Compras - Crescente" << endl;
-	cout << "7 - Numero de Compras - Decrescente" << endl;
+	cout << "0 - ID (crescente)" << endl;
+	cout << "1 - ID (decrescente)" << endl;
+	cout << "2 - idade (crescente)" << endl;
+	cout << "3 - idade (decrescente)" << endl;
+	cout << "4 - nome (crescente)" << endl;
+	cout << "5 - nome (decrescente)" << endl;
+	cout << "6 - NIF (crescente)" << endl;
+	cout << "7 - NIF (decrescente)" << endl;
+	cout << "8 - numero de compras (crescente)" << endl;
+	cout << "9 - numero de compras (decrescente)" << endl;
 
 	cout << "Opcao: ";
 	cin >> opcao;
 
-	cadeia.sortClientes(opcao);
+	cadeia.sortClientes((ord_pessoas) opcao);
 
 	cadeia.mostrarClientes();
 
@@ -268,24 +275,26 @@ void Sistema::consultarEmpregados()
 {
 	cout << endl << "CONSULTAR EMPREGADOS" << endl;
 
-	char opcao;
+	uint opcao;
 
 	cout << "Ordenar por: " << endl;
-	cout << "0 - Idade - Crescente" << endl;
-	cout << "1 - Idade - Decrescente" << endl;
-	cout << "2 - Nome - Crescente" << endl;
-	cout << "3 - Nome - Decrescente" << endl;
-	cout << "4 - NIF - Crescente" << endl;
-	cout << "5 - NIF - Decrescente" << endl;
-	cout << "6 - Salario - Crescente" << endl;
-	cout << "7 - Salario - Decrescente" << endl;
-	cout << "8 - Numero de vendas - Crescente" << endl;
-	cout << "9 - Numero de vendas - Decrescente" << endl;
+	cout << "0 - ID (crescente)" << endl;
+	cout << "1 - ID (decrescente)" << endl;
+	cout << "2 - idade (crescente)" << endl;
+	cout << "3 - idade (decrescente)" << endl;
+	cout << "4 - nome (crescente)" << endl;
+	cout << "5 - nome (decrescente)" << endl;
+	cout << "6 - NIF (crescente)" << endl;
+	cout << "7 - NIF (decrescente)" << endl;
+	cout << "8 - numero de vendas (crescente)" << endl;
+	cout << "9 - numero de vendas (decrescente)" << endl;
+	cout << "10 - salario (crescente)" << endl;
+	cout << "11 - salario (decrescente)" << endl;
 
 	cout << "Opcao: ";
 	cin >> opcao;
 
-	cadeia.sortEmpregados(opcao);
+	cadeia.sortEmpregados((ord_pessoas) opcao);
 
 	cadeia.mostrarEmpregados();
 
@@ -408,7 +417,7 @@ void Sistema::farmacia_menuConsultar()
 
 	//cout << *f;
 
-	cout << "1 - Consultar Empregado" << endl;
+	cout << "1 - Consultar Empregados" << endl;
 	cout << "2 - Consultar Stock" << endl;
 	cout << "3 - Consultar Vendas" << endl;
 	cout << "4 - Menu anterior" << endl;

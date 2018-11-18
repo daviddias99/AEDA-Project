@@ -65,6 +65,7 @@ bool Empregado::setCargo(string novoCargo)
 
 ostream & Empregado::printSimp(ostream & os)
 {
+	os << ID << "\\";
 	Pessoa::printSimp(os);
 
 	os << "\\" << farmaciaNome << "\\" << cargo << "\\" << salario << "\\";
@@ -86,6 +87,7 @@ ostream & operator<<(ostream & os, const Empregado & emp)
 
 uint Empregado::currentID = 0;
 
+/*
 
 bool Empregado_SortFunc_Idade_Crescente(Empregado* p1, Empregado* p2) {
 
@@ -166,6 +168,37 @@ bool Empregado_SortFunc_NIF_Decrescente(Empregado* p1, Empregado* p2) {
 	if (p1->getNIF() > p2->getNIF())
 		return true;
 	else if (p1->getNIF() == p2->getNIF())
+	{
+		if (p1->getNome() < p2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+*/
+
+bool Empregado_SortFunc_ID_Crescente(Empregado* p1, Empregado* p2) {
+
+	if (p1->getID() < p2->getID())
+		return true;
+	else if (p1->getID() == p2->getID())
+	{
+		if (p1->getNome() < p2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool Empregado_SortFunc_ID_Decrescente(Empregado* p1, Empregado* p2) {
+
+	if (p1->getID() > p2->getID())
+		return true;
+	else if (p1->getID() == p2->getID())
 	{
 		if (p1->getNome() < p2->getNome())
 			return true;

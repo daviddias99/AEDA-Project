@@ -32,6 +32,7 @@ bool Cliente::verHistorico() {
 
 ostream & Cliente::printSimp(ostream & os)
 {
+	os << ID << "\\";
 	Pessoa::printSimp(os);
 
 
@@ -44,6 +45,7 @@ ostream & Cliente::printSimp(ostream & os)
 
 uint Cliente::currentID = 0;
 
+/*
 bool Cliente_SortFunc_Idade_Crescente(Cliente* p1, Cliente* p2) {
 
 	if (p1->getIdade() < p2->getIdade())
@@ -132,6 +134,38 @@ bool Cliente_SortFunc_NIF_Decrescente(Cliente* p1, Cliente* p2) {
 	else
 		return false;
 }
+*/
+
+bool Cliente_SortFunc_ID_Crescente(Cliente* p1, Cliente* p2) {
+
+	if (p1->getID() < p2->getID())
+		return true;
+	else if (p1->getID() == p2->getID())
+	{
+		if (p1->getNome() < p2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool Cliente_SortFunc_ID_Decrescente(Cliente* p1, Cliente* p2) {
+
+	if (p1->getID() > p2->getID())
+		return true;
+	else if (p1->getID() == p2->getID())
+	{
+		if (p1->getNome() < p2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
 
 bool Cliente_SortFunc_numCompras_Crescente(Cliente* p1, Cliente* p2) {
 

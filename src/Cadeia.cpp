@@ -29,7 +29,7 @@ bool Cadeia::addCliente(Cliente* cliente)
 	if(procura2(clientes, cliente) != -1) return false;
 
 	clientes.push_back(cliente);
-	sort(clientes.begin(), clientes.end(), Cliente_SortFunc_NIF_Crescente);
+	sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Crescente);
 	return true;
 }
 
@@ -38,7 +38,7 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 	if(procura2(empregados, empregado) != -1) return false;
 
 	empregados.push_back(empregado);
-	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
+	sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
 	return true;
 }
 
@@ -57,7 +57,7 @@ void Cadeia::removeCliente(uint ID)
 	int i = procura2(clientes, ID);
 	if(i != -1) {
 		clientes.erase(clientes.begin() +i);
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_NIF_Crescente);
+		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Crescente);
 	} 
 	else throw ClienteNaoExiste(ID);
 }
@@ -67,7 +67,7 @@ void Cadeia::removeEmpregado(uint ID)
 	int i = procura2(empregados, ID);
 	if(i != -1) {
 		empregados.erase(empregados.begin()+i);
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
 	}
 	else throw EmpregadoNaoExiste(ID);
 }
@@ -112,6 +112,167 @@ unsigned int Cadeia::getNumClientes() const
 }
 
 
+
+
+void Cadeia::sortFarmacias(char modo)
+{
+	switch (modo) {
+	case '1':
+		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
+		break;
+	case '2':
+		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Decrescente);
+		break;
+	case '3':
+		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_TamanhoStock_Crescente);
+		break;
+	case '4':
+		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_TamanhoStock_Decrescente);
+		break;
+	case '5':
+		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_NumVendas_Crescente);
+		break;
+	case '6':
+		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_NumVendas_Decrescente);
+		break;
+	}
+}
+
+void Cadeia::sortClientes(ord_pessoas modo)
+{
+	switch (modo) {
+	case id_cres:
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
+		break;
+	case id_dec:
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Decrescente);
+		break;
+	case idade_cres:
+		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_Idade_Crescente);
+		break;
+	case idade_dec:
+		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_Idade_Decrescente);
+		break;
+	case nome_cres:
+		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_Nome_Crescente);
+		break;
+	case nome_dec:
+		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_Nome_Decrescente);
+		break;
+	case nif_cres:
+		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Crescente);
+		break;
+	case nif_dec:
+		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Decrescente);
+		break;
+	case n_comp_cres:
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_numCompras_Crescente);
+		break;
+	case n_comp_dec:
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_numCompras_Decrescente);
+		break;
+	}
+}
+
+void Cadeia::sortEmpregados(ord_pessoas modo)
+{
+	switch (modo) {
+	case id_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
+		break;
+	case id_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Decrescente);
+		break;
+	case idade_cres:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Crescente);
+		break;
+	case idade_dec:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Decrescente);
+		break;
+	case nome_cres:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Crescente);
+		break;
+	case nome_dec:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Decrescente);
+		break;
+	case nif_cres:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
+		break;
+	case nif_dec:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Decrescente);
+		break;
+	case n_comp_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Crescente);
+		break;
+	case n_comp_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Decrescente);
+		break;
+	case sal_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Crescente);
+		break;
+	case sal_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Decrescente);
+		break;
+	}
+}
+
+void Cadeia::mostrarFarmacias()
+{
+	for (size_t i = 0; i < farmacias.size(); i++);
+		//escreve(cout, *farmacias.at(i), 0);
+
+	sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
+}
+
+void Cadeia::mostrarClientes()
+{
+	for(size_t i = 0; i < clientes.size(); i++)
+		//escreve(cout, *clientes.at(i), 0);
+
+	sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Crescente);
+}
+
+void Cadeia::mostrarEmpregados()
+{
+	for(size_t i = 0; i < empregados.size(); i++)
+		//escreve(cout, *clientes.at(i), 0);
+
+	sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
+}
+
+
+void Cadeia::guardarDados()
+{
+	string nomeFichFarmacias = nome + "-farmacias.txt";
+
+	ofstream fichFarmacias;
+	fichFarmacias.open(nomeFichFarmacias);
+
+	for (vector<Farmacia *>::const_iterator it = farmacias.begin(); it != farmacias.end(); it++) {
+
+		(*it)->printSimp(fichFarmacias) << endl;
+	}
+
+	string nomeFichClientes = nome + "-clientes.txt";
+
+	ofstream fichClientes;
+	fichClientes.open(nomeFichClientes);
+
+	for (vector<Cliente *>::const_iterator it = clientes.begin(); it != clientes.end(); it++) {
+
+		(*it)->printSimp(fichClientes) << endl;
+	}
+
+	string nomeFichEmpregados = nome + "-empregados.txt";
+
+	ofstream fichEmpregados;
+	fichEmpregados.open(nomeFichEmpregados);
+
+	for (vector<Empregado *>::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
+		(*it)->printSimp(fichEmpregados) << endl;
+	}
+}
+
 void Cadeia::carregarDados() {
 
 	carregarFarmacias();
@@ -148,152 +309,5 @@ void Cadeia::carregarFarmacias() {
 			Farmacia * farmacia = new Farmacia(linha);
 			farmacias.push_back(farmacia);
 		}
-	}
-}
-
-void Cadeia::sortFarmacias(char modo)
-{
-	switch (modo) {
-	case '1':
-		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
-		break;
-	case '2':
-		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Decrescente);
-		break;
-	case '3':
-		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_TamanhoStock_Crescente);
-		break;
-	case '4':
-		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_TamanhoStock_Decrescente);
-		break;
-	case '5':
-		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_NumVendas_Crescente);
-		break;
-	case '6':
-		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_NumVendas_Decrescente);
-		break;
-	}
-}
-
-void Cadeia::sortClientes(char modo)
-{
-	switch (modo) {
-	case '0':
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Idade_Crescente);
-		break;
-	case '1':
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Idade_Decrescente);
-		break;
-	case '2':
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Nome_Crescente);
-		break;
-	case '3':
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_Nome_Decrescente);
-		break;
-	case '4':
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_NIF_Crescente);
-		break;
-	case '5':
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_NIF_Decrescente);
-		break;
-	case '6':
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_numCompras_Crescente);
-		break;
-	case '7':
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_numCompras_Decrescente);
-		break;
-	}
-}
-
-void Cadeia::sortEmpregados(char modo)
-{
-	switch (modo) {
-	case '0':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Idade_Crescente);
-		break;
-	case '1':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Idade_Decrescente);
-		break;
-	case '2':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Nome_Crescente);
-		break;
-	case '3':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Nome_Decrescente);
-		break;
-	case '4':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
-		break;
-	case '5':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Decrescente);
-		break;
-	case '6':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Crescente);
-		break;
-	case '7':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Decrescente);
-		break;
-	case '8':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Crescente);
-		break;
-	case '9':
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Decrescente);
-		break;
-	}
-}
-
-void Cadeia::mostrarFarmacias()
-{
-	for (size_t i = 0; i < farmacias.size(); i++);
-		//escreve(cout, *farmacias.at(i), 0);
-
-	sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
-}
-
-void Cadeia::mostrarClientes()
-{
-	for(size_t i = 0; i < clientes.size(); i++)
-		//escreve(cout, *clientes.at(i), 0);
-
-	sort(clientes.begin(), clientes.end(), Cliente_SortFunc_NIF_Crescente);
-}
-
-void Cadeia::mostrarEmpregados()
-{
-	for(size_t i = 0; i < empregados.size(); i++)
-		//escreve(cout, *clientes.at(i), 0);
-
-	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
-}
-
-
-void Cadeia::guardarDados()
-{
-	string nomeFichFarmacias = "farmacias.txt";
-
-	ofstream fichFarmacias;
-	fichFarmacias.open(nomeFichFarmacias);
-
-	for (vector<Farmacia *>::const_iterator it = farmacias.begin(); it != farmacias.end(); it++) {
-
-		(*it)->printSimp(fichFarmacias) << endl;
-	}
-
-	string nomeFichClientes = "clientes.txt";
-
-	ofstream fichClientes;
-	fichClientes.open(nomeFichClientes);
-
-	for (vector<Cliente *>::const_iterator it = clientes.begin(); it != clientes.end(); it++) {
-
-		(*it)->printSimp(fichClientes) << endl;
-	}
-
-	string nomeFichEmpregados = "empregados.txt";
-
-	ofstream fichEmpregados;
-	fichEmpregados.open(nomeFichEmpregados);
-
-	for (vector<Empregado *>::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
-		(*it)->printSimp(fichEmpregados) << endl;
 	}
 }
