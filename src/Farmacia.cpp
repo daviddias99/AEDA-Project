@@ -92,21 +92,8 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 	else return false;
 }
 
-void Farmacia::remEmpregado(int nif)
-{
-	int i = procura2(empregados, nif);
-	if( i != -1) {
-		if(empregados[i]->getCargo() == "gerente") 
-			this->setGerente(NULL);
-		Empregado * temp = empregados.at(i);
-		empregados.erase(empregados.begin() + i);
-		delete temp;
-		return;
-	}
-	throw EmpregadoNaoExiste(nif);
-}
 
-bool Farmacia::removeQuantidade(int codigo, uint quantidade)
+bool Farmacia::removeQuantidade(long unsigned int codigo, uint quantidade)
 {
 	map<Produto*, unsigned int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
@@ -123,7 +110,7 @@ bool Farmacia::removeQuantidade(int codigo, uint quantidade)
 	throw ProdutoNaoExiste(codigo);
 }
 
-void Farmacia::remProduto(int codigo)
+void Farmacia::remProduto(long unsigned int codigo)
 {
 	map<Produto *, unsigned int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
@@ -226,6 +213,11 @@ void Farmacia::consultarQuantidades() const
 	for(it = stock.begin(); it != stock.end(); it++) {
 		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second;
 	}
+}
+
+bool Farmacia::efetuaVenda(Empregado * empregado, Cliente * cliente, map<Produto*, unsigned int> produtos)
+{
+	return false;
 }
 
 /*

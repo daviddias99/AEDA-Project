@@ -6,6 +6,7 @@
 #include <string>
 #include "Produto.h"
 #include "Receita.h"
+#include "util.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ private:
 	const string nomeCliente;
 	const string nomeEmpregado;
 	map<Produto *, unsigned int> produtos;
+	Timestamp timestamp_venda;
 };
 
 #endif /* VENDA_H */

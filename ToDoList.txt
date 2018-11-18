@@ -1,3 +1,0 @@
-Problemas a resolver:
-
-- Resolver problemas de cins e getlines

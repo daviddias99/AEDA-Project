@@ -20,7 +20,7 @@ public:
 	Morada();
 	Morada(string morada, string codigoPostal, string cidade);
 	Morada(string simp);
-	// bool mudaMorada(Morada novaMorada);
+	bool mudaMorada(Morada novaMorada);
 	friend ostream& operator<< (ostream& os, const Morada& mor);
 	ostream& printSimp(ostream& os) const;
 private:
@@ -76,23 +76,6 @@ public:
 	string getTstamp();
 };
 
-/*
-class CartaoCidadao {
-
-public:
-
-	CartaoCidadao(string n = "NOME_DEFAULT",Data dNasc = Data(), uint  nif = 0, uint ncc = 0, uint nss = 0, uint nus = 0, char sex = 'D', float altura = 0.00, string nacionalidade = "DFT");
-
-	const string nome;
-	const Data dataNascimento;
-	const uint  NIF;
-	const uint  NCC;
-	const uint  NSS;
-	const uint  NUS;
-	char sexo;
-	float altura;
-	string nacionalidade;
-}; */
 
 // ----------Funções----------
 
@@ -166,6 +149,18 @@ class DataInvalida {
 };
 
 class TimeInvalido {
+
+};
+
+class CargoInvalido {
+private:
+
+	string cargo;
+
+public:
+
+	CargoInvalido(string n) { this->cargo = n; };
+	string getName() { return cargo; };
 
 };
 

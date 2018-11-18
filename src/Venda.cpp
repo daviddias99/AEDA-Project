@@ -1,6 +1,9 @@
 #include "Venda.h"
 
-Venda::Venda(string client, string empreg) : nomeCliente(client), nomeEmpregado(empreg) {}
+Venda::Venda(string client, string empreg) : nomeCliente(client), nomeEmpregado(empreg) {
+
+	this->timestamp_venda = Timestamp();
+}
 
 map<Produto, unsigned int> Venda::addReceita(const Receita & receita) {
 

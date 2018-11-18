@@ -21,6 +21,13 @@ Morada::Morada(string simp) {
 	cidade = simp;
 }
 
+bool Morada::mudaMorada(Morada novaMorada)
+{
+	*this = novaMorada;
+
+	return true;
+}
+
 
 ostream& Morada::printSimp(ostream& os) const {
 
@@ -338,10 +345,4 @@ int procura(const vector <T*> &v, int nif)
 }
 */
 
-/*CartaoCidadao::CartaoCidadao(string n, Data dNasc, uint nif, uint ncc, uint nss, uint nus, char sex, float altura, string nacionalidade) :nome(n), NIF(nif), NCC(ncc), NSS(nss), NUS(nus) {
 
-	this->sexo = sex;
-	this->nacionalidade = nacionalidade;
-	this->altura = altura;
-
-} */

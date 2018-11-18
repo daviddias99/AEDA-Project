@@ -22,10 +22,9 @@ public:
 	virtual ~Farmacia();
 	void addProduto(Produto *produto, int quantidade);
 	bool addEmpregado(Empregado* empregado);
-	void remProduto(int codigo);
+	void remProduto(long unsigned int codigo);
 	bool setGerente(Empregado* novoGerente);
-	bool removeQuantidade(int codigo, uint quantidade);
-	void remEmpregado(int nif);
+	bool removeQuantidade(long unsigned int codigo, uint quantidade);
 	void adicionarVenda(Venda* v1);
 
 	string getNome() const;
@@ -47,6 +46,9 @@ public:
 
 	void consultarQuantidades() const;
 	//void mostrarVendas() const;
+
+	bool efetuaVenda(Empregado* empregado, Cliente* cliente, map<Produto*, unsigned int> produtos);
+
 private:
 	string nome;
 	Morada morada;

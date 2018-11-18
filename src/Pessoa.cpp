@@ -3,6 +3,7 @@
 using namespace std;
 
 
+
 Pessoa::Pessoa(string nome, uint nif, Data dataNasc, Morada morada): nome(nome), NIF(nif),dataNascimento(dataNasc),morada(morada)
 {
 }
@@ -21,6 +22,7 @@ Morada Pessoa::getMorada() const
 {
 	return this->morada;
 }
+
 uint Pessoa::getIdade() const
 {
 
@@ -60,9 +62,14 @@ bool Pessoa::setMorada(Morada newMorada)
 }
 
 
-
-Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo): Pessoa(nome,nif,dataNasc,morada), farmaciaNome(farmaciaNome), salario(sal), cargo(cargo)
+Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo): Pessoa(nome,nif,dataNasc,morada), farmaciaNome(farmaciaNome), salario(sal)
 {
+	this->ID = currentID;
+	currentID++;
+
+	if ((cargo != "gerente") || (cargo != "empregado"))
+		throw CargoInvalido(cargo);
+
 }
 
 uint Empregado::getSalario() const
@@ -137,14 +144,14 @@ ostream & Cliente::printSimp(ostream & os)
 	return os;
 }
 
-
-
-
-
+uint Empregado::currentID = 0;
 
 
 Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada): Pessoa(nome,nif,dataNasc,morada)
 {
+	this->ID = currentID;
+	currentID++;
+
 }
 
 bool Cliente::adicionaCompra(Venda * novaVenda)
@@ -164,6 +171,8 @@ bool Cliente::verHistorico() {
 	return true;
 }
 
+uint Cliente::currentID = 0;
+
 
 ostream & operator<<(ostream & os, const Empregado & emp)
 {
@@ -171,7 +180,6 @@ ostream & operator<<(ostream & os, const Empregado & emp)
 
 	return os;
 }
-
 
 
 bool Pessoa_SortFunc_Idade_Crescente(Pessoa* p1, Pessoa* p2) {
@@ -500,8 +508,6 @@ bool Cliente_SortFunc_NIF_Decrescente(Cliente* p1, Cliente* p2) {
 	else
 		return false;
 }
-
-
 
 bool Cliente_SortFunc_numCompras_Crescente(Cliente* p1, Cliente* p2) {
 

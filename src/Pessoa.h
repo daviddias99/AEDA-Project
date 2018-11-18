@@ -24,7 +24,7 @@ public:
 	bool setMorada(Morada novaMorada);
 
 
-private:
+protected:
 	const string nome;
 	const Data dataNascimento;
 	const uint NIF;
@@ -56,10 +56,12 @@ public:
 	}
 
 private:
-	uint  salario;
+	uint   salario;
 	string farmaciaNome;
 	string cargo;
 	vector<Venda*> historicoVendas;
+	uint ID;
+	static uint currentID;
 };
 
 class Cliente:public Pessoa {
@@ -80,6 +82,8 @@ public:
 
 private:
 	vector<Venda*> historicoCompras;
+	uint ID;
+	static uint currentID;
 };
 
 bool Pessoa_SortFunc_Idade_Crescente(Pessoa* p1, Pessoa* p2);

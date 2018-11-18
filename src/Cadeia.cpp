@@ -42,7 +42,7 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 	return true;
 }
 
-void Cadeia::removeFarmacia(string nome)
+bool Cadeia::removeFarmacia(string nome)
 {
 	int i = procura2(farmacias, nome);
 	if(i != -1) {
@@ -53,7 +53,7 @@ void Cadeia::removeFarmacia(string nome)
 	throw FarmaciaNaoExiste(nome);
 }
 
-void Cadeia::removeCliente(int nif)
+bool Cadeia::removeCliente(int nif)
 {
 	int i = procura2(clientes, nif);
 	if(i != -1) {
@@ -64,7 +64,7 @@ void Cadeia::removeCliente(int nif)
 	throw ClienteNaoExiste(nif);
 }
 
-void Cadeia::removeEmpregado(int nif)
+bool Cadeia::removeEmpregado(int nif)
 {
 	int i = procura2(empregados, nif);
 	if(i != -1) {
