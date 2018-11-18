@@ -5,7 +5,7 @@
 
 class Medicamento : public Produto {
 public:
-	Medicamento(long int cod, string n, string desc, float pr, bool vendSemRec, bool pdSerRec, float descRec);
+	Medicamento(unsigned long int cod, string n, string desc, float pr, float i, bool vendSemRec, bool pdSerRec, float descRec);
 	float descontoComReceita() const;
 	bool podeSerReceitado() const;
 	bool vendidoSemReceita() const;

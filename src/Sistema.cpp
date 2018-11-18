@@ -25,7 +25,6 @@ void Sistema::menu()
 		menuGerencia();
 		break;
 	case '2':
-		//carregarCadeia();
 		break;
 	case '0':
 		exit(0);
@@ -225,7 +224,7 @@ void Sistema::consultarFarmacias()
 
 	cadeia.sortFarmacias(opcao);
 
-	cadeia.mostrarFarmacias();
+	//cadeia.mostrarFarmacias();
 
 	gerirFarmacias();
 }
@@ -310,7 +309,7 @@ void Sistema::farmacia_menuAdicionar()
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	switch (opcao) {
-	case '2':
+	case '1':
 		farmacia_adicionarVenda();
 		break;
 	case '2':
@@ -426,10 +425,11 @@ void Sistema::farmacia_adicionarVenda()
 {
 	cout << endl << "ADICIONAR VENDA" << endl;
 
-	Venda* v1;
-	cin >> *v1;
+	//Venda* v1;
 
-	f->adicionarVenda(v1);
+	//cin >> *v1;
+
+	//f->adicionarVenda(v1);
 
 	farmacia_menuAdicionar();
 }
@@ -438,7 +438,7 @@ void Sistema::farmacia_menuConsultar()
 {
 	cout << endl << "CONSULTAR FARMACIA" << endl;
 
-	escreve(cout, *f, 0);
+	//escreve(cout, *f, 0);
 
 	cout << "1 - Consultar empregado" << endl;
 	cout << "2 - Consultar stock" << endl;
@@ -574,7 +574,7 @@ void Sistema::farmacia_consultarVendas()
 {
 	cout << endl << "CONSULTAR VENDAS" << endl;
 
-	f->mostrarVendas();
+	//f->mostrarVendas();
 
 	farmacia_menuConsultar();
 }
@@ -615,9 +615,9 @@ void Sistema::farmacia_adicionarProduto()
 {
 	cout << endl << "ADICIONAR PRODUTO" << endl;
 
-	long int codigo;
+	unsigned long int codigo;
 	string nome, descricao;
-	float preco;
+	float preco, iva;
 	int quantidade;
 
 	cout << "Codigo: ";
@@ -629,12 +629,14 @@ void Sistema::farmacia_adicionarProduto()
 	getline(cin, descricao);
 	cout << "Preco: ";
 	cin >> preco;
+	cout << "IVA: ";
+	cin >> iva;
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 	cout << "Quantidade a adicionar: ";
 	cin >> quantidade;
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
-	Produto* p1 = new Produto(codigo, nome, descricao, preco);
+	Produto* p1 = new Produto(codigo, nome, descricao, preco, iva);
 	f->addProduto(p1, quantidade);
 
 	cout << "Produto adicionado" << endl;

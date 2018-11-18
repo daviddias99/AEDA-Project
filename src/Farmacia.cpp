@@ -1,6 +1,55 @@
 #include "Farmacia.h"
 
-Farmacia::Farmacia(string nome, Morada* morada) :nome(nome), morada(morada) {}
+Farmacia::Farmacia(string nome, Morada morada) :nome(nome), morada(morada) {}
+
+Farmacia::Farmacia(string simp)
+{
+	Morada morada;
+	string nome, linha, nome_prod, desc_prod, produtoSimp;
+	uint quant;
+
+	float preco_prod, iva_prod, desc_receita;
+	unsigned long int cod_produto;
+	bool vend_sem_rec, pode_ser_rec;
+
+	nome = linha.substr(0, linha.find_first_of("\\"));
+	linha = linha.substr(linha.find_first_of("\\") + 1);
+	morada = Morada(linha.substr(0, linha.find_first_of("\\")));
+	linha = linha.substr(linha.find_first_of("\\"));
+	
+		
+	while (linha != "!") {
+		produtoSimp = linha.substr(1, linha.find_first_of('#'));
+		quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
+		linha = linha.substr(linha.find_first_of('!'));
+
+		cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+		linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+		nome_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
+		linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+		desc_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
+		linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+		preco_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+		linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+		iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
+
+		if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3) {
+			stock.insert(pair<Produto *, uint>(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant));
+		}
+		else {
+			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+			vend_sem_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+			pode_ser_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+			desc_receita = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
+
+			stock.insert(pair<Produto *, uint>(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant));
+		}
+	}
+}
 
 Farmacia:: ~Farmacia()
 {
@@ -108,7 +157,7 @@ string Farmacia::getNome() const
 	return nome;
 }
 
-Morada* Farmacia::getMorada() const
+Morada Farmacia::getMorada() const
 {
 	return morada;
 }
@@ -179,6 +228,7 @@ void Farmacia::consultarQuantidades() const
 	}
 }
 
+/*
 void Farmacia::mostrarVendas() const
 {
 	for(size_t i = 0; i < vendas.size(); i++)
@@ -207,6 +257,7 @@ ostream& escreve (ostream& os, const Farmacia& f1, int modo) //Modo = 0 -> Ecra;
 
 	return os;
 }
+*/
 
 unsigned int Farmacia::numEmpregados() const
 {
@@ -292,12 +343,10 @@ ostream& Farmacia::printSimp(ostream& os) const {
 	
 	for (map<Produto *, unsigned int>::const_iterator it = stock.begin(); it != stock.end(); it++) {
 
-		os << "!";
+		
 		it->first->printSimp(os);
-		os << "#" << it->second;
+		os << "#" << it->second << "!";
 	}
-
-	os << "\\" << endl;
 
 	return os;
 }

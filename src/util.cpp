@@ -15,9 +15,9 @@ Morada::Morada(string mor, string codigoPostal, string cidade) :
 
 Morada::Morada(string simp) {
 	endereco = simp.substr(0, simp.find_first_of('&'));
-	simp = simp.substr(simp.find_first_of('&') + 1, simp.length() - 1);
+	simp = simp.substr(simp.find_first_of('&') + 1);
 	codigoPostal = simp.substr(0, simp.find_first_of('&'));
-	simp = simp.substr(simp.find_first_of('&') + 1, simp.length() - 1);
+	simp = simp.substr(simp.find_first_of('&') + 1);
 	cidade = simp;
 }
 
@@ -182,7 +182,7 @@ string Timestamp::getTstamp()
 
 ostream & operator<<(ostream & os, const Morada & mor)
 {
-	os << mor.morada << endl << mor.codigoPostal << " " << mor.cidade << endl;
+	os << mor.endereco << endl << mor.codigoPostal << " " << mor.cidade << endl;
 
 	return os;
 

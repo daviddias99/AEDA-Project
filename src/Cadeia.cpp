@@ -1,12 +1,12 @@
 #include "Cadeia.h"
 
-Cadeia::Cadeia() {}
+Cadeia::Cadeia() : nome("SEM_NOME") {}
 
-//Cadeia::Cadeia(string n) : nome(n) {}
+Cadeia::Cadeia(string n) : nome(n) {}
 
 Cadeia::~Cadeia()
 {
-	for (size_t i = 0; i < this->clientes.size(); i++)
+	for (size_t i = 0; i < this->clientes.size(); i++) 
 		delete this->clientes.at(i);
 	for (size_t i = 0; i < this->farmacias.size(); i++)
 		delete this->farmacias.at(i);
@@ -38,7 +38,7 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 	if(procura2(empregados, empregado) != -1) return false;
 
 	empregados.push_back(empregado);
-	sort(empregados.begin(), empregados.end(), Cliente_SortFunc_NIF_Crescente);
+	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
 	return true;
 }
 
@@ -69,7 +69,7 @@ void Cadeia::removeEmpregado(int nif)
 	int i = procura2(empregados, nif);
 	if(i != -1) {
 		empregados.erase(empregados.begin()+i);
-		sort(empregados.begin(), empregados.end(), Cliente_SortFunc_NIF_Crescente);
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
 	}
 
 
@@ -125,31 +125,34 @@ void Cadeia::carregarDados() {
 	carregarClientes();
 }
 
+void Cadeia::carregarClientes()
+{
+}
+
+void Cadeia::carregarEmpregados()
+{
+}
+
 void Cadeia::carregarFarmacias() {
 
 
 	ifstream ficheiro;
 	ficheiro.open("farmacias.txt");
-	Morada morada;
-	string nome;
 	string linha;
 
 	getline(ficheiro, linha);
 	if (linha != "") {
-
-		nome = linha.substr(0, linha.find_first_of("\\"));
-		linha = linha.substr(linha.find_first_of("\\") + 1, linha.length() - 1);
-		morada = Morada(linha.substr(0, linha.find_first_of("\\")));
-
-		
-
+		Farmacia * farmacia = new Farmacia(linha);
+		farmacias.push_back(farmacia);
 	}
 
 	while (!ficheiro.eof()) {
-
+		getline(ficheiro, linha);
+		if (linha != "") {
+			Farmacia * farmacia = new Farmacia(linha);
+			farmacias.push_back(farmacia);
+		}
 	}
-
-
 }
 
 void Cadeia::sortFarmacias(char modo)
@@ -176,11 +179,13 @@ void Cadeia::sortFarmacias(char modo)
 	}
 }
 
+/*
 void Cadeia::mostrarFarmacias() const
 {
 	for(size_t i = 0; i < farmacias.size(); i++)
 		escreve(cout, *farmacias.at(i), 0);
 }
+*/
 
 void Cadeia::guardarDados()
 {

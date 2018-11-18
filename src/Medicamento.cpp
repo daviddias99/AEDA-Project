@@ -1,6 +1,6 @@
 #include "Medicamento.h"
 
-Medicamento::Medicamento(long int cod, string n, string desc, float pr, bool vendSemRec, bool pdSerRec, float descRec): Produto(cod, n, desc, pr), vendidoSemRec(vendSemRec), podeSerRec(pdSerRec), descComReceita(descRec) {
+Medicamento::Medicamento(unsigned long int cod, string n, string desc, float pr, float i, bool vendSemRec, bool pdSerRec, float descRec): Produto(cod, n, desc, pr, i), vendidoSemRec(vendSemRec), podeSerRec(pdSerRec), descComReceita(descRec) {
 }
 
 
@@ -18,9 +18,7 @@ bool Medicamento::podeSerReceitado() const {
 
 ostream& Medicamento::printSimp(ostream& os) const {
 	
-	Produto::printSimp(os);
-
-	os << "&" << vendidoSemRec << "&" << podeSerRec << "&" << descComReceita;
+	Produto::printSimp(os) << "&" << vendidoSemRec << "&" << podeSerRec << "&" << descComReceita;
 
 	return os;
 }

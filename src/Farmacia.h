@@ -6,16 +6,19 @@
 #include <map>
 #include <iomanip>
 #include <iostream>
+#include <sstream>
 
 #include "Pessoa.h"
 #include "Produto.h"
+#include "Medicamento.h"
 #include "util.h"
 
 using namespace std;
 
 class Farmacia {
 public:
-	Farmacia(string nome, Morada* Morada);
+	Farmacia(string nome, Morada Morada);
+	Farmacia(string simp);
 	virtual ~Farmacia();
 	void addProduto(Produto *produto, int quantidade);
 	bool addEmpregado(Empregado* empregado);
@@ -26,7 +29,7 @@ public:
 	void adicionarVenda(Venda* v1);
 
 	string getNome() const;
-	Morada* getMorada() const;
+	Morada getMorada() const;
 	Empregado* getGerente() const;
 	vector<Empregado*> getEmpregados(string nome) const;
 	Produto* getProduto(int codigo) const;
@@ -38,15 +41,15 @@ public:
 
 	bool operator == (const Farmacia & ph1) const;
 	bool operator < (const Farmacia & ph1) const;
-	friend ostream& escreve(ostream& os, const Farmacia& f1, int modo); //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
+	//friend ostream& escreve(ostream& os, const Farmacia& f1, int modo); //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
 
 	ostream& printSimp(ostream& os) const;
 
 	void consultarQuantidades() const;
-	void mostrarVendas() const;
+	//void mostrarVendas() const;
 private:
 	string nome;
-	Morada* morada;
+	Morada morada;
 	Empregado* gerente;
 	vector< Empregado* > empregados;
 	map< Produto *, unsigned int> stock;

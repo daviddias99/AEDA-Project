@@ -1,11 +1,12 @@
 #include "Produto.h"
 
 
-Produto::Produto(long int cod, string n, string desc, float pr) : codigo(cod), nome(n), descricao(desc) {
+Produto::Produto(long int cod, string n, string desc, float pr, float i) : codigo(cod), nome(n), descricao(desc) {
 	preco = pr;
+	iva = i;
 }
 
-long int Produto::getCodigo() const {
+long unsigned int Produto::getCodigo() const {
 	return codigo;
 }
 
@@ -43,7 +44,7 @@ ostream & operator<<(ostream & os, const Produto & prod)
 
 ostream& Produto::printSimp(ostream& os) const {
 
-	os << codigo << "&" << nome << "&" << descricao << "&" << preco;
+	os << codigo << "&" << nome << "&" << descricao << "&" << preco << "&" << iva;
 
 	return os;
 }

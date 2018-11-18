@@ -16,7 +16,7 @@ using namespace std;
 class Cadeia{
 public:
 	Cadeia();
-	//Cadeia(string n);
+	Cadeia(string n);
 	virtual ~Cadeia();
 	bool addFarmacia(Farmacia* Farmacia);
 	bool addCliente(Cliente* cliente);
@@ -35,10 +35,12 @@ public:
 	unsigned int getNumClientes() const;
 
 	void sortFarmacias(char modo);
+	/*
 	void sortClientes(char modo);
 	void sortEmpregados(char modo);
 
 	void mostrarFarmacias() const;
+	*/
 
 	void guardarDados();
 	void carregarDados();
@@ -51,7 +53,7 @@ private:
 	vector< Cliente* > clientes;
 	vector< Empregado* > empregados; //Ordenados por nif
 
-	//const string nome;
+	const string nome;
 };
 
 #endif /* SRC_CADEIA_H_ */

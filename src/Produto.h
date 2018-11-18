@@ -8,8 +8,8 @@ using namespace std;
 
 class Produto {
 public:
-	Produto(long int code, string n, string desc, float pr);
-	long int getCodigo() const;
+	Produto(long int code, string n, string desc, float pr, float i);
+	long unsigned int getCodigo() const;
 	string getNome() const;
 	string getDesc() const;
 	float getPreco() const;
@@ -19,10 +19,11 @@ public:
 
 	virtual ostream& printSimp(ostream& os) const;
 protected:
-	const long int codigo;
+	const long unsigned int codigo;
 	const string nome;
 	const string descricao;
 	float preco;
+	float iva;
 };
 
 
