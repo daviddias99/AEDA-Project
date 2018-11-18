@@ -211,7 +211,7 @@ void Farmacia::consultarQuantidades() const
 {
 	map<Produto*, unsigned int>::const_iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
-		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second;
+		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second << endl;;
 	}
 }
 
