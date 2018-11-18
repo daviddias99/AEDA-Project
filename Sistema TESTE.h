@@ -27,8 +27,6 @@ private:
 
 	void gerirFarmacias();
 
-	void realizarVenda();
-
 	void gerirFarmacia();
 	void farmacia_gerir();
 	void farmacia_menuAdicionar();
@@ -38,6 +36,7 @@ private:
 	void farmacia_adicionarEmpregado();
 	void farmacia_adicionarVenda();
 	void farmacia_removerProduto();
+	void farmacia_removerEmpregado();
 	void farmacia_consultarEmpregado();
 	void farmacia_consultarStock();
 	void farmacia_consultarQuantidades();

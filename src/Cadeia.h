@@ -54,7 +54,7 @@ private:
 	vector< Cliente* > clientes;
 	vector< Empregado* > empregados; //Ordenados por nif
 
-	const string nome;
+	string nome;
 };
 
 #endif /* SRC_CADEIA_H_ */

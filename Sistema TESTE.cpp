@@ -1,9 +1,6 @@
-#include "Sistema.h"
+#include "Sistema TESTE.h"
 
-Sistema::Sistema(): cadeia(Cadeia()) {
-
-
-}
+Sistema::Sistema() {}
 
 void Sistema::start()
 {
@@ -41,12 +38,12 @@ void Sistema::menu()
 void Sistema::menuGerencia()
 {
 	char opcao;
+	this->cadeia = Cadeia();
 
 	cout << endl << "GERIR CADEIA DE FARMACIAS" << endl;
 	cout << "1 - Gerir Farmacias" << endl;
 	cout << "2 - Gerir Clientes" << endl;
 	cout << "3 - Gerir Empregados" << endl;
-	cout << "4 - Realizar Venda" << endl;
 	cout << "0 - Sair da aplicacao" << endl;
 
 	cout << "Opcao: ";
@@ -63,8 +60,6 @@ void Sistema::menuGerencia()
 	case '3':
 		gerirEmpregados();
 		break;
-	case '4':
-		realizarVenda();
 	case '0':
 		sair();
 		break;
@@ -115,10 +110,6 @@ void Sistema::gerirFarmacias()
 	}
 }
 
-void Sistema::realizarVenda()
-{
-}
-
 void Sistema::gerirClientes()
 {
 	char opcao;
@@ -137,13 +128,13 @@ void Sistema::gerirClientes()
 
 	switch (opcao) {
 	case '1':
-		//gerirCliente();
+		gerirCliente();
 		break;
 	case '2':
-		//adicionarCliente();
+		adicionarCliente();
 		break;
 	case '3':
-		//removerCliente();
+		removerCliente();
 		break;
 	case '4':
 		consultarClientes();
@@ -401,32 +392,110 @@ void Sistema::farmacia_menuAdicionar()
 	}
 }
 
-// COMPLETAR
-
-void Sistema::adicionarFarmacia()
+void Sistema::farmacia_adicionarEmpregado()
 {
+	cout << endl << "ADICIONAR EMPREGADO" << endl;
 
+	string nome, cargo;;
+	
+	string dnStr, moradaStr;
+	unsigned int NIF, salario;
+	//Morada morada;
+
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "NIF: ";
+	cin >> NIF;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Data de Nascimento: ";
+	getline(cin, dnStr);
+	cout << "Morada: ";
+	getline(cin, moradaStr);
+	cout << "Salario: ";
+	cin >> salario;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Cargo: ";
+	getline(cin,cargo);
+
+	
+
+
+	Data dataNascimento = Data(dnStr);
+
+	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, Morada(), salario, this->f->getNome(), cargo);
+	this->f->addEmpregado(newEmp);
+	if (cargo == "gerente") {
+		this->f->setGerente(newEmp);
+	}
+
+
+	farmacia_menuAdicionar();
 }
 
-void Sistema::removerFarmacia()
+void Sistema::farmacia_removerProduto()
 {
+	cout << endl << "REMOVER PRODUTO" << endl;
 
+	int codigo, quantidade;
+	bool erro;
 
+	cout << "Codigo do produto: ";
+	cin >> codigo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Quantidade a remover( '0' para remover a quantidade total): ";
+	cin >> quantidade;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	try {
+		if(quantidade == 0) {
+			f->remProduto(codigo);
+			cout << "Produto removido." << endl;
+		}
+		else {
+			erro = f->removeQuantidade(codigo, quantidade);
+			if(!erro) cout << "Quantidade removida;" << endl;
+			else cout << "Erro! Se pretende remover a quantidade total do protudo, responda '0' a quantidade;" << endl;
+		}
+	} catch(ProdutoNaoExiste &p1) {
+		cout << "O produto de codigo " << p1.getCodigo() << " nao existe." << endl;
+	}
+
+	farmacia_menuRemover();
+}
+
+void Sistema::farmacia_removerEmpregado()
+{
+	cout << endl << "REMOVER EMPREGADO" << endl;
+
+	int nif;
+	cout << "NIF: ";
+	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	/*
+	try {
+		f->remEmpregado(nif);
+		cout << "Empregado removido." << endl;
+	} catch (EmpregadoNaoExiste &e) {
+		cout << "Nao existe nenhum empregado com o nif " << nif << ".\n";
+	}
+	*/
+	farmacia_menuRemover();
 }
 
 void Sistema::farmacia_adicionarVenda()
 {
+	cout << endl << "ADICIONAR VENDA" << endl;
 
+	//Venda* v1;
+
+	//cin >> *v1;
+
+	//f->adicionarVenda(v1);
+
+	farmacia_menuAdicionar();
 }
 
-
-//sem efeito
-void Sistema::farmacia_adicionarEmpregado()
-{
-
-} 
-
-//Luis
 void Sistema::farmacia_menuConsultar()
 {
 	cout << endl << "CONSULTAR FARMACIA" << endl;
@@ -468,20 +537,34 @@ void Sistema::farmacia_menuConsultar()
 	}
 }
 
-//Luis
 void Sistema::farmacia_consultarEmpregado()
 {
+	cout << endl << "CONSULTAR EMPREGADO" << endl;
 
+	if(!f->numEmpregados()) {
+		cout << "Nenhum empregado nesta farmacia. Adicione um primeiro." << endl;
+		farmacia_menuConsultar();
+	}
+
+	string nome;
+
+	cout << "Nome: ";
+	getline(cin, nome);
+
+	vector<Empregado*> v1 = f->getEmpregados(nome);
+
+	if(!v1.size()) {
+		cout << "Nao existe nenhum empregado com esse nome." << endl;
+		farmacia_menuConsultar();
+	}
+	else {
+		vector<Empregado*>::iterator it;
+		for(it = v1.begin(); it != v1.end(); it++)
+				cout << **it << endl;
+	}
+	farmacia_menuConsultar();
 }
 
-
-//Gaspar
-void Sistema::farmacia_removerProduto()
-{
-
-}
-
-//Gaspar
 void Sistema::farmacia_consultarStock()
 {
 	cout << endl << "CONSULTAR STOCK" << endl;
@@ -519,23 +602,45 @@ void Sistema::farmacia_consultarStock()
 	}
 }
 
-//Gaspar
 void Sistema::farmacia_consultarProduto()
 {
+	cout << endl << "CONSULTAR PRODUTO" << endl;
 
+	int codigo;
+
+	cout << "Codigo: ";
+	cin >> codigo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	Produto * p1 = NULL;
+	try {
+		p1 = f->getProduto(codigo);
+	} catch(ProdutoNaoExiste &p) {
+		cout << "O produto com o codigo " << p.getCodigo() << " nao existe." << endl;
+		farmacia_consultarStock();
+	}
+
+	cout << *p1;
+	farmacia_consultarStock();
 }
 
-//Gaspar
 void Sistema::farmacia_consultarQuantidades()
 {
+	cout << endl << "CONSULTAR QUANTIDADES" << endl;
 
+	f->consultarQuantidades();
+	farmacia_consultarStock();
 }
 
-void Sistema::farmacia_consultarVendas(){
+void Sistema::farmacia_consultarVendas()
+{
+	cout << endl << "CONSULTAR VENDAS" << endl;
 
+	//f->mostrarVendas();
+
+	farmacia_menuConsultar();
 }
 
-//Gaspar
 void Sistema::farmacia_menuRemover()
 {
 	char opcao;
@@ -554,7 +659,7 @@ void Sistema::farmacia_menuRemover()
 		farmacia_removerProduto();
 		break;
 	case '2':
-
+		farmacia_removerEmpregado();
 		break;
 	case '3':
 		farmacia_gerir();
@@ -568,44 +673,226 @@ void Sistema::farmacia_menuRemover()
 	}
 }
 
-//Gaspar
 void Sistema::farmacia_adicionarProduto()
 {
+	cout << endl << "ADICIONAR PRODUTO" << endl;
+
+	unsigned long int codigo;
+	string nome, descricao;
+	float preco, iva;
+	int quantidade;
+
+	cout << "Codigo: ";
+	cin >> codigo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "Descricao: ";
+	getline(cin, descricao);
+	cout << "Preco: ";
+	cin >> preco;
+	cout << "IVA: ";
+	cin >> iva;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Quantidade a adicionar: ";
+	cin >> quantidade;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	Produto* p1 = new Produto(codigo, nome, descricao, preco, iva);
+	f->addProduto(p1, quantidade);
+
+	cout << "Produto adicionado" << endl;
+	farmacia_menuAdicionar();
+}
+
+void Sistema::adicionarFarmacia()
+{
+	cout << endl << "ADICIONAR FARMACIA" << endl;
+
+	string nome, moradaStr;
+
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "Morada: ";
+	getline(cin, moradaStr);
+	Morada morada = Morada(moradaStr);
+	Farmacia* f = new Farmacia(nome, morada);
+
+	if(cadeia.addFarmacia(f)) cout << "Farmacia adicionada." << endl;
+	else cout << "Ja existe uma farmacia com o nome " << nome << endl;
+
+	gerirFarmacias();
+}
+
+void Sistema::removerFarmacia()
+{
+	cout << endl << "REMOVER FARMACIA" << endl;
+
+	string nome;
+
+	cout << "Nome: ";
+	getline(cin, nome);
+
+	try {
+		cadeia.removeFarmacia(nome);
+		cout << "Farmacia removida." << endl;
+	} catch (FarmaciaNaoExiste &f) {
+		cout << "A farmacia " << f.getNome() << " nao existe." << endl;
+	}
+
+	gerirFarmacias();
 
 }
 
-
-
-//David
 void Sistema::gerirCliente()
 {
+	cout << endl << "GERIR CLIENTE" << endl;
 
-	
+	int nif;
+
+	cout << "NIF: ";
+	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	try {
+		Cliente* c = cadeia.getCliente(nif);
+		//c.gerir();
+	} catch (ClienteNaoExiste &c1) {
+		cout << "O cliente com o nif " << c1.getNIF() << " nao existe." << endl;
+		gerirClientes();
+	}
 }
 
 void Sistema::adicionarCliente()
 {
+	cout << endl << "ADICIONAR CLIENTE" << endl;
 
+	string nome;
+
+	string dnStr, moradaStr;
+	unsigned int NIF;
+	//Morada morada;
+
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "NIF: ";
+	cin >> NIF;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Data de Nascimento: ";
+	getline(cin, dnStr);
+	cout << "Morada: ";
+	getline(cin, moradaStr);
+
+
+	Data dataNascimento = Data(dnStr);
+
+	Cliente* newCli= new Cliente(nome, NIF, dataNascimento, Morada());
+
+
+	if(cadeia.addCliente(c)) cout << "Cliente adicionado." << endl;
+	else cout << "O cliente " << c->getNome() << " com o nif " << c->getNIF() << " ja existe." << endl;
+
+	gerirClientes();
 }
 
 void Sistema::removerCliente()
 {
+	cout << endl << "REMOVER CLIENTE" << endl;
 
+	int nif;
+
+	cout << "NIF: ";
+	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	try {
+		cadeia.removeCliente(nif);
+		cout << "Cliente removido" << endl;
+	} catch (ClienteNaoExiste &c1) {
+		cout << "O cliente com o nif " << c1.getNIF() << " nao existe." << endl;
+	}
+
+	gerirClientes();
 }
 
 void Sistema::gerirEmpregado()
 {
+	cout << endl << "GERIR EMPREGADO" << endl;
 
+	int nif;
+
+	cout << "NIF: ";
+	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	try {
+		Empregado* e = this->cadeia.getEmpregado(nif);
+		//e.gerir();
+	} catch (EmpregadoNaoExiste &e1) {
+		cout << "O empregado com o nif " << e1.getNIF() << " nao existe." << endl;
+	}
+
+	gerirEmpregados();
 }
 
 void Sistema::adicionarEmpregado()
 {
+	cout << endl << "ADICIONAR EMPREGADO" << endl;
 
+	cout << endl << "ADICIONAR EMPREGADO" << endl;
+
+	string nome, cargo;;
+
+	string dnStr, moradaStr;
+	unsigned int NIF, salario;
+	//Morada morada;
+
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "NIF: ";
+	cin >> NIF;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Data de Nascimento: ";
+	getline(cin, dnStr);
+	cout << "Morada: ";
+	getline(cin, moradaStr);
+	cout << "Salario: ";
+	cin >> salario;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	cout << "Cargo: ";
+	cin >> cargo;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+
+
+	Data dataNascimento = Data(dnStr);
+
+	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, Morada(), salario, this->f->getNome(), cargo);
+
+	if(cadeia.addEmpregado(newEmp)) cout << "Empregado adicionado." << endl;
+	else cout << "O empregado " << e->getNome() << " com o nif " << e->getNIF() << " ja existe." << endl;
+
+	gerirEmpregados();
 }
 
 void Sistema::removerEmpregado()
 {
+	cout << endl << "REMOVER EMPREGADO" << endl;
 
+	int nif;
+
+	cout << "NIF: ";
+	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	try {
+		cadeia.removeEmpregado(nif);
+		cout << "Empregado removido." << endl;
+	} catch (EmpregadoNaoExiste &e1) {
+		cout << "O empregado com o nif " << e1.getNIF() << " nao existe." << endl;
+	}
+
+	gerirEmpregados();
 }
 
 

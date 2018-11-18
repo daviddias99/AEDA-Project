@@ -247,8 +247,8 @@ void Cadeia::sortEmpregados(char modo)
 
 void Cadeia::mostrarFarmacias()
 {
-	for(size_t i = 0; i < farmacias.size(); i++)
-		escreve(cout, *farmacias.at(i), 0);
+	for (size_t i = 0; i < farmacias.size(); i++);
+		//escreve(cout, *farmacias.at(i), 0);
 
 	sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
 }
@@ -268,7 +268,7 @@ void Cadeia::mostrarEmpregados()
 
 	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_NIF_Crescente);
 }
-*/
+
 
 void Cadeia::guardarDados()
 {
