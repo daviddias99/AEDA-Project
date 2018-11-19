@@ -9,11 +9,12 @@ public:
 	Cliente(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada());
 
 	bool adicionaCompra(Venda*);
-	uint getNumCompras();
+	uint getNumCompras() const;
 	uint getID() const;
 	bool verHistorico();
 
-	ostream& printSimp(ostream& os);
+	ostream& print(ostream& os) const;
+	ostream& printSimp(ostream& os) const;
 
 	friend bool operator<(const Cliente & e1, const Cliente & e2)
 	{

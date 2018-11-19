@@ -1,4 +1,3 @@
-
 #include "Empregado.h"
 
 Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
@@ -28,7 +27,7 @@ string Empregado::getCargo() const
 	return this->cargo;
 }
 
-uint Empregado::getNumVendas()
+uint Empregado::getNumVendas() const 
 {
 	return this->historicoVendas.size();
 }
@@ -63,7 +62,15 @@ bool Empregado::setCargo(string novoCargo)
 	return true;
 }
 
-ostream & Empregado::printSimp(ostream & os)
+ostream & Empregado::print(ostream & os) const
+{
+	os << "ID: " << ID << endl;
+	Pessoa::print(os) << endl << "Farmacia: " << farmaciaNome << endl << "Cargo: " << cargo << endl << "Salario: " << salario << "Numero de vendas: " << getNumVendas();
+
+	return os;
+}
+
+ostream & Empregado::printSimp(ostream & os) const
 {
 	os << ID << "\\";
 	Pessoa::printSimp(os);
@@ -76,7 +83,6 @@ ostream & Empregado::printSimp(ostream & os)
 
 	return os;
 }
-
 
 ostream & operator<<(ostream & os, const Empregado & emp)
 {

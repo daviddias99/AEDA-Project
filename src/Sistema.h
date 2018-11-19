@@ -20,10 +20,10 @@ private:
 	Empregado* e;
 	const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 
-	void menu();
-	void sair();
+	void menu(); //
+	void sair(); //
 
-	void menuGerencia();
+	void menuGerencia(); //
 
 	void gerirFarmacias();
 
@@ -46,15 +46,15 @@ private:
 	void removerFarmacia();
 	void consultarFarmacias();
 
-	void gerirClientes();
+	void gerirClientes(); //
 	void gerirCliente();
 	void cliente_gerir();
 
-	void adicionarCliente();
-	void removerCliente();
-	void consultarClientes();
+	void adicionarCliente(); //
+	void removerCliente(); //
+	void consultarClientes(); //
 
-	void gerirEmpregados();
+	void gerirEmpregados(); 
 	void gerirEmpregado();
 
 	void adicionarEmpregado();

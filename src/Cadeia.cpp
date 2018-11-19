@@ -218,26 +218,22 @@ void Cadeia::sortEmpregados(ord_pessoas modo)
 
 void Cadeia::mostrarFarmacias()
 {
-	for (size_t i = 0; i < farmacias.size(); i++);
-		//escreve(cout, *farmacias.at(i), 0);
+	for (size_t i = 0; i < farmacias.size(); i++)
+		farmacias.at(i)->print(cout);
 
 	sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
 }
 
 void Cadeia::mostrarClientes()
 {
-	for(size_t i = 0; i < clientes.size(); i++)
-		//escreve(cout, *clientes.at(i), 0);
-
-	sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Crescente);
+	for (size_t i = 0; i < clientes.size(); i++)
+		clientes.at(i)->print(cout);
 }
 
 void Cadeia::mostrarEmpregados()
 {
-	for(size_t i = 0; i < empregados.size(); i++)
-		//escreve(cout, *clientes.at(i), 0);
-
-	sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
+	for (size_t i = 0; i < empregados.size(); i++)
+		empregados.at(i)->print(cout);
 }
 
 
@@ -294,7 +290,7 @@ void Cadeia::carregarFarmacias() {
 
 
 	ifstream ficheiro;
-	ficheiro.open("farmacias.txt");
+	ficheiro.open(nome + "-farmacias.txt");
 	string linha;
 
 	getline(ficheiro, linha);

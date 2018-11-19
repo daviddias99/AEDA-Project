@@ -189,7 +189,7 @@ string Timestamp::getTstamp()
 
 ostream & operator<<(ostream & os, const Morada & mor)
 {
-	os << mor.endereco << endl << mor.codigoPostal << " " << mor.cidade << endl;
+	os << mor.endereco << endl << mor.codigoPostal << " " << mor.cidade;
 
 	return os;
 
@@ -197,7 +197,7 @@ ostream & operator<<(ostream & os, const Morada & mor)
 
 ostream & operator<<(ostream & os, const Data & d)
 {
-	os << setw(4) << d.ano << "-" << setfill('0') << setw(2) << d.mes << "-" << setfill('0') << setw(2) << d.dia;
+	os  << setfill('0') << setw(2) << d.dia << "-" << setfill('0') << setw(2) << d.mes << "-" << setw(4) << d.ano ;
 
 	return os;
 }

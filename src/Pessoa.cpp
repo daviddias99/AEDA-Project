@@ -46,10 +46,17 @@ uint Pessoa::getIdade() const
 
 }
 
-ostream& Pessoa::printSimp(ostream & os)
+ostream& Pessoa::printSimp(ostream & os) const
 {
 	os << nome << "\\" << dataNascimento << "\\" << NIF << "\\";
 	morada.printSimp(os);
+
+	return os;
+}
+ 
+ostream & Pessoa::print(ostream & os) const
+{
+	os << nome << endl << "Data de nascimento: " << dataNascimento << endl << "NIF: " << NIF << endl << morada;
 
 	return os;
 }

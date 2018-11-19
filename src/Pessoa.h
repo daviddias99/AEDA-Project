@@ -19,7 +19,8 @@ public:
 	Morada getMorada() const;
 	uint  getIdade() const;
 
-	virtual ostream& printSimp(ostream& os);
+	virtual ostream& printSimp(ostream& os) const;
+	virtual ostream& print(ostream& os) const;
 
 	bool setMorada(Morada novaMorada);
 

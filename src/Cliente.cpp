@@ -15,7 +15,7 @@ bool Cliente::adicionaCompra(Venda * novaVenda)
 	return true;
 }
 
-uint Cliente::getNumCompras()
+uint Cliente::getNumCompras() const
 {
 	return this->historicoCompras.size();
 }
@@ -30,7 +30,15 @@ bool Cliente::verHistorico() {
 	return true;
 }
 
-ostream & Cliente::printSimp(ostream & os)
+ostream & Cliente::print(ostream & os) const
+{
+	os << "ID: " << ID << endl;
+	Pessoa::print(os) << endl << "Numero de compras: " << getNumCompras();
+
+	return os;
+}
+
+ostream & Cliente::printSimp(ostream & os) const
 {
 	os << ID << "\\";
 	Pessoa::printSimp(os);

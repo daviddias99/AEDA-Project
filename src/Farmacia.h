@@ -45,6 +45,7 @@ public:
 	//friend ostream& escreve(ostream& os, const Farmacia& f1, int modo); //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
 
 	ostream& printSimp(ostream& os) const;
+	ostream& print(ostream& os) const;
 
 	void consultarQuantidades() const;
 	//void mostrarVendas() const;

@@ -10,16 +10,16 @@ public:
 	uint  getSalario() const;
 	string getNomeFarmacia() const;
 	string getCargo() const;
-	uint getNumVendas();
+	uint getNumVendas() const;
 	uint getID() const;
 
 	bool setSalario(uint  novoSalario);
 	bool setFarmacia(string novaFarmacia);
 	bool setCargo(string novoCargo);
 
-	ostream& printSimp(ostream& os);
+	ostream& print(ostream& os) const;
+	ostream& printSimp(ostream& os) const;
 
-	friend ostream& operator<< (ostream& os, const Empregado& mor);
 	friend bool operator<(const  Empregado& e1, const Empregado & e2)
 	{
 		return false;

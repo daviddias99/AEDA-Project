@@ -92,7 +92,6 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 	else return false;
 }
 
-
 bool Farmacia::removeQuantidade(long unsigned int codigo, uint quantidade)
 {
 	map<Produto*, unsigned int>::iterator it;
@@ -340,6 +339,11 @@ ostream& Farmacia::printSimp(ostream& os) const {
 		os << "#" << it->second << "!";
 	}
 
+	return os;
+}
+
+ostream & Farmacia::print(ostream & os) const
+{
 	return os;
 }
 
