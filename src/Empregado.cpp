@@ -2,12 +2,10 @@
 
 Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
 {
+	this->cargo = cargo;
+
 	this->ID = currentID;
 	currentID++;
-
-	if ((cargo != "gerente") || (cargo != "empregado"))
-		throw CargoInvalido(cargo);
-
 }
 
 uint Empregado::getSalario() const

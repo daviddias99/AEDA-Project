@@ -6,6 +6,8 @@
 const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 
 Morada user_getMorada();
+Data user_getData();
+Empregado* user_getEmpregado(Cadeia& cadeia);
 int getInputNumber(int limInf, int limSup);
 
 void showMenuInicial();
@@ -17,6 +19,7 @@ void gerirClientes(Cadeia& cadeia);
 void consultarClientes(Cadeia& cadeia);
 void gerirEmpregados(Cadeia& cadeia);
 void consultarEmpregados(Cadeia& cadeia);
+void adicionarEmpregado(Cadeia& cadeia);
 void gerirFarmacias(Cadeia& cadeia);
 void consultarFarmacias(Cadeia& cadeia);
 void adicionarFarmacia(Cadeia& cadeia);
@@ -271,6 +274,7 @@ void gerirEmpregados(Cadeia& cadeia)
 		case 2:
 			break;
 		case 3:
+			adicionarEmpregado(cadeia);
 			break;
 		case 4:
 			break;
@@ -323,8 +327,20 @@ void consultarEmpregados(Cadeia& cadeia)
 	cadeia.mostrarEmpregados();
 }
 
-///////////////////////////////////////////
-///////////////////////////////////////////
+void adicionarEmpregado(Cadeia& cadeia)
+{
+
+	Empregado* newEmp = user_getEmpregado(cadeia);
+
+	if (cadeia.addEmpregado(newEmp)) {
+
+		cout << "Empregado adicionado." << endl;
+	}
+	else {
+		cout << "O empregado " << newEmp->getNome() << " com o nif " << newEmp->getNIF() << " ja existe." << endl;
+	}
+}
+
 
 void gerirFarmacias(Cadeia& cadeia)
 {
@@ -397,7 +413,7 @@ void adicionarFarmacia(Cadeia& cadeia)
 		cout << "Ja existe uma farmacia com o nome " << nome << "." <<  endl;
 }
 
-Morada user_getMorada() {
+Morada user_getMorada(){
 
 	string morada_endereco, morada_cpostal, morada_localidade;
 	Morada morada;
@@ -417,8 +433,118 @@ Morada user_getMorada() {
 		}
 	}
 
+
 	cout << "-Localidade: ";
 	getline(cin, morada_localidade);
 
 	return Morada(morada_endereco, morada_cpostal, morada_localidade);
+}
+
+Empregado* user_getEmpregado(Cadeia& cadeia) {
+
+	string nome;
+	uint NIF;
+	Data dataNascimento;
+	Morada morada;
+	uint   salario;
+	string farmaciaNome;
+	string cargo;
+
+	cout << endl << "ADICIONAR EMPREGADO" << endl << endl;
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "NIF: ";
+
+	// validar input do NIF
+	while (!(cin >> NIF))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "NIF: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+
+	cout << "Salario: ";
+
+	// validar input do Salario
+	while (!(cin >> salario))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "Salario: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	
+	while (true) {
+		cout << "Farmacia: ";
+		getline(cin, farmaciaNome);
+
+		try
+		{
+			cadeia.getFarmacia(farmaciaNome);
+		}
+		catch (FarmaciaNaoExiste& f)
+		{
+			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		}
+		break;
+	}
+
+	cout << "Cargo: ";
+
+	getline(cin, cargo);
+
+	morada = user_getMorada();
+	dataNascimento = user_getData();
+
+	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, morada, salario, farmaciaNome, cargo);
+
+	return newEmp;
+}
+
+Data user_getData() {
+
+	Data dataNascimento;
+	string data_nascimentoStr;
+	bool inputValido = false;
+
+
+	while (!inputValido) {
+
+		cout << "Data de Nascimento: ";
+		getline(cin, data_nascimentoStr);
+		try {
+
+			dataNascimento = Data(data_nascimentoStr);
+		}
+		catch (DataInvalida& e) {
+			cout << "Erro: Data de nascimento inválida, tente outra vez." << endl;
+			continue;
+		}
+
+		inputValido = true;
+	}
+
+
+	return dataNascimento;
 }

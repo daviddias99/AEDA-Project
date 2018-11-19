@@ -44,7 +44,7 @@ ostream& Morada::printSimp(ostream& os) const {
 	return os;
 }
 
-Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
+Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia){
 
 	if (mes > 12)
 		throw DataInvalida();
@@ -56,7 +56,10 @@ Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
 
 Data::Data(string dataDMY)
 {
-	Data(stoi(dataDMY.substr(0, 2)), stoi(dataDMY.substr(3, 2)),stoi(dataDMY.substr(6, 4)));
+
+	dia = stoi(dataDMY.substr(0, 2));
+	mes = stoi(dataDMY.substr(3, 2));
+	ano = stoi(dataDMY.substr(6, 4));
 
 }
 
@@ -78,13 +81,12 @@ Data::Data() {
 
 	time_t tempoAtual = time(NULL);
 
-	tm* tempAtualStruct =  NULL;
+	tm* tempAtualStruct = new tm;// = NULL;
 	localtime_s(tempAtualStruct,&tempoAtual);
 
-	this->ano = tempAtualStruct->tm_year;
+	this->ano = tempAtualStruct->tm_year + 1900;
 	this->mes = tempAtualStruct->tm_mon;
 	this->dia = tempAtualStruct->tm_mday;
-
 }
 
 uint Data::getAno() const

@@ -679,6 +679,7 @@ Data user_getData() {
 	string data_nascimentoStr;
 	bool inputValido = false;
 
+
 	while (!inputValido) {
 
 		cout << "Data de Nascimento: ";
@@ -696,7 +697,7 @@ Data user_getData() {
 	}
 
 
-	return Data(data_nascimentoStr);
+	return dataNascimento;
 }
 
 Cliente* user_getCliente() {
@@ -923,16 +924,15 @@ void Sistema::gerirEmpregado()
 
 void Sistema::adicionarEmpregado()
 {
-	Empregado* newEmp = user_getEmpregado(this->cadeia);
+	Empregado* newEmp = user_getEmpregado(cadeia);
 
 	if (cadeia.addEmpregado(newEmp)) {
 
 		cout << "Empregado adicionado." << endl;
 	}
 	else {
-		cout << "O empregado " << e->getNome() << " com o nif " << e->getNIF() << " ja existe." << endl;
+		cout << "O empregado " << newEmp->getNome() << " com o nif " << newEmp->getNIF() << " ja existe." << endl;
 	}
-
 }
 
 void Sistema::removerEmpregado()
