@@ -9,6 +9,8 @@ Morada user_getMorada();
 Data user_getData();
 Empregado* user_getEmpregado(Cadeia& cadeia);
 int getInputNumber(int limInf, int limSup);
+string getInputString(string msg, string msgErr);
+
 
 void showMenuInicial();
 void showMenuPrincipal();
@@ -16,15 +18,16 @@ void showMenuPrincipal();
 //void realizarVenda(Cadeia& cadeia);
 
 void gerirClientes(Cadeia& cadeia);
-void consultarClientes(Cadeia& cadeia);
+void resumoClientes(Cadeia& cadeia);
+
 void gerirEmpregados(Cadeia& cadeia);
-void consultarEmpregados(Cadeia& cadeia);
+void resumoEmpregados(Cadeia& cadeia);
 void adicionarEmpregado(Cadeia& cadeia);
 void gerirFarmacias(Cadeia& cadeia);
-void consultarFarmacias(Cadeia& cadeia);
+
+void resumoFarmacias(Cadeia& cadeia);
+void consultarFarmacia(Cadeia& cadeia);
 void adicionarFarmacia(Cadeia& cadeia);
-
-
 
 int main() {
 
@@ -50,9 +53,8 @@ int main() {
 	if (opcao == 0)
 		return 0;
 
-	string nome;
-
-	cout << "Qual o nome da cadeia ? "; cin >> nome;
+	cout << endl;
+	string nome = getInputString("Qual o nome da cadeia ? ", "Nome invalido.");
 	Cadeia cadeia(nome);
 
 	// carregar dados da cadeia existente caso o utilizador o deseje
@@ -106,8 +108,24 @@ int main() {
 }
 
 
-///////////////////////////////////////////
-///////////////////////////////////////////
+
+void showMenuInicial() {
+	cout << "MENU INICIAL" << endl << endl;;
+
+	cout << "1 - Criar nova Cadeia de Farmacias" << endl;
+	cout << "2 - Carregar Cadeia de Farmacias" << endl;
+	cout << "0 - Sair da aplicacao" << endl;
+}
+
+void showMenuPrincipal() {
+	cout << endl << "MENU PRINCIPAL" << endl << endl;
+	cout << "1 - Realizar Venda" << endl;
+	cout << "2 - Gerir Farmacias" << endl;
+	cout << "3 - Gerir Clientes" << endl;
+	cout << "4 - Gerir Empregados" << endl;
+	cout << "0 - Sair da aplicacao" << endl;
+}
+
 
 int getInputNumber(int limInf, int limSup)
 {
@@ -133,27 +151,165 @@ int getInputNumber(int limInf, int limSup)
 	return number;
 }
 
-///////////////////////////////////////////
+Morada user_getMorada(){
 
-void showMenuInicial() {
-	cout << "MENU INICIAL" << endl << endl;;
+	string morada_endereco, morada_cpostal, morada_localidade;
+	Morada morada;
+	bool inputValido = false;
 
-	cout << "1 - Criar nova Cadeia de Farmacias" << endl;
-	cout << "2 - Carregar Cadeia de Farmacias" << endl;
-	cout << "0 - Sair da aplicacao" << endl;
+	cout << "Morada: " << endl;
+	morada_endereco = getInputString("-Endereco:  ", "Endereco invalido");
+
+	// validar input do codigo postal
+	while (!inputValido) {
+
+		morada_cpostal = getInputString("-Codigo postal: ", "Codigo postal invalido");
+
+		if (codigoPostalValido(morada_cpostal)) {
+			inputValido = true;
+		}
+	}
+
+
+	morada_localidade = getInputString("-Localidade: ", "Localidade invalida");
+
+	return Morada(morada_endereco, morada_cpostal, morada_localidade);
 }
 
-void showMenuPrincipal() {
-	cout << endl << "MENU PRINCIPAL" << endl << endl;
-	cout << "1 - Realizar Venda" << endl;
-	cout << "2 - Gerir Farmacias" << endl;
-	cout << "3 - Gerir Clientes" << endl;
-	cout << "4 - Gerir Empregados" << endl;
-	cout << "0 - Sair da aplicacao" << endl;
+Empregado* user_getEmpregado(Cadeia& cadeia) {
+
+	string nome;
+	uint NIF;
+	Data dataNascimento;
+	Morada morada;
+	uint salario;
+	string farmaciaNome;
+	string cargo;
+
+	
+	cout << "Nome: ";
+	nome = getInputString("Nome: ", "Nome invalido.");
+	
+	cout << "NIF: ";
+
+	// validar input do NIF
+	while (!(cin >> NIF))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "NIF: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+
+	cout << "Salario: ";
+
+	// validar input do salario
+	while (!(cin >> salario))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "Salario: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	
+	while (true) {
+		
+		farmaciaNome = getInputString("Farmacia: ", "Nome de farmacia invalido.");
+
+		try
+		{
+			cadeia.getFarmacia(farmaciaNome);
+		}
+		catch (FarmaciaNaoExiste& f)
+		{
+			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		}
+		break;
+	}
+
+	cout << "Cargo: ";
+
+	cargo = getInputString("Cargo: ", "Cargo invalido.");
+
+	morada = user_getMorada();
+	dataNascimento = user_getData();
+
+	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, morada, salario, farmaciaNome, cargo);
+
+	return newEmp;
 }
 
-///////////////////////////////////////////
-///////////////////////////////////////////
+Data user_getData() {
+
+	Data dataNascimento;
+	string data_nascimentoStr;
+	bool inputValido = false;
+
+
+	while (!inputValido) {
+
+		data_nascimentoStr = getInputString("Data de nacimento: ", "Data de nascimento invalida.");
+		try {
+
+			dataNascimento = Data(data_nascimentoStr);
+		}
+		catch (DataInvalida& e) {
+			cout << "Erro: Data de nascimento invalida, tente outra vez." << endl;
+			continue;
+		}
+
+		inputValido = true;
+	}
+
+
+	return dataNascimento;
+}
+
+string getInputString(string msg, string msgErr)
+{
+	string name;
+
+	cout << msg;
+	getline(cin, name);
+
+	while (cin.eof())
+	{
+		if (cin.eof())
+			cin.clear();
+		else
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+
+		cout << msgErr << endl << endl;
+		cout << msg;
+		getline(cin, name);
+	}
+
+	return name;
+}
+
+////////////////
+//  CLIENTES  //
+////////////////
 
 void gerirClientes(Cadeia& cadeia)
 {
@@ -162,7 +318,7 @@ void gerirClientes(Cadeia& cadeia)
 		int opcao;
 
 		cout << endl << "GERIR CLIENTES" << endl << endl;
-		cout << "1 - Gerir Cliente" << endl;
+		cout << "1 - Resumo Clientes" << endl;
 		cout << "2 - Consultar clientes" << endl;
 		cout << "0 - Menu anterior" << endl;
 
@@ -183,10 +339,11 @@ void gerirClientes(Cadeia& cadeia)
 
 		switch (opcao) {
 		case 1:
+			resumoClientes(cadeia);
 			//gerirCliente();
 			break;
 		case 2:
-			consultarClientes(cadeia);
+			//gerirCliente();
 			break;
 		case 0:
 			continuarNesteMenu = false;
@@ -195,9 +352,9 @@ void gerirClientes(Cadeia& cadeia)
 	}
 }
 
-void consultarClientes(Cadeia& cadeia)
+void resumoClientes(Cadeia& cadeia)
 {
-	cout << endl << "CONSULTAR CLIENTES" << endl << endl;
+	cout << endl << "RESUMO CLIENTES" << endl << endl;
 
 	int opcao;
 
@@ -235,9 +392,10 @@ void consultarClientes(Cadeia& cadeia)
 	cadeia.mostrarClientes();
 }
 
-///////////////////////////////////////////
-///////////////////////////////////////////
 
+//////////////////
+//  EMPREGADOS  //
+//////////////////
 
 void gerirEmpregados(Cadeia& cadeia)
 {
@@ -246,7 +404,7 @@ void gerirEmpregados(Cadeia& cadeia)
 		int opcao;
 
 		cout << endl << "GERIR EMPREGADOS" << endl << endl;
-		cout << "1 - Consultar empregados" << endl;
+		cout << "1 - Resumo empregados" << endl;
 		cout << "2 - Gerir empregado" << endl;
 		cout << "3 - Adicionar empregado" << endl;
 		cout << "4 - Remover empregado" << endl;
@@ -269,7 +427,7 @@ void gerirEmpregados(Cadeia& cadeia)
 
 		switch (opcao) {
 		case 1:
-			consultarEmpregados(cadeia);
+			resumoEmpregados(cadeia);
 			break;
 		case 2:
 			break;
@@ -285,9 +443,9 @@ void gerirEmpregados(Cadeia& cadeia)
 	}
 }
 
-void consultarEmpregados(Cadeia& cadeia) 
+void resumoEmpregados(Cadeia& cadeia)
 {
-	cout << endl << "CONSULTAR CLIENTES" << endl << endl;
+	cout << endl << "RESUMO EMPREGADOS" << endl << endl;
 
 	int opcao;
 
@@ -329,6 +487,7 @@ void consultarEmpregados(Cadeia& cadeia)
 
 void adicionarEmpregado(Cadeia& cadeia)
 {
+	cout << endl << "ADICIONAR EMPREGADO" << endl << endl;
 
 	Empregado* newEmp = user_getEmpregado(cadeia);
 
@@ -342,6 +501,10 @@ void adicionarEmpregado(Cadeia& cadeia)
 }
 
 
+/////////////////
+//  FARMACIAS  //
+/////////////////
+
 void gerirFarmacias(Cadeia& cadeia)
 {
 	bool continuarNesteMenu = true;
@@ -349,10 +512,79 @@ void gerirFarmacias(Cadeia& cadeia)
 		int opcao;
 
 		cout << endl << "GERIR FARMACIAS" << endl << endl;
-		cout << "1 - Consultar Farmacias" << endl;
-		cout << "2 - Gerir Farmacia" << endl;
+		cout << "1 - Resumo Farmacias" << endl;
+		cout << "2 - Consultar Farmacia" << endl;
 		cout << "3 - Adicionar Farmacia" << endl;
-		cout << "4 - Remover Farmacia" << endl;
+		//cout << "4 - Remover Farmacia" << endl;
+		cout << "0 - Menu anterior" << endl;
+
+		bool opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Opcao: ";
+				opcao = getInputNumber(0, 3);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+
+		switch (opcao) {
+		case 1:
+			resumoFarmacias(cadeia);
+			break;
+		case 2:
+			consultarFarmacia(cadeia);
+			break;
+		case 3:
+			adicionarFarmacia(cadeia);
+			break;
+		case 4:
+			//removerFarmacia();
+			break;
+		case 0:
+			continuarNesteMenu = false;
+		}
+	}
+}
+
+void resumoFarmacias(Cadeia& cadeia) {
+
+	cout << endl;
+	cadeia.mostrarFarmacias();
+}
+
+void consultarFarmacia(Cadeia& cadeia) {
+
+	Farmacia * farmacia;
+
+	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
+
+	try
+	{
+		farmacia = cadeia.getFarmacia(farmaciaNome);
+	}
+	catch (FarmaciaNaoExiste& f)
+	{
+		cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		return;
+	}
+
+
+	bool continuarNesteMenu = true;
+	while (continuarNesteMenu) {
+		int opcao;
+		cout << "CONSULTAR FARMACIA" << endl << endl;
+		farmacia->print(cout) << endl << endl;
+		cout << "Consultar: " << endl;
+		cout << "1 - Empregados" << endl;
+		cout << "2 - Produtos" << endl;
+		cout << "3 - Vendas" << endl;
+		cout << "4 - Outra farmacia" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -372,27 +604,33 @@ void gerirFarmacias(Cadeia& cadeia)
 
 		switch (opcao) {
 		case 1:
-			consultarFarmacias(cadeia);
+			//consultarEmpregados();
 			break;
 		case 2:
-			//gerirFarmacia();
+			//consultaProdutos(farmacia);
 			break;
 		case 3:
-			adicionarFarmacia(cadeia);
+			//consultaVendas(farmacia);
 			break;
 		case 4:
-			//removerFarmacia();
+			cout << "Farmacia: ";
+			getline(cin, farmaciaNome);
+
+			try
+			{
+				farmacia = cadeia.getFarmacia(farmaciaNome);
+			}
+			catch (FarmaciaNaoExiste& f)
+			{
+				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				return;
+			}
 			break;
 		case 0:
 			continuarNesteMenu = false;
 		}
 	}
-}
 
-void consultarFarmacias(Cadeia& cadeia) {
-
-	cout << endl;
-	cadeia.mostrarFarmacias();
 }
 
 void adicionarFarmacia(Cadeia& cadeia)
@@ -407,144 +645,8 @@ void adicionarFarmacia(Cadeia& cadeia)
 
 	Farmacia* f = new Farmacia(nome, morada);
 
-	if (cadeia.addFarmacia(f)) 
+	if (cadeia.addFarmacia(f))
 		cout << "Farmacia adicionada com sucesso." << endl;
-	else 
-		cout << "Ja existe uma farmacia com o nome " << nome << "." <<  endl;
-}
-
-Morada user_getMorada(){
-
-	string morada_endereco, morada_cpostal, morada_localidade;
-	Morada morada;
-	bool inputValido = false;
-
-	cout << "Morada: " << endl << "-Endereco:  ";
-	getline(cin, morada_endereco);
-
-	// validar input do codigo postal
-	while (!inputValido) {
-
-		cout << "-Codigo postal: ";
-		getline(cin, morada_cpostal);
-
-		if (codigoPostalValido(morada_cpostal)) {
-			inputValido = true;
-		}
-	}
-
-
-	cout << "-Localidade: ";
-	getline(cin, morada_localidade);
-
-	return Morada(morada_endereco, morada_cpostal, morada_localidade);
-}
-
-Empregado* user_getEmpregado(Cadeia& cadeia) {
-
-	string nome;
-	uint NIF;
-	Data dataNascimento;
-	Morada morada;
-	uint   salario;
-	string farmaciaNome;
-	string cargo;
-
-	cout << endl << "ADICIONAR EMPREGADO" << endl << endl;
-	cout << "Nome: ";
-	getline(cin, nome);
-	cout << "NIF: ";
-
-	// validar input do NIF
-	while (!(cin >> NIF))
-	{
-		if (cin.eof())
-		{
-			cin.clear();
-		}
-		else
-		{
-			cin.clear();
-			cin.ignore(MAX_STREAM_SIZE, '\n');
-		}
-
-		cout << "NIF: ";
-	}
-
-	cin.ignore(MAX_STREAM_SIZE, '\n');
-
-
-	cout << "Salario: ";
-
-	// validar input do Salario
-	while (!(cin >> salario))
-	{
-		if (cin.eof())
-		{
-			cin.clear();
-		}
-		else
-		{
-			cin.clear();
-			cin.ignore(MAX_STREAM_SIZE, '\n');
-		}
-
-		cout << "Salario: ";
-	}
-
-	cin.ignore(MAX_STREAM_SIZE, '\n');
-
-	
-	while (true) {
-		cout << "Farmacia: ";
-		getline(cin, farmaciaNome);
-
-		try
-		{
-			cadeia.getFarmacia(farmaciaNome);
-		}
-		catch (FarmaciaNaoExiste& f)
-		{
-			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
-		}
-		break;
-	}
-
-	cout << "Cargo: ";
-
-	getline(cin, cargo);
-
-	morada = user_getMorada();
-	dataNascimento = user_getData();
-
-	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, morada, salario, farmaciaNome, cargo);
-
-	return newEmp;
-}
-
-Data user_getData() {
-
-	Data dataNascimento;
-	string data_nascimentoStr;
-	bool inputValido = false;
-
-
-	while (!inputValido) {
-
-		cout << "Data de Nascimento: ";
-		getline(cin, data_nascimentoStr);
-		try {
-
-			dataNascimento = Data(data_nascimentoStr);
-		}
-		catch (DataInvalida& e) {
-			cout << "Erro: Data de nascimento inválida, tente outra vez." << endl;
-			continue;
-		}
-
-		inputValido = true;
-	}
-
-
-	return dataNascimento;
+	else
+		cout << "Ja existe uma farmacia com o nome " << nome << "." << endl;
 }
