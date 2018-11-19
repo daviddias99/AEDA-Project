@@ -232,9 +232,9 @@ void Cadeia::sortEmpregados(ord_pessoas modo)
 }
 
 void Cadeia::mostrarFarmacias()
-{
+{2
 	for (size_t i = 0; i < farmacias.size(); i++)
-		farmacias.at(i)->print(cout);
+		farmacias.at(i)->print(cout) << endl << endl;
 
 	sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
 }

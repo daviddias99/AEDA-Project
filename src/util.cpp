@@ -247,18 +247,17 @@ int daysInMonth(int month, int year)
 bool codigoPostalValido(string codigoPostal)
 {
 	if (codigoPostal.length() != 8) {
-
 		return false;
 	}
 
-	if (codigoPostal.at(3) != '-') {
+	if (codigoPostal.at(4) != '-') {
 
 		return false;
 	}
 
 	try {
 
-		stoi(codigoPostal.substr(4, 3));
+		stoi(codigoPostal.substr(5, 3));
 
 	}
 	catch (const std::invalid_argument& ia) {

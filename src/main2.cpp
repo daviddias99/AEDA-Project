@@ -1,9 +1,11 @@
 #include <iostream>
 #include "Cadeia.h"
 #include "Excecoes.h"
+#include "util.h"
 
 const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 
+Morada user_getMorada();
 int getInputNumber(int limInf, int limSup);
 
 void showMenuInicial();
@@ -150,7 +152,7 @@ void showMenuPrincipal() {
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-void gerirClientes(Cadeia & cadeia)
+void gerirClientes(Cadeia& cadeia)
 {
 	bool continuarNesteMenu = true;
 	while (continuarNesteMenu) {
@@ -190,7 +192,7 @@ void gerirClientes(Cadeia & cadeia)
 	}
 }
 
-void consultarClientes(Cadeia & cadeia)
+void consultarClientes(Cadeia& cadeia)
 {
 	cout << endl << "CONSULTAR CLIENTES" << endl << endl;
 
@@ -234,7 +236,7 @@ void consultarClientes(Cadeia & cadeia)
 ///////////////////////////////////////////
 
 
-void gerirEmpregados(Cadeia & cadeia)
+void gerirEmpregados(Cadeia& cadeia)
 {
 	bool continuarNesteMenu = true;
 	while (continuarNesteMenu) {
@@ -279,7 +281,7 @@ void gerirEmpregados(Cadeia & cadeia)
 	}
 }
 
-void consultarEmpregados(Cadeia & cadeia) 
+void consultarEmpregados(Cadeia& cadeia) 
 {
 	cout << endl << "CONSULTAR CLIENTES" << endl << endl;
 
@@ -324,7 +326,7 @@ void consultarEmpregados(Cadeia & cadeia)
 ///////////////////////////////////////////
 ///////////////////////////////////////////
 
-void gerirFarmacias(Cadeia & cadeia)
+void gerirFarmacias(Cadeia& cadeia)
 {
 	bool continuarNesteMenu = true;
 	while (continuarNesteMenu) {
@@ -373,23 +375,50 @@ void gerirFarmacias(Cadeia & cadeia)
 
 void consultarFarmacias(Cadeia& cadeia) {
 
+	cout << endl;
 	cadeia.mostrarFarmacias();
 }
 
 void adicionarFarmacia(Cadeia& cadeia)
 {
-
 	cout << endl << "ADICIONAR FARMACIA" << endl << endl;
 
-	string nome, moradaStr;
-
+	string nome;
 	cout << "Nome: ";
 	getline(cin, nome);
-	cout << "Morada: ";
-	getline(cin, moradaStr);
-	Morada morada = Morada(moradaStr);
+
+	Morada morada = user_getMorada();
+
 	Farmacia* f = new Farmacia(nome, morada);
 
-	if (cadeia.addFarmacia(f)) cout << "Farmacia adicionada." << endl;
-	else cout << "Ja existe uma farmacia com o nome " << nome << endl;
+	if (cadeia.addFarmacia(f)) 
+		cout << "Farmacia adicionada com sucesso." << endl;
+	else 
+		cout << "Ja existe uma farmacia com o nome " << nome << "." <<  endl;
+}
+
+Morada user_getMorada() {
+
+	string morada_endereco, morada_cpostal, morada_localidade;
+	Morada morada;
+	bool inputValido = false;
+
+	cout << "Morada: " << endl << "-Endereco:  ";
+	getline(cin, morada_endereco);
+
+	// validar input do codigo postal
+	while (!inputValido) {
+
+		cout << "-Codigo postal: ";
+		getline(cin, morada_cpostal);
+
+		if (codigoPostalValido(morada_cpostal)) {
+			inputValido = true;
+		}
+	}
+
+	cout << "-Localidade: ";
+	getline(cin, morada_localidade);
+
+	return Morada(morada_endereco, morada_cpostal, morada_localidade);
 }
