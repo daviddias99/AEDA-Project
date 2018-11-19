@@ -647,15 +647,64 @@ void Sistema::gerirCliente()
 	
 }
 
+Morada user_getMorada() {
+
+	string morada_endereco, morada_cpostal, morada_localidade;
+	Morada morada;
+	bool inputValido = false;
+
+	cout << "Morada: " << endl << "-Endereco:  ";
+	getline(cin, morada_endereco);
+
+	// validar input do codigo postal
+	while (!inputValido) {
+
+		cout << "-Codigo postal: ";
+		getline(cin, morada_cpostal);
+
+		if (codigoPostalValido(morada_cpostal)) {
+			inputValido = true;
+		}
+	}
+
+	cout << "-Localidade: ";
+	getline(cin, morada_localidade);
+
+	return Morada(morada_endereco, morada_cpostal, morada_localidade);
+}
+
+Data user_getData() {
+
+	Data dataNascimento;
+	string data_nascimentoStr;
+	bool inputValido = false;
+
+	while (!inputValido) {
+
+		cout << "Data de Nascimento: ";
+		getline(cin, data_nascimentoStr);
+		try {
+
+			dataNascimento = Data(data_nascimentoStr);
+		}
+		catch (DataInvalida& e) {
+			cout << "Erro: Data de nascimento inválida, tente outra vez." << endl;
+			continue;
+		}
+
+		inputValido = true;
+	}
+
+
+	return Data(data_nascimentoStr);
+}
+
 Cliente* user_getCliente() {
 
 	string nome;
-	string data_nascimentoStr;
-	string morada_endereco, morada_cpostal, morada_localidade;
 	unsigned int NIF;
 	Data dataNascimento;
 	Morada morada;
-	bool inputValido = false;
 
 	cout << endl << "ADICIONAR CLIENTE" << endl << endl;
 	cout << "Nome: ";
@@ -680,44 +729,51 @@ Cliente* user_getCliente() {
 
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
-	// validar input da Data
-	while (!inputValido) {
-
-		cout << "Data de Nascimento: ";
-		getline(cin, data_nascimentoStr);
-		try {
-
-			dataNascimento = Data(data_nascimentoStr);
-		}
-		catch (DataInvalida& e) {
-			cout << "Erro: Data de nascimento inválida, tente outra vez." << endl;
-			continue;
-		}
-
-		inputValido = true;
-	}
-	inputValido = false;
-
-	cout << "Morada: " << endl << "-Endereco:  ";
-	getline(cin, morada_endereco);
-
-	// validar input do codigo postal
-	while (!inputValido) {
-
-		cout << "-Codigo postal: ";
-		getline(cin, morada_cpostal);
-
-		if (codigoPostalValido(morada_cpostal)) {
-			inputValido = true;
-		}
-	}
-
-	cout << "-Localidade: ";
-	getline(cin, morada_localidade);
-
-	Cliente* newCli = new Cliente(nome, NIF, dataNascimento, Morada(morada_endereco, morada_cpostal,morada_localidade));
+	morada = user_getMorada();
+	dataNascimento = user_getData();
+	Cliente* newCli = new Cliente(nome, NIF, dataNascimento, morada);
 
 	return newCli;
+}
+
+Empregado* user_getEmpregado() {
+
+	/*string nome;
+	unsigned int NIF;
+	Data dataNascimento;
+	Morada morada;
+
+	cout << endl << "ADICIONAR CLIENTE" << endl << endl;
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "NIF: ";
+
+	// validar input do NIF
+	while (!(cin >> NIF))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "NIF: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	morada = user_getMorada();
+	dataNascimento = user_getData();
+	Cliente* newCli = new Cliente(nome, NIF, dataNascimento, morada);
+
+	return newCli; */
+
+	Empregado* teste = new Empregado();
+	return teste;
 }
 
 
@@ -742,30 +798,75 @@ void Sistema::adicionarCliente()
 void Sistema::removerCliente(){
 
 	string nomeCliente;
+	uint ID;
 
 	cout << "REMOVER CLIENTE" << endl << endl;
 
+	//get nome do cliente a remover
 	cout << "Nome do cliente: ";
 	getline(cin, nomeCliente);
 
-	
+	// get clientes com o nome dado
+	vector<Cliente*> clientes_busca = cadeia.getClientes(nomeCliente);
 
+	for (size_t i = 0; i < clientes_busca.size(); i++) {
 
-	int nif;
+		cout << "ID: " << clientes_busca.at(i)->getID()
+			<< "| Nome: " << clientes_busca.at(i)->getNome() << endl;
+			
 
-	cout << "NIF: ";
-	cin >> nif;
+	}
+
+	cout << endl;
+
+	if (clientes_busca.size() == 0) {
+
+		cout << "Nao foi encontrado nenhum cliente com esse nome." << endl;
+		return;
+	}
+
+	// get ID da pessoa
+	cout << "ID: ";
+
+	while (!(cin >> ID))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "ID: ";
+	}
+
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
+	// verificar se o ID dado pertence a alguma das pessoas com o nome dado
+	for (size_t i = 0; i < clientes_busca.size(); i++) {
+
+		if (clientes_busca.at(i)->getID() == ID) {
+			break;
+		}
+		if (i == clientes_busca.size() - 1) {
+
+			cout << "Nao existe nenhuma pessoa com esse par Nome/ID." << endl;
+			return;
+
+		}
+	}
+
+	// remover cliente
 	try {
-		cadeia.removeCliente(nif);
+		cadeia.removeCliente(ID);
 		cout << "Cliente removido" << endl;
 	}
 	catch (ClienteNaoExiste &c1) {
-		cout << "O cliente com o nif " << c1.getID() << " nao existe." << endl;
+		cout << "O cliente com o ID " << c1.getID() << " nao existe." << endl;
 	}
-
-	gerirClientes();
 
 }
 
@@ -776,6 +877,15 @@ void Sistema::gerirEmpregado()
 
 void Sistema::adicionarEmpregado()
 {
+	Empregado* newEmp = user_getEmpregado();
+
+	if (cadeia.addEmpregado(newEmp)) {
+
+		cout << "Empregado adicionado." << endl;
+	}
+	else {
+		cout << "O empregado " << e->getNome() << " com o nif " << e->getNIF() << " ja existe." << endl;
+	}
 
 }
 
