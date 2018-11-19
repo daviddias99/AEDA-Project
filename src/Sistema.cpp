@@ -736,14 +736,17 @@ Cliente* user_getCliente() {
 	return newCli;
 }
 
-Empregado* user_getEmpregado() {
+Empregado* user_getEmpregado(Cadeia& cadeia) {
 
-	/*string nome;
-	unsigned int NIF;
+	string nome;
+	uint NIF;
 	Data dataNascimento;
 	Morada morada;
+	uint   salario;
+	string farmaciaNome;
+	string cargo;
 
-	cout << endl << "ADICIONAR CLIENTE" << endl << endl;
+	cout << endl << "ADICIONAR EMPREGADO" << endl << endl;
 	cout << "Nome: ";
 	getline(cin, nome);
 	cout << "NIF: ";
@@ -766,14 +769,57 @@ Empregado* user_getEmpregado() {
 
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
+
+	cout << "Salario: ";
+
+	// validar input do Salario
+	while (!(cin >> salario))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "Salario: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	cout << "Farmacia: ";
+
+	while (true) {
+
+		getline(cin, farmaciaNome);
+
+		try
+		{
+			cadeia.getFarmacia(farmaciaNome);
+		}
+		catch (FarmaciaNaoExiste& f)
+		{
+			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		} 
+
+		cout << "Farmacia: ";
+	}
+
+	cout << "Cargo: ";
+
+	getline(cin, cargo);
+
 	morada = user_getMorada();
 	dataNascimento = user_getData();
-	Cliente* newCli = new Cliente(nome, NIF, dataNascimento, morada);
 
-	return newCli; */
+	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, morada,salario,farmaciaNome,cargo);
 
-	Empregado* teste = new Empregado();
-	return teste;
+	return newEmp; 
+
+
 }
 
 
@@ -877,7 +923,7 @@ void Sistema::gerirEmpregado()
 
 void Sistema::adicionarEmpregado()
 {
-	Empregado* newEmp = user_getEmpregado();
+	Empregado* newEmp = user_getEmpregado(this->cadeia);
 
 	if (cadeia.addEmpregado(newEmp)) {
 
