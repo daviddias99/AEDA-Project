@@ -1,5 +1,7 @@
 #include "Sistema.h"
 
+const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
+
 Sistema::Sistema() {}
 
 void Sistema::start()
@@ -645,13 +647,125 @@ void Sistema::gerirCliente()
 	
 }
 
+Cliente* user_getCliente() {
+
+	string nome;
+	string data_nascimentoStr;
+	string morada_endereco, morada_cpostal, morada_localidade;
+	unsigned int NIF;
+	Data dataNascimento;
+	Morada morada;
+	bool inputValido = false;
+
+	cout << endl << "ADICIONAR CLIENTE" << endl << endl;
+	cout << "Nome: ";
+	getline(cin, nome);
+	cout << "NIF: ";
+
+	// validar input do NIF
+	while (!(cin >> NIF))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "NIF: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	// validar input da Data
+	while (!inputValido) {
+
+		cout << "Data de Nascimento: ";
+		getline(cin, data_nascimentoStr);
+		try {
+
+			dataNascimento = Data(data_nascimentoStr);
+		}
+		catch (DataInvalida& e) {
+			cout << "Erro: Data de nascimento inválida, tente outra vez." << endl;
+			continue;
+		}
+
+		inputValido = true;
+	}
+	inputValido = false;
+
+	cout << "Morada: " << endl << "-Endereco:  ";
+	getline(cin, morada_endereco);
+
+	// validar input do codigo postal
+	while (!inputValido) {
+
+		cout << "-Codigo postal: ";
+		getline(cin, morada_cpostal);
+
+		if (codigoPostalValido(morada_cpostal)) {
+			inputValido = true;
+		}
+	}
+
+	cout << "-Localidade: ";
+	getline(cin, morada_localidade);
+
+	Cliente* newCli = new Cliente(nome, NIF, dataNascimento, Morada(morada_endereco, morada_cpostal,morada_localidade));
+
+	return newCli;
+}
+
+
 void Sistema::adicionarCliente()
 {
+	// pedir ao user o cliente a adicionar
+	Cliente* newCli = user_getCliente();
+	
+	// adicionar cliente à cadeia
+	if (cadeia.addCliente(c)) {
+		cout << "Cliente adicionado." << endl;
+	}
+	// se o cliente já existir nã adicionar
+	else {
+
+		cout << "O cliente " << c->getNome() << " com o nif " << c->getNIF() << " ja existe." << endl;
+		delete newCli;
+	}
 
 }
 
-void Sistema::removerCliente()
-{
+void Sistema::removerCliente(){
+
+	string nomeCliente;
+
+	cout << "REMOVER CLIENTE" << endl << endl;
+
+	cout << "Nome do cliente: ";
+	getline(cin, nomeCliente);
+
+	
+
+
+	int nif;
+
+	cout << "NIF: ";
+	cin >> nif;
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	try {
+		cadeia.removeCliente(nif);
+		cout << "Cliente removido" << endl;
+	}
+	catch (ClienteNaoExiste &c1) {
+		cout << "O cliente com o nif " << c1.getID() << " nao existe." << endl;
+	}
+
+	gerirClientes();
 
 }
 

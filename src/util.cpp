@@ -10,8 +10,19 @@ Morada::Morada()
 	codigoPostal = "0000-000";
 }
 
-Morada::Morada(string mor, string codigoPostal, string cidade) :
-	endereco(mor), codigoPostal(codigoPostal), cidade(cidade) {}
+Morada::Morada(string mor, string codigoPostal, string cidade) :endereco(mor), cidade(cidade) {
+
+
+	if (codigoPostalValido(codigoPostal)) {
+		this->codigoPostal = codigoPostal;
+	}
+	else {
+		throw MoradaInvalida("codigo postal invalido");
+	}
+
+	
+
+}
 
 Morada::Morada(string simp) {
 	endereco = simp.substr(0, simp.find_first_of('&'));
@@ -48,9 +59,7 @@ Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
 
 Data::Data(string dataDMY)
 {
-	this->dia = stoi(dataDMY.substr(0, 2));
-	this->mes = stoi(dataDMY.substr(3, 2));
-	this->ano = stoi(dataDMY.substr(6, 4));
+	Data(stoi(dataDMY.substr(0, 2)), stoi(dataDMY.substr(3, 2)),stoi(dataDMY.substr(6, 4)));
 
 }
 
@@ -236,6 +245,41 @@ int daysInMonth(int month, int year)
 		numDays = 0;
 
 	return numDays;
+}
+
+bool codigoPostalValido(string codigoPostal)
+{
+	if (codigoPostal.length() != 8) {
+
+		return false;
+	}
+
+	if (codigoPostal.at(3) != '-') {
+
+		return false;
+	}
+
+	try {
+
+		stoi(codigoPostal.substr(4, 3));
+
+	}
+	catch (const std::invalid_argument& ia) {
+
+		return false;
+	}
+
+	try {
+
+		stoi(codigoPostal.substr(0, 4));
+
+	}
+	catch (const std::invalid_argument& ia) {
+
+		return false;
+	}
+
+	return true;
 }
 
 
