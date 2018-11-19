@@ -33,12 +33,19 @@ bool Cadeia::addCliente(Cliente* cliente)
 	return true;
 }
 
+//atencao aqui
 bool Cadeia::addEmpregado(Empregado* empregado)
 {
 	if(procura2(empregados, empregado) != -1) return false;
 
 	empregados.push_back(empregado);
 	sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
+
+	size_t i = procura2(farmacias, empregado->getNomeFarmacia());
+
+	this->farmacias.at(i)->addEmpregado(empregado);
+
+
 	return true;
 }
 
