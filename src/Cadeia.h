@@ -10,9 +10,9 @@
 #include "Farmacia.h"
 #include "Cliente.h"
 #include "Empregado.h"
+#include "Excecoes.h"
 #include "util.h"
 
-enum ord_pessoas { id_cres = 0, id_dec, idade_cres, idade_dec, nome_cres, nome_dec, nif_cres, nif_dec, n_comp_cres, n_comp_dec, sal_cres, sal_dec };
 
 using namespace std;
 
@@ -37,6 +37,7 @@ public:
 	unsigned int getNumFarmacias() const;
 	unsigned int getNumEmpregados() const;
 	unsigned int getNumClientes() const;
+	string getNome() const;
 
 	void sortFarmacias(char modo);
 	
@@ -50,9 +51,9 @@ public:
 	void guardarDados();
 	void carregarDados();
 private:
-	void carregarClientes();
-	void carregarEmpregados();
-	void carregarFarmacias();
+	void carregarClientes(ifstream& ficheiro);
+	void carregarEmpregados(ifstream& ficheiro);
+	void carregarFarmacias(ifstream& ficheiro);
 
 	vector< Farmacia* > farmacias; //Ordenadas por nome
 	vector< Cliente* > clientes;

@@ -12,6 +12,8 @@ using namespace std;
 
 typedef unsigned int uint;
 
+enum ord_pessoas { id_cres = 0, id_dec, idade_cres, idade_dec, nome_cres, nome_dec, nif_cres, nif_dec, n_comp_cres, n_comp_dec, sal_cres, sal_dec };
+
 // ----------Classes----------
 
 class Morada {

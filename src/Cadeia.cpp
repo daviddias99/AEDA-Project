@@ -133,6 +133,11 @@ unsigned int Cadeia::getNumClientes() const
 	return clientes.size();
 }
 
+string Cadeia::getNome() const
+{
+	return nome;
+}
+
 
 
 
@@ -240,6 +245,9 @@ void Cadeia::sortEmpregados(ord_pessoas modo)
 
 void Cadeia::mostrarFarmacias()
 {
+	if (farmacias.size() == 0) {
+		cout << "A cadeia " + nome + " ainda nao tem farmacias." << endl << endl;
+	}
 	for (size_t i = 0; i < farmacias.size(); i++)
 		farmacias.at(i)->print(cout) << endl << endl;
 }
@@ -269,6 +277,8 @@ void Cadeia::guardarDados()
 		(*it)->printSimp(fichFarmacias) << endl;
 	}
 
+	fichFarmacias.close();
+
 	string nomeFichClientes = nome + "-clientes.txt";
 
 	ofstream fichClientes;
@@ -279,6 +289,8 @@ void Cadeia::guardarDados()
 		(*it)->printSimp(fichClientes) << endl;
 	}
 
+	fichClientes.close();
+
 	string nomeFichEmpregados = nome + "-empregados.txt";
 
 	ofstream fichEmpregados;
@@ -287,30 +299,41 @@ void Cadeia::guardarDados()
 	for (vector<Empregado *>::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
 		(*it)->printSimp(fichEmpregados) << endl;
 	}
+
+	fichEmpregados.close();
 }
 
 void Cadeia::carregarDados() {
 
-	carregarFarmacias();
+	ifstream fich_farm, fich_emp, fich_cli;
+	fich_farm.open(nome + "-farmacias.txt");
+	fich_emp.open(nome + "-empregados.txt");
+	fich_cli.open(nome + "-clientes.txt");
 
-	carregarEmpregados();
+	if (!(fich_farm.is_open() && fich_cli.is_open() && fich_emp.is_open()))
+		throw FicheiroNaoEncontrado("Ficheiros da cadeia \"" + nome + "\" nao encontrados.");
 
-	carregarClientes();
+	carregarFarmacias(fich_farm);
+
+	carregarEmpregados(fich_emp);
+
+	carregarClientes(fich_cli);
+
+	fich_cli.close();
+	fich_farm.close();
+	fich_emp.close();
 }
 
-void Cadeia::carregarClientes()
+void Cadeia::carregarClientes(ifstream& ficheiro)
 {
 }
 
-void Cadeia::carregarEmpregados()
+void Cadeia::carregarEmpregados(ifstream& ficheiro)
 {
 }
 
-void Cadeia::carregarFarmacias() {
+void Cadeia::carregarFarmacias(ifstream& ficheiro) {
 
-
-	ifstream ficheiro;
-	ficheiro.open(nome + "-farmacias.txt");
 	string linha;
 
 	getline(ficheiro, linha);

@@ -165,6 +165,11 @@ vector<Empregado*> Farmacia::getEmpregados(string nome) const
 	return v1;
 }
 
+unsigned int Farmacia::getNumEmpregados() const
+{
+	return empregados.size();
+}
+
 Produto* Farmacia::getProduto(int codigo) const
 {
 	map<Produto*, unsigned int>::const_iterator it;
@@ -326,6 +331,48 @@ bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia *f1, Farmacia *f2)
 		return false;
 }
 
+void Farmacia::sortEmpregados(ord_pessoas modo)
+{
+	switch (modo) {
+	case id_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
+		break;
+	case id_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Decrescente);
+		break;
+	case idade_cres:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Crescente);
+		break;
+	case idade_dec:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Decrescente);
+		break;
+	case nome_cres:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Crescente);
+		break;
+	case nome_dec:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Decrescente);
+		break;
+	case nif_cres:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
+		break;
+	case nif_dec:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Decrescente);
+		break;
+	case n_comp_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Crescente);
+		break;
+	case n_comp_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Decrescente);
+		break;
+	case sal_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Crescente);
+		break;
+	case sal_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Decrescente);
+		break;
+	}
+}
+
 ostream& Farmacia::printSimp(ostream& os) const {
 
 	os << nome << "\\";
@@ -342,11 +389,18 @@ ostream& Farmacia::printSimp(ostream& os) const {
 	return os;
 }
 
-ostream & Farmacia::print(ostream & os) const
+ostream& Farmacia::print(ostream & os) const
 {
 	os << nome << endl << morada;
 
 	return os;
+}
+
+void Farmacia::mostrarEmpregados() const
+{
+	for (size_t i = 0; i < empregados.size(); i++)
+		empregados.at(i)->print(cout) << endl << endl;
+
 }
 
 bool farmacia_SortFunc_NumVendas_Crescente(Farmacia *f1, Farmacia *f2)

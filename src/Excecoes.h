@@ -12,4 +12,12 @@ public:
 	string getInfo();
 };
 
+class FicheiroNaoEncontrado {
+private:
+	string info;
+public:
+	FicheiroNaoEncontrado(string i);
+	string getInfo();
+};
+
 #endif 

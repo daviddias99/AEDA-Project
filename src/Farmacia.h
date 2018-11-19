@@ -33,6 +33,7 @@ public:
 	Morada getMorada() const;
 	Empregado* getGerente() const;
 	vector<Empregado*> getEmpregados(string nome) const;
+	unsigned int getNumEmpregados() const;
 	Produto* getProduto(int codigo) const;
 
 	unsigned int getTotalProdutos() const;
@@ -42,10 +43,12 @@ public:
 
 	bool operator == (const Farmacia & ph1) const;
 	bool operator < (const Farmacia & ph1) const;
-	//friend ostream& escreve(ostream& os, const Farmacia& f1, int modo); //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
+
+	void sortEmpregados(ord_pessoas modo);
 
 	ostream& printSimp(ostream& os) const;
 	ostream& print(ostream& os) const;
+	void mostrarEmpregados() const;
 
 	void consultarQuantidades() const;
 	//void mostrarVendas() const;

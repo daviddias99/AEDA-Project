@@ -8,3 +8,11 @@ OpcaoInvalida::OpcaoInvalida(string i = "A opcao introduzida nao e valida.") {
 string OpcaoInvalida::getInfo() {
 	return info;
 }
+
+FicheiroNaoEncontrado::FicheiroNaoEncontrado(string i) {
+	info = i;
+}
+
+string FicheiroNaoEncontrado::getInfo() {
+	return info;
+}

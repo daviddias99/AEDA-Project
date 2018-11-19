@@ -28,41 +28,56 @@ void gerirFarmacias(Cadeia& cadeia);
 void resumoFarmacias(Cadeia& cadeia);
 void consultarFarmacia(Cadeia& cadeia);
 void adicionarFarmacia(Cadeia& cadeia);
+void farmacia_consultarEmpregados(Farmacia& farmacia);
 
 int main() {
-
-	showMenuInicial();
-
+	
+	Cadeia cadeia;
 	int opcao;
+	bool continuarNesteMenu = true;
+	bool opcaoInvalida;
 
-	bool opcaoInvalida = true;
-	while (opcaoInvalida) {
+	while (continuarNesteMenu) {
+		showMenuInicial();
+		
+		opcaoInvalida = true;
+		while (opcaoInvalida) {
 
-		try {
-			cout << "Opcao: ";
-			opcao = getInputNumber(0, 2);
+			try {
+				cout << "Opcao: ";
+				opcao = getInputNumber(0, 2);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
 		}
-		catch (OpcaoInvalida& opIn) {
-			cout << opIn.getInfo() << endl;
-			continue;
-		}
 
-		opcaoInvalida = false;
+		if (opcao == 0)
+			return 0;
+
+		cout << endl;
+		string nome = getInputString("Qual o nome da cadeia ? ", "Nome invalido.");
+		cadeia = Cadeia(nome);
+
+		// carregar dados da cadeia existente caso o utilizador o deseje
+		if (opcao == 1) {
+			continuarNesteMenu = false;
+		}
+		if (opcao == 2) {
+			try {
+				cadeia.carregarDados();
+				continuarNesteMenu = false;
+			}
+			catch (FicheiroNaoEncontrado& e) {
+				cout << e.getInfo() << endl << endl;
+			}
+		}
 	}
 
-	if (opcao == 0)
-		return 0;
-
-	cout << endl;
-	string nome = getInputString("Qual o nome da cadeia ? ", "Nome invalido.");
-	Cadeia cadeia(nome);
-
-	// carregar dados da cadeia existente caso o utilizador o deseje
-	if (opcao == 2)
-		cadeia.carregarDados();
-
-
-	bool continuarNesteMenu = true;
+	continuarNesteMenu = true;
 	while (continuarNesteMenu) {
 
 		showMenuPrincipal();
@@ -447,6 +462,11 @@ void resumoEmpregados(Cadeia& cadeia)
 {
 	cout << endl << "RESUMO EMPREGADOS" << endl << endl;
 
+	if (cadeia.getNumEmpregados() == 0) {
+		cout << "A cadeia \"" << cadeia.getNome() << "\" ainda nao tem empregados." << endl << endl;
+		return;
+	}
+
 	int opcao;
 
 	cout << "Ordenar por: " << endl;
@@ -604,7 +624,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 
 		switch (opcao) {
 		case 1:
-			//consultarEmpregados();
+			farmacia_consultarEmpregados(*farmacia);
 			break;
 		case 2:
 			//consultaProdutos(farmacia);
@@ -633,13 +653,59 @@ void consultarFarmacia(Cadeia& cadeia) {
 
 }
 
+void farmacia_consultarEmpregados(Farmacia& farmacia) {
+	cout << endl << "RESUMO EMPREGADOS " << endl << endl;
+	
+	farmacia.print(cout) << endl << endl;
+
+	if (farmacia.getNumEmpregados() == 0) {
+		cout << "A farmacia ainda nao tem empregados." << endl << endl;
+		return;
+	}
+
+	int opcao;
+
+	cout << "Ordenar por: " << endl;
+	cout << "0 - ID (crescente)" << endl;
+	cout << "1 - ID (decrescente)" << endl;
+	cout << "2 - idade (crescente)" << endl;
+	cout << "3 - idade (decrescente)" << endl;
+	cout << "4 - nome (crescente)" << endl;
+	cout << "5 - nome (decrescente)" << endl;
+	cout << "6 - NIF (crescente)" << endl;
+	cout << "7 - NIF (decrescente)" << endl;
+	cout << "8 - numero de vendas (crescente)" << endl;
+	cout << "9 - numero de vendas (decrescente)" << endl;
+	cout << "10 - salario (crescente)" << endl;
+	cout << "11 - salario (decrescente)" << endl;
+
+
+	bool opcaoInvalida = true;
+	while (opcaoInvalida) {
+
+		try {
+			cout << "Opcao: ";
+			opcao = getInputNumber(0, 11);
+		}
+		catch (OpcaoInvalida& opIn) {
+			cout << opIn.getInfo() << endl;
+			continue;
+		}
+
+		opcaoInvalida = false;
+	}
+
+
+	farmacia.sortEmpregados((ord_pessoas)opcao);
+
+	farmacia.mostrarEmpregados();
+}
+
 void adicionarFarmacia(Cadeia& cadeia)
 {
 	cout << endl << "ADICIONAR FARMACIA" << endl << endl;
 
-	string nome;
-	cout << "Nome: ";
-	getline(cin, nome);
+	string nome = getInputString("Nome: ", "Nome invalido. ");
 
 	Morada morada = user_getMorada();
 
