@@ -344,6 +344,8 @@ ostream& Farmacia::printSimp(ostream& os) const {
 
 ostream & Farmacia::print(ostream & os) const
 {
+	os << nome << endl << morada;
+
 	return os;
 }
 

@@ -19,9 +19,6 @@ Morada::Morada(string mor, string codigoPostal, string cidade) :endereco(mor), c
 	else {
 		throw MoradaInvalida("codigo postal invalido");
 	}
-
-	
-
 }
 
 Morada::Morada(string simp) {

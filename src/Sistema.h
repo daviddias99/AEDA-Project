@@ -48,7 +48,7 @@ private:
 
 	void gerirClientes(); //
 	void gerirCliente();
-	void cliente_gerir();
+	//void cliente_gerir();
 
 	void adicionarCliente(); //
 	void removerCliente(); //

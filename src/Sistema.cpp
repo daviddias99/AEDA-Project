@@ -330,7 +330,7 @@ void Sistema::gerirFarmacia()
 
 void Sistema::farmacia_gerir()
 {
-	cout << endl << "FARMACIA " << f->getNome() << endl;
+	cout << endl << "FARMACIA " << f->getNome() << endl << endl;
 
 	char opcao;
 
@@ -370,7 +370,7 @@ void Sistema::farmacia_gerir()
 
 void Sistema::adicionarFarmacia()
 {
-	cout << endl << "ADICIONAR FARMACIA" << endl;
+	cout << endl << "ADICIONAR FARMACIA" << endl << endl;
 
 	string nome, moradaStr;
 
