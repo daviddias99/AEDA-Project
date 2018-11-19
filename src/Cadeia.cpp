@@ -96,6 +96,21 @@ Empregado* Cadeia::getEmpregado(int nif) const
 	throw EmpregadoNaoExiste(nif);
 }
 
+vector<Cliente*> Cadeia::getClientes(string nome) const
+{
+	vector<Cliente*> resultado;
+
+	for (size_t i = 0; i < this->clientes.size(); i++) {
+
+		if (this->clientes.at(i)->getNome() == nome) {
+			resultado.push_back(this->clientes.at(i));
+		}
+
+	}
+
+	return resultado;
+}
+
 unsigned int Cadeia::getNumFarmacias() const
 {
 	return farmacias.size();

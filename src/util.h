@@ -82,6 +82,9 @@ public:
 bool isLeap(int year);
 
 int daysInMonth(int month, int year);
+
+bool codigoPostalValido(string codigoPostal);
+
 /*
 template< class T>
 int procura(const vector<T> &v, T x);
@@ -161,6 +164,18 @@ public:
 
 	CargoInvalido(string n) { this->cargo = n; };
 	string getName() { return cargo; };
+
+};
+
+class MoradaInvalida {
+
+private:
+
+	string reason;
+public:
+
+	MoradaInvalida(string reason):reason(reason){}
+	string getReason() { return reason; }
 
 };
 

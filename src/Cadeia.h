@@ -32,6 +32,7 @@ public:
 	Farmacia* getFarmacia(string nome) const;
 	Cliente* getCliente(int nif) const;
 	Empregado* getEmpregado(int nif) const;
+	vector<Cliente*> getClientes(string nome) const;
 
 	unsigned int getNumFarmacias() const;
 	unsigned int getNumEmpregados() const;
