@@ -455,6 +455,7 @@ void gerirCliente(Cadeia & cadeia)
 	string nomeCliente;
 	uint ID;
 	uint salario;
+	Morada morada;
 
 	cout << "GERIR CLIENTE" << endl << endl;
 
@@ -526,6 +527,47 @@ void gerirCliente(Cadeia & cadeia)
 
 		ID = clientes_busca.at(0)->getID();
 	}
+
+	int opcao = -1;
+	bool opcaoInvalida = true;
+
+	do {
+
+		cout << endl << "O que pretende alterar no cliente " << cadeia.getEmpregado(ID)->getNome() << " ?" << endl;
+		cout << "1- Morada" << endl;
+		cout << "0- Terminar" << endl << endl;
+
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Opcao: ";
+				opcao = getInputNumber(0, 1);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+		opcaoInvalida = true;
+		cout << endl;
+
+		switch (opcao) {
+		
+		case 1:
+
+			morada = user_getMorada();
+			cadeia.getEmpregado(ID)->setMorada(morada);
+			cout << "Alterado." << endl;
+
+			break;
+		case 0:
+			break;
+		}
+
+	} while (opcao != 0);
+
 }
 
 
@@ -836,8 +878,6 @@ void gerirEmpregado(Cadeia & cadeia)
 
 		ID = empregados_busca.at(0)->getID();
 	}
-
-
 
 
 	int opcao = -1;
