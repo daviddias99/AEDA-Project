@@ -15,8 +15,8 @@ public:
 	float getPreco() const;
 	int alteraPreco(float novoPreco);
 	bool operator==(const Produto &prod);
-	friend ostream& operator<< (ostream& os, const Produto& prod);
-
+	
+	virtual ostream& print(ostream& os) const;
 	virtual ostream& printSimp(ostream& os) const;
 protected:
 	const long unsigned int codigo;

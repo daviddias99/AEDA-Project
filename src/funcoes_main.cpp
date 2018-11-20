@@ -230,7 +230,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	while (opcaoInvalida) {
 
 		try {
-			cout << "IVA: ";
+			cout << "IVA (%): ";
 			iva = getInputNumber(0, 9);
 		}
 		catch (OpcaoInvalida& opIn) {
@@ -280,7 +280,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 			while (opcaoInvalida) {
 
 				try {
-					cout << "Desconto com receita medica: ";
+					cout << "Desconto com receita medica (%): ";
 					descComReceita = getInputNumber(0, 100);
 				}
 				catch (OpcaoInvalida& opIn) {

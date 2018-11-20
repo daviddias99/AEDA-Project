@@ -23,3 +23,17 @@ ostream& Medicamento::printSimp(ostream& os) const {
 	return os;
 }
 
+ostream & Medicamento::print(ostream & os) const
+{
+	Produto::print(os);
+	if (vendidoSemRec)
+		os << "Pode ser vendido sem receita medica." << endl;
+	else
+		os << "Nao pode ser vendido sem receita medica." << endl;
+
+	if (podeSerRec)
+		os << "Pode ser receitado. Desconto com receita: " << descComReceita * 100 << "%" << endl;
+	else
+		os << "Nao pode ser receitado." << endl;
+ }
+

@@ -43,6 +43,12 @@ ostream & operator<<(ostream & os, const Produto & prod)
 	return os;
 }
 
+ostream & Produto::print(ostream & os) const
+{
+	os << "Codigo: " << codigo << "\t\tNome: " << nome << endl;
+	os << descricao << endl << "Preco: " << preco << "e \t\tIva: " << iva * 100 << "%" << endl;
+}
+
 ostream& Produto::printSimp(ostream& os) const {
 
 	os << codigo << "&" << nome << "&" << descricao << "&" << preco << "&" << iva;
