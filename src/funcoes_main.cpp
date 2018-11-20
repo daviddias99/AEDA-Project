@@ -1177,7 +1177,28 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 		}
 		else if (opcao == 2) {
 			produto = user_getProduto(farmacia);
+			
+			uint quantidade;
+			cout << "Qual a quantidade a adicionar? ";
 
+			// validar input do codigo
+			while (!(cin >> quantidade))
+			{
+				if (cin.eof())
+				{
+					cin.clear();
+				}
+				else
+				{
+					cin.clear();
+					cin.ignore(MAX_STREAM_SIZE, '\n');
+				}
+
+				cout << "Qual a quantidade a adicionar? ";
+			}
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+
+			farmacia.addProduto(produto, quantidade);
 		}
 		else {
 			long unsigned int codigo;
