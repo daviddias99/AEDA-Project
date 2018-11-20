@@ -88,7 +88,7 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 
 	if (i == -1) {
 		if (empregado->getCargo() == "gerente")
-			setGerente(empregado);
+			setGerente(empregado, "empregado");
 
 		empregados.push_back(empregado);
 		this->sortEmpregados(id_cres);
@@ -140,10 +140,10 @@ void Farmacia::remEmpregado(uint ID)
 
 }
 
-bool Farmacia::setGerente(Empregado * novoGerente)
+bool Farmacia::setGerente(Empregado * novoGerente, string novoCargo)
 {
 	if(this->gerente != NULL)
-		this->gerente->setCargo("empregado");
+		this->gerente->setCargo(novoCargo);
 	novoGerente->setCargo("gerente");
 	this->gerente = novoGerente;
 

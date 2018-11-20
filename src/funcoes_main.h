@@ -34,6 +34,7 @@ void resumoFarmacias(Cadeia& cadeia);
 void adicionarFarmacia(Cadeia& cadeia);
 void consultarFarmacia(Cadeia& cadeia);
 void gerirStock(Cadeia& cadeia);
+void alterarGerente(Cadeia& cadeia);
 void farmacia_mudarGerente(Cadeia& farmacia);
 void farmacia_consultarEmpregados(Farmacia& farmacia);
 void farmacia_consultarProdutos(Farmacia& farmacia);

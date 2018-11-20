@@ -26,7 +26,7 @@ public:
 	bool addEmpregado(Empregado* empregado);
 	void remProduto(long unsigned int codigo);
 	void remEmpregado(uint ID);
-	bool setGerente(Empregado* novoGerente);
+	bool setGerente(Empregado* novoGerente , string novoCargo);
 	bool removeQuantidade(long unsigned int codigo, uint quantidade);
 	void addQuantidade(long unsigned int codigo, uint quantidade);
 	void adicionarVenda(Venda* v1);
