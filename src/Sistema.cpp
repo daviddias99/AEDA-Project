@@ -556,7 +556,7 @@ void Sistema::farmacia_consultarProduto()
 		farmacia_consultarStock();
 	}
 
-	cout << *p1;
+	//cout << *p1;
 	farmacia_consultarStock();
 }
 
@@ -689,7 +689,7 @@ Data user_getData() {
 
 			dataNascimento = Data(data_nascimentoStr);
 		}
-		catch (DataInvalida& e) {
+		catch (DataInvalida & e) {
 			cout << "Erro: Data de nascimento inválida, tente outra vez." << endl;
 			continue;
 		}
@@ -921,7 +921,6 @@ void Sistema::removerCliente() {
 void Sistema::gerirEmpregado()
 {
 	string nomeEmpregado;
-	uint ID;
 
 	cout << "GERIR EMPREGADO" << endl << endl;
 

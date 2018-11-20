@@ -5,12 +5,39 @@
 
 class Cliente :public Pessoa {
 public:
-
+	/**
+	* @brief Construtor da classe cliente
+	* @param nome Nome do cliente
+	* @param nif NIF do cliente. E zero se nao for indicado
+	* @param dataNasc Data de nascimento do cliente
+	* @param morada Morada atual do cliente
+	*/
 	Cliente(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada());
 
-	bool adicionaCompra(Venda*);
+	/**
+	* @brief Adiciona a venda indicada no seu parametro a lista de compras do cliente
+	* @param v Apontador para uma venda relizada pelo cliente
+	* @return true se a venda foi adicionada com sucesso a lista de compras
+	* false se ocorreu algum erro
+	*/
+	bool adicionaCompra(Venda* v);
+
+	/**
+	* @brief Devolve o numero de compras efetuadas pelo cliente
+	* @return Numero de compras efetuadas pelo cliente
+	*/
 	uint getNumCompras() const;
+
+	/**
+	* @brief Devolve o membro-dado ID do cliente
+	* @return ID do cliente
+	*/
 	uint getID() const;
+
+	/**
+	* @brief Mostra no ecra uma lista das compras efetuadas pelo cliente
+	* @return -----------------COMPLETAR----------
+	*/
 	bool verHistorico();
 
 	ostream& print(ostream& os) const;
