@@ -67,7 +67,7 @@ Morada user_getMorada() {
 	return Morada(morada_endereco, morada_cpostal, morada_localidade);
 }
 
-Empregado* user_getEmpregado(Cadeia& cadeia) {
+Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 
 	string nome;
 	uint NIF;
@@ -121,24 +121,32 @@ Empregado* user_getEmpregado(Cadeia& cadeia) {
 
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
+	if (!newFOverride.first) {
+		while (true) {
 
-	while (true) {
+			farmaciaNome = getInputString("Farmacia: ", "Nome de farmacia invalido.");
 
-		farmaciaNome = getInputString("Farmacia: ", "Nome de farmacia invalido.");
-
-		try
-		{
-			cadeia.getFarmacia(farmaciaNome);
+			try
+			{
+				cadeia.getFarmacia(farmaciaNome);
+			}
+			catch (FarmaciaNaoExiste& f)
+			{
+				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				continue;
+			}
+			break;
 		}
-		catch (FarmaciaNaoExiste& f)
-		{
-			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
-			continue;
-		}
-		break;
+
+		cargo = getInputString("Cargo: ", "Cargo invalido.");
 	}
+	else {
 
-	cargo = getInputString("Cargo: ", "Cargo invalido.");
+		cargo = "gerente";
+		farmaciaNome = newFOverride.second;
+
+	}
+	
 
 	morada = user_getMorada();
 	dataNascimento = user_getData();
@@ -452,6 +460,15 @@ void gerirCliente(Cadeia & cadeia)
 void menuEmpregados(Cadeia& cadeia)
 {
 	bool continuarNesteMenu = true;
+
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "Adicione uma farmacia antes de gerir empregados." << endl;
+		return;
+
+	}
+
+
 	while (continuarNesteMenu) {
 		int opcao;
 
@@ -580,6 +597,7 @@ void removerEmpregado(Cadeia& cadeia)
 
 		cout << "ID: " << empregados_busca.at(i)->getID()
 			<< "| Nome: " << empregados_busca.at(i)->getNome()
+			<< "| Farmacia: " << empregados_busca.at(i)->getNomeFarmacia()
 			<< "| Cargo: " << empregados_busca.at(i)->getCargo() << endl;
 
 
@@ -682,6 +700,7 @@ void gerirEmpregado(Cadeia & cadeia)
 
 		cout << "ID: " << empregados_busca.at(i)->getID()
 			<< "| Nome: " << empregados_busca.at(i)->getNome()
+			<< "| Farmacia: " << empregados_busca.at(i)->getNomeFarmacia()
 			<< "| Cargo: " << empregados_busca.at(i)->getCargo()
 			<< "| Salario: " << empregados_busca.at(i)->getSalario()<< endl;
 
@@ -902,7 +921,7 @@ void menuFarmacias(Cadeia& cadeia)
 		cout << "2 - Consultar Farmacia" << endl;
 		cout << "3 - Adicionar Farmacia" << endl;
 		cout << "4 - Gerir stock" << endl;
-		//cout << "4 - Remover Farmacia" << endl;
+		cout << "5 - Alterar gerente" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -910,7 +929,7 @@ void menuFarmacias(Cadeia& cadeia)
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 4);
+				opcao = getInputNumber(0, 5);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -933,6 +952,8 @@ void menuFarmacias(Cadeia& cadeia)
 		case 4:
 			gerirStock(cadeia);
 			break;
+		case 5:
+			alterarGerente(cadeia);
 		case 0:
 			continuarNesteMenu = false;
 		}
@@ -1152,6 +1173,117 @@ void gerirStock(Cadeia& cadeia) {
 
 }
 
+void alterarGerente(Cadeia & cadeia)
+{
+	cout << endl;
+
+	Farmacia * farmacia;
+
+	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
+
+
+	try
+	{
+		farmacia = cadeia.getFarmacia(farmaciaNome);
+	}
+	catch (FarmaciaNaoExiste& f)
+	{
+		cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		return;
+	}
+
+	string nome_novoGerente;
+	uint ID;
+
+	//get nome do empregado a remover
+	cout << "Nome do novo gerente: ";
+	getline(cin, nome_novoGerente);
+
+	// get empregados com o nome dado
+	vector<Empregado*> empregados_busca = farmacia->getEmpregados(nome_novoGerente);
+
+	// imprime empregados encontrados
+	for (size_t i = 0; i < empregados_busca.size(); i++) {
+
+		cout << "ID: " << empregados_busca.at(i)->getID()
+			<< "| Nome: " << empregados_busca.at(i)->getNome()
+			<< "| Cargo: " << empregados_busca.at(i)->getCargo() << endl;
+
+	}
+
+	cout << endl;
+
+	// se não encontrar nenhum empregado com o nome dado, retorna
+	if (empregados_busca.size() == 0) {
+
+		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
+		return;
+	}
+
+	// se só existir um empregado com o nome dado, remover esse empregado
+	// caso contrario, pedir o ID do empregado a remover
+	if (empregados_busca.size() != 1) {
+
+		// get ID da pessoa
+		cout << "ID: ";
+
+		while (!(cin >> ID))
+		{
+			if (cin.eof())
+			{
+				cin.clear();
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(MAX_STREAM_SIZE, '\n');
+			}
+
+			cout << "ID: ";
+		}
+
+		cin.ignore(MAX_STREAM_SIZE, '\n');
+
+		// verificar se o ID dado pertence a alguma das pessoas com o nome dado
+		for (size_t i = 0; i < empregados_busca.size(); i++) {
+
+			if (empregados_busca.at(i)->getID() == ID) {
+				break;
+			}
+			if (i == empregados_busca.size() - 1) {
+
+				cout << "Nao existe nenhum empregado com esse par Nome/ID." << endl;
+				return;
+
+			}
+		}
+
+
+	}
+	else {
+
+		ID = empregados_busca.at(0)->getID();
+	}
+
+	if (cadeia.getEmpregado(ID)->getCargo() == "gerente") {
+
+		cout << "O empregado escolhido ja e um gerente." << endl;
+		return;
+	}
+
+	string novo_Cargo;
+
+	//getnome do cargo da pessoa que deixou de ser gerente
+	cout << "Qual o novo cargo a atribuir ao gerente atual: ";
+	getline(cin, novo_Cargo);
+
+	farmacia->setGerente(cadeia.getEmpregado(ID), novo_Cargo);
+
+	cout << endl << "Gerente da farmacia " << farmacia->getNome() << " alterado com sucesso." << endl;
+
+
+}
+
 void farmacia_adicionarProduto(Farmacia& farmacia) {
 
 	bool continuarNesteMenu = true;
@@ -1326,6 +1458,7 @@ void farmacia_removerProduto(Farmacia & farmacia)
 
 void adicionarFarmacia(Cadeia& cadeia)
 {
+	Empregado* newEmp;
 	cout << endl << "ADICIONAR FARMACIA" << endl << endl;
 
 	string nome = getInputString("Nome: ", "Nome invalido. ");
@@ -1334,10 +1467,24 @@ void adicionarFarmacia(Cadeia& cadeia)
 
 	Farmacia* f = new Farmacia(nome, morada);
 
-	if (cadeia.addFarmacia(f))
-		cout << "Farmacia adicionada com sucesso." << endl;
-	else
+	if (!cadeia.addFarmacia(f)) {
+
 		cout << "Ja existe uma farmacia com o nome " << nome << "." << endl;
+		return;
+	}
+
+	cout << endl << "-- Adicionar um gerente " << endl << endl;
+
+	do {
+
+		pair<bool, string> ovRide = { true, nome };
+		 newEmp = user_getEmpregado(cadeia, ovRide);
+		
+	} while (!cadeia.addEmpregado(newEmp));
+	
+	
+	cout << endl << "Gerente adicionado, farmacia criada." << endl;
+
 }
 
 void farmacia_mudarGerente(Cadeia& farmacia)

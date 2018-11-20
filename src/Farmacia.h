@@ -58,10 +58,11 @@ public:
 	/**
 	* @brief Troca de gerente da farmacia. O antigo gerente passa a ter o cargo de empregado e o gerente passa a ser o empregado indicado no seu parametro.
 	* @param novoGerente Apontador para o empregado que vai passar a ser o gerente da farmacia.
+	* @param novoCargo	 novo cago a ser atribuido ao ex-gerente
 	* @return true se a troca foi realizada com sucesso
 	* false se ocorreu algum problema.
 	*/
-	bool setGerente(Empregado* novoGerente);
+	bool setGerente(Empregado* novoGerente, string novoCargo);
 	/**
 	* @brief Remove a quantidade indicada no segundo parametro de produto com o codigo indicado no primeiro parametro do stock da farmacia. 
 	* Lanca uma excecao se o produto nao existe em stock
@@ -161,16 +162,33 @@ public:
 
 	/**
 	* @brief Ordena a lista de empregados de acordo com o modo indicado no seu parametro
-	* @
+	* @param modo Modo no qual a lista de empregados vai ser ordenada
 	*/
 	void sortEmpregados(ord_pessoas modo);
 
+	/**
+	* @brief Escreve num ficheiro as informacoes relativas a farmacia para preservar esta informacao e ser posteriormente carregada
+	*/
 	ostream& printSimp(ostream& os) const;
+
+	/**
+	* @brief Mostra o nome e a morada da farmacia no ecra
+	*/
 	ostream& print(ostream& os) const;
+
+	/**
+	* @brief Mostra alguns atributos de todos os empregados da farmacia no ecra
+	*/
 	void mostrarEmpregados() const;
+	/**
+	* @brief Mostra alguns atributos de todos os produtos em stock no ecra e ainda as suas quantidades
+	*/
 	void mostrarStock() const;
 	//void mostrarVendas() const;
 
+	/**
+	* @brief Mostra no ecra as quantidades em stock de todos os produtos 
+	*/
 	void consultarQuantidades() const;
 
 	bool efetuaVenda(Empregado* empregado, Cliente* cliente, map<Produto*, unsigned int> produtos);
