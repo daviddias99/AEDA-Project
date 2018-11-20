@@ -151,7 +151,7 @@ void Farmacia::addQuantidade(long unsigned int codigo, uint quantidade)
 	map<Produto*, unsigned int>::iterator it;
 	for (it = stock.begin(); it != stock.end(); it++) {
 		if (it->first->getCodigo() == codigo) {
-			it->second++;
+			it->second += quantidade;
 			return;
 		}
 	}
