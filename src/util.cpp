@@ -190,7 +190,7 @@ string Timestamp::getTstamp()
 {
 	string result;
 
-	result = this->getData() + " | " + this->getTime();
+	result = this->getData() + " | " + this->getTime(true);
 
 	return result;
 }
