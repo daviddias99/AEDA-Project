@@ -63,7 +63,7 @@ bool Empregado::setCargo(string novoCargo)
 ostream & Empregado::print(ostream & os) const
 {
 	os << "ID: " << ID << endl;
-	Pessoa::print(os) << endl << "Farmacia: " << farmaciaNome << endl << "Cargo: " << cargo << endl << "Salario: " << salario << "Numero de vendas: " << getNumVendas();
+	Pessoa::print(os) << endl << "Farmacia: " << farmaciaNome << endl << "Cargo: " << cargo << endl << "Salario: " << salario << " Numero de vendas: " << getNumVendas();
 
 	return os;
 }

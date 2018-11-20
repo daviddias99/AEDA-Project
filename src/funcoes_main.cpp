@@ -841,6 +841,7 @@ void gerirEmpregado(Cadeia & cadeia)
 
 
 				cout << "Nao pode alterar a farmacia de um gerente." << endl;
+				break;
 			}
 
 
