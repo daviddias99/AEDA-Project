@@ -368,6 +368,7 @@ void menuClientes(Cadeia& cadeia)
 		cout << endl << "GERIR CLIENTES" << endl << endl;
 		cout << "1 - Resumo Clientes" << endl;
 		cout << "2 - Consultar clientes" << endl;
+		cout << "3 - Gerir cliente" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -390,7 +391,9 @@ void menuClientes(Cadeia& cadeia)
 			resumoClientes(cadeia);
 			break;
 		case 2:
-			//gerirCliente();
+			break;
+		case 3:
+			gerirCliente(cadeia);
 			break;
 		case 0:
 			continuarNesteMenu = false;
@@ -449,7 +452,80 @@ void consultarClientes(Cadeia & cadeia)
 
 void gerirCliente(Cadeia & cadeia)
 {
-	// TO DO
+	string nomeCliente;
+	uint ID;
+	uint salario;
+
+	cout << "GERIR CLIENTE" << endl << endl;
+
+	//get nome do empregado a remover
+	cout << "Nome do cliente: ";
+	getline(cin, nomeCliente);
+
+	// get empregados com o nome dado
+	vector<Cliente*> clientes_busca = cadeia.getClientes(nomeCliente);
+
+	// imprime empregados encontrados
+	for (size_t i = 0; i < clientes_busca.size(); i++) {
+
+		cout << "ID: " << clientes_busca.at(i)->getID()
+			<< "| Nome: " << clientes_busca.at(i)->getNome()
+			<< "| Idade: " << clientes_busca.at(i)->getIdade() << endl;
+
+	}
+
+	cout << endl;
+
+	// se não encontrar nenhum empregado com o nome dado, retorna
+	if (clientes_busca.size() == 0) {
+
+		cout << "Nao foi encontrado nenhum cliente com esse nome." << endl;
+		return;
+	}
+
+
+	if (clientes_busca.size() != 1) {
+
+		// get ID da pessoa
+		cout << "ID: ";
+
+		while (!(cin >> ID))
+		{
+			if (cin.eof())
+			{
+				cin.clear();
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(MAX_STREAM_SIZE, '\n');
+			}
+
+			cout << "ID: ";
+		}
+
+		cin.ignore(MAX_STREAM_SIZE, '\n');
+
+		// verificar se o ID dado pertence a alguma das pessoas com o nome dado
+		for (size_t i = 0; i < clientes_busca.size(); i++) {
+
+			if (clientes_busca.at(i)->getID() == ID) {
+				break;
+			}
+			if (i == clientes_busca.size() - 1) {
+
+				cout << "Nao existe nenhum empregado com esse par Nome/ID." << endl;
+				return;
+
+			}
+		}
+
+
+	}
+	else {
+
+		ID = clientes_busca.at(0)->getID();
+	}
 }
 
 
