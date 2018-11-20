@@ -20,10 +20,8 @@ public:
 	ostream& print(ostream& os) const;
 	ostream& printSimp(ostream& os) const;
 
-	friend bool operator<(const  Empregado& e1, const Empregado & e2)
-	{
-		return false;
-	}
+	friend bool operator<(const  Empregado& e1, const Empregado & e2);
+	friend bool operator==(const  Empregado& e1, const Empregado & e2);
 
 private:
 	uint   salario;

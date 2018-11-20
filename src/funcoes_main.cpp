@@ -279,6 +279,8 @@ void resumoClientes(Cadeia& cadeia)
 	cadeia.sortClientes((ord_pessoas)opcao);
 
 	cadeia.mostrarClientes();
+
+	cadeia.sortClientes(nif_cres);
 }
 
 void consultarClientes(Cadeia & cadeia)
@@ -388,6 +390,8 @@ void resumoEmpregados(Cadeia& cadeia)
 	cadeia.sortEmpregados((ord_pessoas)opcao);
 
 	cadeia.mostrarEmpregados();
+
+	cadeia.sortEmpregados(nif_cres);
 }
 
 void adicionarEmpregado(Cadeia& cadeia)

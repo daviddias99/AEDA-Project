@@ -183,6 +183,23 @@ bool Empregado_SortFunc_NIF_Decrescente(Empregado* p1, Empregado* p2) {
 }
 */
 
+bool operator<(const Empregado & e1, const Empregado & e2)
+{
+	if (e1.getNIF() < e2.getNIF()) {
+		return true;
+	}
+	else
+		return false;
+}
+
+bool operator==(const Empregado & e1, const Empregado & e2)
+{
+	if (e1.getNIF() == e2.getNIF())
+		return true;
+	else
+		return false;
+}
+
 bool Empregado_SortFunc_ID_Crescente(Empregado* p1, Empregado* p2) {
 
 	if (p1->getID() < p2->getID())

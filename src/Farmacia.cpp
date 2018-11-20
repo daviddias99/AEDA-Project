@@ -86,6 +86,7 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 			setGerente(empregado);
 
 		empregados.push_back(empregado);
+		this->sortEmpregados(nif_cres);
 		return true;
 	}
 	else return false;
