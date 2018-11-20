@@ -179,7 +179,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 		opcaoInvalida = false;
 	}
 	
-	cout << "Codigo: ";
+	cout << endl << "Codigo: ";
 
 	// validar input do codigo
 	while (!(cin >> codigo))
@@ -230,7 +230,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 
 		try {
 			cout << "IVA (%): ";
-			iva = getInputNumber(0, 9);
+			iva = getInputNumber(0, 100);
 		}
 		catch (OpcaoInvalida& opIn) {
 			cout << opIn.getInfo() << endl;
@@ -502,7 +502,7 @@ void resumoEmpregados(Cadeia& cadeia)
 	cout << endl << "RESUMO EMPREGADOS" << endl << endl;
 
 	if (cadeia.getNumEmpregados() == 0) {
-		cout << "A cadeia \"" << cadeia.getNome() << "\" ainda nao tem empregados." << endl << endl;
+		cout << "A cadeia \"" << cadeia.getNome() << "\" ainda nao tem empregados." << endl;
 		return;
 	}
 
@@ -945,7 +945,7 @@ void menuFarmacias(Cadeia& cadeia)
 
 void resumoFarmacias(Cadeia& cadeia) {
 
-	cout << endl;
+	cout << endl << "RESUMO FARMACIAS" << endl << endl;
 	cadeia.mostrarFarmacias();
 }
 
@@ -1133,6 +1133,7 @@ void gerirStock(Cadeia& cadeia) {
 			farmacia_adicionarProduto(*farmacia);
 			break;
 		case 3:
+			farmacia_removerProduto(*farmacia);
 			break;
 		case 4:
 			cout << "Farmacia: ";
@@ -1384,6 +1385,59 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 	}
 
 }
+
+void farmacia_removerProduto(Farmacia & farmacia)
+{
+		cout << endl << "REMOVER PRODUTOS" << endl << endl;
+		cout << "Codigo do produto a remover: ";
+		
+		long unsigned int codigo;
+		unsigned int quantidade;
+
+		// validar input do codigo
+		while (!(cin >> codigo))
+		{
+			if (cin.eof())
+			{
+				cin.clear();
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(MAX_STREAM_SIZE, '\n');
+			}
+			cout << "Codigo do produto a remover: ";
+		}
+		cin.ignore(MAX_STREAM_SIZE, '\n');
+
+		cout << "Quantidade a remover: ";
+
+		// validar input do codigo
+		while (!(cin >> quantidade))
+		{
+			if (cin.eof())
+			{
+				cin.clear();
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(MAX_STREAM_SIZE, '\n');
+			}
+			cout << "Qual a quantidade a adicionar? ";
+		}
+		cin.ignore(MAX_STREAM_SIZE, '\n');
+
+		try {
+			farmacia.removeQuantidade(codigo, quantidade);
+		}
+		catch (ProdutoNaoExiste& e) {
+			cout << "O produto com o codigo  " << e.getCodigo() << " nao existe." << endl;
+		}
+		catch (ProdutosInsuficientes& e) {
+			cout << "Apenas existem " << e.getQuantidade() << " unidades do produto pedido." << endl;
+		}
+	}
 
 void adicionarFarmacia(Cadeia& cadeia)
 {

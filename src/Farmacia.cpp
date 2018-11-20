@@ -19,10 +19,10 @@ Farmacia::Farmacia(string simp)
 	
 	if (linha != "\\") {
 		while (linha != "!") {
-			produtoSimp = linha.substr(1, linha.find_first_of('#') - 1);
+			linha = linha.substr(1);
+			produtoSimp = linha.substr(0, linha.find_first_of('#') - 1);
 			quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
 			linha = linha.substr(linha.find_first_of('!'));
-			// ERRO AQUI ALGURES
 			
 			bool isMed = false;
 			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3)
@@ -97,17 +97,17 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 	else return false;
 }
 
-bool Farmacia::removeQuantidade(long unsigned int codigo, uint quantidade)
+void Farmacia::removeQuantidade(long unsigned int codigo, uint quantidade)
 {
 	map<Produto*, unsigned int>::iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		if(it->first->getCodigo() == codigo) {
 			if(it->second <= quantidade) {
-				return true;
+				throw ProdutosInsuficientes(it->second);
 			}
 			else {
 				it->second -= quantidade;
-				return false;
+				return;
 			}
 		}
 	}
@@ -445,7 +445,7 @@ void Farmacia::mostrarEmpregados() const
 void Farmacia::mostrarStock() const
 {
 	for (map<Produto *, uint>::const_iterator it = stock.begin(); it != stock.end(); it++) {
-		it->first->print(cout) << "#Quantidade: " << it->second << endl;
+		it->first->print(cout) << "#Quantidade: " << it->second << endl << endl;
 	}
 }
 
