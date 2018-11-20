@@ -2,12 +2,14 @@
 #define FUNCOES_MAIN_H
 
 #include "Cadeia.h"
+#include "util.h"
+using namespace std;
 
 const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 
 Morada user_getMorada();
 Data user_getData();
-Empregado* user_getEmpregado(Cadeia& cadeia);
+Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride = { false, "nome_default" });
 Produto* user_getProduto(Farmacia& farmacia);
 int getInputNumber(int limInf, int limSup);
 string getInputString(string msg, string msgErr);

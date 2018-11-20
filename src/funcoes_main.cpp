@@ -67,7 +67,7 @@ Morada user_getMorada() {
 	return Morada(morada_endereco, morada_cpostal, morada_localidade);
 }
 
-Empregado* user_getEmpregado(Cadeia& cadeia) {
+Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 
 	string nome;
 	uint NIF;
@@ -121,24 +121,32 @@ Empregado* user_getEmpregado(Cadeia& cadeia) {
 
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
+	if (!newFOverride.first) {
+		while (true) {
 
-	while (true) {
+			farmaciaNome = getInputString("Farmacia: ", "Nome de farmacia invalido.");
 
-		farmaciaNome = getInputString("Farmacia: ", "Nome de farmacia invalido.");
-
-		try
-		{
-			cadeia.getFarmacia(farmaciaNome);
+			try
+			{
+				cadeia.getFarmacia(farmaciaNome);
+			}
+			catch (FarmaciaNaoExiste& f)
+			{
+				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				continue;
+			}
+			break;
 		}
-		catch (FarmaciaNaoExiste& f)
-		{
-			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
-			continue;
-		}
-		break;
+
+		cargo = getInputString("Cargo: ", "Cargo invalido.");
 	}
+	else {
 
-	cargo = getInputString("Cargo: ", "Cargo invalido.");
+		cargo = "gerente";
+		farmaciaNome = newFOverride.second;
+
+	}
+	
 
 	morada = user_getMorada();
 	dataNascimento = user_getData();
@@ -1450,6 +1458,7 @@ void farmacia_removerProduto(Farmacia & farmacia)
 
 void adicionarFarmacia(Cadeia& cadeia)
 {
+	Empregado* newEmp;
 	cout << endl << "ADICIONAR FARMACIA" << endl << endl;
 
 	string nome = getInputString("Nome: ", "Nome invalido. ");
@@ -1458,10 +1467,24 @@ void adicionarFarmacia(Cadeia& cadeia)
 
 	Farmacia* f = new Farmacia(nome, morada);
 
-	if (cadeia.addFarmacia(f))
-		cout << "Farmacia adicionada com sucesso." << endl;
-	else
+	if (!cadeia.addFarmacia(f)) {
+
 		cout << "Ja existe uma farmacia com o nome " << nome << "." << endl;
+		return;
+	}
+
+	cout << endl << "-- Adicionar um gerente " << endl << endl;
+
+	do {
+
+		pair<bool, string> ovRide = { true, nome };
+		 newEmp = user_getEmpregado(cadeia, ovRide);
+		
+	} while (!cadeia.addEmpregado(newEmp));
+	
+	
+	cout << endl << "Gerente adicionado, farmacia criada." << endl;
+
 }
 
 void farmacia_mudarGerente(Cadeia& farmacia)
