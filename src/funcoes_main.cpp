@@ -115,7 +115,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia) {
 			cin.clear();
 			cin.ignore(MAX_STREAM_SIZE, '\n');
 		}
-
+		cout << "Salario invalido." << endl << endl;
 		cout << "Salario: ";
 	}
 
@@ -136,8 +136,6 @@ Empregado* user_getEmpregado(Cadeia& cadeia) {
 		}
 		break;
 	}
-
-	cout << "Cargo: ";
 
 	cargo = getInputString("Cargo: ", "Cargo invalido.");
 

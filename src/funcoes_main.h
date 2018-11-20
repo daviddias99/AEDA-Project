@@ -1,7 +1,6 @@
 #ifndef FUNCOES_MAIN_H
 #define FUNCOES_MAIN_H
 
-
 #include "Cadeia.h"
 
 const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
