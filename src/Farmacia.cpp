@@ -19,7 +19,7 @@ Farmacia::Farmacia(string simp)
 	
 	if (linha != "\\") {
 		while (linha != "!") {
-			produtoSimp = linha.substr(1, linha.find_first_of('#'));
+			produtoSimp = linha.substr(1, linha.find_first_of('#') - 1);
 			quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
 			linha = linha.substr(linha.find_first_of('!'));
 			// ERRO AQUI ALGURES
@@ -43,13 +43,12 @@ Farmacia::Farmacia(string simp)
 				stock.insert(pair<Produto *, uint>(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant));
 			}
 			else {
-				linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 				vend_sem_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
-				linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 				pode_ser_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
-				linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 				desc_receita = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
-
 
 				stock.insert(pair<Produto *, uint>(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant));
 			}
@@ -446,7 +445,7 @@ void Farmacia::mostrarEmpregados() const
 void Farmacia::mostrarStock() const
 {
 	for (map<Produto *, uint>::const_iterator it = stock.begin(); it != stock.end(); it++) {
-		it->first->print(cout) << "#Quantidade: " << it->second;
+		it->first->print(cout) << "#Quantidade: " << it->second << endl;
 	}
 }
 
@@ -494,3 +493,5 @@ bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia &f1, Farmacia &f2)
 	else
 		return false;
 }
+
+

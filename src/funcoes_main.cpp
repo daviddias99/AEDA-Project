@@ -199,8 +199,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	if (farmacia.existeProduto(codigo)) {
-		cout << "Ja existe um produto com esse codigo." << endl;
-		return NULL;
+		throw ProdutoRepetido(codigo);
 	}
 
 	nome = getInputString("Nome: ", "Nome invalido.");
@@ -968,7 +967,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 	bool continuarNesteMenu = true;
 	while (continuarNesteMenu) {
 		int opcao;
-		cout << "CONSULTAR FARMACIA" << endl << endl;
+		cout << endl <<"CONSULTAR FARMACIA" << endl << endl;
 		farmacia->print(cout) << endl << endl;
 		cout << "Consultar: " << endl;
 		cout << "1 - Empregados" << endl;
@@ -1073,6 +1072,7 @@ void farmacia_consultarEmpregados(Farmacia& farmacia) {
 
 void farmacia_consultarProdutos(Farmacia & farmacia)
 {
+	cout << endl << "PRODUTOS" << endl << endl;
 	farmacia.mostrarStock();
 }
 
@@ -1098,7 +1098,7 @@ void gerirStock(Cadeia& cadeia) {
 	bool continuarNesteMenu = true;
 	while (continuarNesteMenu) {
 		int opcao;
-		cout << "GERIR STOCK" << endl << endl;
+		cout << endl << "GERIR STOCK" << endl << endl;
 		farmacia->print(cout) << endl << endl;
 		cout << "1 - Consultar produtos" << endl;
 		cout << "2 - Adicionar produtos" << endl;
@@ -1177,14 +1177,23 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 			opcaoInvalida = false;
 		}
 
+		cout << endl;
+
 		Produto* produto;
 
 		if (opcao == 0) {
 			continuarNesteMenu = false;
 		}
 		else if (opcao == 2) {
-			produto = user_getProduto(farmacia);
 			
+			try {
+				produto = user_getProduto(farmacia);
+			}
+			catch (ProdutoRepetido &e) {
+				cout << "O produto com o codigo " << e.getCodigo() << " ja existe." << endl;
+				continue;
+			}
+
 			uint quantidade;
 			cout << "Qual a quantidade a adicionar? ";
 

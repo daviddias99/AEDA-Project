@@ -149,6 +149,14 @@ public:
 	string getCodigo() const {return  to_string(codigo);}
 };
 
+class ProdutoRepetido {
+	int codigo;
+public:
+	ProdutoRepetido(int codigo) { this->codigo = codigo; }
+	string getCodigo() const { return  to_string(codigo); }
+};
+
+
 class DataInvalida {
 
 };
