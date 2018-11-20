@@ -53,9 +53,9 @@ public:
 	ostream& print(ostream& os) const;
 	void mostrarEmpregados() const;
 	void mostrarStock() const;
+	//void mostrarVendas() const;
 
 	void consultarQuantidades() const;
-	//void mostrarVendas() const;
 
 	bool efetuaVenda(Empregado* empregado, Cliente* cliente, map<Produto*, unsigned int> produtos);
 
@@ -67,7 +67,6 @@ private:
 	map< Produto *, unsigned int> stock;
 	vector <Venda *> vendas;
 };
-
 
 bool farmacia_SortFunc_Nome_Crescente(Farmacia * f1, Farmacia * f2);
 bool farmacia_SortFunc_Nome_Decrescente(Farmacia *f1, Farmacia *f2);

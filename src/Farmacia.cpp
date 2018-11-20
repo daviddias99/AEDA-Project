@@ -56,7 +56,7 @@ Farmacia::Farmacia(string simp)
 	}
 }
 
-Farmacia:: ~Farmacia()
+Farmacia::~Farmacia()
 {
 	map< Produto *, uint>::const_iterator it;
 
@@ -263,37 +263,6 @@ bool Farmacia::efetuaVenda(Empregado * empregado, Cliente * cliente, map<Produto
 	return false;
 }
 
-/*
-void Farmacia::mostrarVendas() const
-{
-	for(size_t i = 0; i < vendas.size(); i++)
-		cout << *(vendas.at(i)) << endl;
-}
-
-ostream& escreve (ostream& os, const Farmacia& f1, int modo) //Modo = 0 -> Ecra; Modo = 1 -> Ficheiro txt
-{
-	os << "Nome: " << f1.getNome() << endl;
-	os << "Morada: " << f1.getMorada() << endl;
-
-	if(modo == 0) {
-		os << "Numero de Empregados: " << f1.numEmpregados() << endl;
-		os << "Tamanho Stock: " << f1.tamanhoStock() << endl;
-		os << "Numero de Vendas: " << f1.numVendas() << endl;
-	}
-	else if(modo == 1) {
-		for(size_t i = 0; i < f1.empregados.size(); i++)
-			os << f1.empregados.at(i) << endl;
-		map<Produto*, int>::iterator it;
-		for(it = f1.stock.begin(); it != f1.stock.end(); it++)
-			os << (*it->first) << endl << it->second;
-		for (size_t i = 0; i < f1.vendas.size(); i++)
-			os << f1.vendas.at(i) << endl;
-	}
-
-	return os;
-}
-*/
-
 unsigned int Farmacia::numEmpregados() const
 {
 	return empregados.size();
@@ -308,7 +277,6 @@ unsigned int Farmacia::numVendas() const
 {
 	return vendas.size();
 }
-
 
 bool farmacia_SortFunc_Nome_Crescente(Farmacia * f1, Farmacia * f2)
 {
@@ -325,7 +293,7 @@ bool farmacia_SortFunc_Nome_Crescente(Farmacia * f1, Farmacia * f2)
 		return false;
 }
 
-bool farmacia_SortFunc_Nome_Decrescente(Farmacia *f1, Farmacia *f2)
+bool farmacia_SortFunc_Nome_Decrescente(Farmacia * f1, Farmacia * f2)
 {
 	if(f1->getNome() > f2->getNome())
 		return true;
@@ -340,7 +308,7 @@ bool farmacia_SortFunc_Nome_Decrescente(Farmacia *f1, Farmacia *f2)
 		return false;
 }
 
-bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia *f1, Farmacia *f2)
+bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia * f1, Farmacia * f2)
 {
 	if(f1->tamanhoStock() < f2->tamanhoStock())
 		return true;
@@ -355,7 +323,7 @@ bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia *f1, Farmacia *f2)
 		return false;
 }
 
-bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia *f1, Farmacia *f2)
+bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia * f1, Farmacia * f2)
 {
 	if(f1->tamanhoStock() > f2->tamanhoStock())
 		return true;
@@ -478,20 +446,4 @@ bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2)
 	else
 		return false;
 }
-
-bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia &f1, Farmacia &f2)
-{
-	if(f1.numVendas() < f2.numVendas())
-		return true;
-	else if(f1.numVendas() == f2.numVendas())
-	{
-		if(f1.getNome() < f2.getNome())
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
-
 
