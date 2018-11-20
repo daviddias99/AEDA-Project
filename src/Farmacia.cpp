@@ -22,19 +22,24 @@ Farmacia::Farmacia(string simp)
 			produtoSimp = linha.substr(1, linha.find_first_of('#'));
 			quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
 			linha = linha.substr(linha.find_first_of('!'));
+			// ERRO AQUI ALGURES
+			
+			bool isMed = false;
+			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3)
+				isMed = true;
 
 			cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
-			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 			nome_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
-			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 			desc_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
-			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 			preco_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
-			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 			iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 
 
-			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3) {
+			if (!isMed) {
 				stock.insert(pair<Produto *, uint>(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant));
 			}
 			else {
@@ -436,6 +441,13 @@ void Farmacia::mostrarEmpregados() const
 	for (size_t i = 0; i < empregados.size(); i++)
 		empregados.at(i)->print(cout) << endl << endl;
 
+}
+
+void Farmacia::mostrarStock() const
+{
+	for (map<Produto *, uint>::const_iterator it = stock.begin(); it != stock.end(); it++) {
+		it->first->print(cout) << "#Quantidade: " << it->second;
+	}
 }
 
 bool farmacia_SortFunc_NumVendas_Crescente(Farmacia *f1, Farmacia *f2)

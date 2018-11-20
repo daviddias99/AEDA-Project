@@ -52,6 +52,7 @@ public:
 	ostream& printSimp(ostream& os) const;
 	ostream& print(ostream& os) const;
 	void mostrarEmpregados() const;
+	void mostrarStock() const;
 
 	void consultarQuantidades() const;
 	//void mostrarVendas() const;

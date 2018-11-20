@@ -997,7 +997,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 			farmacia_consultarEmpregados(*farmacia);
 			break;
 		case 2:
-			//consultaProdutos(farmacia);
+			farmacia_consultarProdutos(*farmacia);
 			break;
 		case 3:
 			//consultaVendas(farmacia);
@@ -1071,6 +1071,11 @@ void farmacia_consultarEmpregados(Farmacia& farmacia) {
 	farmacia.mostrarEmpregados();
 }
 
+void farmacia_consultarProdutos(Farmacia & farmacia)
+{
+	farmacia.mostrarStock();
+}
+
 void gerirStock(Cadeia& cadeia) {
 
 	cout << endl;
@@ -1118,6 +1123,7 @@ void gerirStock(Cadeia& cadeia) {
 
 		switch (opcao) {
 		case 1:
+			farmacia_consultarProdutos(*farmacia);
 			break;
 		case 2:
 			farmacia_adicionarProduto(*farmacia);
