@@ -162,17 +162,34 @@ public:
 
 	/**
 	* @brief Ordena a lista de empregados de acordo com o modo indicado no seu parametro
-	* @
+	* @param modo Modo no qual a lista de empregados vai ser ordenada
 	*/
 	void sortEmpregados(ord_pessoas modo);
 
+	/**
+	* @brief Escreve num ficheiro as informacoes relativas a farmacia para preservar esta informacao e ser posteriormente carregada
+	*/
 	ostream& printSimp(ostream& os) const;
-	ostream& print(ostream& os) const;
-	void mostrarEmpregados() const;
-	void mostrarStock() const;
 
-	void consultarQuantidades() const;
+	/**
+	* @brief Mostra o nome e a morada da farmacia no ecra
+	*/
+	ostream& print(ostream& os) const;
+
+	/**
+	* @brief Mostra alguns atributos de todos os empregados da farmacia no ecra
+	*/
+	void mostrarEmpregados() const;
+	/**
+	* @brief Mostra alguns atributos de todos os produtos em stock no ecra e ainda as suas quantidades
+	*/
+	void mostrarStock() const;
 	//void mostrarVendas() const;
+
+	/**
+	* @brief Mostra no ecra as quantidades em stock de todos os produtos 
+	*/
+	void consultarQuantidades() const;
 
 	bool efetuaVenda(Empregado* empregado, Cliente* cliente, map<Produto*, unsigned int> produtos);
 
@@ -184,7 +201,6 @@ private:
 	map< Produto *, unsigned int> stock;
 	vector <Venda *> vendas;
 };
-
 
 bool farmacia_SortFunc_Nome_Crescente(Farmacia * f1, Farmacia * f2);
 bool farmacia_SortFunc_Nome_Decrescente(Farmacia *f1, Farmacia *f2);

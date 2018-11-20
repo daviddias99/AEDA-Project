@@ -1,14 +1,20 @@
 /*!
-
-* \file Cadeia.h
-*
-* \author FEUP AEDA1819 MIEIC Turma5_G1:
-* \author 
-* \author
-* \author
-*/
+ * \file Cadeia.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1:
+ * \author 
+ * \author
+ * \author
+ */
 #ifndef CADEIA_H_
 #define CADEIA_H_
+
+/** @defgroup Cadeia Cadeia
+ * @{
+ *
+ * Classe cadeia
+ */
+
 
 #include <string>
 #include <vector>
@@ -46,7 +52,7 @@ public:
 	* @return true se  farmacia foi adicionada com sucesso
 	* false se farmacia nao foi adicionada porque esta ja existe na lista de farmacias
 	*/
-	bool addFarmacia(Farmacia* Farmacia);
+	bool addFarmacia(Farmacia* farmacia);
 	/**
 	* @brief Adciona um cliente a lista de clientes da cadeia
 	* @param cliente Apontador para o cliente a ser adicionado a lista
@@ -189,10 +195,21 @@ private:
 	*/
 	void carregarFarmacias(ifstream& ficheiro);
 
-	vector< Farmacia* > farmacias; //Ordenadas por nome
-	vector< Cliente* > clientes; //Ordenados por ID
-	vector< Empregado* > empregados; //Ordenados por ID
-
+	/**
+	 * @brief Vector de apontadores para objetos do tipo Farmacia, ordenadas por ordem alfabetica de nome
+	 */
+	vector< Farmacia* > farmacias;
+	/**
+	 * @brief Vector de apontadores para objetos do tipo Cliente, ordenados pelo numero de ID de cada cliente
+	 */
+	vector< Cliente* > clientes; 
+	/**
+	 * @brief Vector de apontadores para objetos do tipo Empregado, ordenados pelo numero de ID de cada cliente
+	 */
+	vector< Empregado* > empregados; 
+	/**
+	 * @brief Nome da cadeia de farmacias
+	 */
 	string nome;
 };
 

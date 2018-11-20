@@ -1,5 +1,8 @@
 #include "Empregado.h"
 
+
+uint Empregado::currentID = 0;
+
 Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
 {
 	this->cargo = cargo;
@@ -15,9 +18,7 @@ uint Empregado::getSalario() const
 
 string Empregado::getNomeFarmacia() const
 {
-
 	return this->farmaciaNome;
-
 }
 
 string Empregado::getCargo() const
@@ -40,24 +41,19 @@ bool Empregado::setSalario(uint novoSalario)
 	if (novoSalario < 0)
 		return false;
 
-
 	this->salario = novoSalario;
 
 	return true;
 }
 
-bool Empregado::setFarmacia(string  novaFarmacia)
+void Empregado::setFarmacia(string  novaFarmacia)
 {
 	this->farmaciaNome = novaFarmacia;
-
-	return true;
 }
 
-bool Empregado::setCargo(string novoCargo)
+void Empregado::setCargo(string novoCargo)
 {
 	this->cargo = novoCargo;
-
-	return true;
 }
 
 ostream & Empregado::print(ostream & os) const
@@ -82,106 +78,7 @@ ostream & Empregado::printSimp(ostream & os) const
 	return os;
 }
 
-ostream & operator<<(ostream & os, const Empregado & emp)
-{
-	os << "COUT DE UM EMPREGADO- WIP" << endl;
 
-	return os;
-}
-
-uint Empregado::currentID = 0;
-
-/*
-
-bool Empregado_SortFunc_Idade_Crescente(Empregado* p1, Empregado* p2) {
-
-	if (p1->getIdade() < p2->getIdade())
-		return true;
-	else if (p1->getIdade() == p2->getIdade())
-	{
-		if (p1->getNome() < p2->getNome())
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
-
-bool Empregado_SortFunc_Idade_Decrescente(Empregado* p1, Empregado* p2) {
-
-	if (p1->getIdade() > p2->getIdade())
-		return true;
-	else if (p1->getIdade() == p2->getIdade())
-	{
-		if (p1->getNome() < p2->getNome())
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
-
-bool Empregado_SortFunc_Nome_Crescente(Empregado* p1, Empregado* p2) {
-
-	if (p1->getNome() < p2->getNome())
-		return true;
-	else if (p1->getNome() == p2->getNome())
-	{
-		if (p1->getIdade() < p2->getIdade())
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
-
-bool Empregado_SortFunc_Nome_Decrescente(Empregado* p1, Empregado* p2) {
-
-	if (p1->getNome() > p2->getNome())
-		return true;
-	else if (p1->getNome() == p2->getNome())
-	{
-		if (p1->getIdade() < p2->getIdade())
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
-bool Empregado_SortFunc_NIF_Crescente(Empregado* p1, Empregado* p2) {
-
-	if (p1->getNIF() < p2->getNIF())
-		return true;
-	else if (p1->getNIF() == p2->getNIF())
-	{
-		if (p1->getNome() < p2->getNome())
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
-
-bool Empregado_SortFunc_NIF_Decrescente(Empregado* p1, Empregado* p2) {
-
-	if (p1->getNIF() > p2->getNIF())
-		return true;
-	else if (p1->getNIF() == p2->getNIF())
-	{
-		if (p1->getNome() < p2->getNome())
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
-*/
 
 bool operator<(const Empregado & e1, const Empregado & e2)
 {

@@ -68,13 +68,6 @@ bool Pessoa::setMorada(Morada newMorada)
 	return true;
 }
 
-
-
-
-
-
-
-
 bool Pessoa_SortFunc_Idade_Crescente(Pessoa* p1, Pessoa* p2) {
 
 	if (p1->getIdade() < p2->getIdade())
