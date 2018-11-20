@@ -156,6 +156,12 @@ public:
 	string getCodigo() const { return  to_string(codigo); }
 };
 
+class ProdutosInsuficientes {
+	int quantidade;
+public:
+	ProdutosInsuficientes(int quant) { this->quantidade = quant; }
+	string getQuantidade() const { return to_string(quantidade); }
+};
 
 class DataInvalida {
 

@@ -38,5 +38,6 @@ void farmacia_mudarGerente(Cadeia& farmacia);
 void farmacia_consultarEmpregados(Farmacia& farmacia);
 void farmacia_consultarProdutos(Farmacia& farmacia);
 void farmacia_adicionarProduto(Farmacia& farmacia);
+void farmacia_removerProduto(Farmacia& farmacia);
 
 #endif

@@ -37,15 +37,9 @@ bool Produto::operator==(const Produto &prod) {
 	return codigo == prod.codigo;
 }
 
-ostream & operator<<(ostream & os, const Produto & prod)
-{
-	os << "COUT DE UM PRODUTO- WIP" << endl;
-	return os;
-}
-
 ostream & Produto::print(ostream & os) const
 {
-	os << "Codigo: " << codigo << "\t\tNome: " << nome << endl;
+	os << "Nome: " << nome << "\t\tCodigo: " << codigo << endl;
 	os << "Descricao: " << descricao << endl << "Preco: " << preco << "e \t\tIva: " << iva * 100 << "%" << endl;
 
 	return os;
@@ -53,7 +47,7 @@ ostream & Produto::print(ostream & os) const
 
 ostream& Produto::printSimp(ostream& os) const {
 
-	os << codigo << "&" << nome << "&" << descricao << "&" << preco << "&" << iva << endl;
+	os << codigo << "&" << nome << "&" << descricao << "&" << preco << "&" << iva;
 
 	return os;
 }
