@@ -85,7 +85,7 @@ Data::Data() {
 	localtime_s(tempAtualStruct,&tempoAtual);
 
 	this->ano = tempAtualStruct->tm_year + 1900;
-	this->mes = tempAtualStruct->tm_mon;
+	this->mes = tempAtualStruct->tm_mon + 1;
 	this->dia = tempAtualStruct->tm_mday;
 }
 

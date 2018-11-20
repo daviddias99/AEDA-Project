@@ -56,7 +56,7 @@ ostream& Pessoa::printSimp(ostream & os) const
  
 ostream & Pessoa::print(ostream & os) const
 {
-	os << nome << endl << "Data de nascimento: " << dataNascimento << endl << "NIF: " << NIF << endl << morada;
+	os << nome << endl << "Data de nascimento: " << dataNascimento << "(" << getIdade() <<" anos)" << endl << "NIF: " << NIF << endl << morada;
 
 	return os;
 }

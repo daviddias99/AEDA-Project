@@ -30,7 +30,7 @@ uint Cliente::getID() const
 ostream & Cliente::print(ostream & os) const
 {
 	os << "ID: " << ID << endl;
-	Pessoa::print(os) << endl << "Numero de compras: " << getNumCompras();
+	Pessoa::print(os) << endl << "Numero de compras: " << getNumCompras() ;
 
 	return os;
 }
