@@ -87,7 +87,7 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 			setGerente(empregado);
 
 		empregados.push_back(empregado);
-		this->sortEmpregados(nif_cres);
+		this->sortEmpregados(id_cres);
 		return true;
 	}
 	else return false;
@@ -122,6 +122,18 @@ void Farmacia::remProduto(long unsigned int codigo)
 		}
 	}
 	throw ProdutoNaoExiste(codigo);
+}
+
+void Farmacia::remEmpregado(uint ID)
+{
+	int i = procura2(this->empregados, ID);
+
+	if (i != -1) {
+		empregados.erase(empregados.begin() + i);
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
+	}
+	else throw ClienteNaoExiste(ID);
+
 }
 
 bool Farmacia::setGerente(Empregado * novoGerente)

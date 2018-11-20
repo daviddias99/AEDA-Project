@@ -133,6 +133,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia) {
 		catch (FarmaciaNaoExiste& f)
 		{
 			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+			continue;
 		}
 		break;
 	}
@@ -430,7 +431,8 @@ void resumoClientes(Cadeia& cadeia)
 
 	cadeia.mostrarClientes();
 
-	cadeia.sortClientes(nif_cres);
+
+	cadeia.sortClientes(id_cres);
 }
 
 void consultarClientes(Cadeia & cadeia)
@@ -481,6 +483,7 @@ void menuEmpregados(Cadeia& cadeia)
 			resumoEmpregados(cadeia);
 			break;
 		case 2:
+			gerirEmpregado(cadeia);
 			break;
 		case 3:
 			adicionarEmpregado(cadeia);
@@ -541,7 +544,7 @@ void resumoEmpregados(Cadeia& cadeia)
 
 	cadeia.mostrarEmpregados();
 
-	cadeia.sortEmpregados(nif_cres);
+	cadeia.sortEmpregados(id_cres);
 }
 
 void adicionarEmpregado(Cadeia& cadeia)
@@ -657,7 +660,229 @@ void removerEmpregado(Cadeia& cadeia)
 
 void gerirEmpregado(Cadeia & cadeia)
 {
-	// TO DO
+	string nomeEmpregado;
+	uint ID;
+	uint salario;
+	string cargo, nomeFarmacia;
+	Farmacia* farmaciaTemp = NULL;
+	Morada morada;
+	bool farmaciaValida = false;
+
+
+	cout << "GERIR EMPREGADO" << endl << endl;
+
+	//get nome do empregado a remover
+	cout << "Nome do empregado: ";
+	getline(cin, nomeEmpregado);
+
+	// get empregados com o nome dado
+	vector<Empregado*> empregados_busca = cadeia.getEmpregados(nomeEmpregado);
+
+	// imprime empregados encontrados
+	for (size_t i = 0; i < empregados_busca.size(); i++) {
+
+		cout << "ID: " << empregados_busca.at(i)->getID()
+			<< "| Nome: " << empregados_busca.at(i)->getNome()
+			<< "| Cargo: " << empregados_busca.at(i)->getCargo()
+			<< "| Salario: " << empregados_busca.at(i)->getSalario()<< endl;
+
+
+	}
+
+	cout << endl;
+
+	// se não encontrar nenhum empregado com o nome dado, retorna
+	if (empregados_busca.size() == 0) {
+
+		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
+		return;
+	}
+
+	// se só existir um empregado com o nome dado, remover esse empregado
+	// caso contrario, pedir o ID do empregado a remover
+	if (empregados_busca.size() != 1) {
+
+		// get ID da pessoa
+		cout << "ID: ";
+
+		while (!(cin >> ID))
+		{
+			if (cin.eof())
+			{
+				cin.clear();
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(MAX_STREAM_SIZE, '\n');
+			}
+
+			cout << "ID: ";
+		}
+
+		cin.ignore(MAX_STREAM_SIZE, '\n');
+
+		// verificar se o ID dado pertence a alguma das pessoas com o nome dado
+		for (size_t i = 0; i < empregados_busca.size(); i++) {
+
+			if (empregados_busca.at(i)->getID() == ID) {
+				break;
+			}
+			if (i == empregados_busca.size() - 1) {
+
+				cout << "Nao existe nenhum empregado com esse par Nome/ID." << endl;
+				return;
+
+			}
+		}
+
+
+	}
+	else {
+
+		ID = empregados_busca.at(0)->getID();
+	}
+
+
+
+
+	int opcao = -1;
+	bool opcaoInvalida = true;
+
+	do {
+
+		cout << endl << "O que pretende alterar no empregado " << cadeia.getEmpregado(ID)->getNome() << " ?" << endl;
+		cout << "1- Salario" << endl;
+		cout << "2- Cargo" << endl;
+		cout << "3- Morada" << endl;
+		cout << "4- Farmacia" << endl;
+		cout << "0- Terminar" << endl << endl;
+
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Opcao: ";
+				opcao = getInputNumber(0, 4);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+		opcaoInvalida = true;
+		cout << endl;
+
+		switch (opcao) {
+		case 1:
+
+			
+			cout << "Novo Salario: ";
+			while (!(cin >> salario))
+			{
+				if (cin.eof())
+				{
+					cin.clear();
+				}
+				else
+				{
+					cin.clear();
+					cin.ignore(MAX_STREAM_SIZE, '\n');
+				}
+
+				cout << "Novo Salario: ";
+			}
+
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+
+			cadeia.getEmpregado(ID)->setSalario(salario);
+
+			cout << "Alterado." << endl;
+
+
+			break;
+		case 2:
+			
+			if (cadeia.getEmpregado(ID)->getCargo() == "gerente") {
+
+				cout << "Nao pode alterar o cargo de um gerente." << endl;
+				break;
+			}
+
+			
+			do {
+				cout << "Novo cargo: ";
+				getline(cin, cargo);
+
+				if (cargo == "gerente") {
+
+					cout << "Nao pode definir um novo gerente aqui." << endl;
+				}
+
+			} while (cargo == "gerente");
+
+
+			cadeia.getEmpregado(ID)->setCargo(cargo);
+
+			cout << "Alterado." << endl;
+
+			break;
+		case 3:
+			
+			morada = user_getMorada();
+			cadeia.getEmpregado(ID)->setMorada(morada);
+			cout << "Alterado." << endl;
+
+			break;
+		case 4:
+			
+			if (cadeia.getEmpregado(ID)->getCargo() == "gerente") {
+
+
+				cout << "Nao pode alterar a farmacia de um gerente." << endl;
+			}
+
+
+
+			do {
+
+				cout << "Nova farmacia: ";
+				getline(cin, nomeFarmacia);
+
+				try
+				{
+					farmaciaTemp = cadeia.getFarmacia(nomeFarmacia);
+					break;
+				}
+				catch (FarmaciaNaoExiste& f)
+				{
+					cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+					continue;
+				}
+
+			} while (!farmaciaValida);
+			farmaciaValida = false;
+
+			farmaciaTemp->addEmpregado(cadeia.getEmpregado(ID));
+			cadeia.getFarmacia(cadeia.getEmpregado(ID)->getNomeFarmacia())->remEmpregado(ID);
+			cadeia.getEmpregado(ID)->setFarmacia(nomeFarmacia);
+			
+
+			cout << "Alterado." << endl;
+
+
+
+
+			break;
+		case 0:
+			break;
+		}
+
+	} while (opcao != 0);
+
+
+		return;
 }
 
 
