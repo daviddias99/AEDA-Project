@@ -82,10 +82,9 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 	int i = procura2(empregados, empregado);
 
 	if (i != -1) {
-		/*if(empregado->getCargo() == "gerente")
-			if(!addGerente(empregado)) return false;
-		empregados.push_back(empregado);
-		return true; */
+		if (empregado->getCargo() == "gerente")
+			setGerente(empregado);
+
 		empregados.push_back(empregado);
 		return true;
 	}

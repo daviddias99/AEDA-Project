@@ -209,11 +209,11 @@ void Sistema::sair()
 		cin >> opcao;
 		cin.ignore(MAX_STREAM_SIZE, '\n');
 
-		if(opcao == "sim") {
+		if (opcao == "sim") {
 			cadeia.guardarDados();
 			exit(0);
 		}
-		else if(opcao == "nao")
+		else if (opcao == "nao")
 			exit(0);
 		else
 			cout << "Resposta invalida!" << endl;
@@ -266,7 +266,7 @@ void Sistema::consultarClientes()
 	cout << "Opcao: ";
 	cin >> opcao;
 
-	cadeia.sortClientes((ord_pessoas) opcao);
+	cadeia.sortClientes((ord_pessoas)opcao);
 
 	cadeia.mostrarClientes();
 
@@ -296,7 +296,7 @@ void Sistema::consultarEmpregados()
 	cout << "Opcao: ";
 	cin >> opcao;
 
-	cadeia.sortEmpregados((ord_pessoas) opcao);
+	cadeia.sortEmpregados((ord_pessoas)opcao);
 
 	cadeia.mostrarEmpregados();
 
@@ -307,7 +307,7 @@ void Sistema::gerirFarmacia()
 {
 	cout << endl << "GERIR FARMACIA" << endl;
 
-	if(cadeia.getNumFarmacias() == 0) {
+	if (cadeia.getNumFarmacias() == 0) {
 		cout << "Nenhuma farmacia nesta cadeia. Adicione uma farmacia primeiro." << endl;
 		gerirFarmacias();
 	}
@@ -316,12 +316,12 @@ void Sistema::gerirFarmacia()
 
 	cout << "Nome da farmacia: ";
 	getline(cin, nome);
-	
+
 	try {
 		f = cadeia.getFarmacia(nome);
 		farmacia_gerir();
 	}
-	catch(FarmaciaNaoExiste &f1)
+	catch (FarmaciaNaoExiste &f1)
 	{
 		cout << "A farmacia " << f1.getNome() << " nao existe.";
 		gerirFarmacias();
@@ -476,16 +476,17 @@ void Sistema::farmacia_removerProduto()
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	try {
-		if(quantidade == 0) {
+		if (quantidade == 0) {
 			f->remProduto(codigo);
 			cout << "Produto removido." << endl;
 		}
 		else {
 			erro = f->removeQuantidade(codigo, quantidade);
-			if(!erro) cout << "Quantidade removida;" << endl;
+			if (!erro) cout << "Quantidade removida;" << endl;
 			else cout << "Erro! Se pretende remover a quantidade total do protudo, responda '0' a quantidade;" << endl;
 		}
-	} catch(ProdutoNaoExiste &p1) {
+	}
+	catch (ProdutoNaoExiste &p1) {
 		cout << "O produto de codigo " << p1.getCodigo() << " nao existe." << endl;
 	}
 
@@ -628,12 +629,12 @@ void Sistema::farmacia_adicionarProduto()
 			p1 = new Produto(codigo, nome, descricao, preco, iva);
 			break;
 		}
-			
+
 		else
 			cerr << "Resposta invalida!" << endl;
 
 	} while (true);
-		
+
 	f->addProduto(p1, quantidade);
 
 	cout << "Produto adicionado" << endl;
@@ -644,7 +645,7 @@ void Sistema::farmacia_adicionarProduto()
 void Sistema::gerirCliente()
 {
 
-	
+
 }
 
 Morada user_getMorada() {
@@ -804,7 +805,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia) {
 		catch (FarmaciaNaoExiste& f)
 		{
 			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
-		} 
+		}
 
 		cout << "Farmacia: ";
 	}
@@ -816,9 +817,9 @@ Empregado* user_getEmpregado(Cadeia& cadeia) {
 	morada = user_getMorada();
 	dataNascimento = user_getData();
 
-	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, morada,salario,farmaciaNome,cargo);
+	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, morada, salario, farmaciaNome, cargo);
 
-	return newEmp; 
+	return newEmp;
 
 
 }
@@ -828,7 +829,7 @@ void Sistema::adicionarCliente()
 {
 	// pedir ao user o cliente a adicionar
 	Cliente* newCli = user_getCliente();
-	
+
 	// adicionar cliente à cadeia
 	if (cadeia.addCliente(c)) {
 		cout << "Cliente adicionado." << endl;
@@ -842,7 +843,7 @@ void Sistema::adicionarCliente()
 
 }
 
-void Sistema::removerCliente(){
+void Sistema::removerCliente() {
 
 	string nomeCliente;
 	uint ID;
@@ -860,7 +861,7 @@ void Sistema::removerCliente(){
 
 		cout << "ID: " << clientes_busca.at(i)->getID()
 			<< "| Nome: " << clientes_busca.at(i)->getNome() << endl;
-			
+
 
 	}
 
@@ -937,7 +938,98 @@ void Sistema::adicionarEmpregado()
 
 void Sistema::removerEmpregado()
 {
+	string nomeEmpregado;
+	uint ID;
 
+	cout << "REMOVER EMPREGADO" << endl << endl;
+
+	//get nome do empregado a remover
+	cout << "Nome do empregado: ";
+	getline(cin, nomeEmpregado);
+
+	// get empregados com o nome dado
+	vector<Empregado*> empregados_busca = cadeia.getEmpregados(nomeEmpregado);
+
+	// imprime empregados encontrados
+	for (size_t i = 0; i < empregados_busca.size(); i++) {
+
+		cout << "ID: " << empregados_busca.at(i)->getID()
+			<< "| Nome: " << empregados_busca.at(i)->getNome() 
+			<< "| Cargo: " << empregados_busca.at(i)->getCargo()<< endl;
+
+
+	}
+
+	cout << endl;
+
+	// se não encontrar nenhum empregado com o nome dado, retorna
+	if (empregados_busca.size() == 0) {
+
+		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
+		return;
+	}
+
+	// se só existir um empregado com o nome dado, remover esse empregado
+	// caso contrario, pedir o ID do empregado a remover
+	if (empregados_busca.size() != 1) {
+
+		// get ID da pessoa
+		cout << "ID: ";
+
+		while (!(cin >> ID))
+		{
+			if (cin.eof())
+			{
+				cin.clear();
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(MAX_STREAM_SIZE, '\n');
+			}
+
+			cout << "ID: ";
+		}
+
+		cin.ignore(MAX_STREAM_SIZE, '\n');
+
+		// verificar se o ID dado pertence a alguma das pessoas com o nome dado
+		for (size_t i = 0; i < empregados_busca.size(); i++) {
+
+			if (empregados_busca.at(i)->getID() == ID) {
+				break;
+			}
+			if (i == empregados_busca.size() - 1) {
+
+				cout << "Nao existe nenhum empregado com esse par Nome/ID." << endl;
+				return;
+
+			}
+		}
+
+
+	}
+	else {
+
+		ID = empregados_busca.at(0)->getID();
+	}
+
+	// se o empregado que se tenta remover for um gerente, nao remover
+	if (cadeia.getEmpregado(ID)->getCargo() == "gerente") {
+
+		cout << "Erro: Nao pode remover o gerente de uma farmacia." << endl;
+		return;
+
+	}
+
+	// remover empregado
+	try {
+		cadeia.removeEmpregado(ID);
+		cout << "Cliente removido" << endl;
+	}
+	catch (EmpregadoNaoExiste &c1) {
+		cout << "O empregado com o ID " << c1.getID() << " nao existe." << endl;
+	}
 }
 
 

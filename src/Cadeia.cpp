@@ -87,20 +87,20 @@ Farmacia* Cadeia::getFarmacia(string nome) const
 	throw FarmaciaNaoExiste(nome);
 }
 
-Cliente* Cadeia::getCliente(int nif) const
+Cliente* Cadeia::getCliente(uint ID) const
 {
-	int i = procura2(clientes, nif);
+	int i = procura2(clientes, ID);
 	if(i != -1) return clientes[i];
 
-	throw ClienteNaoExiste(nif);
+	throw ClienteNaoExiste(ID);
 }
 
-Empregado* Cadeia::getEmpregado(int nif) const
+Empregado* Cadeia::getEmpregado(uint ID) const
 {
-	int i = procura2(empregados, nif);
+	int i = procura2(empregados, ID);
 	if(i != -1) return empregados[i];
 
-	throw EmpregadoNaoExiste(nif);
+	throw EmpregadoNaoExiste(ID);
 }
 
 vector<Cliente*> Cadeia::getClientes(string nome) const
@@ -111,6 +111,21 @@ vector<Cliente*> Cadeia::getClientes(string nome) const
 
 		if (this->clientes.at(i)->getNome() == nome) {
 			resultado.push_back(this->clientes.at(i));
+		}
+
+	}
+
+	return resultado;
+}
+
+vector<Empregado*> Cadeia::getEmpregados(string nome) const
+{
+	vector<Empregado*> resultado;
+
+	for (size_t i = 0; i < this->empregados.size(); i++) {
+
+		if (this->empregados.at(i)->getNome() == nome) {
+			resultado.push_back(this->empregados.at(i));
 		}
 
 	}

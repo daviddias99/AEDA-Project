@@ -30,9 +30,10 @@ public:
 	void removeEmpregado(uint ID);
 
 	Farmacia* getFarmacia(string nome) const;
-	Cliente* getCliente(int nif) const;
-	Empregado* getEmpregado(int nif) const;
+	Cliente* getCliente(uint  ID) const;
+	Empregado* getEmpregado(uint ID) const;
 	vector<Cliente*> getClientes(string nome) const;
+	vector<Empregado*> getEmpregados(string nome) const;
 
 	unsigned int getNumFarmacias() const;
 	unsigned int getNumEmpregados() const;
