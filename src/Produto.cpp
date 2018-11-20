@@ -6,6 +6,7 @@ Produto::Produto(long int cod, string n, string desc, float pr, float i) : codig
 	iva = i;
 }
 
+
 long unsigned int Produto::getCodigo() const {
 	return codigo;
 }

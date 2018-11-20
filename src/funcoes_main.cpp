@@ -147,6 +147,158 @@ Empregado* user_getEmpregado(Cadeia& cadeia) {
 	return newEmp;
 }
 
+Produto* user_getProduto(Farmacia& farmacia) {
+
+	string nome, desc;
+	float preco;
+	int iva;
+	long int codigo;
+	int opcao;
+	bool vendidoSemRec;
+	bool podeSerRec;
+	int descComReceita;
+	Produto* produto;
+
+	cout << "Categoria: " << endl;
+	cout << "1 - Produto generico" << endl;
+	cout << "2 - Medicamento" << endl;
+	
+	bool opcaoInvalida = true;
+	while (opcaoInvalida) {
+
+		try {
+			cout << "Opcao: ";
+			opcao = getInputNumber(0, 9);
+		}
+		catch (OpcaoInvalida& opIn) {
+			cout << opIn.getInfo() << endl;
+			continue;
+		}
+
+		opcaoInvalida = false;
+	}
+	
+	cout << "Codigo: ";
+
+	// validar input do codigo
+	while (!(cin >> codigo))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "Codigo: ";
+	}
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	if (farmacia.existeProduto(codigo)) {
+		cout << "Ja existe um produto com esse codigo." << endl;
+		return NULL;
+	}
+
+	nome = getInputString("Nome: ", "Nome invalido.");
+	desc = getInputString("Descricao: ", "Descricao invalida.");
+
+	cout << "Preco: ";
+
+	// validar input do codigo
+	while (!(cin >> preco))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "Preco: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+	
+	opcaoInvalida = true;
+	while (opcaoInvalida) {
+
+		try {
+			cout << "IVA: ";
+			iva = getInputNumber(0, 9);
+		}
+		catch (OpcaoInvalida& opIn) {
+			cout << opIn.getInfo() << endl;
+			continue;
+		}
+
+		opcaoInvalida = false;
+	}
+
+	if (opcao == 1) {
+		produto = new Produto(codigo, nome, desc, preco, (float)iva / 100);
+	}
+	else  {
+		opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Pode ser receitado (1 - sim, 0 - nao): ";
+				podeSerRec = getInputNumber(0, 1);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+
+		opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Pode ser vendido sem receita medica (1 - sim, 0 - nao): ";
+				vendidoSemRec = getInputNumber(0, 1);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+		
+		if (podeSerRec) {
+			opcaoInvalida = true;
+			while (opcaoInvalida) {
+
+				try {
+					cout << "Desconto com receita medica: ";
+					descComReceita = getInputNumber(0, 100);
+				}
+				catch (OpcaoInvalida& opIn) {
+					cout << opIn.getInfo() << endl;
+					continue;
+				}
+
+				opcaoInvalida = false;
+			}
+		}
+		else
+			descComReceita = 0;
+
+		produto = new Medicamento(codigo, nome, desc, preco, (float)iva / 100, vendidoSemRec, podeSerRec, descComReceita);
+	}
+	
+	return produto;
+}
+
 Data user_getData() {
 
 	Data dataNascimento;
@@ -524,6 +676,7 @@ void menuFarmacias(Cadeia& cadeia)
 		cout << "1 - Resumo Farmacias" << endl;
 		cout << "2 - Consultar Farmacia" << endl;
 		cout << "3 - Adicionar Farmacia" << endl;
+		cout << "4 - Gerir stock" << endl;
 		//cout << "4 - Remover Farmacia" << endl;
 		cout << "0 - Menu anterior" << endl;
 
@@ -532,7 +685,7 @@ void menuFarmacias(Cadeia& cadeia)
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 3);
+				opcao = getInputNumber(0, 4);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -553,7 +706,7 @@ void menuFarmacias(Cadeia& cadeia)
 			adicionarFarmacia(cadeia);
 			break;
 		case 4:
-			//removerFarmacia();
+			gerirStock(cadeia);
 			break;
 		case 0:
 			continuarNesteMenu = false;
@@ -568,6 +721,8 @@ void resumoFarmacias(Cadeia& cadeia) {
 }
 
 void consultarFarmacia(Cadeia& cadeia) {
+
+	cout << endl;
 
 	Farmacia * farmacia;
 
@@ -688,6 +843,169 @@ void farmacia_consultarEmpregados(Farmacia& farmacia) {
 	farmacia.sortEmpregados((ord_pessoas)opcao);
 
 	farmacia.mostrarEmpregados();
+}
+
+void gerirStock(Cadeia& cadeia) {
+
+	cout << endl;
+
+	Farmacia * farmacia;
+
+	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
+
+	try
+	{
+		farmacia = cadeia.getFarmacia(farmaciaNome);
+	}
+	catch (FarmaciaNaoExiste& f)
+	{
+		cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		return;
+	}
+
+
+	bool continuarNesteMenu = true;
+	while (continuarNesteMenu) {
+		int opcao;
+		cout << "GERIR STOCK" << endl << endl;
+		farmacia->print(cout) << endl << endl;
+		cout << "1 - Consultar produtos" << endl;
+		cout << "2 - Adicionar produtos" << endl;
+		cout << "3 - Remover produtos" << endl;
+		cout << "4 - Outra farmacia" << endl;
+		cout << "0 - Menu anterior" << endl;
+
+		bool opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Opcao: ";
+				opcao = getInputNumber(0, 4);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+
+		switch (opcao) {
+		case 1:
+			break;
+		case 2:
+			farmacia_adicionarProduto(*farmacia);
+			break;
+		case 3:
+			break;
+		case 4:
+			cout << "Farmacia: ";
+			getline(cin, farmaciaNome);
+
+			try
+			{
+				farmacia = cadeia.getFarmacia(farmaciaNome);
+			}
+			catch (FarmaciaNaoExiste& f)
+			{
+				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				return;
+			}
+			break;
+		case 0:
+			continuarNesteMenu = false;
+		}
+	}
+
+}
+
+void farmacia_adicionarProduto(Farmacia& farmacia) {
+
+	bool continuarNesteMenu = true;
+	while (continuarNesteMenu) {
+
+		cout << endl << "ADICIONAR PRODUTOS" << endl << endl;
+		cout << "1 - Produto existente (adicionar quantidade) " << endl;
+		cout << "2 - Novo produto " << endl;
+		cout << "0 - Menu anterior" << endl;
+
+		int opcao;
+		bool opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Opcao: ";
+				opcao = getInputNumber(0, 2);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+
+		Produto* produto;
+
+		if (opcao == 0) {
+			continuarNesteMenu = false;
+		}
+		else if (opcao == 2) {
+			produto = user_getProduto(farmacia);
+
+		}
+		else {
+			long unsigned int codigo;
+			unsigned int quantidade;
+
+			cout << "Qual o codigo do produto? ";
+
+			// validar input do codigo
+			while (!(cin >> codigo))
+			{
+				if (cin.eof())
+				{
+					cin.clear();
+				}
+				else
+				{
+					cin.clear();
+					cin.ignore(MAX_STREAM_SIZE, '\n');
+				}
+
+				cout << "Qual o codigo do produto? ";
+			}
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+
+			cout << "Qual a quantidade a adicionar? ";
+
+			// validar input do codigo
+			while (!(cin >> quantidade))
+			{
+				if (cin.eof())
+				{
+					cin.clear();
+				}
+				else
+				{
+					cin.clear();
+					cin.ignore(MAX_STREAM_SIZE, '\n');
+				}
+
+				cout << "Qual a quantidade a adicionar? ";
+			}
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+
+			try {
+				farmacia.addQuantidade(codigo, quantidade);
+			}
+			catch (ProdutoNaoExiste& e) {
+				cout << "O produto com o codigo  " << e.getCodigo() << " nao existe." << endl;
+			}
+		}
+
+	}
+
 }
 
 void adicionarFarmacia(Cadeia& cadeia)

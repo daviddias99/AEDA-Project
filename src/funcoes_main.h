@@ -8,6 +8,7 @@ const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 Morada user_getMorada();
 Data user_getData();
 Empregado* user_getEmpregado(Cadeia& cadeia);
+Produto* user_getProduto();
 int getInputNumber(int limInf, int limSup);
 string getInputString(string msg, string msgErr);
 
@@ -34,6 +35,7 @@ void consultarFarmacia(Cadeia& cadeia);
 void adicionarFarmacia(Cadeia& cadeia);
 void farmacia_mudarGerente(Cadeia& farmacia);
 void farmacia_consultarEmpregados(Farmacia& farmacia);
-
+void gerirStock(Cadeia& cadeia);
+void farmacia_adicionarProduto(Farmacia& farmacia);
 
 #endif

@@ -4,49 +4,50 @@ Farmacia::Farmacia(string nome, Morada morada) :nome(nome), morada(morada) {}
 
 Farmacia::Farmacia(string simp)
 {
-	Morada morada;
-	string nome, linha, nome_prod, desc_prod, produtoSimp;
+	string linha, nome_prod, desc_prod, produtoSimp;
 	uint quant;
 
 	float preco_prod, iva_prod, desc_receita;
 	unsigned long int cod_produto;
 	bool vend_sem_rec, pode_ser_rec;
-
-	nome = linha.substr(0, linha.find_first_of("\\"));
-	linha = linha.substr(linha.find_first_of("\\") + 1);
-	morada = Morada(linha.substr(0, linha.find_first_of("\\")));
-	linha = linha.substr(linha.find_first_of("\\"));
 	
-		
-	while (linha != "!") {
-		produtoSimp = linha.substr(1, linha.find_first_of('#'));
-		quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
-		linha = linha.substr(linha.find_first_of('!'));
+	linha = simp;
+	this->nome = linha.substr(0, linha.find_first_of('\\'));
+	linha = linha.substr(linha.find_first_of('\\') + 1);
+	this->morada = Morada(linha.substr(0, linha.find_first_of('\\')));
+	linha = linha.substr(linha.find_first_of('\\'));
+	
+	if (linha != "\\") {
+		while (linha != "!") {
+			produtoSimp = linha.substr(1, linha.find_first_of('#'));
+			quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
+			linha = linha.substr(linha.find_first_of('!'));
 
-		cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
-		linha = linha.substr(produtoSimp.find_first_of('&') + 1);
-		nome_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
-		linha = linha.substr(produtoSimp.find_first_of('&') + 1);
-		desc_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
-		linha = linha.substr(produtoSimp.find_first_of('&') + 1);
-		preco_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
-		linha = linha.substr(produtoSimp.find_first_of('&') + 1);
-		iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
-
-
-		if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3) {
-			stock.insert(pair<Produto *, uint>(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant));
-		}
-		else {
+			cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
-			vend_sem_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			nome_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
 			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
-			pode_ser_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			desc_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
 			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
-			desc_receita = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			preco_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+			iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 
 
-			stock.insert(pair<Produto *, uint>(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant));
+			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3) {
+				stock.insert(pair<Produto *, uint>(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant));
+			}
+			else {
+				linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+				vend_sem_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+				linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+				pode_ser_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+				linha = linha.substr(produtoSimp.find_first_of('&') + 1);
+				desc_receita = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
+
+				stock.insert(pair<Produto *, uint>(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant));
+			}
 		}
 	}
 }
@@ -133,9 +134,31 @@ bool Farmacia::setGerente(Empregado * novoGerente)
 	return true;
 }
 
+void Farmacia::addQuantidade(long unsigned int codigo, uint quantidade)
+{
+	map<Produto*, unsigned int>::iterator it;
+	for (it = stock.begin(); it != stock.end(); it++) {
+		if (it->first->getCodigo() == codigo) {
+			it->second++;
+			return;
+		}
+	}
+	throw ProdutoNaoExiste(codigo);
+}
+
 void Farmacia::adicionarVenda(Venda* v1)
 {
 	vendas.push_back(v1);
+}
+
+bool Farmacia::existeProduto(unsigned long int codigo)
+{
+	for (map<Produto *, unsigned int>::const_iterator it = stock.begin(); it != stock.end(); it++) {
+		if (it->first->getCodigo() == codigo)
+			return true;
+	}
+
+	return false;
 }
 
 string Farmacia::getNome() const

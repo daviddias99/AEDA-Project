@@ -27,7 +27,9 @@ public:
 	void remProduto(long unsigned int codigo);
 	bool setGerente(Empregado* novoGerente);
 	bool removeQuantidade(long unsigned int codigo, uint quantidade);
+	void addQuantidade(long unsigned int codigo, uint quantidade);
 	void adicionarVenda(Venda* v1);
+	bool existeProduto(unsigned long int codigo);
 
 	string getNome() const;
 	Morada getMorada() const;
