@@ -432,6 +432,11 @@ ostream& Farmacia::print(ostream & os) const
 {
 	os << nome << endl << morada;
 
+	if (this->getGerente() != NULL) {
+
+		cout << endl << "gerente: " << this->getGerente()->getNome();
+	}
+
 	return os;
 }
 

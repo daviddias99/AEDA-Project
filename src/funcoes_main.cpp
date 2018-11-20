@@ -316,7 +316,7 @@ Data user_getData() {
 
 	while (!inputValido) {
 
-		data_nascimentoStr = getInputString("Data de nacimento: ", "Data de nascimento invalida.");
+		data_nascimentoStr = getInputString("Data de nascimento: ", "Data de nascimento invalida.");
 		try {
 
 			dataNascimento = Data(data_nascimentoStr);
