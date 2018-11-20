@@ -82,7 +82,7 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 {
 	int i = procura2(empregados, empregado);
 
-	if (i != -1) {
+	if (i == -1) {
 		if (empregado->getCargo() == "gerente")
 			setGerente(empregado);
 
