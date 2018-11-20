@@ -58,10 +58,11 @@ public:
 	/**
 	* @brief Troca de gerente da farmacia. O antigo gerente passa a ter o cargo de empregado e o gerente passa a ser o empregado indicado no seu parametro.
 	* @param novoGerente Apontador para o empregado que vai passar a ser o gerente da farmacia.
+	* @param novoCargo	 novo cago a ser atribuido ao ex-gerente
 	* @return true se a troca foi realizada com sucesso
 	* false se ocorreu algum problema.
 	*/
-	bool setGerente(Empregado* novoGerente);
+	bool setGerente(Empregado* novoGerente, string novoCargo);
 	/**
 	* @brief Remove a quantidade indicada no segundo parametro de produto com o codigo indicado no primeiro parametro do stock da farmacia. 
 	* Lanca uma excecao se o produto nao existe em stock

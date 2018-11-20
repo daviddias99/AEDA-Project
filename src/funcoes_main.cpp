@@ -452,6 +452,15 @@ void gerirCliente(Cadeia & cadeia)
 void menuEmpregados(Cadeia& cadeia)
 {
 	bool continuarNesteMenu = true;
+
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "Adicione uma farmacia antes de gerir empregados." << endl;
+		return;
+
+	}
+
+
 	while (continuarNesteMenu) {
 		int opcao;
 
