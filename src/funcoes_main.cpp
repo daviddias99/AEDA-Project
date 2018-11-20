@@ -59,6 +59,7 @@ Morada user_getMorada() {
 		if (codigoPostalValido(morada_cpostal)) {
 			inputValido = true;
 		}
+		else cout << "Codigo postal invalido!" << endl;
 	}
 
 
@@ -154,6 +155,43 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, morada, salario, farmaciaNome, cargo);
 
 	return newEmp;
+}
+
+Cliente* user_getCliente(Cadeia& cadeia)
+{
+	string nome;
+	uint NIF;
+	Data dataNascimento;
+	Morada morada;
+
+	nome = getInputString("Nome: ", "Nome invalido.");
+
+	cout << "NIF: ";
+
+	// validar input do NIF
+	while (!(cin >> NIF))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "NIF: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	morada = user_getMorada();
+	dataNascimento = user_getData();
+
+	Cliente* newCliente = new Cliente(nome, NIF, dataNascimento, morada);
+
+	return newCliente;
 }
 
 Produto* user_getProduto(Farmacia& farmacia) {
