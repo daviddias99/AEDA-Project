@@ -45,6 +45,10 @@ bool Pessoa_SortFunc_NIF_Decrescente(Pessoa* p1, Pessoa* p2);
 template<class T>
 int procura2(vector<T>& v, T x)
 {
+	if (v.size() == 0) {
+		return -1;
+	}
+
 	int left = 0, right = v.size() - 1;
 	while (left <= right)
 	{
@@ -59,9 +63,27 @@ int procura2(vector<T>& v, T x)
 	return -1;
 }
 
+template<class T>
+int procura2seq(vector<T>& v, T x)
+{
+	for (int i = 0; i < v.size(); i++) {
+
+		if (*v.at(i) == *x) {
+			return i;
+		}
+
+	}
+
+	return -1;
+}
+
 template<class X>
 int procura2(const vector<X>& v, string nome)
 {
+	if (v.size() == 0) {
+		return -1;
+	}
+
 	int left = 0, right = v.size() - 1;
 	while (left <= right)
 	{
@@ -79,6 +101,10 @@ int procura2(const vector<X>& v, string nome)
 template<class X>
 int procura2(const vector<X>& v, uint ID)
 {
+	if (v.size() == 0) {
+		return -1;
+	}
+
 	int left = 0, right = v.size() - 1;
 	while (left <= right)
 	{

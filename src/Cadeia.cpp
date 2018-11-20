@@ -29,17 +29,17 @@ bool Cadeia::addCliente(Cliente* cliente)
 	if(procura2(clientes, cliente) != -1) return false;
 
 	clientes.push_back(cliente);
-	sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Crescente);
+	sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
 	return true;
 }
 
 //atencao aqui
 bool Cadeia::addEmpregado(Empregado* empregado)
 {
-	if(procura2(empregados, empregado) != -1) return false;
+	if(procura2seq(empregados, empregado) != -1) return false;
 
 	empregados.push_back(empregado);
-	sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
+	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
 
 	size_t i = procura2(farmacias, empregado->getNomeFarmacia());
 
@@ -64,7 +64,7 @@ void Cadeia::removeCliente(uint ID)
 	int i = procura2(clientes, ID);
 	if(i != -1) {
 		clientes.erase(clientes.begin() +i);
-		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Crescente);
+		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
 	} 
 	else throw ClienteNaoExiste(ID);
 }
@@ -74,7 +74,7 @@ void Cadeia::removeEmpregado(uint ID)
 	int i = procura2(empregados, ID);
 	if(i != -1) {
 		empregados.erase(empregados.begin()+i);
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
 	}
 	else throw EmpregadoNaoExiste(ID);
 }
