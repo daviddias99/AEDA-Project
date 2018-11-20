@@ -35,5 +35,7 @@ ostream & Medicamento::print(ostream & os) const
 		os << "Pode ser receitado. Desconto com receita: " << descComReceita * 100 << "%" << endl;
 	else
 		os << "Nao pode ser receitado." << endl;
+
+	return os;
  }
 

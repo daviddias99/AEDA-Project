@@ -66,10 +66,10 @@ int procura2(vector<T>& v, T x)
 template<class T>
 int procura2seq(vector<T>& v, T x)
 {
-	for (int i = 0; i < v.size(); i++) {
+	for (size_t i = 0; i < v.size(); i++) {
 
 		if (*v.at(i) == *x) {
-			return i;
+			return (int) i;
 		}
 
 	}

@@ -294,7 +294,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 		else
 			descComReceita = 0;
 
-		produto = new Medicamento(codigo, nome, desc, preco, (float)iva / 100, vendidoSemRec, podeSerRec, descComReceita);
+		produto = new Medicamento(codigo, nome, desc, preco, (float)iva / 100, vendidoSemRec, podeSerRec, (float) descComReceita / 100);
 	}
 	
 	return produto;
