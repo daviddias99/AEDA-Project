@@ -920,6 +920,39 @@ void Sistema::removerCliente() {
 
 void Sistema::gerirEmpregado()
 {
+	string nomeEmpregado;
+	uint ID;
+
+	cout << "GERIR EMPREGADO" << endl << endl;
+
+	//get nome do empregado a remover
+	cout << "Nome do empregado: ";
+	getline(cin, nomeEmpregado);
+
+	// get empregados com o nome dado
+	vector<Empregado*> empregados_busca = cadeia.getEmpregados(nomeEmpregado);
+
+	// imprime empregados encontrados
+	for (size_t i = 0; i < empregados_busca.size(); i++) {
+
+		cout << "ID: " << empregados_busca.at(i)->getID()
+			<< "| Nome: " << empregados_busca.at(i)->getNome()
+			<< "| Cargo: " << empregados_busca.at(i)->getCargo() << endl;
+
+
+	}
+
+	cout << endl;
+
+	// se não encontrar nenhum empregado com o nome dado, retorna
+	if (empregados_busca.size() == 0) {
+
+		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
+		return;
+	}
+
+
+
 
 }
 
