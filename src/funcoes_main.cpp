@@ -354,7 +354,7 @@ Data user_getData() {
 
 	while (!inputValido) {
 
-		data_nascimentoStr = getInputString("Data de nascimento: ", "Data de nascimento invalida.");
+		data_nascimentoStr = getInputString("Data de nascimento (DD/MM/AA): ", "Data de nascimento invalida.");
 		try {
 
 			dataNascimento = Data(data_nascimentoStr);
@@ -405,8 +405,7 @@ void menuClientes(Cadeia& cadeia)
 
 		cout << endl << "GERIR CLIENTES" << endl << endl;
 		cout << "1 - Resumo Clientes" << endl;
-		cout << "2 - Consultar clientes" << endl;
-		cout << "3 - Gerir cliente" << endl;
+		cout << "2 - Gerir cliente" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -429,8 +428,6 @@ void menuClientes(Cadeia& cadeia)
 			resumoClientes(cadeia);
 			break;
 		case 2:
-			break;
-		case 3:
 			gerirCliente(cadeia);
 			break;
 		case 0:
@@ -483,19 +480,21 @@ void resumoClientes(Cadeia& cadeia)
 	cadeia.sortClientes(id_cres);
 }
 
-void consultarClientes(Cadeia & cadeia)
+void cliente_consultarCompras(Cliente* c)
 {
-	// TO DO
+	cout << endl << "CONSULTAR COMPRAS" << endl;
+
+	c->mostrarCompras();
+
 }
 
 void gerirCliente(Cadeia & cadeia)
 {
 	string nomeCliente;
 	uint ID;
-	uint salario;
 	Morada morada;
 
-	cout << "GERIR CLIENTE" << endl << endl;
+	cout << endl << "GERIR CLIENTE" << endl << endl;
 
 	//get nome do empregado a remover
 	cout << "Nome do cliente: ";
@@ -553,7 +552,7 @@ void gerirCliente(Cadeia & cadeia)
 			}
 			if (i == clientes_busca.size() - 1) {
 
-				cout << "Nao existe nenhum empregado com esse par Nome/ID." << endl;
+				cout << "Nao existe nenhum cliente com esse par Nome/ID." << endl;
 				return;
 
 			}
@@ -571,15 +570,16 @@ void gerirCliente(Cadeia & cadeia)
 
 	do {
 
-		cout << endl << "O que pretende alterar no cliente " << cadeia.getEmpregado(ID)->getNome() << " ?" << endl;
-		cout << "1- Morada" << endl;
-		cout << "0- Terminar" << endl << endl;
+		cout << endl << "O que pretende em relacao ao cliente  " << cadeia.getCliente(ID)->getNome() << " ?" << endl;
+		cout << "1 - Alterar Morada" << endl;
+		cout << "2 - Consultar Compras" << endl; 
+		cout << "0 - Terminar" << endl << endl;
 
 		while (opcaoInvalida) {
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 1);
+				opcao = getInputNumber(0, 2);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -599,6 +599,9 @@ void gerirCliente(Cadeia & cadeia)
 			cadeia.getEmpregado(ID)->setMorada(morada);
 			cout << "Alterado." << endl;
 
+			break;
+		case 2:
+			cliente_consultarCompras(cadeia.getCliente(ID));
 			break;
 		case 0:
 			break;

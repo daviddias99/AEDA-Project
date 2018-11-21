@@ -27,6 +27,11 @@ public:
 	* false se ocorreu algum erro
 	*/
 	bool adicionaCompra(Venda* v);
+
+	/**
+	* @brief Mostra no ecra a lista de compras do cliente
+	*/
+	void mostrarCompras();
 	/**
 	* @brief Devolve o numero de compras efetuadas pelo cliente
 	* @return Numero de compras efetuadas pelo cliente

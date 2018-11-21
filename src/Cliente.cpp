@@ -16,6 +16,12 @@ bool Cliente::adicionaCompra(Venda * novaVenda)
 	return true;
 }
 
+void Cliente::mostrarCompras()
+{
+	/*for (size_t i = 0; i < historicoCompras.size(); i++)
+		historicoCompras[i]->print(cout); */
+}
+
 uint Cliente::getNumCompras() const
 {
 	return this->historicoCompras.size();

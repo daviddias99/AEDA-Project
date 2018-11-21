@@ -23,7 +23,7 @@ void showMenuPrincipal();
 
 void menuClientes(Cadeia& cadeia);
 void resumoClientes(Cadeia& cadeia);
-void consultarClientes(Cadeia& cadeia);
+void cliente_consultarCompras(Cliente* c);
 void gerirCliente(Cadeia& cadeia);
 
 void menuEmpregados(Cadeia& cadeia);
