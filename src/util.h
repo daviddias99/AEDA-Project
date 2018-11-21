@@ -58,7 +58,7 @@ public:
 	*
 	* @param	os			valor do atributo morada
 	* @param	mor
-	* @return						true se a morada foi alterada com sucesso, falso caso contraio
+	* @return				true se a morada foi alterada com sucesso, falso caso contraio
 	*/
 	friend ostream& operator<< (ostream& os, const Morada& mor);
 

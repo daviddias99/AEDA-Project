@@ -83,35 +83,30 @@ public:
 	* @param ID ID do empregado a ser removido da lista 
 	*/
 	void removeEmpregado(uint ID);
-
 	/**
 	* @brief Devolve um apontador para a farmacia com o nome indicado no parametro
 	* @param nome Nome da farmacia que vai ser retornada
 	* @return Apontador para a farmacia com o nome indicado no parametro
 	*/
 	Farmacia* getFarmacia(string nome) const;
-
 	/**
 	* @brief Devolve um apontador para o cliente com o ID indicado no parametro
 	* @param ID ID do cliente que vai ser retornado
 	* @return Apontador para o cliente com o ID indicado no parametro
 	*/
 	Cliente* getCliente(uint  ID) const;
-
 	/**
 	* @brief Devolve um apontador para o empregado com o ID indicado no parametro
 	* @param ID ID do empregado que vai ser retornado
 	* @return Apontador para o empregado com o ID indicado no parametro
 	*/
 	Empregado* getEmpregado(uint ID) const;
-
 	/**
 	* @brief Devolve um vetor de apontador para clientes com o nome indicado no seu parametro
 	* @param nome Nome dos clientes que vai procurar na lista de clientes da cadeia
 	* @return Vetor de apontadores para objetos da classe Cliente que pertencem a cadeia e que tem o nome indicao no parametro
 	*/
 	vector<Cliente*> getClientes(string nome) const;
-
 	/**
 	* @brief Devolve um vetor de apontadores para empregados com o nome indicado no seu parametro
 	* @param nome Nome dos empregados que vai procurar na lista de empregados da cadeia

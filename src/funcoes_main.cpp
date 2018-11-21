@@ -714,6 +714,7 @@ void resumoEmpregados(Cadeia& cadeia)
 		opcaoInvalida = false;
 	}
 
+	cout << endl;
 
 	cadeia.sortEmpregados((ord_pessoas)opcao);
 
@@ -728,12 +729,13 @@ void adicionarEmpregado(Cadeia& cadeia)
 
 	Empregado* newEmp = user_getEmpregado(cadeia);
 
-	if (cadeia.addEmpregado(newEmp)) {
+	if (cadeia.addEmpregado(newEmp)) {	
 
 		cout << "Empregado adicionado." << endl;
 	}
 	else {
-		cout << "O empregado " << newEmp->getNome() << " com o nif " << newEmp->getNIF() << " ja existe." << endl;
+		Empregado::decID();
+		cout << "O empregado com o nif " << newEmp->getNIF() << " ja existe." << endl;
 	}
 }
 

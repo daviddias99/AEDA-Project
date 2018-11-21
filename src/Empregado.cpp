@@ -3,12 +3,24 @@
 
 uint Empregado::currentID = 0;
 
-Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
+Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo, int ID) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
 {
 	this->cargo = cargo;
 
-	this->ID = currentID;
-	currentID++;
+	if (ID == -1) {
+		this->ID = currentID;
+		currentID++;
+	}
+	else {
+		this->ID = ID;
+		if (ID > currentID) {
+			currentID = ID + 1;
+		}
+	}
+}
+
+void Empregado::decID() {
+	currentID--;
 }
 
 uint Empregado::getSalario() const
@@ -69,12 +81,12 @@ ostream & Empregado::printSimp(ostream & os) const
 	os << ID << "\\";
 	Pessoa::printSimp(os);
 
-	os << "\\" << farmaciaNome << "\\" << cargo << "\\" << salario << "\\";
+	os << "\\" << farmaciaNome << "\\" << cargo << "\\" << salario; /*<< "\\";
 
 	for (vector<Venda*>::const_iterator it = historicoVendas.begin(); it != historicoVendas.end(); it++) {
 		(*it)->printSimp(os);
 	}
-
+	*/
 	return os;
 }
 

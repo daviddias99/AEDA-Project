@@ -33,7 +33,6 @@ bool Cadeia::addCliente(Cliente* cliente)
 	return true;
 }
 
-//atencao aqui
 bool Cadeia::addEmpregado(Empregado* empregado)
 {
 	if(procura2seq(empregados, empregado) != -1) return false;
@@ -345,6 +344,69 @@ void Cadeia::carregarClientes(ifstream& ficheiro)
 
 void Cadeia::carregarEmpregados(ifstream& ficheiro)
 {
+
+	string linha;
+	int ID;
+	string nome, farmaciaNome, cargo;
+	int NIF;
+	uint salario;
+	Morada morada;
+	Data data;
+	Empregado * novoEmp;
+
+
+	getline(ficheiro, linha);
+	if (linha != "") {
+
+		ID = stoi(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		nome = linha.substr(0, linha.find_first_of('\\'));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		data = Data(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		NIF = stoi(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		morada = Morada(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		farmaciaNome = linha.substr(0, linha.find_first_of('\\'));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		cargo = linha.substr(0, linha.find_first_of('\\'));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		salario = stoul(linha);
+		
+		novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, ID);
+	
+		empregados.push_back(novoEmp);
+		getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
+	}
+
+	while (!ficheiro.eof()) {
+		getline(ficheiro, linha);
+		if (linha != "") {
+			
+			ID = stoi(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			nome = linha.substr(0, linha.find_first_of('\\'));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			data = Data(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			NIF = stoi(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			morada = Morada(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			farmaciaNome = linha.substr(0, linha.find_first_of('\\'));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			cargo = linha.substr(0, linha.find_first_of('\\'));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			salario = stoul(linha);
+
+
+			novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, ID);
+
+			empregados.push_back(novoEmp);
+			getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
+		}
+	}
 }
 
 void Cadeia::carregarFarmacias(ifstream& ficheiro) {

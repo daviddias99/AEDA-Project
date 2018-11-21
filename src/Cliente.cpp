@@ -46,10 +46,12 @@ ostream & Cliente::printSimp(ostream & os) const
 	os << ID << "\\";
 	Pessoa::printSimp(os);
 
+	/*
 
 	for (vector<Venda*>::const_iterator it = historicoCompras.begin(); it != historicoCompras.end(); it++) {
 		(*it)->printSimp(os);
 	}
+	*/
 
 	return os;
 }
