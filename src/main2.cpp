@@ -80,7 +80,7 @@ int main() {
 			menuEmpregados(cadeia);
 			break;
 		case 4:
-			//realizarVenda(cadeia);
+			realizarVenda(cadeia);
 			break;
 		case 0:
 			continuarNesteMenu = false;

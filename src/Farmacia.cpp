@@ -222,6 +222,16 @@ Produto* Farmacia::getProduto(int codigo) const
 	throw ProdutoNaoExiste(codigo);
 }
 
+Produto * Farmacia::getProduto(string nome) const
+{
+	map<Produto*, unsigned int>::const_iterator it;
+	for (it = stock.begin(); it != stock.end(); it++) {
+		if ((*it->first).getNome() == nome)
+			return (it->first);
+	}
+	throw ProdutoNaoExiste(nome);
+}
+
 unsigned int Farmacia::getTotalProdutos() const
 {
 	int soma = 0;

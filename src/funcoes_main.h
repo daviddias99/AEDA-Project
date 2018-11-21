@@ -10,16 +10,18 @@ const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 Morada user_getMorada();
 Data user_getData();
 Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride = { false, "nome_default" });
-Cliente* uset_getCliente(Cadeia& cadeia);
+Cliente* user_getCliente();
 Produto* user_getProduto(Farmacia& farmacia);
-int getInputNumber(int limInf, int limSup);
+map<Produto, uint> user_getProdutos(Farmacia* farmacia);
+int getInputNumber(int limInf, int limSup, bool showLimSup = true);
 string getInputString(string msg, string msgErr);
+
 
 
 void showMenuInicial();
 void showMenuPrincipal();
 
-//void realizarVenda(Cadeia& cadeia);
+void realizarVenda(Cadeia& cadeia);
 
 void menuClientes(Cadeia& cadeia);
 void resumoClientes(Cadeia& cadeia);

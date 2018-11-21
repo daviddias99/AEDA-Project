@@ -23,6 +23,8 @@ private:
 	const string nomeEmpregado;
 	map<Produto *, unsigned int> produtos;
 	Timestamp timestamp_venda;
+	uint idEmpregado;
+	uint idCliente;
 };
 
 #endif /* VENDA_H */
