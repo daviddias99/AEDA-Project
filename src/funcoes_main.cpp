@@ -18,7 +18,7 @@ void showMenuPrincipal() {
 }
 
 
-int getInputNumber(int limInf, int limSup)
+int getInputNumber(int limInf, int limSup, bool showLimSup)
 {
 	int number;
 
@@ -34,7 +34,10 @@ int getInputNumber(int limInf, int limSup)
 			cin.ignore(MAX_STREAM_SIZE, '\n');
 		}
 
-		throw OpcaoInvalida("A opcao introduzida deve ser um numero entre " + to_string(limInf) + " e " + to_string(limSup) + ".");
+		if(showLimSup)
+			throw OpcaoInvalida("A opcao introduzida deve ser um numero entre " + to_string(limInf) + " e " + to_string(limSup) + ".");
+		else
+			throw OpcaoInvalida("A opcao introduzida deve ser um numero superior a " + to_string(limInf) + ".");
 	}
 
 	cin.ignore(MAX_STREAM_SIZE, '\n'); // ignora o que sobra no input buffer para nao entrar em conflito com a funcao getline
@@ -157,7 +160,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 	return newEmp;
 }
 
-Cliente* user_getCliente(Cadeia& cadeia)
+Cliente* user_getCliente()
 {
 	string nome;
 	uint NIF;
@@ -391,6 +394,296 @@ string getInputString(string msg, string msgErr)
 	}
 
 	return name;
+}
+
+void realizarVenda(Cadeia & cadeia)
+{
+	string farmaciaNome, nomeEmpregado,nomeCliente;
+	bool farmaciaValida = false;
+	Farmacia* farmacia = NULL;
+	Empregado* empregado;
+	Cliente* cliente;
+	uint ID;
+
+
+	cout << endl << "REALIZAR VENDA" << endl << endl;
+
+
+	// GET FARMACIA
+	do {
+
+		cout << "Em que farmacia pretende realizar a venda: ";
+		getline(cin, farmaciaNome);
+
+		try
+		{
+			farmacia = cadeia.getFarmacia(farmaciaNome);
+		}
+		catch (FarmaciaNaoExiste& f)
+		{
+			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl << endl;
+			continue;
+		}
+
+		farmaciaValida = true;
+
+	} while (!farmaciaValida);
+	
+	// GET EMPREGADO
+	cout << "Que empregado realiza a venda: ";
+	getline(cin, nomeEmpregado);
+
+	// get empregados com o nome dado
+	vector<Empregado*> empregados_busca = farmacia->getEmpregados(nomeEmpregado);
+
+	// imprime empregados encontrados
+	if (empregados_busca.size() == 1) {
+		for (size_t i = 0; i < empregados_busca.size(); i++) {
+
+			cout << "ID: " << empregados_busca.at(i)->getID()
+				<< "| Nome: " << empregados_busca.at(i)->getNome()
+				<< "| Cargo: " << empregados_busca.at(i)->getCargo() << endl;
+
+
+		}
+	}
+	
+
+	cout << endl;
+
+	// se não encontrar nenhum empregado com o nome dado na farmacia, retorna
+	if (empregados_busca.size() == 0) {
+
+		cout << "Nao foi encontrado nenhum empregado com esse nome na Farmacia " << farmaciaNome << "." << endl;
+		return;
+	}
+
+	// se só existir um empregado com o nome dado usar esse empregado na venda
+	// caso contrario, pedir o ID do empregado 
+	if (empregados_busca.size() != 1) {
+
+		// get ID da pessoa
+		cout << "ID: ";
+
+		while (!(cin >> ID))
+		{
+			if (cin.eof())
+			{
+				cin.clear();
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(MAX_STREAM_SIZE, '\n');
+			}
+
+			cout << "ID: ";
+		}
+
+		cin.ignore(MAX_STREAM_SIZE, '\n');
+
+		// verificar se o ID dado pertence a alguma das pessoas com o nome dado
+		for (size_t i = 0; i < empregados_busca.size(); i++) {
+
+			if (empregados_busca.at(i)->getID() == ID) {
+				break;
+			}
+			if (i == empregados_busca.size() - 1) {
+
+				cout << "Nao existe nenhum empregado com esse par Nome/ID." << endl;
+				return;
+
+			}
+		}
+
+
+	}
+	else {
+
+		ID = empregados_busca.at(0)->getID();
+	}
+
+	empregado = cadeia.getEmpregado(ID);
+
+	// GET CLIENTE
+
+	//get nome do empregado a remover
+	cout << "Nome do cliente (se for um cliente novo deixe em branco): ";
+	getline(cin, nomeCliente);
+
+	if (nomeCliente.size() != 0) {
+
+		// get empregados com o nome dado
+		vector<Cliente*> clientes_busca = cadeia.getClientes(nomeCliente);
+
+		// imprime empregados encontrados
+		for (size_t i = 0; i < clientes_busca.size(); i++) {
+
+			cout << "ID: " << clientes_busca.at(i)->getID()
+				<< "| Nome: " << clientes_busca.at(i)->getNome()
+				<< "| Idade: " << clientes_busca.at(i)->getIdade()
+				<< "| Numero de compras: " << clientes_busca.at(i)->getNumCompras() << endl;
+
+		}
+
+		cout << endl;
+
+		// se não encontrar nenhum empregado com o nome dado, pergunta ao user se pretende adicionar um empregado novo
+		if (clientes_busca.size() == 0) {
+			string userChoice;
+
+			cout << "Nao foi encontrado nenhum cliente com esse nome, adicionar um cliente novo (S/N)? ";
+			getline(cin, userChoice);
+			cout << endl;
+			toUpper(userChoice);
+
+			if ((userChoice == "S") ||  (userChoice == "SIM")) {
+				cliente = user_getCliente();
+			}
+			else if ((userChoice == "N") || (userChoice == "NAO")) {
+
+				return;
+			}
+		}
+		else if (clientes_busca.size() != 1) {
+
+			// get ID da pessoa
+			cout << "ID: ";
+
+			while (!(cin >> ID))
+			{
+				if (cin.eof())
+				{
+					cin.clear();
+				}
+				else
+				{
+					cin.clear();
+					cin.ignore(MAX_STREAM_SIZE, '\n');
+				}
+
+				cout << "ID: ";
+			}
+
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+
+			// verificar se o ID dado pertence a alguma das pessoas com o nome dado
+			for (size_t i = 0; i < clientes_busca.size(); i++) {
+
+				if (clientes_busca.at(i)->getID() == ID) {
+					break;
+				}
+				if (i == clientes_busca.size() - 1) {
+
+					cout << "Nao existe nenhum cliente com esse par Nome/ID." << endl;
+					return;
+
+				}
+			}
+
+
+		}
+		else {
+
+			ID = clientes_busca.at(0)->getID();
+		}
+		cliente = cadeia.getCliente(ID);
+	}
+	else {
+
+		cliente = user_getCliente();
+
+	}
+	
+	cout << endl;
+
+	//GET PRODUTOS
+
+
+
+}
+
+map<Produto, uint> user_getProdutos(Farmacia* farmacia) {
+
+	int opcao ;
+	string nomeProduto;
+	Produto* produtoTemp;
+	uint quantidade;
+	map<Produto, uint> tempProd;
+
+	do {
+		cout << endl;
+		cout << "PRODUTOS: " << endl << endl;
+		cout << "1- Adicionar produto" << endl;
+		cout << "2- Adicionar medicamento nao sujeito a receita " << endl;
+		cout << "3- Adicionar receita" << endl;
+		cout << "4- Ver lista da compra" << endl;
+		cout << "5- Remover da lista da compra" << endl;
+		cout << "0- Sair" << endl;
+
+		bool opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Opcao: ";
+				opcao = getInputNumber(0, 4);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+
+		switch (opcao) {
+		case 1:
+
+			cout << endl;
+			cout << "-Adicionar produto- " << endl << endl;
+
+			cout << "Nome do produto: ";
+			getline(cin, nomeProduto);
+
+			try
+			{
+				produtoTemp = farmacia->getProduto(nomeProduto);
+			}
+			catch (ProdutoNaoExiste& p1)
+			{
+				cout << "O produto com o nome " << p1.getNome() << " nao existe." << endl;
+				break;
+			}
+			
+			cout << "Quantidade: ";
+			quantidade = getInputNumber(1, 999, false);
+			cout << endl;
+
+			
+
+			break;
+		case 2:
+
+			break;
+		case 3:
+
+			break;
+		case 4:
+
+			break;
+		case 5:
+
+			break;
+		case 0:
+
+			break;
+		}
+
+
+	} while (opcao != 0);
+	
+	
+	return tempProd;
 }
 
 ////////////////

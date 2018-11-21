@@ -246,6 +246,18 @@ int daysInMonth(int month, int year)
 	return numDays;
 }
 
+void toUpper(string& input) {
+
+	for (size_t i = 0; i < input.size(); i++) {
+
+		input.at(i) = toupper(input.at(i));
+
+	}
+
+}
+
+
+
 bool codigoPostalValido(string codigoPostal)
 {
 	if (codigoPostal.length() != 8) {

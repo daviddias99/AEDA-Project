@@ -248,6 +248,8 @@ int daysInMonth(int month, int year);
 
 bool codigoPostalValido(string codigoPostal);
 
+void toUpper(string& input);
+
 /*
 template< class T>
 int procura(const vector<T> &v, T x);
@@ -304,10 +306,13 @@ public:
 };
 
 class ProdutoNaoExiste {
-	int codigo;
+	int codigo = 0;
+	string nome = "";
 public:
 	ProdutoNaoExiste(int codigo) {this->codigo = codigo;}
+	ProdutoNaoExiste(string nome) { this->nome = nome; }
 	string getCodigo() const {return  to_string(codigo);}
+	string getNome() const { return  nome; }
 };
 
 class ProdutoRepetido {

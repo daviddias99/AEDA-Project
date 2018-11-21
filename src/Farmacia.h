@@ -125,6 +125,14 @@ public:
 	*/
 	Produto* getProduto(int codigo) const;
 
+	/**
+	* @brief Procura no stock o produto com o nome indicado no seu parametro
+	* Lanca uma excecao nao for encontrado nenhum produto com esse nome em stock
+	* @param nome nome do produto a ser procurado em stock
+	* @return	  Apontador para o produto com o codigo indicado no parametro
+	*/
+	Produto* getProduto(string nome) const;
+
 	/** 
 	* @brief Devolve o numero total de produtos em stock, incluindo os produtos repetidos
 	* @return Numero total de produtos em stock
