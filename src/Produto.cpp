@@ -23,6 +23,10 @@ float Produto::getPreco() const {
 	return preco;
 }
 
+float Produto::getIVA() const {
+	return iva;
+}
+
 int Produto::alteraPreco(float novoPreco) {
 
 	if (novoPreco > 0) {
@@ -51,3 +55,4 @@ ostream& Produto::printSimp(ostream& os) const {
 
 	return os;
 }
+

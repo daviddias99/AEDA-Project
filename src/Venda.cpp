@@ -2,6 +2,7 @@
 
 Venda::Venda(uint cID, string client, uint eID, string empreg, string farm) : idCliente(cID), nomeCliente(client), idEmpregado(eID), nomeEmpregado(empreg), nomeFarmacia(farm) {
 
+	preco = 0;
 	this->timestamp_venda = Timestamp();
 }
 
@@ -20,7 +21,14 @@ void Venda::addProduto(Produto* prod, unsigned int quant) {
 		}
 	}
 
+	preco += prod->getPreco * (1 + prod->getIVA()) * quant;
+
 	produtos[prod] = quant;
+}
+
+double Venda::getPrecoTotal() const
+{
+	return preco;
 }
 
 ostream & Venda::print(ostream & os) const

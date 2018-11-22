@@ -17,9 +17,12 @@ public:
 	map<Produto, unsigned int> addReceita(const Receita & receita);
 	void addProduto(Produto* prod, unsigned int quant);
 
+	double getPrecoTotal() const;
+
 	ostream& print(ostream& os) const;
 	ostream& printSimp(ostream& os) const;
 private:
+	double preco;
 	const string nomeFarmacia;
 	const string nomeCliente;
 	const string nomeEmpregado;
