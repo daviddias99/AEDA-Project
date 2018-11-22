@@ -620,13 +620,20 @@ void realizarVenda(Cadeia & cadeia)
 	if ((userChoice == "S") || (userChoice == "SIM")) {
 		farmacia->addVenda(venda);
 
-		map<Produto*, uint>::iterator it = venda->getProdutos().begin();
-		map<Produto*, uint>::iterator ite = venda->getProdutos().end();
+		map<Produto*, uint>tempProd_map;
+		tempProd_map = venda->getProdutos();
+		map<Produto*, uint>::iterator it = tempProd_map.begin();
+		map<Produto*, uint>::iterator ite = tempProd_map.end();
+
 
 		while (it != ite) {
 			farmacia->removeQuantidade(it->first->getCodigo(), it->second);
+			it++;
 		}
 		cout << endl << "Venda efetuada." << endl;
+		cadeia.addCliente(cliente);
+		cliente->adicionaCompra(venda);
+		empregado->addVenda(venda);
 
 	}
 	else if ((userChoice == "N") || (userChoice == "NAO")) {
