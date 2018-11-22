@@ -2,6 +2,7 @@
 
 Venda::Venda(uint cID, string client, uint eID, string empreg, string farm) : idCliente(cID), nomeCliente(client), idEmpregado(eID), nomeEmpregado(empreg), nomeFarmacia(farm) {
 
+	preco = 0;
 	this->timestamp_venda = Timestamp();
 }
 
@@ -19,6 +20,8 @@ void Venda::addProduto(Produto* prod, unsigned int quant) {
 			return;
 		}
 	}
+
+	preco += prod->getPreco() * (1 + prod->getIVA()) * quant;
 
 	produtos[prod] = quant;
 }
@@ -72,10 +75,8 @@ void Venda::remProduto(string  nome)
 
 }
 
-uint Venda::getCusto()
-{
-	return 0;
-
+float Venda::getCusto() const {
+	return preco;
 }
 
 map<Produto*, uint> Venda::getProdutos()

@@ -19,13 +19,14 @@ public:
 	pair<Produto*, uint> getProd(uint prodId);
 	pair<Produto*, uint> getProd(string nome);
 	void remProduto(string nome);
-	uint getCusto();
+	float getCusto() const;
 
 	map<Produto*, uint> getProdutos();
 
 	ostream& print(ostream& os) const;
 	ostream& printSimp(ostream& os) const;
 private:
+	double preco;
 	const string nomeFarmacia;
 	const string nomeCliente;
 	const string nomeEmpregado;

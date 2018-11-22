@@ -43,6 +43,13 @@ public:
 	float getPreco() const;
 
 	/**
+	 * @brief Devolve o IVA sobre o produto
+	 *
+	 * @return IVA sobre o produto
+	 */
+	float getIVA() const;
+
+	/**
 	* @brief Altera o preco do produto para o indicado no seu argumento
 	* @param novoPreco Novo preco do produto
 	* @return Retorna 0 se a alteracao tiver sucesso

@@ -65,7 +65,7 @@ void Cadeia::removeCliente(uint ID)
 		clientes.erase(clientes.begin() +i);
 		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
 	} 
-	else throw ClienteNaoExiste(ID);
+	else throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");
 }
 
 void Cadeia::removeEmpregado(uint ID)
@@ -75,7 +75,7 @@ void Cadeia::removeEmpregado(uint ID)
 		empregados.erase(empregados.begin()+i);
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
 	}
-	else throw EmpregadoNaoExiste(ID);
+	else throw EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
 }
 
 Farmacia* Cadeia::getFarmacia(string nome) const
@@ -91,7 +91,7 @@ Cliente* Cadeia::getCliente(uint ID) const
 	int i = procura2(clientes, ID);
 	if(i != -1) return clientes[i];
 
-	throw ClienteNaoExiste(ID);
+	throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");
 }
 
 Empregado* Cadeia::getEmpregado(uint ID) const
@@ -99,7 +99,7 @@ Empregado* Cadeia::getEmpregado(uint ID) const
 	int i = procura2(empregados, ID);
 	if(i != -1) return empregados[i];
 
-	throw EmpregadoNaoExiste(ID);
+	throw  EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
 }
 
 vector<Cliente*> Cadeia::getClientes(string nome) const

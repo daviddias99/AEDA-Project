@@ -136,7 +136,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 			}
 			catch (FarmaciaNaoExiste& f)
 			{
-				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				cout << f.getInfo() << endl;
 				continue;
 			}
 			break;
@@ -248,7 +248,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	if (farmacia.existeProduto(codigo)) {
-		throw ProdutoRepetido(codigo);
+		throw ProdutoRepetido("O produto com o codigo " + to_string(codigo) + " ja existe.");
 	}
 
 	nome = getInputString("Nome: ", "Nome invalido.");
@@ -427,7 +427,7 @@ void realizarVenda(Cadeia & cadeia)
 		}
 		catch (FarmaciaNaoExiste& f)
 		{
-			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl << endl;
+			cout << f.getInfo() << endl << endl;
 			continue;
 		}
 
@@ -457,14 +457,14 @@ void realizarVenda(Cadeia & cadeia)
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado na farmacia, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado na farmacia, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome na Farmacia " << farmaciaNome << "." << endl;
 		return;
 	}
 
-	// se só existir um empregado com o nome dado usar esse empregado na venda
+	// se sï¿½ existir um empregado com o nome dado usar esse empregado na venda
 	// caso contrario, pedir o ID do empregado 
 	if (empregados_busca.size() != 1) {
 
@@ -534,7 +534,7 @@ void realizarVenda(Cadeia & cadeia)
 
 		cout << endl;
 
-		// se não encontrar nenhum empregado com o nome dado, pergunta ao user se pretende adicionar um empregado novo
+		// se nï¿½o encontrar nenhum empregado com o nome dado, pergunta ao user se pretende adicionar um empregado novo
 		if (clientes_busca.size() == 0) {
 			string userChoice;
 
@@ -689,7 +689,7 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 			}
 			catch (ProdutoNaoExiste& p1)
 			{
-				cout << "O produto com o nome " << p1.getNome() << " nao existe." << endl;
+				cout << p1.getInfo() << endl;
 				break;
 			}
 
@@ -750,7 +750,7 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 			}
 			catch (ProdutoNaoExiste& p1)
 			{
-				cout << "O medicamento com o nome " << p1.getNome() << " nao existe." << endl;
+				cout << p1.getInfo() << endl;
 				break;
 			}
 
@@ -982,7 +982,7 @@ void gerirCliente(Cadeia & cadeia)
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado, retorna
 	if (clientes_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum cliente com esse nome." << endl;
@@ -1234,14 +1234,14 @@ void removerEmpregado(Cadeia& cadeia)
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
 		return;
 	}
 
-	// se só existir um empregado com o nome dado, remover esse empregado
+	// se sï¿½ existir um empregado com o nome dado, remover esse empregado
 	// caso contrario, pedir o ID do empregado a remover
 	if (empregados_busca.size() != 1) {
 
@@ -1300,7 +1300,7 @@ void removerEmpregado(Cadeia& cadeia)
 		cout << "Cliente removido" << endl;
 	}
 	catch (EmpregadoNaoExiste &c1) {
-		cout << "O empregado com o ID " << c1.getID() << " nao existe." << endl;
+		cout << c1.getInfo() << endl;
 	}
 }
 
@@ -1338,14 +1338,14 @@ void gerirEmpregado(Cadeia & cadeia)
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
 		return;
 	}
 
-	// se só existir um empregado com o nome dado, remover esse empregado
+	// se sï¿½ existir um empregado com o nome dado, remover esse empregado
 	// caso contrario, pedir o ID do empregado a remover
 	if (empregados_busca.size() != 1) {
 
@@ -1503,7 +1503,7 @@ void gerirEmpregado(Cadeia & cadeia)
 				}
 				catch (FarmaciaNaoExiste& f)
 				{
-					cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+					cout << f.getInfo() << endl;
 					continue;
 				}
 
@@ -1607,7 +1607,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 	}
 	catch (FarmaciaNaoExiste& f)
 	{
-		cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		cout << f.getInfo() << endl;
 		return;
 	}
 
@@ -1659,7 +1659,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 			}
 			catch (FarmaciaNaoExiste& f)
 			{
-				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				cout << f.getInfo() << endl;
 				return;
 			}
 			break;
@@ -1738,7 +1738,7 @@ void gerirStock(Cadeia& cadeia) {
 	}
 	catch (FarmaciaNaoExiste& f)
 	{
-		cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		cout << f.getInfo() << endl;
 		return;
 	}
 
@@ -1789,7 +1789,7 @@ void gerirStock(Cadeia& cadeia) {
 			}
 			catch (FarmaciaNaoExiste& f)
 			{
-				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				cout << f.getInfo() << endl;
 				return;
 			}
 			break;
@@ -1815,7 +1815,7 @@ void alterarGerente(Cadeia & cadeia)
 	}
 	catch (FarmaciaNaoExiste& f)
 	{
-		cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		cout << f.getInfo() << endl;
 		return;
 	}
 
@@ -1840,14 +1840,14 @@ void alterarGerente(Cadeia & cadeia)
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
 		return;
 	}
 
-	// se só existir um empregado com o nome dado, remover esse empregado
+	// se sï¿½ existir um empregado com o nome dado, remover esse empregado
 	// caso contrario, pedir o ID do empregado a remover
 	if (empregados_busca.size() != 1) {
 
@@ -1950,7 +1950,7 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 				produto = user_getProduto(farmacia);
 			}
 			catch (ProdutoRepetido &e) {
-				cout << "O produto com o codigo " << e.getCodigo() << " ja existe." << endl;
+				cout << e.getInfo() << endl;
 				continue;
 			}
 
@@ -2022,7 +2022,7 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 				farmacia.addQuantidade(codigo, quantidade);
 			}
 			catch (ProdutoNaoExiste& e) {
-				cout << "O produto com o codigo  " << e.getCodigo() << " nao existe." << endl;
+				cout << e.getInfo() << endl;
 			}
 		}
 
@@ -2054,6 +2054,7 @@ void farmacia_removerProduto(Farmacia & farmacia)
 	}
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
+
 	cout << "Quantidade a remover: ";
 
 	// validar input do codigo
@@ -2076,10 +2077,10 @@ void farmacia_removerProduto(Farmacia & farmacia)
 		farmacia.removeQuantidade(codigo, quantidade);
 	}
 	catch (ProdutoNaoExiste& e) {
-		cout << "O produto com o codigo  " << e.getCodigo() << " nao existe." << endl;
+		cout << e.getInfo() << endl;
 	}
 	catch (ProdutosInsuficientes& e) {
-		cout << "Apenas existem " << e.getQuantidade() << " unidades do produto pedido." << endl;
+		cout << e.getInfo() << endl;
 	}
 }
 

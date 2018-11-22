@@ -13,7 +13,7 @@
 #include "Cliente.h"
 #include "Produto.h"
 #include "Medicamento.h"
-#include "util.h"
+#include "Excecoes.h"
 
 using namespace std;
 
@@ -26,8 +26,8 @@ public:
 	*/
 	Farmacia(string nome, Morada Morada);
 	/**
-	* @brief Construtor da classe farmacia que inicializa os atributos atravez do conteudo lido num ficheiro txt
-	* @param simp ----------------COMPLETAR-----------------
+	* @brief Construtor da classe farmacia que inicializa os atributos atravez do conteudo lido de um ficheiro de texto
+	* @param simp String com as informacoes sobre a farmacia no formato escrito pelo programa num ficheiro de texto
 	*/
 	Farmacia(string simp);
 	/** 

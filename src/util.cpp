@@ -157,11 +157,11 @@ bool Data::operator<(Data & d2) const
 Time::Time(uint hora, uint minuto, uint segundo) : hora(hora), minuto(minuto), segundo(segundo) {
 
 	if (hora > 23)
-		throw TimeInvalido();
+		throw TimeInvalido("Hora invalida.");
 	if (minuto > 59)
-		throw TimeInvalido();
-	if (segundo > 50)
-		throw TimeInvalido();
+		throw TimeInvalido("Minuto invalido.");
+	if (segundo > 59)
+		throw TimeInvalido("Segundo invalido.");
 
 }
 
@@ -315,112 +315,5 @@ bool codigoPostalValido(string codigoPostal)
 
 	return true;
 }
-
-
-
-/*
-template< class T>
-int procura(const vector<T> &v, T x)
-{
-	int left = 0, right = v.size() - 1;
-	while (left <= right)
-	{
-		int middle = (left + right) / 2;
-		if (v[middle] < x)
-			left = middle + 1;
-		else if (x < v[middle])
-			right = middle - 1;
-		else return middle;
-
-	}
-	return -1;
-}
-
-template< class T>
-int procura(const vector<T*> &v, T x)
-{
-	int left = 0, right = v.size() - 1;
-	while (left <= right)
-	{
-		int middle = (left + right) / 2;
-		if (*v[middle] < x)
-			left = middle + 1;
-		else if (x < *v[middle])
-			right = middle - 1;
-		else return middle;
-
-	}
-	return -1;
-}
-
-
-template< class T>
-int procura(const vector<T*> &v, T* x)
-{
-	int left = 0, right = v.size() - 1;
-	while (left <= right)
-	{
-		int middle = (left + right) / 2;
-		if (*v[middle] < *x)
-			left = middle + 1;
-		else if (*x < *v[middle])
-			right = middle - 1;
-		else return middle;
-
-	}
-	return -1;
-}
-
-template< class T>
-int procura(const vector <T> &v, string nome)
-{
-	int left = 0, right = v.size() - 1;
-	while (left <= right)
-	{
-		int middle = (left + right) / 2;
-		if (v[middle].getNome() < nome)
-			left = middle + 1;
-		else if (nome < v[middle].getNome())
-			right = middle - 1;
-		else return middle;
-
-	}
-	return -1;
-}
-
-template < class T>
-int procura(const vector <T> &v, int nif)
-{
-	int left = 0, right = v.size() - 1;
-	while (left <= right)
-	{
-		int middle = (left + right) / 2;
-		if (v[middle].getNIF() < nif)
-			left = middle + 1;
-		else if (nif < v[middle].getNIF())
-			right = middle - 1;
-		else return middle;
-
-	}
-	return -1;
-}
-
-template < class T>
-int procura(const vector <T*> &v, int nif)
-{
-	int left = 0, right = v.size() - 1;
-	while (left <= right)
-	{
-		int middle = (left + right) / 2;
-		if (v[middle]->getNIF() < nif)
-			left = middle + 1;
-		else if (nif < v[middle]->getNIF())
-			right = middle - 1;
-		else return middle;
-
-	}
-	return -1;
-}
-*/
 
 
