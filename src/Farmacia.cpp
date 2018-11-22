@@ -232,6 +232,11 @@ Produto * Farmacia::getProduto(string nome) const
 	throw ProdutoNaoExiste(nome);
 }
 
+const vector<Venda*>& Farmacia::getVendas() const
+{
+	return vendas;
+}
+
 unsigned int Farmacia::getTotalProdutos() const
 {
 	int soma = 0;
@@ -269,6 +274,11 @@ void Farmacia::consultarQuantidades() const
 	for(it = stock.begin(); it != stock.end(); it++) {
 		cout << "Nome: " << (*it->first).getNome() << "; Codigo: " << (*it->first).getCodigo() << "; Quantidade: " << it->second << endl;;
 	}
+}
+
+void Farmacia::addVenda(Venda * venda)
+{
+	vendas.push_back(venda);
 }
 
 bool Farmacia::efetuaVenda(Empregado * empregado, Cliente * cliente, map<Produto*, unsigned int> produtos)

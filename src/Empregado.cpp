@@ -23,6 +23,11 @@ void Empregado::decID() {
 	currentID--;
 }
 
+void Empregado::addVenda(Venda * venda)
+{
+	historicoVendas.push_back(venda);
+}
+
 uint Empregado::getSalario() const
 {
 	return this->salario;

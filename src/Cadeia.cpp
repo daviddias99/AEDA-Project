@@ -315,16 +315,30 @@ void Cadeia::guardarDados()
 	}
 
 	fichEmpregados.close();
+
+	string nomeFichVendas = nome + "-vendas.txt";
+
+	ofstream fichVendas;
+	fichVendas.open(nomeFichVendas);
+
+	for (vector<Farmacia *>::const_iterator it_farmacias = farmacias.begin(); it_farmacias != farmacias.end(); it_farmacias++) {
+
+		for (vector<Venda *>::const_iterator it_vendas = (*it_farmacias)->getVendas().begin(); it_vendas != (*it_farmacias)->getVendas().end(); it_vendas++) {
+
+			(*it_vendas)->printSimp(fichVendas) << endl;
+		}
+	}
 }
 
 void Cadeia::carregarDados() {
 
-	ifstream fich_farm, fich_emp, fich_cli;
+	ifstream fich_farm, fich_emp, fich_cli, fich_vend;
 	fich_farm.open(nome + "-farmacias.txt");
 	fich_emp.open(nome + "-empregados.txt");
 	fich_cli.open(nome + "-clientes.txt");
+	fich_vend.open(nome + "-vendas.txt");
 
-	if (!(fich_farm.is_open() && fich_cli.is_open() && fich_emp.is_open()))
+	if (!(fich_farm.is_open() && fich_cli.is_open() && fich_emp.is_open() && fich_vend.is_open()))
 		throw FicheiroNaoEncontrado("Ficheiros da cadeia \"" + nome + "\" nao encontrados.");
 
 	carregarFarmacias(fich_farm);
@@ -333,9 +347,12 @@ void Cadeia::carregarDados() {
 
 	carregarClientes(fich_cli);
 
+	carregarVendas(fich_vend);
+
 	fich_cli.close();
 	fich_farm.close();
 	fich_emp.close();
+	fich_vend.close();
 }
 
 void Cadeia::carregarClientes(ifstream& ficheiro)
@@ -474,3 +491,136 @@ void Cadeia::carregarFarmacias(ifstream& ficheiro) {
 		}
 	}
 }
+
+void Cadeia::carregarVendas(ifstream & ficheiro)
+{
+	string linha;
+	int idCliente, idEmpregado;
+	string nomeFarmacia, nomeCliente, nomeEmpregado, nome_prod, desc_prod, produtoSimp;
+	float preco_prod, iva_prod, desc_receita;
+	unsigned long int cod_produto;
+	bool vend_sem_rec, pode_ser_rec;
+	uint quant;
+
+
+	Venda * novaVenda;
+	Produto * produto;
+
+	getline(ficheiro, linha);
+	if (linha != "") {
+
+		nomeFarmacia = linha.substr(0, linha.find_first_of('&'));
+		linha = linha.substr(linha.find_first_of('&') + 1);
+		idCliente = stoi(linha.substr(0, linha.find_first_of('&')));
+		linha = linha.substr(linha.find_first_of('&') + 1);
+		nomeCliente = linha.substr(0, linha.find_first_of('&'));
+		linha = linha.substr(linha.find_first_of('&') + 1);
+		idEmpregado = stoi(linha.substr(0, linha.find_first_of('&')));
+		linha = linha.substr(linha.find_first_of('&') + 1);
+		nomeEmpregado = linha.substr(0, linha.find_first_of('&'));
+		linha = linha.substr(linha.find_first_of('&'));
+
+		novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia);
+
+		while (linha != "!" && linha != "") {
+			linha = linha.substr(1);
+			produtoSimp = linha.substr(0, linha.find_first_of('#') - 1);
+			quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
+			linha = linha.substr(linha.find_first_of('!'));
+
+			bool isMed = false;
+			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3)
+				isMed = true;
+
+			cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+			nome_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+			desc_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+			preco_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+			iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
+
+			if (!isMed) {
+				novaVenda->addProduto(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant);
+			}
+			else {
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				vend_sem_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				pode_ser_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				desc_receita = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
+				novaVenda->addProduto(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant);
+			}
+		}
+
+		getFarmacia(nomeFarmacia)->addVenda(novaVenda);
+		getCliente(idCliente)->adicionaCompra(novaVenda);
+		getEmpregado(idEmpregado)->addVenda(novaVenda);
+	}
+
+	while (!ficheiro.eof()) {
+		getline(ficheiro, linha);
+		if (linha != "") {
+
+			nomeFarmacia = linha.substr(0, linha.find_first_of('&'));
+			linha = linha.substr(linha.find_first_of('&') + 1);
+			idCliente = stoi(linha.substr(0, linha.find_first_of('&')));
+			linha = linha.substr(linha.find_first_of('&') + 1);
+			nomeCliente = linha.substr(0, linha.find_first_of('&'));
+			linha = linha.substr(linha.find_first_of('&') + 1);
+			idEmpregado = stoi(linha.substr(0, linha.find_first_of('&')));
+			linha = linha.substr(linha.find_first_of('&') + 1);
+			nomeEmpregado = linha.substr(0, linha.find_first_of('&'));
+			linha = linha.substr(linha.find_first_of('&'));
+
+			novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia);
+
+			while (linha != "!" && linha != "") {
+				linha = linha.substr(1);
+				produtoSimp = linha.substr(0, linha.find_first_of('#') - 1);
+				quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
+				linha = linha.substr(linha.find_first_of('!'));
+
+				bool isMed = false;
+				if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3)
+					isMed = true;
+
+				cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				nome_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				desc_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				preco_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
+
+				if (!isMed) {
+					novaVenda->addProduto(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant);
+				}
+				else {
+					produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+					vend_sem_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+					produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+					pode_ser_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+					produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+					desc_receita = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
+					novaVenda->addProduto(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant);
+				}
+			}
+
+			getFarmacia(nomeFarmacia)->addVenda(novaVenda);
+			getCliente(idCliente)->adicionaCompra(novaVenda);
+			getEmpregado(idEmpregado)->addVenda(novaVenda);
+		}
+	}
+}
+
+
