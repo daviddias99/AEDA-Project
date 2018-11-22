@@ -79,11 +79,7 @@ public:
 	*/
 
 	void addQuantidade(long unsigned int codigo, uint quantidade);
-	/**
-	* @brief Adiciona uma venda a lista de vendas efetuadas na farmacia
-	* @param v1 Apontador para a venda que vai ser adiciona a lista de vendas efetuadas pela farmacia
-	*/
-	void adicionarVenda(Venda* v1);
+
 	/**
 	* @brief Procura no stock da farmacia pelo produto com o codigo indicado no parametro
 	* @param codigo Codigo do produto a ser procurado

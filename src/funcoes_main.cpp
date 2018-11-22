@@ -17,7 +17,6 @@ void showMenuPrincipal() {
 	cout << "0 - Sair da aplicacao" << endl;
 }
 
-
 int getInputNumber(int limInf, int limSup, bool showLimSup)
 {
 	int number;
@@ -34,7 +33,7 @@ int getInputNumber(int limInf, int limSup, bool showLimSup)
 			cin.ignore(MAX_STREAM_SIZE, '\n');
 		}
 
-		if(showLimSup)
+		if (showLimSup)
 			throw OpcaoInvalida("A opcao introduzida deve ser um numero entre " + to_string(limInf) + " e " + to_string(limSup) + ".");
 		else
 			throw OpcaoInvalida("A opcao introduzida deve ser um numero superior a " + to_string(limInf) + ".");
@@ -151,12 +150,12 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 		farmaciaNome = newFOverride.second;
 
 	}
-	
+
 
 	morada = user_getMorada();
 	dataNascimento = user_getData();
 
-	Empregado* newEmp = new Empregado(nome, (long unsigned int) NIF, dataNascimento, morada, (uint) salario, farmaciaNome, cargo);
+	Empregado* newEmp = new Empregado(nome, (long unsigned int) NIF, dataNascimento, morada, (uint)salario, farmaciaNome, cargo);
 
 	return newEmp;
 }
@@ -213,7 +212,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	cout << "Categoria: " << endl;
 	cout << "1 - Produto generico" << endl;
 	cout << "2 - Medicamento" << endl;
-	
+
 	bool opcaoInvalida = true;
 	while (opcaoInvalida) {
 
@@ -228,7 +227,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 
 		opcaoInvalida = false;
 	}
-	
+
 	cout << endl << "Codigo: ";
 
 	// validar input do codigo
@@ -274,7 +273,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	}
 
 	cin.ignore(MAX_STREAM_SIZE, '\n');
-	
+
 	opcaoInvalida = true;
 	while (opcaoInvalida) {
 
@@ -293,7 +292,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	if (opcao == 1) {
 		produto = new Produto(codigo, nome, desc, preco, (float)iva / 100);
 	}
-	else  {
+	else {
 		opcaoInvalida = true;
 		while (opcaoInvalida) {
 
@@ -323,7 +322,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 
 			opcaoInvalida = false;
 		}
-		
+
 		if (podeSerRec) {
 			opcaoInvalida = true;
 			while (opcaoInvalida) {
@@ -343,9 +342,9 @@ Produto* user_getProduto(Farmacia& farmacia) {
 		else
 			descComReceita = 0;
 
-		produto = new Medicamento(codigo, nome, desc, preco, (float)iva / 100, vendidoSemRec, podeSerRec, (float) descComReceita / 100);
+		produto = new Medicamento(codigo, nome, desc, preco, (float)iva / 100, vendidoSemRec, podeSerRec, (float)descComReceita / 100);
 	}
-	
+
 	return produto;
 }
 
@@ -398,7 +397,7 @@ string getInputString(string msg, string msgErr)
 
 void realizarVenda(Cadeia & cadeia)
 {
-	string farmaciaNome, nomeEmpregado,nomeCliente;
+	string farmaciaNome, nomeEmpregado, nomeCliente;
 	bool farmaciaValida = false;
 	Farmacia* farmacia = NULL;
 	Empregado* empregado;
@@ -407,6 +406,13 @@ void realizarVenda(Cadeia & cadeia)
 
 
 	cout << endl << "REALIZAR VENDA" << endl << endl;
+
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "Adicione uma farmacia antes de realizar uma venda." << endl;
+		return;
+	}
+
 
 
 	// GET FARMACIA
@@ -428,7 +434,7 @@ void realizarVenda(Cadeia & cadeia)
 		farmaciaValida = true;
 
 	} while (!farmaciaValida);
-	
+
 	// GET EMPREGADO
 	cout << "Que empregado realiza a venda: ";
 	getline(cin, nomeEmpregado);
@@ -447,18 +453,18 @@ void realizarVenda(Cadeia & cadeia)
 
 		}
 	}
-	
+
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado na farmacia, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado na farmacia, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome na Farmacia " << farmaciaNome << "." << endl;
 		return;
 	}
 
-	// se só existir um empregado com o nome dado usar esse empregado na venda
+	// se sï¿½ existir um empregado com o nome dado usar esse empregado na venda
 	// caso contrario, pedir o ID do empregado 
 	if (empregados_busca.size() != 1) {
 
@@ -528,7 +534,7 @@ void realizarVenda(Cadeia & cadeia)
 
 		cout << endl;
 
-		// se não encontrar nenhum empregado com o nome dado, pergunta ao user se pretende adicionar um empregado novo
+		// se nï¿½o encontrar nenhum empregado com o nome dado, pergunta ao user se pretende adicionar um empregado novo
 		if (clientes_busca.size() == 0) {
 			string userChoice;
 
@@ -537,7 +543,7 @@ void realizarVenda(Cadeia & cadeia)
 			cout << endl;
 			toUpper(userChoice);
 
-			if ((userChoice == "S") ||  (userChoice == "SIM")) {
+			if ((userChoice == "S") || (userChoice == "SIM")) {
 				cliente = user_getCliente();
 			}
 			else if ((userChoice == "N") || (userChoice == "NAO")) {
@@ -594,23 +600,50 @@ void realizarVenda(Cadeia & cadeia)
 		cliente = user_getCliente();
 
 	}
-	
+
 	cout << endl;
+
+	Venda* venda = new Venda(cliente->getID(), cliente->getNome(), empregado->getID(), empregado->getNome(), farmacia->getNome());
 
 	//GET PRODUTOS
 
-	user_getProdutos(farmacia);
+	user_getProdutos(farmacia, venda);
+	cout << "Preco final: " << venda->getCusto() << " euros";
+	cout << "Finalizar venda(S/N)? ";
+	string userChoice;
+	getline(cin, userChoice);
+	cout << endl;
+	toUpper(userChoice);
+
+	if ((userChoice == "S") || (userChoice == "SIM")) {
+		farmacia->addVenda(venda);
+
+		map<Produto*, uint>::iterator it = venda->getProdutos().begin();
+		map<Produto*, uint>::iterator ite = venda->getProdutos().end();
+
+		while (it != ite) {
+			farmacia->removeQuantidade(it->first->getCodigo(), it->second);
+		}
+		cout << endl << "Venda efetuada." << endl;
+
+	}
+	else if ((userChoice == "N") || (userChoice == "NAO")) {
+
+		delete cliente;
+		delete venda;
+		return;
+	}
 
 }
 
-map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
+void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 
-	int opcao ;
+	int opcao, quantExistente;
 	string nomeProduto;
-	pair<Produto*,uint> produtoTemp;
+	pair<Produto*, uint> produtoTemp;
 	map<Produto*, uint>::iterator it;
 	uint quantidade;
-	map<Produto*, uint> tempProd_map;
+	//map<Produto*, uint> tempProd_map;
 	Medicamento* mediTemp;
 
 	do {
@@ -656,26 +689,32 @@ map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 				cout << p1.getInfo() << endl;
 				break;
 			}
-			
+
 			mediTemp = dynamic_cast<Medicamento*> (produtoTemp.first);
 
 			if (mediTemp != NULL) {
 				cout << "O produto " << produtoTemp.first->getNome() << " e um medicamento." << endl;
 				break;
 			}
-				
+
 
 			cout << "Produto: " << produtoTemp.first->getNome() << " Quantidade disponivel: " << produtoTemp.second << " Preco: " << produtoTemp.first->getPreco() << endl;
 
-			
-			
+
+
 
 			opcaoInvalida = true;
 			while (opcaoInvalida) {
 
 				try {
+
+					if (venda->getProd(produtoTemp.first->getCodigo()).first == NULL)
+						quantExistente = 0;
+					else
+						quantExistente = venda->getProd(produtoTemp.first->getCodigo()).second;
+
 					cout << "Quantidade: ";
-					quantidade = getInputNumber(1, produtoTemp.second);
+					quantidade = getInputNumber(1, produtoTemp.second - quantExistente);
 				}
 				catch (OpcaoInvalida& opIn) {
 					cout << opIn.getInfo() << endl;
@@ -688,10 +727,9 @@ map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 			cout << endl;
 
 			produtoTemp.second = quantidade;
+			venda->addProduto(produtoTemp.first, produtoTemp.second);
 
-			tempProd_map.insert(produtoTemp);
 
-			farmacia->removeQuantidade(produtoTemp.first->getCodigo(), quantidade);
 
 			cout << "Produto adicionado a compra." << endl;
 			break;
@@ -727,13 +765,18 @@ map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 			}
 
 			cout << "Medicamento: " << produtoTemp.first->getNome() << " Quantidade disponivel: " << produtoTemp.second << " Preco: " << produtoTemp.first->getPreco() << endl;
-			
+
 			opcaoInvalida = true;
 			while (opcaoInvalida) {
 
 				try {
+					if (venda->getProd(produtoTemp.first->getCodigo()).first == NULL)
+						quantExistente = 0;
+					else
+						quantExistente = venda->getProd(produtoTemp.first->getCodigo()).second;
+
 					cout << "Quantidade: ";
-					quantidade = getInputNumber(1, produtoTemp.second);
+					quantidade = getInputNumber(1, produtoTemp.second - quantExistente);
 				}
 				catch (OpcaoInvalida& opIn) {
 					cout << opIn.getInfo() << endl;
@@ -745,16 +788,11 @@ map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 			cout << endl;
 
 			produtoTemp.second = quantidade;
-
-			tempProd_map.insert(produtoTemp);
-
-			farmacia->removeQuantidade(produtoTemp.first->getCodigo(), quantidade);
+			venda->addProduto(produtoTemp.first, produtoTemp.second);
 
 			cout << "Medicamento adicionado a compra." << endl;
 			break;
 
-
-			break;
 		case 3:
 
 			break;
@@ -763,9 +801,9 @@ map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 			cout << endl;
 			cout << "-Lista de compra- " << endl << endl;
 
-			it = tempProd_map.begin();
+			it = venda->getProdutos().begin();
 
-			for (it; it != tempProd_map.end(); it++) {
+			for (it; it != venda->getProdutos().end(); it++) {
 
 				it->first->print(cout);
 				cout << endl;
@@ -775,6 +813,40 @@ map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 			break;
 		case 5:
 
+			cout << endl;
+			cout << "-Remover produto- " << endl << endl;
+
+			if (venda->getProdutos().size() == 0) {
+
+				cout << "Sem produtos." << endl;
+				break;
+			}
+
+			it = venda->getProdutos().begin();
+
+			for (it; it != venda->getProdutos().end(); it++) {
+
+				cout << "Nome: " << setw(10) << it->first->getNome() << " | Quantidade: " << it->second;
+
+			}
+
+
+
+			opcaoInvalida = true;
+			while (opcaoInvalida) {
+				cout << endl << "Nome do medicamento: ";
+				getline(cin, nomeProduto);
+
+				if (venda->getProd(nomeProduto).first == NULL)
+					continue;
+				else
+					venda->remProduto(nomeProduto);
+
+				opcaoInvalida = false;
+			}
+
+			cout << "Produto removido." << endl;
+
 			break;
 		case 0:
 
@@ -783,9 +855,8 @@ map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 
 
 	} while (opcao != 0);
-	
-	
-	return tempProd_map;
+
+
 }
 
 ////////////////
@@ -909,7 +980,7 @@ void gerirCliente(Cadeia & cadeia)
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado, retorna
 	if (clientes_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum cliente com esse nome." << endl;
@@ -967,7 +1038,7 @@ void gerirCliente(Cadeia & cadeia)
 
 		cout << endl << "O que pretende em relacao ao cliente  " << cadeia.getCliente(ID)->getNome() << " ?" << endl;
 		cout << "1 - Alterar Morada" << endl;
-		cout << "2 - Consultar Compras" << endl; 
+		cout << "2 - Consultar Compras" << endl;
 		cout << "0 - Terminar" << endl << endl;
 
 		while (opcaoInvalida) {
@@ -987,7 +1058,7 @@ void gerirCliente(Cadeia & cadeia)
 		cout << endl;
 
 		switch (opcao) {
-		
+
 		case 1:
 
 			morada = user_getMorada();
@@ -1124,7 +1195,7 @@ void adicionarEmpregado(Cadeia& cadeia)
 
 	Empregado* newEmp = user_getEmpregado(cadeia);
 
-	if (cadeia.addEmpregado(newEmp)) {	
+	if (cadeia.addEmpregado(newEmp)) {
 
 		cout << "Empregado adicionado." << endl;
 	}
@@ -1161,14 +1232,14 @@ void removerEmpregado(Cadeia& cadeia)
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
 		return;
 	}
 
-	// se só existir um empregado com o nome dado, remover esse empregado
+	// se sï¿½ existir um empregado com o nome dado, remover esse empregado
 	// caso contrario, pedir o ID do empregado a remover
 	if (empregados_busca.size() != 1) {
 
@@ -1258,21 +1329,21 @@ void gerirEmpregado(Cadeia & cadeia)
 			<< "| Nome: " << empregados_busca.at(i)->getNome()
 			<< "| Farmacia: " << empregados_busca.at(i)->getNomeFarmacia()
 			<< "| Cargo: " << empregados_busca.at(i)->getCargo()
-			<< "| Salario: " << empregados_busca.at(i)->getSalario()<< endl;
+			<< "| Salario: " << empregados_busca.at(i)->getSalario() << endl;
 
 
 	}
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
 		return;
 	}
 
-	// se só existir um empregado com o nome dado, remover esse empregado
+	// se sï¿½ existir um empregado com o nome dado, remover esse empregado
 	// caso contrario, pedir o ID do empregado a remover
 	if (empregados_busca.size() != 1) {
 
@@ -1349,7 +1420,7 @@ void gerirEmpregado(Cadeia & cadeia)
 		switch (opcao) {
 		case 1:
 
-			
+
 			cout << "Novo Salario: ";
 			while (!(cin >> salario))
 			{
@@ -1375,14 +1446,14 @@ void gerirEmpregado(Cadeia & cadeia)
 
 			break;
 		case 2:
-			
+
 			if (cadeia.getEmpregado(ID)->getCargo() == "gerente") {
 
 				cout << "Nao pode alterar o cargo de um gerente." << endl;
 				break;
 			}
 
-			
+
 			do {
 				cout << "Novo cargo: ";
 				getline(cin, cargo);
@@ -1401,14 +1472,14 @@ void gerirEmpregado(Cadeia & cadeia)
 
 			break;
 		case 3:
-			
+
 			morada = user_getMorada();
 			cadeia.getEmpregado(ID)->setMorada(morada);
 			cout << "Alterado." << endl;
 
 			break;
 		case 4:
-			
+
 			if (cadeia.getEmpregado(ID)->getCargo() == "gerente") {
 
 
@@ -1440,7 +1511,7 @@ void gerirEmpregado(Cadeia & cadeia)
 			farmaciaTemp->addEmpregado(cadeia.getEmpregado(ID));
 			cadeia.getFarmacia(cadeia.getEmpregado(ID)->getNomeFarmacia())->remEmpregado(ID);
 			cadeia.getEmpregado(ID)->setFarmacia(nomeFarmacia);
-			
+
 
 			cout << "Alterado." << endl;
 
@@ -1455,7 +1526,7 @@ void gerirEmpregado(Cadeia & cadeia)
 	} while (opcao != 0);
 
 
-		return;
+	return;
 }
 
 
@@ -1542,7 +1613,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 	bool continuarNesteMenu = true;
 	while (continuarNesteMenu) {
 		int opcao;
-		cout << endl <<"CONSULTAR FARMACIA" << endl << endl;
+		cout << endl << "CONSULTAR FARMACIA" << endl << endl;
 		farmacia->print(cout) << endl << endl;
 		cout << "Consultar: " << endl;
 		cout << "1 - Empregados" << endl;
@@ -1767,14 +1838,14 @@ void alterarGerente(Cadeia & cadeia)
 
 	cout << endl;
 
-	// se não encontrar nenhum empregado com o nome dado, retorna
+	// se nï¿½o encontrar nenhum empregado com o nome dado, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
 		return;
 	}
 
-	// se só existir um empregado com o nome dado, remover esse empregado
+	// se sï¿½ existir um empregado com o nome dado, remover esse empregado
 	// caso contrario, pedir o ID do empregado a remover
 	if (empregados_busca.size() != 1) {
 
@@ -1872,7 +1943,7 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 			continuarNesteMenu = false;
 		}
 		else if (opcao == 2) {
-			
+
 			try {
 				produto = user_getProduto(farmacia);
 			}
@@ -1959,56 +2030,57 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 
 void farmacia_removerProduto(Farmacia & farmacia)
 {
-		cout << endl << "REMOVER PRODUTOS" << endl << endl;
+	cout << endl << "REMOVER PRODUTOS" << endl << endl;
+	cout << "Codigo do produto a remover: ";
+
+	long unsigned int codigo;
+	unsigned int quantidade;
+
+	// validar input do codigo
+	while (!(cin >> codigo))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
 		cout << "Codigo do produto a remover: ";
-		
-		long unsigned int codigo;
-		unsigned int quantidade;
-
-		// validar input do codigo
-		while (!(cin >> codigo))
-		{
-			if (cin.eof())
-			{
-				cin.clear();
-			}
-			else
-			{
-				cin.clear();
-				cin.ignore(MAX_STREAM_SIZE, '\n');
-			}
-			cout << "Codigo do produto a remover: ";
-		}
-		cin.ignore(MAX_STREAM_SIZE, '\n');
-
-		cout << "Quantidade a remover: ";
-
-		// validar input do codigo
-		while (!(cin >> quantidade))
-		{
-			if (cin.eof())
-			{
-				cin.clear();
-			}
-			else
-			{
-				cin.clear();
-				cin.ignore(MAX_STREAM_SIZE, '\n');
-			}
-			cout << "Qual a quantidade a adicionar? ";
-		}
-		cin.ignore(MAX_STREAM_SIZE, '\n');
-
-		try {
-			farmacia.removeQuantidade(codigo, quantidade);
-		}
-		catch (ProdutoNaoExiste& e) {
-			cout << e.getInfo() << endl;
-		}
-		catch (ProdutosInsuficientes& e) {
-			cout << e.getInfo() << endl;
-		}
 	}
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+
+	cout << "Quantidade a remover: ";
+
+	// validar input do codigo
+	while (!(cin >> quantidade))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+		cout << "Qual a quantidade a adicionar? ";
+	}
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	try {
+		farmacia.removeQuantidade(codigo, quantidade);
+	}
+	catch (ProdutoNaoExiste& e) {
+		cout << e.getInfo() << endl;
+	}
+	catch (ProdutosInsuficientes& e) {
+		cout << e.getInfo() << endl;
+	}
+}
 
 void adicionarFarmacia(Cadeia& cadeia)
 {
@@ -2032,11 +2104,11 @@ void adicionarFarmacia(Cadeia& cadeia)
 	do {
 
 		pair<bool, string> ovRide = { true, nome };
-		 newEmp = user_getEmpregado(cadeia, ovRide);
-		
+		newEmp = user_getEmpregado(cadeia, ovRide);
+
 	} while (!cadeia.addEmpregado(newEmp));
-	
-	
+
+
 	cout << endl << "Gerente adicionado, farmacia criada." << endl;
 
 }

@@ -165,10 +165,6 @@ void Farmacia::addQuantidade(long unsigned int codigo, uint quantidade)
 	throw ProdutoNaoExiste("O produto com o codigo " + to_string(codigo) + " nao existe.");
 }
 
-void Farmacia::adicionarVenda(Venda* v1)
-{
-	vendas.push_back(v1);
-}
 
 bool Farmacia::existeProduto(unsigned long int codigo)
 {
