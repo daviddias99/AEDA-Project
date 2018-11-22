@@ -137,7 +137,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 			}
 			catch (FarmaciaNaoExiste& f)
 			{
-				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				cout << f.getInfo() << endl;
 				continue;
 			}
 			break;
@@ -249,7 +249,7 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
 	if (farmacia.existeProduto(codigo)) {
-		throw ProdutoRepetido(codigo);
+		throw ProdutoRepetido("O produto com o codigo " + to_string(codigo) + " ja existe.");
 	}
 
 	nome = getInputString("Nome: ", "Nome invalido.");
@@ -421,7 +421,7 @@ void realizarVenda(Cadeia & cadeia)
 		}
 		catch (FarmaciaNaoExiste& f)
 		{
-			cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl << endl;
+			cout << f.getInfo() << endl << endl;
 			continue;
 		}
 
@@ -653,7 +653,7 @@ map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 			}
 			catch (ProdutoNaoExiste& p1)
 			{
-				cout << "O produto com o nome " << p1.getNome() << " nao existe." << endl;
+				cout << p1.getInfo() << endl;
 				break;
 			}
 			
@@ -709,7 +709,7 @@ map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 			}
 			catch (ProdutoNaoExiste& p1)
 			{
-				cout << "O medicamento com o nome " << p1.getNome() << " nao existe." << endl;
+				cout << p1.getInfo() << endl;
 				break;
 			}
 
@@ -1227,7 +1227,7 @@ void removerEmpregado(Cadeia& cadeia)
 		cout << "Cliente removido" << endl;
 	}
 	catch (EmpregadoNaoExiste &c1) {
-		cout << "O empregado com o ID " << c1.getID() << " nao existe." << endl;
+		cout << c1.getInfo() << endl;
 	}
 }
 
@@ -1430,7 +1430,7 @@ void gerirEmpregado(Cadeia & cadeia)
 				}
 				catch (FarmaciaNaoExiste& f)
 				{
-					cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+					cout << f.getInfo() << endl;
 					continue;
 				}
 
@@ -1534,7 +1534,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 	}
 	catch (FarmaciaNaoExiste& f)
 	{
-		cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		cout << f.getInfo() << endl;
 		return;
 	}
 
@@ -1586,7 +1586,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 			}
 			catch (FarmaciaNaoExiste& f)
 			{
-				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				cout << f.getInfo() << endl;
 				return;
 			}
 			break;
@@ -1665,7 +1665,7 @@ void gerirStock(Cadeia& cadeia) {
 	}
 	catch (FarmaciaNaoExiste& f)
 	{
-		cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		cout << f.getInfo() << endl;
 		return;
 	}
 
@@ -1716,7 +1716,7 @@ void gerirStock(Cadeia& cadeia) {
 			}
 			catch (FarmaciaNaoExiste& f)
 			{
-				cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+				cout << f.getInfo() << endl;
 				return;
 			}
 			break;
@@ -1742,7 +1742,7 @@ void alterarGerente(Cadeia & cadeia)
 	}
 	catch (FarmaciaNaoExiste& f)
 	{
-		cout << "Nao existe nenhuma farmacia com o nome " << f.getNome() << "." << endl;
+		cout << f.getInfo() << endl;
 		return;
 	}
 
@@ -1877,7 +1877,7 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 				produto = user_getProduto(farmacia);
 			}
 			catch (ProdutoRepetido &e) {
-				cout << "O produto com o codigo " << e.getCodigo() << " ja existe." << endl;
+				cout << e.getInfo() << endl;
 				continue;
 			}
 
@@ -1949,7 +1949,7 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 				farmacia.addQuantidade(codigo, quantidade);
 			}
 			catch (ProdutoNaoExiste& e) {
-				cout << "O produto com o codigo  " << e.getCodigo() << " nao existe." << endl;
+				cout << e.getInfo() << endl;
 			}
 		}
 
@@ -2003,10 +2003,10 @@ void farmacia_removerProduto(Farmacia & farmacia)
 			farmacia.removeQuantidade(codigo, quantidade);
 		}
 		catch (ProdutoNaoExiste& e) {
-			cout << "O produto com o codigo  " << e.getCodigo() << " nao existe." << endl;
+			cout << e.getInfo() << endl;
 		}
 		catch (ProdutosInsuficientes& e) {
-			cout << "Apenas existem " << e.getQuantidade() << " unidades do produto pedido." << endl;
+			cout << e.getInfo() << endl;
 		}
 	}
 

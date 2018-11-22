@@ -106,7 +106,7 @@ void Farmacia::removeQuantidade(long unsigned int codigo, uint quantidade)
 	for(it = stock.begin(); it != stock.end(); it++) {
 		if(it->first->getCodigo() == codigo) {
 			if(it->second <= quantidade) {
-				throw ProdutosInsuficientes(it->second);
+				throw ProdutosInsuficientes("Apenas existem " + to_string(it->second) + " unidades do referido produto.");
 			}
 			else {
 				it->second -= quantidade;
@@ -114,7 +114,7 @@ void Farmacia::removeQuantidade(long unsigned int codigo, uint quantidade)
 			}
 		}
 	}
-	throw ProdutoNaoExiste(codigo);
+	throw ProdutoNaoExiste("O produto com o codigo " + to_string(codigo) + " nao existe.");
 }
 
 void Farmacia::remProduto(long unsigned int codigo)
@@ -128,7 +128,7 @@ void Farmacia::remProduto(long unsigned int codigo)
 			return;
 		}
 	}
-	throw ProdutoNaoExiste(codigo);
+	throw ProdutoNaoExiste("O produto com o codigo " + to_string(codigo) + " nao existe.");
 }
 
 void Farmacia::remEmpregado(uint ID)
@@ -139,7 +139,7 @@ void Farmacia::remEmpregado(uint ID)
 		empregados.erase(empregados.begin() + i);
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
 	}
-	else throw ClienteNaoExiste(ID);
+	else throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");
 
 }
 
@@ -162,7 +162,7 @@ void Farmacia::addQuantidade(long unsigned int codigo, uint quantidade)
 			return;
 		}
 	}
-	throw ProdutoNaoExiste(codigo);
+	throw ProdutoNaoExiste("O produto com o codigo " + to_string(codigo) + " nao existe.");
 }
 
 void Farmacia::adicionarVenda(Venda* v1)
@@ -219,7 +219,7 @@ pair<Produto*,unsigned int> Farmacia::getProduto(int codigo) const
 		if( (*it->first).getCodigo() == codigo)
 			return *it;
 	}
-	throw ProdutoNaoExiste(codigo);
+	throw ProdutoNaoExiste("O produto com o codigo " + to_string(codigo) + " nao existe.");
 }
 
 pair<Produto*, unsigned int> Farmacia::getProduto(string nome) const
@@ -229,7 +229,7 @@ pair<Produto*, unsigned int> Farmacia::getProduto(string nome) const
 		if ((*it->first).getNome() == nome)
 			return *it;
 	}
-	throw ProdutoNaoExiste(nome);
+	throw ProdutoNaoExiste("O produto com o nome " + nome + " nao existe.");
 }
 
 const vector<Venda*>& Farmacia::getVendas() const

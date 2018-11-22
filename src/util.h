@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iostream>
 #include <sstream>
+#include "Excecoes.h"
 
 
 using namespace std;
@@ -54,7 +55,7 @@ public:
 	bool mudaMorada(Morada novaMorada);
 
 	/**
-	* @brief envia para uma output stream os valores dos atributos da morada com o formato
+	* @brief Envia para uma output stream os valores dos atributos da morada com o formato
 	* endereço endl codigoPostal space cidade
 	*
 	* @param	os			valor do atributo morada
@@ -64,12 +65,25 @@ public:
 	friend ostream& operator<< (ostream& os, const Morada& mor);
 
 
-	// LUIS VE ISTO
+	/**
+	 * @brief Imprime a data num formato especifico para ser guardado num ficheiro de texto
+	 *
+	 * @param os Stream onde e suposto imprimir a data
+	 * @return
+	 */
 	ostream& printSimp(ostream& os) const;
 private:
-
+	/**
+	 * @brief Endereco da morada
+	 */
 	string endereco;
+	/**
+	 * @brief Codigo postal
+	 */
 	string codigoPostal;
+	/**
+	 * @brief Cidade
+	 */
 	string cidade;
 };
 
@@ -251,119 +265,8 @@ bool codigoPostalValido(string codigoPostal);
 
 void toUpper(string& input);
 
-/*
-template< class T>
-int procura(const vector<T> &v, T x);
-
-template< class T>
-int procura(const vector<T*> &v, T x);
-
-template< class T>
-int procura(const vector<T*> &v, T* x);
-
-template< class T>
-int procura(const vector <T> &v, string nome);
-
-template < class T>
-int procura(const vector <T> &v, int nif);
-
-template < class T>
-int procura(const vector <T*> &v, int nif);
-*/
-
-/*template< class T>
-int procura2(vector<T> &v, T x);
-
-template< class T>
-int procura2(const  vector <T> &v, string nome);
-
-template < class T>
-int procura2( const vector <T> &v, int nif);*/
 
 
-
-// ----------Exceções----------
-
-
-class FarmaciaNaoExiste {
-	string nome;
-public:
-	FarmaciaNaoExiste(string nome) {this->nome = nome;}
-	string getNome() const {return nome;}
-};
-
-class ClienteNaoExiste {
-	uint ID;
-public:
-	ClienteNaoExiste(uint ID) {this->ID = ID;}
-	string getID() const {return to_string(ID);}
-};
-
-class EmpregadoNaoExiste {
-	uint ID;
-public:
-	EmpregadoNaoExiste(uint ID) {this->ID = ID;}
-	string getID() const {return to_string(ID);}
-};
-
-class ProdutoNaoExiste {
-	int codigo = 0;
-	string nome = "";
-public:
-	ProdutoNaoExiste(int codigo) {this->codigo = codigo;}
-	ProdutoNaoExiste(string nome) { this->nome = nome; }
-	string getCodigo() const {return  to_string(codigo);}
-	string getNome() const { return  nome; }
-};
-
-class ProdutoRepetido {
-	int codigo;
-public:
-	ProdutoRepetido(int codigo) { this->codigo = codigo; }
-	string getCodigo() const { return  to_string(codigo); }
-};
-
-class ProdutosInsuficientes {
-	int quantidade;
-public:
-	ProdutosInsuficientes(int quant) { this->quantidade = quant; }
-	string getQuantidade() const { return to_string(quantidade); }
-};
-
-class DataInvalida {
-	string info;
-public:
-	DataInvalida(string info) { this->info = info;  }
-	string getInfo() const { return info; }
-};
-
-class TimeInvalido {
-
-};
-
-class CargoInvalido {
-private:
-
-	string cargo;
-
-public:
-
-	CargoInvalido(string n) { this->cargo = n; };
-	string getName() { return cargo; };
-
-};
-
-class MoradaInvalida {
-
-private:
-
-	string reason;
-public:
-
-	MoradaInvalida(string reason):reason(reason){}
-	string getReason() { return reason; }
-
-};
 
 #endif /* SRC_UTIL_H_ */
 
