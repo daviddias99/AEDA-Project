@@ -71,7 +71,7 @@ void Empregado::setCargo(string novoCargo)
 ostream & Empregado::print(ostream & os) const
 {
 	os << "ID: " << ID << endl;
-	Pessoa::print(os) << endl << "Farmacia: " << farmaciaNome << endl << "Cargo: " << cargo << endl << "Salario: " << salario << " Numero de vendas: " << getNumVendas();
+	Pessoa::print(os) << endl << "Farmacia: " << farmaciaNome << endl << "Cargo: " << cargo << endl << "Salario: " << salario << endl << " Numero de vendas: " << getNumVendas();
 
 	return os;
 }
@@ -81,15 +81,10 @@ ostream & Empregado::printSimp(ostream & os) const
 	os << ID << "\\";
 	Pessoa::printSimp(os);
 
-	os << "\\" << farmaciaNome << "\\" << cargo << "\\" << salario; /*<< "\\";
+	os << "\\" << farmaciaNome << "\\" << cargo << "\\" << salario; 
 
-	for (vector<Venda*>::const_iterator it = historicoVendas.begin(); it != historicoVendas.end(); it++) {
-		(*it)->printSimp(os);
-	}
-	*/
 	return os;
 }
-
 
 
 bool operator<(const Empregado & e1, const Empregado & e2)

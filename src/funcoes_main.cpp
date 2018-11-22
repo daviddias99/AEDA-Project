@@ -1007,7 +1007,7 @@ void resumoEmpregados(Cadeia& cadeia)
 		opcaoInvalida = false;
 	}
 
-	cout << endl;
+	cout << endl << endl;
 
 	cadeia.sortEmpregados((ord_pessoas)opcao);
 

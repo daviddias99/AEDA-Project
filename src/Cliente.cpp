@@ -2,11 +2,18 @@
 
 uint Cliente::currentID = 0;
 
-Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada) : Pessoa(nome, nif, dataNasc, morada)
+Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada, int ID) : Pessoa(nome, nif, dataNasc, morada)
 {
-	this->ID = currentID;
-	currentID++;
-
+	if (ID == -1) {
+		this->ID = currentID;
+		currentID++;
+	}
+	else {
+		this->ID = ID;
+		if ((uint)ID > currentID) {
+			currentID = ID + 1;
+		}
+	}
 }
 
 bool Cliente::adicionaCompra(Venda * novaVenda)
@@ -45,13 +52,6 @@ ostream & Cliente::printSimp(ostream & os) const
 {
 	os << ID << "\\";
 	Pessoa::printSimp(os);
-
-	/*
-
-	for (vector<Venda*>::const_iterator it = historicoCompras.begin(); it != historicoCompras.end(); it++) {
-		(*it)->printSimp(os);
-	}
-	*/
 
 	return os;
 }

@@ -340,6 +340,53 @@ void Cadeia::carregarDados() {
 
 void Cadeia::carregarClientes(ifstream& ficheiro)
 {
+	string linha;
+	int ID;
+	string nome;
+	int NIF;
+	Morada morada;
+	Data data;
+	Cliente * novoCli;
+
+
+	getline(ficheiro, linha);
+	if (linha != "") {
+
+		ID = stoi(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		nome = linha.substr(0, linha.find_first_of('\\'));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		data = Data(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		NIF = stoi(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		morada = linha;
+		
+
+		novoCli = new Cliente(nome, NIF, data, morada, ID);
+
+		clientes.push_back(novoCli);
+	}
+
+	while (!ficheiro.eof()) {
+		getline(ficheiro, linha);
+		if (linha != "") {
+
+			ID = stoi(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			nome = linha.substr(0, linha.find_first_of('\\'));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			data = Data(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			NIF = stoi(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			morada = linha;
+
+			novoCli = new Cliente(nome, NIF, data, morada, ID);
+
+			clientes.push_back(novoCli);
+		}
+	}
 }
 
 void Cadeia::carregarEmpregados(ifstream& ficheiro)

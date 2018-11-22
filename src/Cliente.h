@@ -17,8 +17,9 @@ public:
 	* @param nif NIF do cliente. E zero se nao for indicado
 	* @param dataNasc Data de nascimento do cliente
 	* @param morada Morada atual do cliente
+	* @param ID numero de identificacao, tem valor por omissao -1 para gerar ID automaticamente para quando se criam clientes durante a execucao do programa
 	*/
-	Cliente(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada());
+	Cliente(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada(), int ID = -1);
 
 	/**
 	* @brief Adiciona a venda indicada no seu parametro a lista de compras do cliente
