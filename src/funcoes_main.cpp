@@ -550,6 +550,8 @@ void realizarVenda(Cadeia & cadeia)
 
 				return;
 			}
+			else
+				return;
 		}
 		else if (clientes_busca.size() != 1) {
 
@@ -641,9 +643,10 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 	int opcao, quantExistente;
 	string nomeProduto;
 	pair<Produto*, uint> produtoTemp;
-	map<Produto*, uint>::iterator it;
+	map<Produto*, uint>::iterator it,ite;
+	map<Produto*, uint>::const_iterator cit, cite;
 	uint quantidade;
-	//map<Produto*, uint> tempProd_map;
+	map<Produto*, uint> tempProd_map;
 	Medicamento* mediTemp;
 
 	do {
@@ -661,7 +664,7 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 4);
+				opcao = getInputNumber(0, 5);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -801,34 +804,33 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 			cout << endl;
 			cout << "-Lista de compra- " << endl << endl;
 
-			it = venda->getProdutos().begin();
+			tempProd_map = venda->getProdutos();
+			it = tempProd_map.begin();
+			ite = tempProd_map.end();
 
-			for (it; it != venda->getProdutos().end(); it++) {
+			while (it != ite) {
 
-				it->first->print(cout);
-				cout << endl;
-
+				cout << "Nome: " << setw(10) << it->first->getNome() << " | Quantidade: " << it->second << endl;
+				it++;
 			}
-
+			cout << endl;
 			break;
 		case 5:
 
 			cout << endl;
 			cout << "-Remover produto- " << endl << endl;
 
-			if (venda->getProdutos().size() == 0) {
+			tempProd_map = venda->getProdutos();
+			it = tempProd_map.begin();
+			ite = tempProd_map.end();
 
-				cout << "Sem produtos." << endl;
-				break;
+			while (it != ite) {
+
+				cout << "Nome: " << setw(10) << it->first->getNome() << " | Quantidade: " << it->second << endl;
+				it++;
 			}
-
-			it = venda->getProdutos().begin();
-
-			for (it; it != venda->getProdutos().end(); it++) {
-
-				cout << "Nome: " << setw(10) << it->first->getNome() << " | Quantidade: " << it->second;
-
-			}
+			cout << endl;
+			break;
 
 
 

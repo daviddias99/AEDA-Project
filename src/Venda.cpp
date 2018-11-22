@@ -37,7 +37,7 @@ pair<Produto*,uint> Venda::getProd(uint prodId)
 		if (it->first->getCodigo() == prodId) {
 			return *it;
 		}
-
+		it++;
 	}
 
 	return resultado;
