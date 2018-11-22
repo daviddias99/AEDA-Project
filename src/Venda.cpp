@@ -69,8 +69,9 @@ void Venda::remProduto(string  nome)
 
 		if (it->first->getNome() == nome) {
 			produtos.erase(it);
+			return;
 		}
-
+		it++;
 	}
 
 }

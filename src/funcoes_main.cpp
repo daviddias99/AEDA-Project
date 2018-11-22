@@ -830,8 +830,6 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 				it++;
 			}
 			cout << endl;
-			break;
-
 
 
 			opcaoInvalida = true;
