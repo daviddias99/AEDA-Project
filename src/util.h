@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <iostream>
+#include <sstream>
 
 
 using namespace std;
@@ -330,7 +331,10 @@ public:
 };
 
 class DataInvalida {
-
+	string info;
+public:
+	DataInvalida(string info) { this->info = info;  }
+	string getInfo() const { return info; }
 };
 
 class TimeInvalido {

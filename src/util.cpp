@@ -47,20 +47,46 @@ ostream& Morada::printSimp(ostream& os) const {
 Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia){
 
 	if (mes > 12)
-		throw DataInvalida();
+		throw DataInvalida("Mes invalido.");
+
+	if (ano > 2005 || ano < 1920)
+		throw DataInvalida("Ano invalido.");
 
 	if (dia > (unsigned int)daysInMonth(mes, ano))
-		throw DataInvalida();
-
+		throw DataInvalida("Dia invalido.");
 }
 
 Data::Data(string dataDMY)
 {
+	stringstream ss(dataDMY);
 
-	dia = stoi(dataDMY.substr(0, 2));
-	mes = stoi(dataDMY.substr(3, 2));
-	ano = stoi(dataDMY.substr(6, 4));
+	ss >> dia;
+	if (ss.fail())
+		DataInvalida("Formato invalido.");
 
+	if (ss.peek() != '/' && ss.peek() != '-')
+		throw DataInvalida("Formato invalido.");
+	ss.ignore();
+
+	ss >> mes; 
+	if (ss.fail())
+		DataInvalida("Formato invalido.");
+	if (mes > 12)
+		throw DataInvalida("Mes invalido.");
+	if (ss.peek() != '/' && ss.peek() != '-')
+		throw DataInvalida("Formato invalido.");
+	ss.ignore();
+
+	ss >> ano;
+	if (ss.fail())
+		DataInvalida("Formato invalido.");
+
+	if (ano > 2005 || ano < 1920)
+		throw DataInvalida("Ano invalido.");
+
+
+	if (dia > (unsigned int)daysInMonth(mes, ano))
+		throw DataInvalida("Dia invalido.");
 }
 
 string Data::getData(bool dmy)
@@ -81,7 +107,7 @@ Data::Data() {
 
 	time_t tempoAtual = time(NULL);
 
-	tm* tempAtualStruct = new tm;// = NULL;
+	tm* tempAtualStruct = new tm;
 	localtime_s(tempAtualStruct,&tempoAtual);
 
 	this->ano = tempAtualStruct->tm_year + 1900;
@@ -270,22 +296,20 @@ bool codigoPostalValido(string codigoPostal)
 	}
 
 	try {
-
 		stoi(codigoPostal.substr(5, 3));
-
 	}
 	catch (const std::invalid_argument& ia) {
-
+		ia.what();
 		return false;
 	}
 
 	try {
-
+		
 		stoi(codigoPostal.substr(0, 4));
 
 	}
 	catch (const std::invalid_argument& ia) {
-
+		ia.what();
 		return false;
 	}
 

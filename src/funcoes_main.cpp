@@ -74,10 +74,10 @@ Morada user_getMorada() {
 Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 
 	string nome;
-	uint NIF;
+	long int NIF;
 	Data dataNascimento;
 	Morada morada;
-	uint salario;
+	int salario;
 	string farmaciaNome;
 	string cargo;
 
@@ -87,7 +87,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 	cout << "NIF: ";
 
 	// validar input do NIF
-	while (!(cin >> NIF))
+	while (!(cin >> NIF) || (NIF < 100000000 || NIF > 999999999))
 	{
 		if (cin.eof())
 		{
@@ -99,6 +99,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 			cin.ignore(MAX_STREAM_SIZE, '\n');
 		}
 
+		cout << "NIF invalido." << endl << endl;
 		cout << "NIF: ";
 	}
 
@@ -108,7 +109,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 	cout << "Salario: ";
 
 	// validar input do salario
-	while (!(cin >> salario))
+	while (!(cin >> salario) || salario < 0)
 	{
 		if (cin.eof())
 		{
@@ -155,7 +156,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 	morada = user_getMorada();
 	dataNascimento = user_getData();
 
-	Empregado* newEmp = new Empregado(nome, NIF, dataNascimento, morada, salario, farmaciaNome, cargo);
+	Empregado* newEmp = new Empregado(nome, (long unsigned int) NIF, dataNascimento, morada, (uint) salario, farmaciaNome, cargo);
 
 	return newEmp;
 }
@@ -359,11 +360,10 @@ Data user_getData() {
 
 		data_nascimentoStr = getInputString("Data de nascimento (DD/MM/AA): ", "Data de nascimento invalida.");
 		try {
-
 			dataNascimento = Data(data_nascimentoStr);
 		}
 		catch (DataInvalida& e) {
-			cout << "Erro: Data de nascimento invalida, tente outra vez." << endl;
+			cout << e.getInfo() << endl;
 			continue;
 		}
 
