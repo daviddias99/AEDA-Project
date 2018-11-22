@@ -212,22 +212,22 @@ unsigned int Farmacia::getNumEmpregados() const
 	return empregados.size();
 }
 
-Produto* Farmacia::getProduto(int codigo) const
+pair<Produto*,unsigned int> Farmacia::getProduto(int codigo) const
 {
 	map<Produto*, unsigned int>::const_iterator it;
 	for(it = stock.begin(); it != stock.end(); it++) {
 		if( (*it->first).getCodigo() == codigo)
-			return (it->first);
+			return *it;
 	}
 	throw ProdutoNaoExiste(codigo);
 }
 
-Produto * Farmacia::getProduto(string nome) const
+pair<Produto*, unsigned int> Farmacia::getProduto(string nome) const
 {
 	map<Produto*, unsigned int>::const_iterator it;
 	for (it = stock.begin(); it != stock.end(); it++) {
 		if ((*it->first).getNome() == nome)
-			return (it->first);
+			return *it;
 	}
 	throw ProdutoNaoExiste(nome);
 }

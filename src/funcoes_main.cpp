@@ -599,17 +599,19 @@ void realizarVenda(Cadeia & cadeia)
 
 	//GET PRODUTOS
 
-
+	user_getProdutos(farmacia);
 
 }
 
-map<Produto, uint> user_getProdutos(Farmacia* farmacia) {
+map<Produto*, uint> user_getProdutos(Farmacia* farmacia) {
 
 	int opcao ;
 	string nomeProduto;
-	Produto* produtoTemp;
+	pair<Produto*,uint> produtoTemp;
+	map<Produto*, uint>::iterator it;
 	uint quantidade;
-	map<Produto, uint> tempProd;
+	map<Produto*, uint> tempProd_map;
+	Medicamento* mediTemp;
 
 	do {
 		cout << endl;
@@ -655,20 +657,120 @@ map<Produto, uint> user_getProdutos(Farmacia* farmacia) {
 				break;
 			}
 			
-			cout << "Quantidade: ";
-			quantidade = getInputNumber(1, 999, false);
-			cout << endl;
+			mediTemp = dynamic_cast<Medicamento*> (produtoTemp.first);
+
+			if (mediTemp != NULL) {
+				cout << "O produto " << produtoTemp.first->getNome() << " e um medicamento." << endl;
+				break;
+			}
+				
+
+			cout << "Produto: " << produtoTemp.first->getNome() << " Quantidade disponivel: " << produtoTemp.second << " Preco: " << produtoTemp.first->getPreco() << endl;
 
 			
+			
 
+			opcaoInvalida = true;
+			while (opcaoInvalida) {
+
+				try {
+					cout << "Quantidade: ";
+					quantidade = getInputNumber(1, produtoTemp.second);
+				}
+				catch (OpcaoInvalida& opIn) {
+					cout << opIn.getInfo() << endl;
+					continue;
+				}
+
+				opcaoInvalida = false;
+			}
+
+			cout << endl;
+
+			produtoTemp.second = quantidade;
+
+			tempProd_map.insert(produtoTemp);
+
+			farmacia->removeQuantidade(produtoTemp.first->getCodigo(), quantidade);
+
+			cout << "Produto adicionado a compra." << endl;
 			break;
 		case 2:
+
+			cout << endl;
+			cout << "-Adicionar medicamento- " << endl << endl;
+
+			cout << "Nome do medicamento: ";
+			getline(cin, nomeProduto);
+
+			try
+			{
+				produtoTemp = farmacia->getProduto(nomeProduto);
+			}
+			catch (ProdutoNaoExiste& p1)
+			{
+				cout << "O medicamento com o nome " << p1.getNome() << " nao existe." << endl;
+				break;
+			}
+
+			mediTemp = dynamic_cast<Medicamento*> (produtoTemp.first);
+
+			if (mediTemp == NULL) {
+				cout << "O produto " << produtoTemp.first->getNome() << " nao e um medicamento." << endl;
+				break;
+			}
+
+			if (!mediTemp->vendidoSemReceita()) {
+
+				cout << "O medicamento " << produtoTemp.first->getNome() << "  e um sujeito a receita." << endl;
+				break;
+			}
+
+			cout << "Medicamento: " << produtoTemp.first->getNome() << " Quantidade disponivel: " << produtoTemp.second << " Preco: " << produtoTemp.first->getPreco() << endl;
+			
+			opcaoInvalida = true;
+			while (opcaoInvalida) {
+
+				try {
+					cout << "Quantidade: ";
+					quantidade = getInputNumber(1, produtoTemp.second);
+				}
+				catch (OpcaoInvalida& opIn) {
+					cout << opIn.getInfo() << endl;
+					continue;
+				}
+
+				opcaoInvalida = false;
+			}
+			cout << endl;
+
+			produtoTemp.second = quantidade;
+
+			tempProd_map.insert(produtoTemp);
+
+			farmacia->removeQuantidade(produtoTemp.first->getCodigo(), quantidade);
+
+			cout << "Medicamento adicionado a compra." << endl;
+			break;
+
 
 			break;
 		case 3:
 
 			break;
 		case 4:
+
+			cout << endl;
+			cout << "-Lista de compra- " << endl << endl;
+
+			it = tempProd_map.begin();
+
+			for (it; it != tempProd_map.end(); it++) {
+
+				it->first->print(cout);
+				cout << endl;
+
+			}
 
 			break;
 		case 5:
@@ -683,7 +785,7 @@ map<Produto, uint> user_getProdutos(Farmacia* farmacia) {
 	} while (opcao != 0);
 	
 	
-	return tempProd;
+	return tempProd_map;
 }
 
 ////////////////
