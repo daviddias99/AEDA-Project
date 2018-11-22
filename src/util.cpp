@@ -196,7 +196,7 @@ Time::Time() {
 
 	time_t tempoAtual = time(NULL);
 
-	tm* tempAtualStruct = NULL;
+	tm* tempAtualStruct = new tm;
 	localtime_s(tempAtualStruct,&tempoAtual);
 
 	this->hora = tempAtualStruct->tm_hour;
@@ -206,7 +206,7 @@ Time::Time() {
 
 }
 
-Timestamp::Timestamp() : Data(), Time() {
+Timestamp::Timestamp(): Data(), Time() {
 }
 
 Timestamp::Timestamp(Data data, Time time): Data(data), Time(time){

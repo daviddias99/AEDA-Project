@@ -165,10 +165,6 @@ void Farmacia::addQuantidade(long unsigned int codigo, uint quantidade)
 	throw ProdutoNaoExiste(codigo);
 }
 
-void Farmacia::adicionarVenda(Venda* v1)
-{
-	vendas.push_back(v1);
-}
 
 bool Farmacia::existeProduto(unsigned long int codigo)
 {

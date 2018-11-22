@@ -504,7 +504,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 
 
 	Venda * novaVenda;
-	Produto * produto;
+	//Produto * produto;
 
 	getline(ficheiro, linha);
 	if (linha != "") {

@@ -12,7 +12,7 @@ Data user_getData();
 Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride = { false, "nome_default" });
 Cliente* user_getCliente();
 Produto* user_getProduto(Farmacia& farmacia);
-map<Produto*, uint> user_getProdutos(Farmacia* farmacia);
+void user_getProdutos(Farmacia* farmacia, Venda* venda);
 int getInputNumber(int limInf, int limSup, bool showLimSup = true);
 string getInputString(string msg, string msgErr);
 
