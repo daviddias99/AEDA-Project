@@ -1578,7 +1578,7 @@ void menuFarmacias(Cadeia& cadeia)
 			gerirStock(cadeia);
 			break;
 		case 5:
-			alterarGerente(cadeia);
+			farmacia_alterarGerente(cadeia);
 		case 0:
 			continuarNesteMenu = false;
 		}
@@ -1798,7 +1798,7 @@ void gerirStock(Cadeia& cadeia) {
 
 }
 
-void alterarGerente(Cadeia & cadeia)
+void farmacia_alterarGerente(Cadeia & cadeia)
 {
 	cout << endl;
 
@@ -1821,8 +1821,7 @@ void alterarGerente(Cadeia & cadeia)
 	uint ID;
 
 	//get nome do empregado a remover
-	cout << "Nome do novo gerente: ";
-	getline(cin, nome_novoGerente);
+	nome_novoGerente = getInputString("Nome do novo gerente: ", "Nome invalido.");
 
 	// get empregados com o nome dado
 	vector<Empregado*> empregados_busca = farmacia->getEmpregados(nome_novoGerente);
@@ -1838,7 +1837,7 @@ void alterarGerente(Cadeia & cadeia)
 
 	cout << endl;
 
-	// se n�o encontrar nenhum empregado com o nome dado, retorna
+	// se nao encontrar nenhum empregado com o nome dado, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
@@ -2113,7 +2112,4 @@ void adicionarFarmacia(Cadeia& cadeia)
 
 }
 
-void farmacia_mudarGerente(Cadeia& farmacia)
-{
-	// TO DO
-}
+

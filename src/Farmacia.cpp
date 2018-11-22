@@ -20,12 +20,12 @@ Farmacia::Farmacia(string simp)
 	if (linha != "\\") {
 		while (linha != "!") {
 			linha = linha.substr(1);
-			produtoSimp = linha.substr(0, linha.find_first_of('#') - 1);
+			produtoSimp = linha.substr(0, linha.find_first_of('#'));
 			quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
 			linha = linha.substr(linha.find_first_of('!'));
 			
 			bool isMed = false;
-			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3)
+			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 4)
 				isMed = true;
 
 			cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
