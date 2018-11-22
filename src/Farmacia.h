@@ -131,7 +131,16 @@ public:
 	* @param nome nome do produto a ser procurado em stock
 	* @return	  Apontador para o produto com o codigo indicado no parametro
 	*/
+
 	pair<Produto*, unsigned int> getProduto(string nome) const;
+
+
+	/**
+	 * @brief Obtem o vetor de vendas da farmacia
+	 *
+	 * @return Vetor de apontadores para vendas realizadas pela farmacia
+	 */
+	const vector<Venda *>& getVendas() const;
 
 	/** 
 	* @brief Devolve o numero total de produtos em stock, incluindo os produtos repetidos
@@ -198,6 +207,12 @@ public:
 	* @brief Mostra no ecra as quantidades em stock de todos os produtos 
 	*/
 	void consultarQuantidades() const;
+
+	/**
+	 * @brief Adiciona uma venda ao vetor de vendas da farmacia
+	 */
+	void addVenda(Venda* venda);
+
 
 	bool efetuaVenda(Empregado* empregado, Cliente* cliente, map<Produto*, unsigned int> produtos);
 

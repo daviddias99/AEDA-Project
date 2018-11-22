@@ -29,6 +29,10 @@ public:
 	 */
 	static void decID();
 	/**
+	 * @brief Adiciona uma venda ao empregado
+	 */
+	void addVenda(Venda* venda);
+	/**
 	 * @brief Devolve o salario do empregado
 	 * 
 	 * @return Salario do empregado

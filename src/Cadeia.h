@@ -189,7 +189,11 @@ private:
 	* @param ficheiro Ficheiro de entrada de onde vai ser lida a informacao das farmacias da cadeia
 	*/
 	void carregarFarmacias(ifstream& ficheiro);
-
+	/**
+	* @brief Carrega as vendas do ficheiro indicado no seu parametro para o respetivos cliente, empregado e farmacia
+	* @param ficheiro Ficheiro de leitura de onde vai ser lida a informacao sobre as vendas
+	*/
+	void carregarVendas(ifstream& ficheiro);
 	/**
 	 * @brief Vector de apontadores para objetos do tipo Farmacia, ordenadas por ordem alfabetica de nome
 	 */
