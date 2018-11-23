@@ -4,7 +4,7 @@ Cadeia::Cadeia() : nome("SEM_NOME") {}
 
 Cadeia::Cadeia(string n) : nome(n) {}
 
-Cadeia::~Cadeia()
+Cadeia::~Cadeia() 
 {
 	for (size_t i = 0; i < this->clientes.size(); i++) 
 		delete this->clientes.at(i);
@@ -26,7 +26,7 @@ bool Cadeia::addFarmacia(Farmacia* farmacia)
 
 bool Cadeia::addCliente(Cliente* cliente)
 {
-	if(procura2(clientes, cliente) != -1) return false;
+	if(procura2(clientes, cliente) != -1) return false; //Cliente ja existe
 
 	clientes.push_back(cliente);
 	sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
@@ -35,7 +35,7 @@ bool Cadeia::addCliente(Cliente* cliente)
 
 bool Cadeia::addEmpregado(Empregado* empregado)
 {
-	if(procura2seq(empregados, empregado) != -1) return false;
+	if(procura2seq(empregados, empregado) != -1) return false; //Empregado ja existe
 
 	empregados.push_back(empregado);
 	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
@@ -51,7 +51,7 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 void Cadeia::removeFarmacia(string nome)
 {
 	int i = procura2(farmacias, nome);
-	if(i != -1) {
+	if(i != -1) { //Farmacia encontrada
 		farmacias.erase(farmacias.begin() + i);
 		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
 	}
@@ -61,7 +61,7 @@ void Cadeia::removeFarmacia(string nome)
 void Cadeia::removeCliente(uint ID)
 {
 	int i = procura2(clientes, ID);
-	if(i != -1) {
+	if(i != -1) { //Cliente encontrado
 		clientes.erase(clientes.begin() +i);
 		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
 	} 
@@ -71,7 +71,7 @@ void Cadeia::removeCliente(uint ID)
 void Cadeia::removeEmpregado(uint ID)
 {
 	int i = procura2(empregados, ID);
-	if(i != -1) {
+	if(i != -1) { //Empregado encontrado
 		empregados.erase(empregados.begin()+i);
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
 	}
@@ -81,7 +81,8 @@ void Cadeia::removeEmpregado(uint ID)
 Farmacia* Cadeia::getFarmacia(string nome) const
 {
 	unsigned int i = procura2(farmacias, nome);
-	if(i != -1) return farmacias[i];
+	if(i != -1) //Farmacia encontrada
+		return farmacias[i]; 
 
 	throw FarmaciaNaoExiste("Nao existe nenhuma farmacia com o nome " + nome + ".");
 }
@@ -89,7 +90,8 @@ Farmacia* Cadeia::getFarmacia(string nome) const
 Cliente* Cadeia::getCliente(uint ID) const
 {
 	int i = procura2(clientes, ID);
-	if(i != -1) return clientes[i];
+	if(i != -1) //Cliente encontrado
+		return clientes[i];
 
 	throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");
 }
@@ -97,7 +99,8 @@ Cliente* Cadeia::getCliente(uint ID) const
 Empregado* Cadeia::getEmpregado(uint ID) const
 {
 	int i = procura2(empregados, ID);
-	if(i != -1) return empregados[i];
+	if(i != -1) //Empregado encontrado
+		return empregados[i];
 
 	throw  EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
 }
@@ -261,6 +264,7 @@ void Cadeia::mostrarFarmacias()
 {
 	if (farmacias.size() == 0) {
 		cout << "A cadeia " + nome + " ainda nao tem farmacias." << endl << endl;
+		return;
 	}
 	for (size_t i = 0; i < farmacias.size(); i++)
 		farmacias.at(i)->print(cout) << endl << endl;

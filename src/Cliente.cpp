@@ -4,7 +4,7 @@ uint Cliente::currentID = 0;
 
 Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada, int ID) : Pessoa(nome, nif, dataNasc, morada)
 {
-	if (ID == -1) {
+	if (ID == -1) { //Primeiro cliente
 		this->ID = currentID;
 		currentID++;
 	}
