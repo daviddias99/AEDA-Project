@@ -23,16 +23,52 @@ using namespace std;
  * Classe receita 
  */
 
-
-
 class Receita {
 public:
+	/**
+	* @brief Construtor de receita
+	* @param numReceita Numero da receita
+	* @param cliente Nome do cliente a quem a receita foi receitada
+	* @param medico Nome do medico que receitou a receita
+	* @param nifPaciente NIF do paciente a quem a receita foi receitada
+	*/
 	Receita(int numReceita, string cliente, string Medico, uint nifPaciente);
+
+	/**
+	* @brief Adiciona um produto e respetiva quantidade a lista de produtos que constam na receita
+	* @param produto Produto a ser adicionado a receita
+	* @param quantidade Quantidade de produto a adicionar
+	*/
 	void addProduto(Produto* produto, uint quantidade);
+
+	/**
+	* @brief Devolve a lista de produtos que constam na receita e as suas quantidades
+	* @return Lista de produtos que constam na receita
+	*/
 	map<Produto*, uint> getProdutos() const;
+
+	/**
+	* @brief Devolve o numero da receita
+	* @return Numero da receita
+	*/
 	int getNumReceita() const;
+
+	/**
+	* @brief Devolve o nome do cliente a quem foi receitada a receita
+	* @return Nome do cliente 
+	*/
 	string getCliente() const;
+
+	/**
+	* @brief Devolve o nome do medico que receitou a receita
+	* @return Nome do medico
+	*/
 	string getMedico() const;
+
+	/**
+	* @brief Devolve o nif do paciente
+	* @return NIF do paciente
+	*/
 	uint getNifPaciente() const;
 
 private:

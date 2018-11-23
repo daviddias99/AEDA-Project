@@ -237,12 +237,46 @@ private:
 	vector <Venda *> vendas;
 };
 
-
+/**
+* @brief Usada para ordenar a lista de farmacias da cadeia. Compara duas farmacias.
+* @return True se a farmacia f1 tem nome menor do que a farmacia f2. Se os nomes sao iguais,
+* retorna true se a farmacia f1 tem menor tamanho de stock do que a farmacia f2.
+*/
 bool farmacia_SortFunc_Nome_Crescente(Farmacia * f1, Farmacia * f2);
+
+/**
+* @brief Usada para ordenar a lista de farmacias da cadeia. Compara duas farmacias.
+* @return True se a farmacia f1 tem nome maior do que a farmacia f2. Se os nomes sao iguais,
+* retorna true se a farmacia f1 tem menor tamanho de stock do que a farmacia f2.
+*/
 bool farmacia_SortFunc_Nome_Decrescente(Farmacia *f1, Farmacia *f2);
+
+/**
+* @brief Usada para ordenar a lista de farmacias da cadeia. Compara duas farmacias.
+* @return True se a farmacia f1 tem tamanho de stock menor do que a farmacia f2. Se os tamanhos de stock sao iguais,
+* retorna true se a farmacia f1 tem menor nome do que a farmacia f2.
+*/
 bool farmacia_SortFunc_TamanhoStock_Crescente(Farmacia *f1, Farmacia *f2);
+
+/**
+* @brief Usada para ordenar a lista de farmacias da cadeia. Compara duas farmacias.
+* @return True se a farmacia f1 tem tamanho de stock maior do que a farmacia f2. Se os tamanhos de stock sao iguais,
+* retorna true se a farmacia f1 tem menor nome do que a farmacia f2.
+*/
 bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia *f1, Farmacia *f2);
+
+/**
+* @brief Usada para ordenar a lista de farmacias da cadeia. Compara duas farmacias.
+* @return True se a farmacia f1 tem numero de vendas menor do que a farmacia f2. Se o numeros de venas sao iguais,
+* retorna true se a farmacia f1 tem menor nome do que a farmacia f2.
+*/
 bool farmacia_SortFunc_NumVendas_Crescente(Farmacia *f1, Farmacia *f2);
+
+/**
+* @brief Usada para ordenar a lista de farmacias da cadeia. Compara duas farmacias.
+* @return True se a farmacia f1 tem numero de vendas maior do que a farmacia f2. Se o numeros de venas sao iguais,
+* retorna true se a farmacia f1 tem menor nome do que a farmacia f2.
+*/
 bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2);
 
 #endif

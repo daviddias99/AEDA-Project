@@ -151,12 +151,46 @@ private:
 	static uint currentID;
 };
 	
-
+/**
+* @brief Usada para ordenar a lista de empregados da cadeia. Compara dois empregados
+* @return True se o empregado p1 tem ID menor do que o empregado p2. Se os IDs sao iguais,
+* retorna true se o empregado p1 tem menor nome do que o empregado p2
+*/
 bool Empregado_SortFunc_ID_Crescente(Empregado* p1, Empregado* p2);
+
+/**
+* @brief Usada para ordenar a lista de empregados da cadeia. Compara dois empregados
+* @return True se o empregado p1 tem ID maior do que o empregado p2. Se os IDs sao iguais,
+* retorna true se o empregado p1 tem menor nome do que o empregado p2
+*/
 bool Empregado_SortFunc_ID_Decrescente(Empregado* p1, Empregado* p2);
+
+/**
+* @brief Usada para ordenar a lista de empregados da cadeia. Compara dois empregados
+* @return True se o empregado p1 tem salario menor do que o empregado p2. Se os salarios sao iguais,
+* retorna true se o empregado p1 tem menor nome do que o empregado p2
+*/
 bool Empregado_SortFunc_Salario_Crescente(Empregado* p1, Empregado* p2);
+
+/**
+* @brief Usada para ordenar a lista de empregados da cadeia. Compara dois empregados
+* @return True se o empregado p1 tem salario maior do que o empregado p2. Se os salarios sao iguais,
+* retorna true se o empregado p1 tem menor nome do que o empregado p2
+*/
 bool Empregado_SortFunc_Salario_Decrescente(Empregado* p1, Empregado* p2);
+
+/**
+* @brief Usada para ordenar a lista de empregados da cadeia. Compara dois empregados
+* @return True se o empregado p1 tem numero de vendas menor do que o empregado p2. Se os numeros de vendas sao iguais,
+* retorna true se o empregado p1 tem menor nome do que o empregado p2
+*/
 bool Empregado_SortFunc_numVendas_Crescente(Empregado* p1, Empregado* p2);
+
+/**
+* @brief Usada para ordenar a lista de empregados da cadeia. Compara dois empregados
+* @return True se o empregado p1 tem numero de vendas maior do que o empregado p2. Se os numeros de vendas sao iguais,
+* retorna true se o empregado p1 tem menor nome do que o empregado p2
+*/
 bool Empregado_SortFunc_numVendas_Decrescente(Empregado* p1, Empregado* p2);
 
 

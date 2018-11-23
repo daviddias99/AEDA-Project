@@ -99,10 +99,32 @@ private:
 	static uint currentID;
 };
 
-
+/**
+* @brief Usada para ordenar a lista de clientes da cadeia. Compara dois clientes
+* @return True se o cliente p1 tem ID menor do que o cliente p2. Se os IDs sao iguais,
+* retorna true se o nome de p1 e menor do que o nome de p2
+*/
 bool Cliente_SortFunc_ID_Crescente(Cliente* p1, Cliente* p2);
+
+/**
+* @brief Usada para ordenar a lista de clientes da cadeia. Compara dois clientes
+* @return True se o cliente p1 tem ID maior do que o cliente p2. Se os Ids sao iguais, 
+* retorna true se o nome de p1 e menor do que o nome de p2
+*/
 bool Cliente_SortFunc_ID_Decrescente(Cliente* p1, Cliente* p2);
+
+/**
+* @brief Usada para ordenar a lista de clientes da cadeia. Compara dois clientes
+* @return True se o cliente p1 fez menos compras do que o cliente p2. Se os numeros de compras sao iguais,
+* retorna true se o nome de p1 e menor do que o nome de p2
+*/
 bool Cliente_SortFunc_numCompras_Crescente(Cliente* p1, Cliente* p2);
+
+/**
+* @brief Usada para ordenar a lista de clientes da cadeia. Compara dois clientes
+* @return True se o cliente p1 fez mais compras do que o cliente p2. Se os numeros de compras sao iguais,
+* retorna true se o nome de p1 e menor do que o nome de p2
+*/
 bool Cliente_SortFunc_numCompras_Decrescente(Cliente* p1, Cliente* p2);
 
 

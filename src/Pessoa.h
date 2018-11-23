@@ -102,12 +102,46 @@ protected:
 	Morada morada;
 };
 
-
+/**
+* @brief Usada para ordenar as listas de empregados ou clientes da cadeia. Compara duas pessoas.
+* @return True se a pessoa p1 tem idade menor do que a pessoa p2. Se as idades sao iguais,
+* retorna true se a pessoa p1 tem menor nome do que a pessoa p2.
+*/
 bool Pessoa_SortFunc_Idade_Crescente(Pessoa* p1, Pessoa* p2);
+
+/**
+* @brief Usada para ordenar as listas de empregados ou clientes da cadeia. Compara duas pessoas.
+* @return True se a pessoa p1 tem idade maior do que a pessoa p2. Se as idades sao iguais,
+* retorna true se a pessoa p1 tem menor nome do que a pessoa p2.
+*/
 bool Pessoa_SortFunc_Idade_Decrescente(Pessoa* p1, Pessoa* p2);
+
+/**
+* @brief Usada para ordenar as listas de empregados ou clientes da cadeia. Compara duas pessoas.
+* @return True se a pessoa p1 tem nome menor do que a pessoa p2. Se as idades sao iguais,
+* retorna true se a pessoa p1 tem menor idade do que a pessoa p2.
+*/
 bool Pessoa_SortFunc_Nome_Crescente(Pessoa* p1, Pessoa* p2);
+
+/**
+* @brief Usada para ordenar as listas de empregados ou clientes da cadeia. Compara duas pessoas.
+* @return True se a pessoa p1 tem nome maior do que a pessoa p2. Se as idades sao iguais,
+* retorna true se a pessoa p1 tem menor idade do que a pessoa p2.
+*/
 bool Pessoa_SortFunc_Nome_Decrescente(Pessoa* p1, Pessoa* p2);
+
+/**
+* @brief Usada para ordenar as listas de empregados ou clientes da cadeia. Compara duas pessoas.
+* @return True se a pessoa p1 tem NIF menor do que a pessoa p2. Se as idades sao iguais,
+* retorna true se a pessoa p1 tem menor nome do que a pessoa p2.
+*/
 bool Pessoa_SortFunc_NIF_Crescente(Pessoa* p1, Pessoa* p2);
+
+/**
+* @brief Usada para ordenar as listas de empregados ou clientes da cadeia. Compara duas pessoas.
+* @return True se a pessoa p1 tem NIF maior do que a pessoa p2. Se as idades sao iguais,
+* retorna true se a pessoa p1 tem menor nome do que a pessoa p2.
+*/
 bool Pessoa_SortFunc_NIF_Decrescente(Pessoa* p1, Pessoa* p2);
 
 
