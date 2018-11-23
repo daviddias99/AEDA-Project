@@ -10,7 +10,7 @@ Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada, int ID) : 
 	}
 	else {
 		this->ID = ID;
-		if (ID > (int) currentID) {
+		if (ID >= (int) currentID) {
 			currentID = ID + 1;
 		}
 	}
