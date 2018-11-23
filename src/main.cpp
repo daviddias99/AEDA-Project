@@ -1,7 +1,6 @@
 #include <iostream>
 #include "funcoes_main.h"
 
-
 int main() {
 	
 	Cadeia cadeia;
