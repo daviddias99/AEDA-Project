@@ -1,9 +1,15 @@
 #include "Venda.h"
 
-Venda::Venda(uint cID, string client, uint eID, string empreg, string farm) : idCliente(cID), nomeCliente(client), idEmpregado(eID), nomeEmpregado(empreg), nomeFarmacia(farm) {
+Venda::Venda(uint cID, string client, uint eID, string empreg, string farm, string time) : idCliente(cID), nomeCliente(client), idEmpregado(eID), nomeEmpregado(empreg), nomeFarmacia(farm) {
 
 	preco = 0;
-	this->timestamp_venda = Timestamp();
+	if (time == "") {
+		this->timestamp_venda = Timestamp();
+	}
+	else {
+		this->timestamp_venda = Timestamp(time);
+	}
+
 }
 
 void Venda::addReceita(const Receita & receita) {
@@ -107,7 +113,7 @@ map<Produto*, uint>& Venda::getProdutos()
 ostream & Venda::print(ostream & os) const
 {
 	os << endl << "RECIBO VENDA" << endl << endl;
-	os << time << endl;
+	os << timestamp_venda << endl;
 	os << "Farmacia: " << nomeFarmacia << endl;
 	os << "Cliente - ID: " << idCliente << "     Nome: " << nomeCliente << endl;
 	os << "Empregado - ID: " << idEmpregado << "     Nome: " << nomeEmpregado << endl;
@@ -125,7 +131,7 @@ ostream & Venda::print(ostream & os) const
 
 ostream & Venda::printSimp(ostream & os) const
 {
-	os << time << "\\" << nomeFarmacia << "\\" << idCliente << "\\" << nomeCliente << "\\" << idEmpregado << "\\" << nomeEmpregado << "\\";
+	os << timestamp_venda << "\\" << nomeFarmacia << "\\" << idCliente << "\\" << nomeCliente << "\\" << idEmpregado << "\\" << nomeEmpregado << "\\";
 
 	for (map<Produto *, unsigned int>::const_iterator it = produtos.begin(); it != produtos.end(); it++) {
 

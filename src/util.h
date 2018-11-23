@@ -188,6 +188,13 @@ public:
 	*/
 	Time();
 
+	/**
+	* @brief Constroi um objeto da classe Time a partir das informacoes contidas na string passada como argumento
+	* 
+	* @return string com as horas no formato HH:MM:SS
+	*/
+	Time(string time);
+
 
 	/**
 	* @brief constroi a classe Time com os valores para a hora, minuto e segundo dados
@@ -254,6 +261,13 @@ public:
 	* @param time	tempo associado ao Timestamp
 	*/
 	Timestamp(Data data, Time time);
+
+	/**
+	* @brief constroi um objeto da classe Timestamp com a data e tempo que estao na string passada com argumento
+	*
+	* @param time	data associada ao Timestamp
+	*/
+	Timestamp(string time);
 
 	/**
 	* @brief retorna um string com o Timestamp no formato DD/MM//YYYY | HH:MM:SS

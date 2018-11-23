@@ -638,11 +638,10 @@ void realizarVenda(Cadeia & cadeia)
 		try
 		{
 			cadeia.getCliente(cliente->getID());
-			cadeia.addCliente(cliente);
 		}
 		catch (const ClienteNaoExiste &c1)
 		{
-
+			cadeia.addCliente(cliente);
 		}
 
 		cliente->adicionaCompra(venda);

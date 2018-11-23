@@ -49,9 +49,6 @@ Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia){
 	if (mes > 12)
 		throw DataInvalida("Mes invalido.");
 
-	if (ano > 2005 || ano < 1920)
-		throw DataInvalida("Ano invalido.");
-
 	if (dia > (unsigned int)daysInMonth(mes, ano))
 		throw DataInvalida("Dia invalido.");
 }
@@ -80,10 +77,6 @@ Data::Data(string dataDMY)
 	ss >> ano;
 	if (ss.fail())
 		DataInvalida("Formato invalido.");
-
-	if (ano > 2005 || ano < 1920)
-		throw DataInvalida("Ano invalido.");
-
 
 	if (dia > (unsigned int)daysInMonth(mes, ano))
 		throw DataInvalida("Dia invalido.");
@@ -165,6 +158,37 @@ Time::Time(uint hora, uint minuto, uint segundo) : hora(hora), minuto(minuto), s
 
 }
 
+Time::Time(string time) {
+
+	stringstream ss(time);
+
+	ss >> hora;
+	if (ss.fail())
+		TimeInvalido("Formato invalido.");
+	if (hora > 23) {
+		throw TimeInvalido("Hora invalida.");
+	}
+	if (ss.peek() != ':' )
+		throw TimeInvalido("Formato invalido.");
+	ss.ignore();
+
+	ss >> minuto;
+	if (ss.fail())
+		DataInvalida("Formato invalido.");
+	if (minuto > 59)
+		throw TimeInvalido("Minuto invalido.");
+	if (ss.peek() != ':')
+		throw TimeInvalido("Formato invalido.");
+	ss.ignore();
+
+	ss >> segundo;
+	if (ss.fail())
+		TimeInvalido("Formato invalido.");
+	if (segundo > 59)
+		throw TimeInvalido("Segundo invalido.");
+}
+
+
 string Time::getTime(bool mostraSegundos)
 {
 	string result;
@@ -210,6 +234,12 @@ Timestamp::Timestamp(): Data(), Time() {
 }
 
 Timestamp::Timestamp(Data data, Time time): Data(data), Time(time){
+}
+
+Timestamp::Timestamp(string time)
+{
+	Data(time.substr(0, time.find_first_of('|')));
+	Time(time.substr(time.find_last_of('|') + 1, string::npos));
 }
 
 string Timestamp::getTstamp()
