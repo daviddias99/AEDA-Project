@@ -580,7 +580,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 
 			precoVenda = stof(linha.substr(0, linha.find_first_of('\\')));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
-			timestamp = stof(produtoSimp.substr(0, produtoSimp.find_first_of('\\')));
+			timestamp = linha.substr(0, linha.find_first_of('\\'));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
