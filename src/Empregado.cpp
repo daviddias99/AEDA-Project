@@ -13,7 +13,7 @@ Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint s
 	}
 	else {
 		this->ID = ID;
-		if ((uint) ID > currentID) {
+		if (ID >=(int) currentID) {
 			currentID = ID + 1;
 		}
 	}

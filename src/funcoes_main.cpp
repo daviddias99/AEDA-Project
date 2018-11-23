@@ -357,7 +357,7 @@ Data user_getData() {
 
 	while (!inputValido) {
 
-		data_nascimentoStr = getInputString("Data de nascimento (DD/MM/AA): ", "Data de nascimento invalida.");
+		data_nascimentoStr = getInputString("Data de nascimento (DD/MM/AAAA): ", "Data de nascimento invalida.");
 		try {
 			dataNascimento = Data(data_nascimentoStr);
 		}
@@ -457,14 +457,14 @@ void realizarVenda(Cadeia & cadeia)
 
 	cout << endl;
 
-	// se n�o encontrar nenhum empregado com o nome dado na farmacia, retorna
+	// se nao encontrar nenhum empregado com o nome dado na farmacia, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome na Farmacia " << farmaciaNome << "." << endl;
 		return;
 	}
 
-	// se s� existir um empregado com o nome dado usar esse empregado na venda
+	// se so existir um empregado com o nome dado usar esse empregado na venda
 	// caso contrario, pedir o ID do empregado 
 	if (empregados_busca.size() != 1) {
 
@@ -513,16 +513,16 @@ void realizarVenda(Cadeia & cadeia)
 
 	// GET CLIENTE
 
-	//get nome do empregado a remover
+	//get nome do cliente
 	cout << "Nome do cliente (se for um cliente novo deixe em branco): ";
 	getline(cin, nomeCliente);
 
 	if (nomeCliente.size() != 0) {
 
-		// get empregados com o nome dado
+		// get clientes com o nome dado
 		vector<Cliente*> clientes_busca = cadeia.getClientes(nomeCliente);
 
-		// imprime empregados encontrados
+		// imprime clientes encontrados
 		for (size_t i = 0; i < clientes_busca.size(); i++) {
 
 			cout << "ID: " << clientes_busca.at(i)->getID()
@@ -534,7 +534,7 @@ void realizarVenda(Cadeia & cadeia)
 
 		cout << endl;
 
-		// se n�o encontrar nenhum empregado com o nome dado, pergunta ao user se pretende adicionar um empregado novo
+		// se n�o encontrar nenhum cliente com o nome dado, pergunta ao user se pretende adicionar um cliente novo
 		if (clientes_busca.size() == 0) {
 			string userChoice;
 
@@ -555,7 +555,7 @@ void realizarVenda(Cadeia & cadeia)
 		}
 		else if (clientes_busca.size() != 1) {
 
-			// get ID da pessoa
+			// get ID do cliente
 			cout << "ID: ";
 
 			while (!(cin >> ID))
@@ -605,6 +605,7 @@ void realizarVenda(Cadeia & cadeia)
 
 	cout << endl;
 
+	//criar uma nova venda
 	Venda* venda = new Venda(cliente->getID(), cliente->getNome(), empregado->getID(), empregado->getNome(), farmacia->getNome());
 
 	//GET PRODUTOS
@@ -618,6 +619,8 @@ void realizarVenda(Cadeia & cadeia)
 	toUpper(userChoice);
 
 	if ((userChoice == "S") || (userChoice == "SIM")) {
+		
+		// adicionar a venda a farmacia
 		farmacia->addVenda(venda);
 
 		map<Produto*, uint>tempProd_map;
@@ -625,13 +628,23 @@ void realizarVenda(Cadeia & cadeia)
 		map<Produto*, uint>::iterator it = tempProd_map.begin();
 		map<Produto*, uint>::iterator ite = tempProd_map.end();
 
-
+		// atualizar as quantidades do stock da farmacia
 		while (it != ite) {
 			farmacia->removeQuantidade(it->first->getCodigo(), it->second);
 			it++;
 		}
 		cout << endl << "Venda efetuada." << endl;
-		cadeia.addCliente(cliente);
+		
+		try
+		{
+			cadeia.getCliente(cliente->getID());
+			cadeia.addCliente(cliente);
+		}
+		catch (const ClienteNaoExiste &c1)
+		{
+
+		}
+
 		cliente->adicionaCompra(venda);
 		empregado->addVenda(venda);
 
@@ -711,8 +724,6 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 			cout << "Produto: " << produtoTemp.first->getNome() << " Quantidade disponivel: " << produtoTemp.second << " Preco: " << produtoTemp.first->getPreco() << endl;
 
 
-
-
 			opcaoInvalida = true;
 			while (opcaoInvalida) {
 
@@ -774,17 +785,17 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 				break;
 			}
 
-			cout << "Medicamento: " << produtoTemp.first->getNome() << " Quantidade disponivel: " << produtoTemp.second << " Preco: " << produtoTemp.first->getPreco() << endl;
+			if (venda->getProd(produtoTemp.first->getCodigo()).first == NULL)
+				quantExistente = 0;
+			else
+				quantExistente = venda->getProd(produtoTemp.first->getCodigo()).second;
+			
+			cout << "Medicamento: " << produtoTemp.first->getNome() << " Quantidade disponivel: " << produtoTemp.second -quantExistente<< " Preco: " << produtoTemp.first->getPreco() << endl;
 
 			opcaoInvalida = true;
 			while (opcaoInvalida) {
 
 				try {
-					if (venda->getProd(produtoTemp.first->getCodigo()).first == NULL)
-						quantExistente = 0;
-					else
-						quantExistente = venda->getProd(produtoTemp.first->getCodigo()).second;
-
 					cout << "Quantidade: ";
 					quantidade = getInputNumber(1, produtoTemp.second - quantExistente);
 				}
@@ -820,7 +831,8 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 				cout << "Nome: " << setw(10) << it->first->getNome() << " | Quantidade: " << it->second << endl;
 				it++;
 			}
-			cout << endl;
+			cout << "TOTAL: " << venda->getCusto() << endl << endl;
+
 			break;
 		case 5:
 
@@ -945,8 +957,6 @@ void resumoClientes(Cadeia& cadeia)
 	}
 
 
-	cadeia.sortClientes((ord_pessoas)opcao);
-
 	cadeia.mostrarClientes();
 
 
@@ -1069,7 +1079,7 @@ void gerirCliente(Cadeia & cadeia)
 		case 1:
 
 			morada = user_getMorada();
-			cadeia.getEmpregado(ID)->setMorada(morada);
+			cadeia.getCliente(ID)->setMorada(morada);
 			cout << "Alterado." << endl;
 
 			break;

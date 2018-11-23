@@ -60,9 +60,6 @@ Farmacia::~Farmacia()
 {
 	map< Produto *, uint>::const_iterator it;
 
-	delete gerente;
-	for (size_t i = 0; i < this->empregados.size(); i++)
-		delete this->empregados.at(i);
 	for(it = stock.begin(); it != stock.end(); it++)
 		delete it->first;
 	for (size_t i = 0; i < this->vendas.size(); i++)
