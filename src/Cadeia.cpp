@@ -16,7 +16,7 @@ Cadeia::~Cadeia()
 
 bool Cadeia::addFarmacia(Farmacia* farmacia)
 {
-	if(procura2(farmacias, farmacia) != -1) return false;
+	if(procura(farmacias, farmacia) != -1) return false;
 
 	farmacias.push_back(farmacia);
 
@@ -26,7 +26,7 @@ bool Cadeia::addFarmacia(Farmacia* farmacia)
 
 bool Cadeia::addCliente(Cliente* cliente)
 {
-	if(procura2(clientes, cliente) != -1) return false; //Cliente ja existe
+	if(procura(clientes, cliente) != -1) return false; //Cliente ja existe
 
 	clientes.push_back(cliente);
 	sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
@@ -35,12 +35,12 @@ bool Cadeia::addCliente(Cliente* cliente)
 
 bool Cadeia::addEmpregado(Empregado* empregado)
 {
-	if(procura2seq(empregados, empregado) != -1) return false; //Empregado ja existe
+	if(procuraseq(empregados, empregado) != -1) return false; //Empregado ja existe
 
 	empregados.push_back(empregado);
 	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
 
-	size_t i = procura2(farmacias, empregado->getNomeFarmacia());
+	size_t i = procura(farmacias, empregado->getNomeFarmacia());
 
 	this->farmacias.at(i)->addEmpregado(empregado);
 
@@ -50,7 +50,7 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 
 void Cadeia::removeFarmacia(string nome)
 {
-	int i = procura2(farmacias, nome);
+	int i = procura(farmacias, nome);
 	if(i != -1) { //Farmacia encontrada
 		farmacias.erase(farmacias.begin() + i);
 		
@@ -60,7 +60,7 @@ void Cadeia::removeFarmacia(string nome)
 
 void Cadeia::removeCliente(uint ID)
 {
-	int i = procura2(clientes, ID);
+	int i = procura(clientes, ID);
 	if(i != -1) { //Cliente encontrado
 		clientes.erase(clientes.begin() +i);
 		
@@ -70,7 +70,7 @@ void Cadeia::removeCliente(uint ID)
 
 void Cadeia::removeEmpregado(uint ID)
 {
-	int i = procura2(empregados, ID);
+	int i = procura(empregados, ID);
 	if(i != -1) { //Empregado encontrado
 		empregados.erase(empregados.begin()+i);
 		
@@ -80,7 +80,7 @@ void Cadeia::removeEmpregado(uint ID)
 
 Farmacia* Cadeia::getFarmacia(string nome) const
 {
-	unsigned int i = procura2(farmacias, nome);
+	unsigned int i = procura(farmacias, nome);
 	if(i != -1) //Farmacia encontrada
 		return farmacias[i]; 
 
@@ -89,7 +89,7 @@ Farmacia* Cadeia::getFarmacia(string nome) const
 
 Cliente* Cadeia::getCliente(uint ID) const
 {
-	int i = procura2(clientes, ID);
+	int i = procura(clientes, ID);
 	if(i != -1) //Cliente encontrado
 		return clientes[i];
 
@@ -98,7 +98,7 @@ Cliente* Cadeia::getCliente(uint ID) const
 
 Empregado* Cadeia::getEmpregado(uint ID) const
 {
-	int i = procura2(empregados, ID);
+	int i = procura(empregados, ID);
 	if(i != -1) //Empregado encontrado
 		return empregados[i];
 
@@ -501,7 +501,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 	string linha;
 	int idCliente, idEmpregado;
 	string nomeFarmacia, nomeCliente, nomeEmpregado, nome_prod, desc_prod, produtoSimp;
-	float preco_prod, iva_prod, desc_receita;
+	float preco_prod, iva_prod, desc_receita, precoVenda;
 	unsigned long int cod_produto;
 	bool vend_sem_rec, pode_ser_rec;
 	uint quant;
@@ -513,7 +513,8 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 	getline(ficheiro, linha);
 	if (linha != "") {
 
-		
+		precoVenda = stof(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
 		timestamp = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
@@ -528,6 +529,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		linha = linha.substr(linha.find_first_of('\\'));
 
 		novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia, timestamp);
+		novaVenda->setPreco(precoVenda);
 
 		while (linha != "!" && linha != "") {
 			linha = linha.substr(1);
@@ -552,7 +554,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 
 			if (!isMed) {
 				iva_prod = stof(produtoSimp);
-				novaVenda->addProduto(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant);
+				novaVenda->addProduto(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant, false, true);
 			}
 			else {
 				iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
@@ -563,7 +565,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 				desc_receita = stof(produtoSimp);
 
-				novaVenda->addProduto(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant);
+				novaVenda->addProduto(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant, false, true);
 			}
 		}
 
@@ -576,6 +578,8 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		getline(ficheiro, linha);
 		if (linha != "") {
 
+			precoVenda = stof(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
 			timestamp = stof(produtoSimp.substr(0, produtoSimp.find_first_of('\\')));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
@@ -590,6 +594,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 			linha = linha.substr(linha.find_first_of('\\'));
 
 			novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia);
+			novaVenda->setPreco(precoVenda);
 
 			while (linha != "!" && linha != "") {
 				linha = linha.substr(1);
@@ -614,7 +619,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 
 				if (!isMed) {
 					iva_prod = stof(produtoSimp);
-					novaVenda->addProduto(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant);
+					novaVenda->addProduto(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant, false, true);
 				}
 				else {
 					iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
@@ -625,7 +630,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 					produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 					desc_receita = stof(produtoSimp);
 
-					novaVenda->addProduto(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant);
+					novaVenda->addProduto(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant, false, true);
 				}
 			}
 

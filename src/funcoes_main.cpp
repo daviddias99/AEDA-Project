@@ -701,7 +701,7 @@ void user_addReceita(Farmacia* farmacia, Venda* venda) {
 	
 
 	Receita receita = Receita(stoi(receitaNumStr), nomePaciente, nomeMedico, stoi(nifPacienteStr));
-
+	
 	getline(ficheiro, tempString);
 	while(tempString != "--"){
 		
@@ -1438,21 +1438,17 @@ void gerirEmpregado(Cadeia & cadeia)
 			<< "| Farmacia: " << empregados_busca.at(i)->getNomeFarmacia()
 			<< "| Cargo: " << empregados_busca.at(i)->getCargo()
 			<< "| Salario: " << empregados_busca.at(i)->getSalario() << endl;
-
-
 	}
 
 	cout << endl;
 
-	// se n�o encontrar nenhum empregado com o nome dado, retorna
+	// se nao encontrar nenhum empregado com o nome dado, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
 		return;
 	}
 
-	// se s� existir um empregado com o nome dado, remover esse empregado
-	// caso contrario, pedir o ID do empregado a remover
 	if (empregados_busca.size() != 1) {
 
 		// get ID da pessoa
@@ -1489,7 +1485,6 @@ void gerirEmpregado(Cadeia & cadeia)
 			}
 		}
 
-
 	}
 	else {
 
@@ -1507,13 +1502,14 @@ void gerirEmpregado(Cadeia & cadeia)
 		cout << "2- Cargo" << endl;
 		cout << "3- Morada" << endl;
 		cout << "4- Farmacia" << endl;
+		cout << "5- Consultar vendas" << endl;
 		cout << "0- Terminar" << endl << endl;
 
 		while (opcaoInvalida) {
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 4);
+				opcao = getInputNumber(0, 5);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -1627,6 +1623,8 @@ void gerirEmpregado(Cadeia & cadeia)
 
 
 			break;
+		case 5:
+			cadeia.getEmpregado(ID)->mostrarVendas();
 		case 0:
 			break;
 		}
@@ -1766,7 +1764,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 			farmacia_consultarProdutos(*farmacia);
 			break;
 		case 3:
-			//consultaVendas(farmacia);
+			farmacia_consultarVendas(*farmacia);
 			break;
 		case 4:
 			cout << "Farmacia: ";
@@ -2040,6 +2038,13 @@ void farmacia_alterarGerente(Cadeia & cadeia)
 	cout << endl << "Gerente da farmacia " << farmacia->getNome() << " alterado com sucesso." << endl;
 
 
+}
+
+void farmacia_consultarVendas(Farmacia & farmacia)
+{
+	cout << endl << "VENDAS" << endl << endl;
+
+	farmacia.mostrarVendas();
 }
 
 void farmacia_adicionarProduto(Farmacia& farmacia) {

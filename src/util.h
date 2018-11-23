@@ -342,6 +342,83 @@ bool codigoPostalValido(string codigoPostal);
 void toUpper(string& input);
 
 
+template<class T>
+int procura(vector<T>& v, T x)
+{
+	if (v.size() == 0) {
+		return -1;
+	}
+
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (*v[middle] < *x)
+			left = middle + 1;
+		else if (*x < *v[middle])
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
+
+template<class T>
+int procuraseq(vector<T>& v, T x)
+{
+	for (size_t i = 0; i < v.size(); i++) {
+
+		if (*v.at(i) == *x) {
+			return (int)i;
+		}
+
+	}
+
+	return -1;
+}
+
+template<class X>
+int procura(const vector<X>& v, string nome)
+{
+	if (v.size() == 0) {
+		return -1;
+	}
+
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (v[middle]->getNome() < nome)
+			left = middle + 1;
+		else if (nome < v[middle]->getNome())
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
+
+template<class X>
+int procura(const vector<X>& v, uint ID)
+{
+	if (v.size() == 0) {
+		return -1;
+	}
+
+	int left = 0, right = v.size() - 1;
+	while (left <= right)
+	{
+		int middle = (left + right) / 2;
+		if (v[middle]->getID() < ID)
+			left = middle + 1;
+		else if (ID < v[middle]->getID())
+			right = middle - 1;
+		else return middle;
+
+	}
+	return -1;
+}
+
 
 
 #endif /* SRC_UTIL_H_ */
