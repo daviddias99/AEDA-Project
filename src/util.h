@@ -26,7 +26,7 @@ public:
 
 	/**
 	* @brief Construtor default da classe Morada, constroi o objeto com a cidade igual a SEM_CIDADE, 
-	* o endere�o igual a SEM_ENDERECO e o codigo postal igual a 0000-000
+	* o endereco igual a SEM_ENDERECO e o codigo postal igual a 0000-000
 	*/
 
 	Morada();
@@ -42,8 +42,10 @@ public:
 	Morada(string morada, string codigoPostal, string cidade);
 
 	/**
-		LUIS VE ISTO
-	*/
+	 * @brief Constroi um objeto do tipo morada a partir de uma string que contem as informacoes de uma morda, no formato lido de um ficheiro de texto
+	 * 
+	 * @param simp String que contem as informacoes da morada
+	 */
 	Morada(string simp);
 
 	/**
@@ -100,9 +102,9 @@ public:
 	/**
 	* @brief constroi a classe Data com os valores para o dia, mes e ano dados
 	*
-	* @param dia dia associado � data
-	* @param mes mes associado � data
-	* @param ano ano associado � data
+	* @param dia dia associado a data
+	* @param mes mes associado a data
+	* @param ano ano associado a data
 	*/
 	Data(uint dia,uint mes,uint ano);
 
@@ -117,7 +119,7 @@ public:
 
 	/**
 	* @brief retorna num string a data guardada, no formato DD-MM-YYYY(default) se o parametro
-	* dmy � true e YYYY-MM-DD se dmy � falso
+	* dmy a true e YYYY-MM-DD se dmy a falso
 	*
 	* @param	dmy	true se formato DD-MM-YYYY, falso caso YYYY-MM-DD
 	* @return		string com a data no formato pretendido 
@@ -149,25 +151,36 @@ public:
 
 
 	/**
-	* @brief verifica se uma data � "menor" que a outra
+	* @brief verifica se uma data a "menor" que a outra
 	*
-	* @param d2	refer�ncia para a segunda data a ser comparada
-	* @return	true se a data do objeto � antes da data de d2
+	* @param d2	referencia para a segunda data a ser comparada
+	* @return	true se a data do objeto e antes da data de d2
 	*/
 	bool operator < (Data& d2) const;
 
 	/**
 	* @brief envia para a stream os a data no formato DD-MM-YYYY
 	*
-	* @param os	refer�ncia para uma output stream
-	* @param d	refer�ncia para uma data
+	* @param os	referencia para uma output stream
+	* @param d	referencia para uma data
 	* @return	a output stream de argumento
 	*/
 	friend ostream& operator<<(ostream& os, const Data& d);
 
 protected:
+	/**
+	* @brief dia associado ao presente objeto de Data
+	*/
 	uint dia;
+
+	/**
+	* @brief mes associado ao presente objeto de Data
+	*/
 	uint mes;
+
+	/**
+	* @brief ano associado ao presente objeto de Data
+	*/
 	uint ano;
 
 };
@@ -176,8 +189,17 @@ class Time {
 
 protected:
 
+	/**
+	* @brief segundo associado ao presente objeto de Time
+	*/
 	uint segundo;
+	/**
+	* @brief minuto associado ao presente objeto de Time
+	*/
 	uint minuto;
+	/**
+	* @brief hora associado ao presente objeto de Time
+	*/
 	uint hora;
 
 public:
@@ -210,7 +232,7 @@ public:
 	* @brief retorna um string com o tempo associado ao objeto no formato HH:MM:SS
 	*
 	* @param mostraSegundos	mostra tempo no formato HH:MM:SS se true e HH:MM se false
-	* @return string com o tempo num formato pretendido
+	* @return				string com o tempo num formato pretendido
 	*/
 	string getTime(bool mostraSegundos = false);
 
@@ -289,35 +311,36 @@ public:
 // ----------Funcoes----------
 
 /**
- * @brief Funcao que verifica se um dado ano e bissexto
- * 
- * @param year Ano que se pretende saber se e ou nao bissexto
- * @return True caso o ano seja bissextoo
- */
+* @brief verifica se o ano dado e bissexto ou nao
+*
+* @param	year		ano a verfificar
+* @return				true se o ano e bissexto, falso caso contrario
+*/
 bool isLeap(int year);
 
 /**
- * @brief Funcao que indica o numero de dias de um determinado mes num determinado ano
- * 
- * @param month Mes sobre o qual se quer saber o numero de de dias
- * @param year Ano que contem o mes sobre o qual se quer saber o numero de dias
- * @return Numero de dias no mes indicado
- */
+* @brief retorna o numero de meses de um mes de um dado ano
+*
+* @param	year		ano a verificar
+* @param	month		mes a verificar
+* @return				numero de meses de um mes de um dado ano
+*/
 int daysInMonth(int month, int year);
 
 /**
- * @brief Funcao que valida se um codigo postal e valido
- * 
- * @param codigoPostal Cuja validade se pretende testar
- * @return Verdade caso o codigo postal seja valido
- */
+* @brief verfica se o codigo postal dado e valido, isto e, se esta no formato DDDD-DDD, em que D e um digito
+*
+* @param	codigPostal		string com o codigo postal a verificiar
+* @return					true se o codigo postal e valido, falso caso contrario
+*/
 bool codigoPostalValido(string codigoPostal);
 
 /**
- * @brief Transforma uma string na mesma string em tudo caps lock
- * 
- * @param String que se pretende converter 
- */
+* @brief coloca a string dada em letras maiusculas
+*
+* @param	input		referencia para a string a alterar
+* @return				
+*/
 void toUpper(string& input);
 
 /**

@@ -53,7 +53,7 @@ void Cadeia::removeFarmacia(string nome)
 	int i = procura(farmacias, nome);
 	if(i != -1) { //Farmacia encontrada
 		farmacias.erase(farmacias.begin() + i);
-		sort(farmacias.begin(), farmacias.end(), farmacia_SortFunc_Nome_Crescente);
+		
 	}
 	else throw FarmaciaNaoExiste(nome);
 }
@@ -63,7 +63,7 @@ void Cadeia::removeCliente(uint ID)
 	int i = procura(clientes, ID);
 	if(i != -1) { //Cliente encontrado
 		clientes.erase(clientes.begin() +i);
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
+		
 	} 
 	else throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");
 }
@@ -73,7 +73,7 @@ void Cadeia::removeEmpregado(uint ID)
 	int i = procura(empregados, ID);
 	if(i != -1) { //Empregado encontrado
 		empregados.erase(empregados.begin()+i);
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
+		
 	}
 	else throw EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
 }

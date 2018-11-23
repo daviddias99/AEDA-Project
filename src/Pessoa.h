@@ -19,10 +19,10 @@ public:
 	/**
 	 * @brief Construtor da classe pessoa que tambem serve como construtor por omissao
 	 * 
-	 * @param nome Nome da pessoa
-	 * @param nif NIF da pessoa
-	 * @param dataNasc Data de nascimento da pessoa
-	 * @param morada Objeto do tipo Morada
+	 * @param nome				Nome da pessoa
+	 * @param nif				NIF da pessoa
+	 * @param dataNasc			Data de nascimento da pessoa
+	 * @param morada			Objeto do tipo Morada
 	 */
 	Pessoa(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada());
 	/**
