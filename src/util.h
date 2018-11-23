@@ -166,8 +166,19 @@ public:
 	friend ostream& operator<<(ostream& os, const Data& d);
 
 protected:
+	/**
+	* @brief dia associado ao presente objeto de Data
+	*/
 	uint dia;
+
+	/**
+	* @brief mes associado ao presente objeto de Data
+	*/
 	uint mes;
+
+	/**
+	* @brief ano associado ao presente objeto de Data
+	*/
 	uint ano;
 
 };
@@ -176,8 +187,17 @@ class Time {
 
 protected:
 
+	/**
+	* @brief segundo associado ao presente objeto de Time
+	*/
 	uint segundo;
+	/**
+	* @brief minuto associado ao presente objeto de Time
+	*/
 	uint minuto;
+	/**
+	* @brief hora associado ao presente objeto de Time
+	*/
 	uint hora;
 
 public:
@@ -210,7 +230,7 @@ public:
 	* @brief retorna um string com o tempo associado ao objeto no formato HH:MM:SS
 	*
 	* @param mostraSegundos	mostra tempo no formato HH:MM:SS se true e HH:MM se false
-	* @return string com o tempo num formato pretendido
+	* @return				string com o tempo num formato pretendido
 	*/
 	string getTime(bool mostraSegundos = false);
 
@@ -288,12 +308,37 @@ public:
 
 // ----------Funções----------
 
+/**
+* @brief verifica se o ano dado é bisexto ou nao
+*
+* @param	year		ano a verfificar
+* @return				true se o ano e bissexto, falso caso contrario
+*/
 bool isLeap(int year);
 
+/**
+* @brief retorna o numero de meses de um mes de um dado ano
+*
+* @param	year		ano a verificar
+* @param	month		mes a verificar
+* @return				numero de meses de um mes de um dado ano
+*/
 int daysInMonth(int month, int year);
 
+/**
+* @brief verfica se o codigo postal dado é valido, isto é, se está no formato DDDD-DDD, em que D é um digito
+*
+* @param	codigPostal		string com o codigo postal a verificiar
+* @return					true se o codigo postal é valido, falso caso contrario
+*/
 bool codigoPostalValido(string codigoPostal);
 
+/**
+* @brief coloca a string dada em letras maiusculas
+*
+* @param	input		referencia para a string a alterar
+* @return				
+*/
 void toUpper(string& input);
 
 
