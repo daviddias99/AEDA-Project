@@ -1,7 +1,0 @@
-var searchData=
-[
-  ['opcaoinvalida',['OpcaoInvalida',['../class_opcao_invalida.html',1,'OpcaoInvalida'],['../group___excecoes.html#gae4bc18c7527ff9c710ff040bd770f107',1,'OpcaoInvalida::OpcaoInvalida()']]],
-  ['operator_3c',['operator&lt;',['../group___pessoa.html#ga16165c613500cca44c44c4a9f9091071',1,'Cliente::operator&lt;()'],['../group___pessoa.html#gab2ef7b8811638a3e85197d718312025e',1,'Empregado::operator&lt;()'],['../group___farmacia.html#ga6d81f29ed88ed755e548f148a1662784',1,'Farmacia::operator&lt;()'],['../class_data.html#a27a9327a0a8156dee60df000d805172a',1,'Data::operator&lt;()']]],
-  ['operator_3c_3c',['operator&lt;&lt;',['../class_morada.html#a2fa5eb9513c6e2da2cbbc20c575b6fef',1,'Morada::operator&lt;&lt;()'],['../class_data.html#a90bb051fbc9d2b01d7a4936fc42cd7a9',1,'Data::operator&lt;&lt;()'],['../class_time.html#a1fb4d46ef2c6b18a4150dbdd2d0e57bb',1,'Time::operator&lt;&lt;()'],['../class_timestamp.html#a5076c53c7e9c272606adb4fde727e978',1,'Timestamp::operator&lt;&lt;()']]],
-  ['operator_3d_3d',['operator==',['../group___pessoa.html#ga87b42d05ecacae7350326d8b0b31657e',1,'Cliente::operator==()'],['../group___pessoa.html#ga244a932cbea95f2460a08b2d01d3832c',1,'Empregado::operator==()'],['../group___farmacia.html#ga133181e5dfab41476e1421994414d2bf',1,'Farmacia::operator==()'],['../group___produto.html#gaa03e1234ff1742068791e2f5c274078c',1,'Produto::operator==()']]]
-];
