@@ -13,7 +13,7 @@ using namespace std;
 
 class Venda {
 public:
-	Venda(uint cID, string client, uint eID, string empreg, string farm);
+	Venda(uint cID, string client, uint eID, string empreg, string farm, string time = "");
 	map<Produto, unsigned int> addReceita(const Receita & receita);
 	void addProduto(Produto* prod, unsigned int quant);
 	pair<Produto*, uint> getProd(uint prodId);

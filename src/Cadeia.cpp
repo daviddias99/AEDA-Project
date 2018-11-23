@@ -501,6 +501,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 	unsigned long int cod_produto;
 	bool vend_sem_rec, pode_ser_rec;
 	uint quant;
+	string timestamp;
 
 
 	Venda * novaVenda;
@@ -508,9 +509,9 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 	getline(ficheiro, linha);
 	if (linha != "") {
 
-		/*
-		preco = stof(produtoSimp.substr(0, produtoSimp.find_first_of('\\')));
-		linha = linha.substr(linha.find_first_of('\\'));*/
+		
+		timestamp = linha.substr(0, linha.find_first_of('\\'));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
 		nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		idCliente = stoi(linha.substr(0, linha.find_first_of('\\')));
@@ -522,16 +523,16 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		nomeEmpregado = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\'));
 
-		novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia);
+		novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia, timestamp);
 
 		while (linha != "!" && linha != "") {
 			linha = linha.substr(1);
-			produtoSimp = linha.substr(0, linha.find_first_of('#') - 1);
+			produtoSimp = linha.substr(0, linha.find_first_of('#'));
 			quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
 			linha = linha.substr(linha.find_first_of('!'));
 
 			bool isMed = false;
-			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3)
+			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 4)
 				isMed = true;
 
 			cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
@@ -542,19 +543,21 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 			preco_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
-			iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			
 
 
 			if (!isMed) {
+				iva_prod = stof(produtoSimp);
 				novaVenda->addProduto(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant);
 			}
 			else {
+				iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 				vend_sem_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 				pode_ser_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
-				desc_receita = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+				desc_receita = stof(produtoSimp);
 
 				novaVenda->addProduto(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant);
 			}
@@ -569,6 +572,8 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		getline(ficheiro, linha);
 		if (linha != "") {
 
+			timestamp = stof(produtoSimp.substr(0, produtoSimp.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
 			nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			idCliente = stoi(linha.substr(0, linha.find_first_of('\\')));
@@ -584,12 +589,12 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 
 			while (linha != "!" && linha != "") {
 				linha = linha.substr(1);
-				produtoSimp = linha.substr(0, linha.find_first_of('#') - 1);
+				produtoSimp = linha.substr(0, linha.find_first_of('#'));
 				quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
 				linha = linha.substr(linha.find_first_of('!'));
 
 				bool isMed = false;
-				if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 3)
+				if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 4)
 					isMed = true;
 
 				cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
@@ -600,19 +605,21 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 				preco_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
-				iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
 
 
 				if (!isMed) {
+					iva_prod = stof(produtoSimp);
 					novaVenda->addProduto(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant);
 				}
 				else {
+					iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 					produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 					vend_sem_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 					produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
 					pode_ser_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
 					produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
-					desc_receita = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+					desc_receita = stof(produtoSimp);
 
 					novaVenda->addProduto(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant);
 				}

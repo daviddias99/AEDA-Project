@@ -26,7 +26,7 @@ bool Cliente::adicionaCompra(Venda * novaVenda)
 void Cliente::mostrarCompras()
 {
 	for (size_t i = 0; i < historicoCompras.size(); i++)
-		historicoCompras[i]->print(cout); 
+		historicoCompras[i]->print(cout) << endl << endl;
 }
 
 uint Cliente::getNumCompras() const
