@@ -702,16 +702,17 @@ void user_addReceita(Farmacia* farmacia, Venda* venda) {
 
 	Receita receita = Receita(stoi(receitaNumStr), nomePaciente, nomeMedico, stoi(nifPacienteStr));
 
-
-	do {
-		getline(ficheiro, tempString);
+	getline(ficheiro, tempString);
+	while(tempString != "--"){
+		
 		istringstream iss(tempString);
 		iss >> prodId;
+		iss.ignore();
 		iss.ignore();
 		iss >> quantidade;
 		pair<Produto*,uint>produtoTemp = farmacia->getProduto(prodId);
 
-		if (produtoTemp.first = NULL) {
+		if (produtoTemp.first == NULL) {
 			cout << "A farmacia nao consegue satisfazer a receita." << endl;
 			return;
 		}
@@ -727,8 +728,8 @@ void user_addReceita(Farmacia* farmacia, Venda* venda) {
 		}
 
 		receita.addProduto(produtoTemp.first, quantidade);
-
-	} while (tempString != "--");
+		getline(ficheiro, tempString);
+	}
 
 
 	ficheiro.close();

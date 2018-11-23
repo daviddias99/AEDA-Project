@@ -18,7 +18,10 @@ void Venda::addReceita(const Receita & receita) {
 	map<Produto*, uint>::iterator it = produtosReceita.begin();
 	map<Produto*, uint>::iterator ite = produtosReceita.end();
 
-	this->produtos.insert(ite, ite);
+	while (it != ite) {
+		this->addProduto(it->first, it->second);
+		it++;
+	}
 }
 
 void Venda::addProduto(Produto* prod, unsigned int quant) {
