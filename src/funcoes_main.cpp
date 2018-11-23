@@ -357,7 +357,7 @@ Data user_getData() {
 
 	while (!inputValido) {
 
-		data_nascimentoStr = getInputString("Data de nascimento (DD/MM/AA): ", "Data de nascimento invalida.");
+		data_nascimentoStr = getInputString("Data de nascimento (DD/MM/AAAA): ", "Data de nascimento invalida.");
 		try {
 			dataNascimento = Data(data_nascimentoStr);
 		}
@@ -513,16 +513,16 @@ void realizarVenda(Cadeia & cadeia)
 
 	// GET CLIENTE
 
-	//get nome do empregado a remover
+	//get nome do cliente
 	cout << "Nome do cliente (se for um cliente novo deixe em branco): ";
 	getline(cin, nomeCliente);
 
 	if (nomeCliente.size() != 0) {
 
-		// get empregados com o nome dado
+		// get clientes com o nome dado
 		vector<Cliente*> clientes_busca = cadeia.getClientes(nomeCliente);
 
-		// imprime empregados encontrados
+		// imprime clientes encontrados
 		for (size_t i = 0; i < clientes_busca.size(); i++) {
 
 			cout << "ID: " << clientes_busca.at(i)->getID()
@@ -534,7 +534,7 @@ void realizarVenda(Cadeia & cadeia)
 
 		cout << endl;
 
-		// se n�o encontrar nenhum empregado com o nome dado, pergunta ao user se pretende adicionar um empregado novo
+		// se n�o encontrar nenhum cliente com o nome dado, pergunta ao user se pretende adicionar um cliente novo
 		if (clientes_busca.size() == 0) {
 			string userChoice;
 
