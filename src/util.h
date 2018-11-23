@@ -26,7 +26,7 @@ public:
 
 	/**
 	* @brief Construtor default da classe Morada, constroi o objeto com a cidade igual a SEM_CIDADE, 
-	* o endereço igual a SEM_ENDERECO e o codigo postal igual a 0000-000
+	* o endereï¿½o igual a SEM_ENDERECO e o codigo postal igual a 0000-000
 	*/
 
 	Morada();
@@ -56,7 +56,7 @@ public:
 
 	/**
 	* @brief Envia para uma output stream os valores dos atributos da morada com o formato
-	* endereço endl codigoPostal space cidade
+	* endereï¿½o endl codigoPostal space cidade
 	*
 	* @param	os			valor do atributo morada
 	* @param	mor
@@ -100,9 +100,9 @@ public:
 	/**
 	* @brief constroi a classe Data com os valores para o dia, mes e ano dados
 	*
-	* @param dia dia associado à data
-	* @param mes mes associado à data
-	* @param ano ano associado à data
+	* @param dia dia associado ï¿½ data
+	* @param mes mes associado ï¿½ data
+	* @param ano ano associado ï¿½ data
 	*/
 	Data(uint dia,uint mes,uint ano);
 
@@ -117,7 +117,7 @@ public:
 
 	/**
 	* @brief retorna num string a data guardada, no formato DD-MM-YYYY(default) se o parametro
-	* dmy é true e YYYY-MM-DD se dmy é falso
+	* dmy ï¿½ true e YYYY-MM-DD se dmy ï¿½ falso
 	*
 	* @param	dmy	true se formato DD-MM-YYYY, falso caso YYYY-MM-DD
 	* @return		string com a data no formato pretendido 
@@ -149,18 +149,18 @@ public:
 
 
 	/**
-	* @brief verifica se uma data é "menor" que a outra
+	* @brief verifica se uma data ï¿½ "menor" que a outra
 	*
-	* @param d2	referência para a segunda data a ser comparada
-	* @return	true se a data do objeto é antes da data de d2
+	* @param d2	referï¿½ncia para a segunda data a ser comparada
+	* @return	true se a data do objeto ï¿½ antes da data de d2
 	*/
 	bool operator < (Data& d2) const;
 
 	/**
 	* @brief envia para a stream os a data no formato DD-MM-YYYY
 	*
-	* @param os	referência para uma output stream
-	* @param d	referência para uma data
+	* @param os	referï¿½ncia para uma output stream
+	* @param d	referï¿½ncia para uma data
 	* @return	a output stream de argumento
 	*/
 	friend ostream& operator<<(ostream& os, const Data& d);
@@ -238,8 +238,8 @@ public:
 	/**
 	* @brief envia para a stream os a data no formato DD-MM-YYYY
 	*
-	* @param os	referência para uma output stream
-	* @param d	referência para uma hora
+	* @param os	referï¿½ncia para uma output stream
+	* @param d	referï¿½ncia para uma hora
 	* @return	a output stream de argumento
 	*/
 	friend ostream& operator<<(ostream& os, const Time& d);
@@ -278,25 +278,56 @@ public:
 	/**
 	* @brief envia para a stream os a data e horas no formato DD-MM-YYYY e HH:MM:SS
 	*
-	* @param os	referência para uma output stream
-	* @param d	referência para uma timestamp
+	* @param os	referï¿½ncia para uma output stream
+	* @param d	referï¿½ncia para uma timestamp
 	* @return	a output stream de argumento
 	*/
 	friend ostream& operator<<(ostream& os, const Timestamp& d);
 };
 
 
-// ----------Funções----------
+// ----------Funcoes----------
 
+/**
+ * @brief Funcao que verifica se um dado ano e bissexto
+ * 
+ * @param year Ano que se pretende saber se e ou nao bissexto
+ * @return True caso o ano seja bissextoo
+ */
 bool isLeap(int year);
 
+/**
+ * @brief Funcao que indica o numero de dias de um determinado mes num determinado ano
+ * 
+ * @param month Mes sobre o qual se quer saber o numero de de dias
+ * @param year Ano que contem o mes sobre o qual se quer saber o numero de dias
+ * @return Numero de dias no mes indicado
+ */
 int daysInMonth(int month, int year);
 
+/**
+ * @brief Funcao que valida se um codigo postal e valido
+ * 
+ * @param codigoPostal Cuja validade se pretende testar
+ * @return Verdade caso o codigo postal seja valido
+ */
 bool codigoPostalValido(string codigoPostal);
 
+/**
+ * @brief Transforma uma string na mesma string em tudo caps lock
+ * 
+ * @param String que se pretende converter 
+ */
 void toUpper(string& input);
 
-
+/**
+ * @brief Aplica pesquisa binaria a um vetor
+ * 
+ * @tparam T 
+ * @param v Vetor sobre o qual se pretende aplicar a pesquisa
+ * @param x Elemento do vetor
+ * @return Indice onde esta o elemento que se pretende procurar 
+ */
 template<class T>
 int procura(vector<T>& v, T x)
 {
@@ -318,6 +349,14 @@ int procura(vector<T>& v, T x)
 	return -1;
 }
 
+/**
+ * @brief Aplica pesquisa sequencial a um vetor
+ * 
+ * @tparam T 
+ * @param v Vetor ao qual se pretende aplicar a pesquisa
+ * @param x Objeto do tipo dos objetos do vetor
+ * @return Indice do vetor onde esta o elemento procurado
+ */
 template<class T>
 int procuraseq(vector<T>& v, T x)
 {
@@ -332,6 +371,14 @@ int procuraseq(vector<T>& v, T x)
 	return -1;
 }
 
+/**
+ * @brief Aplica pesquisa binaria a um vetor, destina a procurar objetos pelo nome
+ * 
+ * @tparam X 
+ * @param v Vetor sobre o qual queremos aplicar a pesquisa
+ * @param nome Nome do objeto a procurar
+ * @return Indice da posicao onde esta o elemento procurado
+ */
 template<class X>
 int procura(const vector<X>& v, string nome)
 {
@@ -353,6 +400,14 @@ int procura(const vector<X>& v, string nome)
 	return -1;
 }
 
+/**
+ * @brief Aplica pesquisa binaria a um vetor, destina a procurar um elemento pelo ID
+ * 
+ * @tparam X 
+ * @param v Vetor ao qual se aplica a pesquisa binaria
+ * @param ID ID do elemento que pretendemos procurar
+ * @return Indice do vetor onde se encontra o elemento procurado
+ */
 template<class X>
 int procura(const vector<X>& v, uint ID)
 {
