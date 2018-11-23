@@ -357,7 +357,7 @@ Data user_getData() {
 
 	while (!inputValido) {
 
-		data_nascimentoStr = getInputString("Data de nascimento (DD/MM/AA): ", "Data de nascimento invalida.");
+		data_nascimentoStr = getInputString("Data de nascimento (DD/MM/AAAA): ", "Data de nascimento invalida.");
 		try {
 			dataNascimento = Data(data_nascimentoStr);
 		}
@@ -519,7 +519,7 @@ void realizarVenda(Cadeia & cadeia)
 
 	if (nomeCliente.size() != 0) {
 
-		// get empregados com o nome dado
+		// get clientes com o nome dado
 		vector<Cliente*> clientes_busca = cadeia.getClientes(nomeCliente);
 
 		// imprime clientes encontrados
