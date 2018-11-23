@@ -327,7 +327,6 @@ void toUpper(string& input) {
 }
 
 
-
 bool codigoPostalValido(string codigoPostal)
 {
 	if (codigoPostal.length() != 8) {
@@ -357,7 +356,7 @@ bool codigoPostalValido(string codigoPostal)
 		return false;
 	}
 
+
 	return true;
 }
-
 

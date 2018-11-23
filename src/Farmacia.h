@@ -77,9 +77,7 @@ public:
 	* @param codigo Codigo do produto no qual a quantidade em stock vai ser aumentada
 	* @param quantidade Quantidade de produto a aumentar ao stock
 	*/
-
 	void addQuantidade(long unsigned int codigo, uint quantidade);
-
 	/**
 	* @brief Procura no stock da farmacia pelo produto com o codigo indicado no parametro
 	* @param codigo Codigo do produto a ser procurado
@@ -197,20 +195,18 @@ public:
 	* @brief Mostra alguns atributos de todos os produtos em stock no ecra e ainda as suas quantidades
 	*/
 	void mostrarStock() const;
-	//void mostrarVendas() const;
-
+	/**
+	 * @brief Mostra vendas da farmacia no ecra
+	 */
+	void mostrarVendas() const;
 	/**
 	* @brief Mostra no ecra as quantidades em stock de todos os produtos 
 	*/
 	void consultarQuantidades() const;
-
 	/**
 	 * @brief Adiciona uma venda ao vetor de vendas da farmacia
 	 */
 	void addVenda(Venda* venda);
-
-
-	bool efetuaVenda(Empregado* empregado, Cliente* cliente, map<Produto*, unsigned int> produtos);
 
 private:
 	string nome;

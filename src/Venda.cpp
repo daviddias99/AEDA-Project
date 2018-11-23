@@ -12,6 +12,7 @@ Venda::Venda(uint cID, string client, uint eID, string empreg, string farm, stri
 
 }
 
+
 void Venda::addReceita(const Receita & receita) {
 
 	map<Produto*,uint> produtosReceita = receita.getProdutos();
@@ -22,6 +23,10 @@ void Venda::addReceita(const Receita & receita) {
 		this->addProduto(it->first, it->second);
 		it++;
 	}
+}
+
+void Venda::setPreco(float pr) {
+	preco = pr;
 }
 
 void Venda::addProduto(Produto* prod, unsigned int quant) {
@@ -134,7 +139,7 @@ ostream & Venda::print(ostream & os) const
 
 ostream & Venda::printSimp(ostream & os) const
 {
-	os << timestamp_venda << "\\" << nomeFarmacia << "\\" << idCliente << "\\" << nomeCliente << "\\" << idEmpregado << "\\" << nomeEmpregado << "\\";
+	os << preco << "\\" << timestamp_venda << "\\" << nomeFarmacia << "\\" << idCliente << "\\" << nomeCliente << "\\" << idEmpregado << "\\" << nomeEmpregado << "\\";
 
 	for (map<Produto *, unsigned int>::const_iterator it = produtos.begin(); it != produtos.end(); it++) {
 

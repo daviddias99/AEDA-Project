@@ -81,7 +81,7 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 
 bool Farmacia::addEmpregado(Empregado* empregado)
 {
-	int i = procura2(empregados, empregado);
+	int i = procura(empregados, empregado);
 
 	if (i == -1) {
 		if (empregado->getCargo() == "gerente") {
@@ -130,7 +130,7 @@ void Farmacia::remProduto(long unsigned int codigo)
 
 void Farmacia::remEmpregado(uint ID)
 {
-	int i = procura2(this->empregados, ID);
+	int i = procura(this->empregados, ID);
 
 	if (i != -1) {
 		empregados.erase(empregados.begin() + i);
@@ -274,10 +274,7 @@ void Farmacia::addVenda(Venda * venda)
 	vendas.push_back(venda);
 }
 
-bool Farmacia::efetuaVenda(Empregado * empregado, Cliente * cliente, map<Produto*, unsigned int> produtos)
-{
-	return false;
-}
+
 
 unsigned int Farmacia::numEmpregados() const
 {
@@ -436,6 +433,12 @@ void Farmacia::mostrarStock() const
 	for (map<Produto *, uint>::const_iterator it = stock.begin(); it != stock.end(); it++) {
 		it->first->print(cout) << "#Quantidade: " << it->second << endl << endl;
 	}
+}
+
+void Farmacia::mostrarVendas() const
+{
+	for (size_t i = 0; i < vendas.size(); i++)
+		vendas[i]->print(cout) << endl << endl;
 }
 
 bool farmacia_SortFunc_NumVendas_Crescente(Farmacia *f1, Farmacia *f2)

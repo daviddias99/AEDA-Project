@@ -82,6 +82,10 @@ public:
 	 */
 	void setCargo(string novoCargo);
 	/**
+	 * @brief Mostra vendas do empregado
+	 */
+	void mostrarVendas();
+	/**
 	 * @brief Imprime as informacoes do empregado num formato legivel
 	 * 
 	 * @param os Stream onde sao imprimidas as informacoes

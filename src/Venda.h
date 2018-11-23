@@ -32,6 +32,12 @@ public:
 	 */
 	void addReceita(const Receita & receita);
 	/**
+	 * @brief Muda o preco total da venda para o valor passado por argumento (usado quando se le uma venda do ficheiro)
+	 *
+	 * @param pr Preco da venda
+	 */
+	void setPreco(float pr);
+	/**
 	 * @brief Adiciona a respetiva quantidade de um determinado produto a venda, atualizando o preco total da mesma
 	 * 
 	 * @param prod Produto a adicionar

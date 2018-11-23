@@ -73,6 +73,12 @@ void Empregado::setCargo(string novoCargo)
 	this->cargo = novoCargo;
 }
 
+void Empregado::mostrarVendas()
+{
+	for (size_t i = 0; i < historicoVendas.size(); i++)
+		historicoVendas[i]->print(cout) << endl << endl;
+}
+
 ostream & Empregado::print(ostream & os) const
 {
 	os << "ID: " << ID << endl;
