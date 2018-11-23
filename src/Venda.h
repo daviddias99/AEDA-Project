@@ -91,9 +91,23 @@ public:
 	 * @return  Preco total da venda
 	 */
 	float getCusto() const;
-
+	/**
+	 * @brief Devolve o nome da farmacia onde foi realizada a venda
+	 * 
+	 * @return Nome da farmacia onde foi realizada a venda
+	 */
 	string getNomeFarm() const;
+	/**
+	 * @brief Devolve o nome do cliente que efetuou a compra
+	 * 
+	 * @return Nome do cliente que efetuou a compra
+	 */
 	string getNomeCliente() const;
+	/**
+	 * @brief Devolve o nome do empregado que efetuou a venda
+	 * 
+	 * @return Nome do empregado que efetuou a venda
+	 */
 	string getNomeEmp() const;
 
 	/**
