@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include "Produto.h"
+#include "Medicamento.h"
 #include "Receita.h"
 #include "util.h"
 
@@ -34,10 +35,10 @@ public:
 	/**
 	 * @brief Adiciona a respetiva quantidade de um determinado produto a venda, atualizando o preco total da mesma
 	 * 
-	 * @param prod Produto a adicionar
-	 * @param quant Quantidade do produto a adicionar
+	 * @param prod				Produto a adicionar
+	 * @param quant				Quantidade do produto a adicionar
 	 */
-	void addProduto(Produto* prod, unsigned int quant);
+	void addProduto(Produto* prod, unsigned int quant, bool vemReceitado = false, bool vemDeFicheiro = false);
 	/**
 	 * @brief Obtem um pair com um apontador para o produto com o codigo indicado (key) e a quantiade existente (value)
 	 * 
