@@ -1047,7 +1047,7 @@ void resumoClientes(Cadeia& cadeia)
 		opcaoInvalida = false;
 	}
 
-
+	cadeia.sortClientes((ord_pessoas)opcao);
 	cadeia.mostrarClientes();
 
 
@@ -1833,6 +1833,8 @@ void farmacia_consultarEmpregados(Farmacia& farmacia) {
 	farmacia.sortEmpregados((ord_pessoas)opcao);
 
 	farmacia.mostrarEmpregados();
+
+	farmacia.sortEmpregados(id_cres);
 }
 
 void farmacia_consultarProdutos(Farmacia & farmacia)
