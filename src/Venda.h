@@ -13,26 +13,109 @@ using namespace std;
 
 class Venda {
 public:
+	/**
+	 * @brief Construir um objeto da classe venda 
+	 * 
+	 * @param cID ID do cliente
+	 * @param client Nome do cliente
+	 * @param eID ID do empregado
+	 * @param empreg Nome do empregado
+	 * @param farm Nome da farmacia onde foi realizada a venda
+	 * @param time Data e hora a que foi realizada a venda, 
+	 * caso nao seja indicado (valor default = ""), utiliza data e hora atuais
+	 */
 	Venda(uint cID, string client, uint eID, string empreg, string farm, string time = "");
+	/**
+	 * @brief Adiciona os produtos receitados existentes numa receita a venda, atualizando o preco total da mesma
+	 * 
+	 * @param receita Receita fornecida pelo cliente
+	 */
 	map<Produto, unsigned int> addReceita(const Receita & receita);
+	/**
+	 * @brief Adiciona a respetiva quantidade de um determinado produto a venda, atualizando o preco total da mesma
+	 * 
+	 * @param prod Produto a adicionar
+	 * @param quant Quantidade do produto a adicionar
+	 */
 	void addProduto(Produto* prod, unsigned int quant);
+	/**
+	 * @brief Obtem um pair com um apontador para o produto com o codigo indicado (key) e a quantiade existente (value)
+	 * 
+	 * @param prodId Codigo do produto
+	 * @return Pair com um apontador para o produto pedido (key) e quantidade existente (value)
+	 */
 	pair<Produto*, uint> getProd(uint prodId);
+	/**
+	 * @brief Obtem um pair com um apontador para o produto com o nome pedido (key) e a quantidade existente (value)
+	 * 
+	 * @param prodId Nome do produto
+	 * @return  Pair com um apontador para o produto pedido (key) e quantidade existente (value)
+	 */
 	pair<Produto*, uint> getProd(string nome);
+	/**
+	 * @brief Remove o da venda o produto com o nome indicado
+	 * 
+	 * @param nome Nome do produto a remover
+	 */
 	void remProduto(string nome);
+	/**
+	 * @brief Devolve o preco total da venda
+	 * 
+	 * @return  Preco total da venda
+	 */
 	float getCusto() const;
-
+	/**
+	 * @brief Devolve com os produtos e respetivas quantidades da venda
+	 * 
+	 * @return Map com apontador para produto (key) e quantidade (value)
+	 */
 	map<Produto*, uint> getProdutos();
-
+	/**
+	 * @brief Imprime as informacoes da venda num formato legivel para a stream passada por argumento
+	 * 
+	 * @param os Stream onde queremos imprimir as informacoes
+	 * @return Stream onde foram escritas as informacoes
+	 */
 	ostream& print(ostream& os) const;
+	/**
+	 * @brief Imprime as informacoes da venda no formato usado na leitura de ficheiros para a stream passada por argumento
+	 * 
+	 * @param os Stream onde queremos imprimir as informacoes
+	 * @return Stream onde foram escritas as informacoes
+	 */
 	ostream& printSimp(ostream& os) const;
 private:
+	/**
+	 * @brief Preco total da venda
+	 */
 	float preco;
+	/**
+	 * @brief Nome da farmacia onde foi realizada a venda
+	 */
 	const string nomeFarmacia;
+	/**
+	 * @brief Nome do cliente que realizou a compra
+	 */
 	const string nomeCliente;
+	/**
+	 * @brief Nome do empregado que realizou a venda
+	 */
 	const string nomeEmpregado;
+	/**
+	 * @brief Map que representa os produtos e respetivas quantidades da venda (key = apontador para produto, value = quantidade)
+	 */
 	map<Produto *, unsigned int> produtos;
+	/**
+	 * @brief Data e hora a que a venda ocorreu
+	 */
 	Timestamp timestamp_venda;
+	/**
+	 * @brief ID do empregado que realizou a venda
+	 */
 	const uint idEmpregado;
+	/**
+	 * @brief ID do cliente que realizou a compra
+	 */
 	const uint idCliente;
 };
 
