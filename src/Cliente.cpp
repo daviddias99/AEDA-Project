@@ -10,7 +10,7 @@ Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada, int ID) : 
 	}
 	else {
 		this->ID = ID;
-		if ((uint)ID > currentID) {
+		if (ID > (int) currentID) {
 			currentID = ID + 1;
 		}
 	}
@@ -25,8 +25,8 @@ bool Cliente::adicionaCompra(Venda * novaVenda)
 
 void Cliente::mostrarCompras()
 {
-	/*for (size_t i = 0; i < historicoCompras.size(); i++)
-		historicoCompras[i]->print(cout); */
+	for (size_t i = 0; i < historicoCompras.size(); i++)
+		historicoCompras[i]->print(cout); 
 }
 
 uint Cliente::getNumCompras() const

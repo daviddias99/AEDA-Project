@@ -610,7 +610,7 @@ void realizarVenda(Cadeia & cadeia)
 	//GET PRODUTOS
 
 	user_getProdutos(farmacia, venda);
-	cout << "Preco final: " << venda->getCusto() << " euros";
+	cout << "Preco final: " << venda->getCusto() << " euros" << endl;
 	cout << "Finalizar venda(S/N)? ";
 	string userChoice;
 	getline(cin, userChoice);

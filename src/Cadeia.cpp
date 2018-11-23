@@ -509,16 +509,16 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 	getline(ficheiro, linha);
 	if (linha != "") {
 
-		nomeFarmacia = linha.substr(0, linha.find_first_of('&'));
-		linha = linha.substr(linha.find_first_of('&') + 1);
-		idCliente = stoi(linha.substr(0, linha.find_first_of('&')));
-		linha = linha.substr(linha.find_first_of('&') + 1);
-		nomeCliente = linha.substr(0, linha.find_first_of('&'));
-		linha = linha.substr(linha.find_first_of('&') + 1);
-		idEmpregado = stoi(linha.substr(0, linha.find_first_of('&')));
-		linha = linha.substr(linha.find_first_of('&') + 1);
-		nomeEmpregado = linha.substr(0, linha.find_first_of('&'));
-		linha = linha.substr(linha.find_first_of('&'));
+		nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		idCliente = stoi(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		nomeCliente = linha.substr(0, linha.find_first_of('\\'));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		idEmpregado = stoi(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		nomeEmpregado = linha.substr(0, linha.find_first_of('\\'));
+		linha = linha.substr(linha.find_first_of('\\'));
 
 		novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia);
 
@@ -567,16 +567,16 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		getline(ficheiro, linha);
 		if (linha != "") {
 
-			nomeFarmacia = linha.substr(0, linha.find_first_of('&'));
-			linha = linha.substr(linha.find_first_of('&') + 1);
-			idCliente = stoi(linha.substr(0, linha.find_first_of('&')));
-			linha = linha.substr(linha.find_first_of('&') + 1);
-			nomeCliente = linha.substr(0, linha.find_first_of('&'));
-			linha = linha.substr(linha.find_first_of('&') + 1);
-			idEmpregado = stoi(linha.substr(0, linha.find_first_of('&')));
-			linha = linha.substr(linha.find_first_of('&') + 1);
-			nomeEmpregado = linha.substr(0, linha.find_first_of('&'));
-			linha = linha.substr(linha.find_first_of('&'));
+			nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			idCliente = stoi(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			nomeCliente = linha.substr(0, linha.find_first_of('\\'));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			idEmpregado = stoi(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			nomeEmpregado = linha.substr(0, linha.find_first_of('\\'));
+			linha = linha.substr(linha.find_first_of('\\'));
 
 			novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia);
 

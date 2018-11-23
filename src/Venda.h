@@ -26,7 +26,7 @@ public:
 	ostream& print(ostream& os) const;
 	ostream& printSimp(ostream& os) const;
 private:
-	double preco;
+	float preco;
 	const string nomeFarmacia;
 	const string nomeCliente;
 	const string nomeEmpregado;

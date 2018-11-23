@@ -102,7 +102,7 @@ ostream & Venda::print(ostream & os) const
 
 ostream & Venda::printSimp(ostream & os) const
 {
-	os << nomeFarmacia << "&" << idCliente << "&" << nomeCliente << "&" << idEmpregado << "&" <<  nomeEmpregado << "&";
+	os << nomeFarmacia << "\\" << idCliente << "\\" << nomeCliente << "\\" << idEmpregado << "\\" << nomeEmpregado << "\\";
 
 	for (map<Produto *, unsigned int>::const_iterator it = produtos.begin(); it != produtos.end(); it++) {
 
