@@ -658,6 +658,93 @@ void realizarVenda(Cadeia & cadeia)
 
 }
 
+void user_addReceita(Farmacia* farmacia, Venda* venda) {
+
+	string nomeReceita;
+	ifstream ficheiro;
+	cout << "Numero da receita: ";
+	getline(cin, nomeReceita);
+	ficheiro.open(nomeReceita + ".txt");
+
+	if (!ficheiro.is_open()) {
+
+		cout << "Receita nao encontrada." << endl;
+		return;
+	}
+
+	string tempString;
+	string nomePaciente;
+	string nomeMedico;
+	string receitaNumStr;
+	string nifPacienteStr;
+	uint prodId, quantidade;
+	getline(ficheiro, tempString);
+	getline(ficheiro, tempString);
+	getline(ficheiro, tempString);
+	receitaNumStr = tempString.substr(tempString.find_first_of(" ")+1);
+	getline(ficheiro, tempString);
+	nomePaciente= tempString.substr(tempString.find_first_of(" ") + 1);
+	getline(ficheiro, tempString);
+	nifPacienteStr = tempString.substr(tempString.find_first_of(" ") + 1);
+	getline(ficheiro, tempString);
+	getline(ficheiro, tempString);
+	nomeMedico = tempString.substr(tempString.find_first_of(" ") + 1);
+	getline(ficheiro, tempString);
+	getline(ficheiro, tempString);
+	getline(ficheiro, tempString);
+	getline(ficheiro, tempString);
+
+	if (venda->getNomeCliente() != nomePaciente) {
+
+		cout << "Esta receita nao e sua." << endl;
+		return;
+	}
+	
+
+	Receita receita = Receita(stoi(receitaNumStr), nomePaciente, nomeMedico, stoi(nifPacienteStr));
+
+
+	do {
+		getline(ficheiro, tempString);
+		istringstream iss(tempString);
+		iss >> prodId;
+		iss.ignore();
+		iss >> quantidade;
+		pair<Produto*,uint>produtoTemp = farmacia->getProduto(prodId);
+
+		if (produtoTemp.first = NULL) {
+			cout << "A farmacia nao consegue satisfazer a receita." << endl;
+			return;
+		}
+		uint quantExistente;
+		if (venda->getProd(produtoTemp.first->getCodigo()).first == NULL)
+			quantExistente = 0;
+		else
+			quantExistente = venda->getProd(produtoTemp.first->getCodigo()).second;
+
+		if (produtoTemp.second-quantExistente < quantidade) {
+			cout << "A farmacia nao consegue satisfazer a receita." << endl;
+			return;
+		}
+
+		receita.addProduto(produtoTemp.first, quantidade);
+
+	} while (tempString != "--");
+
+
+	ficheiro.close();
+
+	venda->addReceita(receita);
+	
+	return;
+
+
+
+
+
+
+}
+
 void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 
 	int opcao, quantExistente;
@@ -815,6 +902,10 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 			break;
 
 		case 3:
+
+			cout << endl;
+			cout << "-Adicionar Receita- " << endl << endl;
+			user_addReceita(farmacia, venda);
 
 			break;
 		case 4:
@@ -1605,12 +1696,25 @@ void menuFarmacias(Cadeia& cadeia)
 void resumoFarmacias(Cadeia& cadeia) {
 
 	cout << endl << "RESUMO FARMACIAS" << endl << endl;
+
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "A cadeia " << cadeia.getNome() << " ainda nao tem farmacias."<< endl;
+		return;
+	}
+
 	cadeia.mostrarFarmacias();
 }
 
 void consultarFarmacia(Cadeia& cadeia) {
 
 	cout << endl;
+
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "A cadeia " << cadeia.getNome() << " ainda nao tem farmacias." << endl;
+		return;
+	}
 
 	Farmacia * farmacia;
 
@@ -1743,6 +1847,12 @@ void gerirStock(Cadeia& cadeia) {
 
 	cout << endl;
 
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "A cadeia " << cadeia.getNome() << " ainda nao tem farmacias." << endl;
+		return;
+	}
+
 	Farmacia * farmacia;
 
 	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
@@ -1817,6 +1927,13 @@ void gerirStock(Cadeia& cadeia) {
 
 void farmacia_alterarGerente(Cadeia & cadeia)
 {
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "Adicione uma farmacia primeiro." << endl;
+		return;
+
+	}
+
 	cout << endl;
 
 	Farmacia * farmacia;

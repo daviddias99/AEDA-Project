@@ -14,14 +14,18 @@ using namespace std;
 class Venda {
 public:
 	Venda(uint cID, string client, uint eID, string empreg, string farm);
-	map<Produto, unsigned int> addReceita(const Receita & receita);
+	void addReceita(const Receita & receita);
 	void addProduto(Produto* prod, unsigned int quant);
 	pair<Produto*, uint> getProd(uint prodId);
 	pair<Produto*, uint> getProd(string nome);
 	void remProduto(string nome);
 	float getCusto() const;
 
-	map<Produto*, uint> getProdutos();
+	string getNomeFarm() const;
+	string getNomeCliente() const;
+	string getNomeEmp() const;
+
+	map<Produto*, uint>& getProdutos();
 
 	ostream& print(ostream& os) const;
 	ostream& printSimp(ostream& os) const;

@@ -1,19 +1,18 @@
 #include "Receita.h"
 
-Receita::Receita(int numReceita, string cliente, string nomeMedico) : numReceita(numReceita), nomeCliente(cliente), nomeMedico(nomeMedico) {}
+Receita::Receita(int numReceita, string cliente, string nomeMedico, uint nifPaciente) : numReceita(numReceita), nomeCliente(cliente), nomeMedico(nomeMedico),nifPaciente(nifPaciente) {}
 
-void Receita::addProduto(Produto *  produto, int quantidade) {
+void Receita::addProduto(Produto* produto, uint quantidade) {
 
-	map<Produto *, int>::iterator it;
+	pair<Produto*, uint> novoPar = { produto, quantidade };
 
-	for (it = produtos.begin(); it != produtos.end(); it++) {
-		if (*(it->first) == *produto) {
-			it->second += quantidade;
-			return;
-		}
-	}
+	this->produtos.insert(novoPar);
 
-	produtos[produto] = quantidade;
+}
+
+map<Produto*, uint> Receita::getProdutos() const
+{
+	return produtos;
 }
 
 int Receita::getNumReceita() const {
@@ -27,3 +26,9 @@ string Receita::getCliente() const {
 string Receita::getMedico() const {
 	return nomeMedico;
 }
+
+uint Receita::getNifPaciente() const
+{
+	return this->nifPaciente;
+}
+

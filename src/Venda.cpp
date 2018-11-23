@@ -6,9 +6,13 @@ Venda::Venda(uint cID, string client, uint eID, string empreg, string farm) : id
 	this->timestamp_venda = Timestamp();
 }
 
-map<Produto, unsigned int> Venda::addReceita(const Receita & receita) {
+void Venda::addReceita(const Receita & receita) {
 
-	return map<Produto, unsigned int>();
+	map<Produto*,uint> produtosReceita = receita.getProdutos();
+	map<Produto*, uint>::iterator it = produtosReceita.begin();
+	map<Produto*, uint>::iterator ite = produtosReceita.end();
+
+	this->produtos.insert(ite, ite);
 }
 
 void Venda::addProduto(Produto* prod, unsigned int quant) {
@@ -80,7 +84,22 @@ float Venda::getCusto() const {
 	return preco;
 }
 
-map<Produto*, uint> Venda::getProdutos()
+string Venda::getNomeFarm() const
+{
+	return nomeFarmacia;
+}
+
+string Venda::getNomeCliente() const
+{
+	return nomeCliente;
+}
+
+string Venda::getNomeEmp() const
+{
+	return nomeEmpregado;
+}
+
+map<Produto*, uint>& Venda::getProdutos()
 {
 	return this->produtos;
 }
