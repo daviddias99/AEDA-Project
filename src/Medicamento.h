@@ -38,7 +38,7 @@ public:
 
 	/**
 	* @brief Devolve o valor do desconto do medicamento quando e receitado
-	* @param Valor do desconto quando e receitado
+	* @return Valor do desconto quando e receitado
 	*/
 	float descontoComReceita() const;
 
@@ -64,10 +64,24 @@ public:
 	*/
 	ostream& print(ostream& os) const;
 private:
+	/**
+	 * @brief True se o medicamento pode ser vendido sem receita medica
+	 * 
+	 */
 	const bool vendidoSemRec;
+	/**
+	 * @brief True se o medicamento pode ser receitado
+	 * 
+	 */
 	const bool podeSerRec;
+	/**
+	 * @brief Desconto do medicamento caso este tenha sido receitado
+	 * 
+	 */
 	const float descComReceita;
 };
+
+/** @} */
 
 
 #endif /* MEDICAMENTO_H_ */

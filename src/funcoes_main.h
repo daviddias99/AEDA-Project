@@ -21,6 +21,10 @@ using namespace std;
  */
 
 
+
+/**
+ * @brief Maximum stream size - used in istream::ignore()
+ */
 const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 
 /**
@@ -36,10 +40,10 @@ Morada user_getMorada();
  */
 Data user_getData();
 /**
- * @brief Lê um empregado do utilizador
+ * @brief Le um empregado do utilizador
  * 
- * @param Cadeia para a qual se quer ler um empregado de modo a nao permitir que o utilizador indique um empregado com NIF  que ja existe
- * @param newFOverride se newFOverride for true significa que esta a ler um empregado para ser gerente de uma nova farmacia,
+ * @param cadeia        Cadeia para a qual se quer ler um empregado de modo a nao permitir que o utilizador indique um empregado com NIF  que ja existe
+ * @param newFOverride  Se newFOverride for true significa que esta a ler um empregado para ser gerente de uma nova farmacia,
  * pelo que nao precisa de perguntar ao utilizador pelo cargo nem pela farmacia
  * @return Apontador para o empregado lido do utilizador
  */
@@ -84,8 +88,8 @@ int getInputNumber(int limInf, int limSup, bool showLimSup = true);
 /**
  * @brief Le uma string do utilizador, verificando que o input e valido
  * 
- * @param Mensagem a apresentar ao utilizador para pedir que ele introduza a string
- * @param Mensagem a apresentar ao utilizador caso a string seja invalida
+ * @param msg Mensagem a apresentar ao utilizador para pedir que ele introduza a string
+ * @param msgErr Mensagem a apresentar ao utilizador caso a string seja invalida
  * @return string lida do utilizador
  */
 string getInputString(string msg, string msgErr);
@@ -233,5 +237,7 @@ void farmacia_adicionarProduto(Farmacia& farmacia);
  * @param farmacia Farmacia da qual pretendemos remover produtos
  */
 void farmacia_removerProduto(Farmacia& farmacia);
+
+/** @} */
 
 #endif

@@ -210,4 +210,6 @@ public:
 	TimeInvalido(string i) : ExcecaoGeral(i) {}
 };
 
+/** @} */
+
 #endif

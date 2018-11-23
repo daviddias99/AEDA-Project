@@ -144,5 +144,6 @@ bool Pessoa_SortFunc_NIF_Crescente(Pessoa* p1, Pessoa* p2);
 */
 bool Pessoa_SortFunc_NIF_Decrescente(Pessoa* p1, Pessoa* p2);
 
+/** @} */
 
 #endif

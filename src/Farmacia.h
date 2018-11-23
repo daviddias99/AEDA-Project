@@ -44,7 +44,7 @@ public:
 	* @param nome Nome da farmacia
 	* @param morada Morada da farmacia
 	*/
-	Farmacia(string nome, Morada Morada);
+	Farmacia(string nome, Morada morada);
 	/**
 	* @brief Construtor da classe farmacia que inicializa os atributos atravez do conteudo lido de um ficheiro de texto
 	* @param simp String com as informacoes sobre a farmacia no formato escrito pelo programa num ficheiro de texto
@@ -178,7 +178,7 @@ public:
 	unsigned int numVendas() const;
 
 	/**
-	* @breif Compara a igualdade de duas farmacia. Duas farmacias sao iguais se possuem o mesmo nome
+	* @brief Compara a igualdade de duas farmacia. Duas farmacias sao iguais se possuem o mesmo nome
 	* @param ph1 Farmacia a ser comparada com o proprio objeto
 	* @return True se as duas farmacias sao iguais. False se nao o sao
 	*/
@@ -229,11 +229,31 @@ public:
 	void addVenda(Venda* venda);
 
 private:
+	/**
+	 * @brief Nome da farmacia
+	 * 
+	 */
 	string nome;
+	/**
+	 * @brief Morada da farmacia
+	 */
 	Morada morada;
+	/**
+	 * @brief Apontador para o gerente da farmacia
+	 */
 	Empregado* gerente;
+	/**
+	 * @brief Vetor de apontadores para os empregados da farmacia
+	 */
 	vector< Empregado* > empregados;
+	/**
+	 * @brief Map que representa o stock da farmacia (key = apontador para produto, value = quantidade)
+	 * 
+	 */
 	map< Produto *, unsigned int> stock;
+	/**
+	 * @brief Vetor de apontadores para vendas
+	 */
 	vector <Venda *> vendas;
 };
 
@@ -278,5 +298,7 @@ bool farmacia_SortFunc_NumVendas_Crescente(Farmacia *f1, Farmacia *f2);
 * retorna true se a farmacia f1 tem menor nome do que a farmacia f2.
 */
 bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2);
+
+/** @} */
 
 #endif

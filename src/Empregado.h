@@ -196,6 +196,7 @@ bool Empregado_SortFunc_numVendas_Crescente(Empregado* p1, Empregado* p2);
 */
 bool Empregado_SortFunc_numVendas_Decrescente(Empregado* p1, Empregado* p2);
 
+/** @} */
 
 #endif // !EMPREGADO_H
 

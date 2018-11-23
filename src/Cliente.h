@@ -75,16 +75,16 @@ public:
 	/**
 	* @brief Overload do operador <, os clientes sao comparados por NIF
 	*
-	* @param e1 Cliente na esquerda do operador
-	* @param e2 Cliente na direita do operador
+	* @param c1 Cliente na esquerda do operador
+	* @param c2 Cliente na direita do operador
 	* @return True caso o NIF do cliente da esquerda seja menor que o NIF do da direita
 	*/
 	friend bool operator<(const  Cliente& c1, const Cliente & c2);
 	/**
 	 * @brief Overload do operador ==, os clientes sao comparados por NIF
 	 *
-	 * @param e1 Cliente na esquerda do operador
-	 * @param e2 Cliente na direita do operador
+	 * @param c1 Cliente na esquerda do operador
+	 * @param c2 Cliente na direita do operador
 	 * @return True caso o NIF do cliente da esquerda seja igual ao NIF do da direita
 	 */
 	friend bool operator==(const  Cliente& c1, const Cliente & c2);
@@ -131,5 +131,7 @@ bool Cliente_SortFunc_numCompras_Crescente(Cliente* p1, Cliente* p2);
 */
 bool Cliente_SortFunc_numCompras_Decrescente(Cliente* p1, Cliente* p2);
 
+
+/** @} */
 
 #endif // !CLIENTE_H

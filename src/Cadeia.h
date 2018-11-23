@@ -216,4 +216,6 @@ private:
 	string nome;
 };
 
+/** @} */
+
 #endif /* SRC_CADEIA_H_ */

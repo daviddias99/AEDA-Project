@@ -240,7 +240,7 @@ public:
 	Time(uint hora, uint minuto, uint segundo = 0);
 
 
-	/*
+	/**
 	* @brief retorna um string com o tempo associado ao objeto no formato HH:MM:SS
 	*
 	* @param mostraSegundos	mostra tempo no formato HH:MM:SS se true e HH:MM se false
@@ -468,7 +468,7 @@ int procura(const vector<X>& v, uint ID)
 	return -1;
 }
 
-
+/** @} */
 
 #endif /* SRC_UTIL_H_ */
 

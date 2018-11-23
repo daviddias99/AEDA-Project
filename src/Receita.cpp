@@ -1,6 +1,6 @@
 #include "Receita.h"
 
-Receita::Receita(int numReceita, string cliente, string nomeMedico, uint nifPaciente) : numReceita(numReceita), nomeCliente(cliente), nomeMedico(nomeMedico),nifPaciente(nifPaciente) {}
+Receita::Receita(int numReceita, string cliente, string medico, uint nifPaciente) : numReceita(numReceita), nomeCliente(cliente), nomeMedico(medico),nifPaciente(nifPaciente) {}
 
 void Receita::addProduto(Produto* produto, uint quantidade) {
 

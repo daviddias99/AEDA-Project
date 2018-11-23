@@ -47,7 +47,7 @@ void Venda::addProduto(Produto* prod, unsigned int quant, bool vemReceitado, boo
 
 		Medicamento* mediTemp = dynamic_cast<Medicamento*> (prod);
 		if (vemReceitado) {
-			preco - mediTemp->descontoComReceita() * mediTemp->getPreco();
+			preco -= mediTemp->descontoComReceita() * mediTemp->getPreco();
 		}
 	}
 

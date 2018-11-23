@@ -20,14 +20,17 @@ using namespace std;
  * Classe produto e classe derivada medicamento 
  */
 
-
+/**
+ * @brief Classe que representa as informacoes de um produto
+ * 
+ */
 class Produto {
 public:
 	/**
 	* @brief Construtor da classe Produto. 
 	* @param code Codigo do produto
 	* @param n Nome do produto
-	* @param dec Descricao do produto
+	* @param desc Descricao do produto
 	* @param pr Preco do produto
 	* @param i Iva do produto
 	*/
@@ -90,12 +93,28 @@ public:
 	*/
 	virtual ostream& printSimp(ostream& os) const;
 protected:
+	/**
+	 * @brief Codigo do produto
+	 */
 	const long unsigned int codigo;
+	/**
+	 * @brief Nome do produto
+	 */
 	const string nome;
+	/**
+	 * @brief Descricao do produto
+	 */
 	const string descricao;
+	/**
+	 * @brief Preco do produto
+	 */
 	float preco;
+	/**
+	 * @brief Imposto sobre o produto
+	 */
 	float iva;
 };
 
+/** @} */
 
 #endif /* PRODUTO_H */

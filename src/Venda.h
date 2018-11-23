@@ -75,7 +75,7 @@ public:
 	/**
 	 * @brief Obtem um pair com um apontador para o produto com o nome pedido (key) e a quantidade existente (value)
 	 * 
-	 * @param prodId Nome do produto
+	 * @param nome Nome do produto
 	 * @return  Pair com um apontador para o produto pedido (key) e quantidade existente (value)
 	 */
 	pair<Produto*, uint> getProd(string nome);
@@ -164,5 +164,7 @@ private:
 	 */
 	const uint idCliente;
 };
+
+/** @} */
 
 #endif /* VENDA_H */
