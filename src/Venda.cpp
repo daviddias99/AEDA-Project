@@ -94,7 +94,7 @@ map<Produto*, uint> Venda::getProdutos()
 ostream & Venda::print(ostream & os) const
 {
 	os << endl << "RECIBO VENDA" << endl << endl;
-	os << time << endl;
+	os << timestamp_venda << endl;
 	os << "Farmacia: " << nomeFarmacia << endl;
 	os << "Cliente - ID: " << idCliente << "     Nome: " << nomeCliente << endl;
 	os << "Empregado - ID: " << idEmpregado << "     Nome: " << nomeEmpregado << endl;

@@ -186,11 +186,6 @@ Time::Time(string time) {
 		TimeInvalido("Formato invalido.");
 	if (segundo > 59)
 		throw TimeInvalido("Segundo invalido.");
-
-
-
-
-
 }
 
 
@@ -244,7 +239,7 @@ Timestamp::Timestamp(Data data, Time time): Data(data), Time(time){
 Timestamp::Timestamp(string time)
 {
 	Data(time.substr(0, time.find_first_of('|')));
-	Time(time.substr(time.find_last_of('|') + 1));
+	Time(time.substr(time.find_last_of('|') + 1, string::npos));
 }
 
 string Timestamp::getTstamp()
