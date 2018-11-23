@@ -5,6 +5,7 @@
 #include <vector>
 #include <string>
 #include "Produto.h"
+#include "Medicamento.h"
 #include "Receita.h"
 #include "util.h"
 
@@ -40,10 +41,12 @@ public:
 	/**
 	 * @brief Adiciona a respetiva quantidade de um determinado produto a venda, atualizando o preco total da mesma
 	 * 
-	 * @param prod Produto a adicionar
-	 * @param quant Quantidade do produto a adicionar
+	 * @param prod				Produto a adicionar
+	 * @param quant				Quantidade do produto a adicionar
+	 * @param vemReceitado		Verdadeiro se o produto estiver a ser adicionado atraves de uma receita (calcular descontos), falso caso contrario
+	 * @param vemDeFicheiro		Verdadeiro se o produto estiver a ser adicionado atraves de um ficheiro
 	 */
-	void addProduto(Produto* prod, unsigned int quant);
+	void addProduto(Produto* prod, unsigned int quant, bool vemReceitado = false, bool vemDeFicheiro = false);
 	/**
 	 * @brief Obtem um pair com um apontador para o produto com o codigo indicado (key) e a quantiade existente (value)
 	 * 
@@ -59,7 +62,7 @@ public:
 	 */
 	pair<Produto*, uint> getProd(string nome);
 	/**
-	 * @brief Remove o da venda o produto com o nome indicado
+	 * @brief Remove o da venda o produto com o nome indicado, atualiza o preco
 	 * 
 	 * @param nome Nome do produto a remover
 	 */

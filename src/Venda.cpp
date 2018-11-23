@@ -29,7 +29,8 @@ void Venda::setPreco(float pr) {
 	preco = pr;
 }
 
-void Venda::addProduto(Produto* prod, unsigned int quant) {
+
+void Venda::addProduto(Produto* prod, unsigned int quant, bool vemReceitado, bool vemDeFicheiro) {
 
 	map<Produto *, unsigned int>::iterator it;
 	for (it = produtos.begin(); it != produtos.end(); it++) {
@@ -39,7 +40,17 @@ void Venda::addProduto(Produto* prod, unsigned int quant) {
 		}
 	}
 
-	preco += prod->getPreco() * (1 + prod->getIVA()) * quant;
+
+	if (!vemDeFicheiro) {
+		preco += prod->getPreco() * (1 + prod->getIVA()) * quant;
+
+
+		Medicamento* mediTemp = dynamic_cast<Medicamento*> (prod);
+		if (vemReceitado) {
+			preco - mediTemp->descontoComReceita() * mediTemp->getPreco();
+		}
+	}
+
 
 	produtos[prod] = quant;
 }
@@ -86,6 +97,8 @@ void Venda::remProduto(string  nome)
 	while (it != ite) {
 
 		if (it->first->getNome() == nome) {
+
+			preco -= it->first->getPreco() * (1 + it->first->getIVA()) * it->second;
 			produtos.erase(it);
 			return;
 		}
