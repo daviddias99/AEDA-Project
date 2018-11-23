@@ -1,10 +1,29 @@
 #ifndef SRC_EXCECOES_H
 #define SRC_EXCECOES_H
 
+/*!
+ * \file Excecoes.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
+ */
+
+/** @defgroup Excecoes Excecoes
+ * @{
+ *
+ * Excecoes 
+ */
+
+
 #include <String>
 using namespace std;
 
-
+/**
+ * @brief Classe que representa uma excecao geral que apenas contem a informacao sobre a ocorrencia da excecao,
+ *  usada para derivar nova excecoes
+ */
 class ExcecaoGeral {
 protected:
 	/**
@@ -24,6 +43,10 @@ public:
 	string getInfo() const { return info; }
 };
 
+/**
+ * @brief Excecao que ocorre quando o utilizador escolhe uma opcao invalida num menu
+ * 
+ */
 class OpcaoInvalida: public ExcecaoGeral {
 public:
 	/**
@@ -34,6 +57,9 @@ public:
 	OpcaoInvalida(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando um ficheiro nao e encontrado
+ */
 class FicheiroNaoEncontrado: public ExcecaoGeral {
 public:
 	/**
@@ -44,6 +70,10 @@ public:
 	FicheiroNaoEncontrado(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando uma farmacia nao existe
+ * 
+ */
 class FarmaciaNaoExiste : public ExcecaoGeral {
 public:
 	/**
@@ -54,6 +84,10 @@ public:
 	FarmaciaNaoExiste(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando um cliente nao existe
+ * 
+ */
 class ClienteNaoExiste : public ExcecaoGeral {
 public:
 	/**
@@ -64,6 +98,10 @@ public:
 	ClienteNaoExiste(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando empregado nao existe
+ * 
+ */
 class EmpregadoNaoExiste : public ExcecaoGeral {
 public:
 	/**
@@ -74,6 +112,10 @@ public:
 	EmpregadoNaoExiste(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando um produto nao existe
+ * 
+ */
 class ProdutoNaoExiste : public ExcecaoGeral {
 public:
 	/**
@@ -84,6 +126,10 @@ public:
 	ProdutoNaoExiste(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando um produto e repetido
+ * 
+ */
 class ProdutoRepetido : public ExcecaoGeral {
 public:
 	/**
@@ -94,6 +140,10 @@ public:
 	ProdutoRepetido(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao quando ocorre quando se tenta adicionar a uma venda um numero de produtos que o stock de uma farmacia nao consegue satisfazer
+ * 
+ */
 class ProdutosInsuficientes : public ExcecaoGeral {
 public:
 	/**
@@ -104,6 +154,10 @@ public:
 	ProdutosInsuficientes(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando uma data e invalida
+ * 
+ */
 class DataInvalida : public ExcecaoGeral {
 public:
 	/**
@@ -114,6 +168,10 @@ public:
 	DataInvalida(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando um cargo e invalido
+ * 
+ */
 class CargoInvalido : public ExcecaoGeral {
 public:
 	/**
@@ -124,6 +182,10 @@ public:
 	CargoInvalido(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando uma morada e invalida
+ * 
+ */
 class MoradaInvalida : public ExcecaoGeral {
 public:
 	/**
@@ -134,6 +196,10 @@ public:
 	MoradaInvalida(string i) : ExcecaoGeral(i) {}
 };
 
+/**
+ * @brief Excecao que ocorre quando um hora e invalida
+ * 
+ */
 class TimeInvalido : public ExcecaoGeral {
 public:
 	/**

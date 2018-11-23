@@ -1,6 +1,16 @@
 #ifndef PERSON_H
 #define PERSON_H
 
+/*!
+ * \file Pessoa.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
+ */
+
+
 /** @defgroup Pessoa Pessoa
  * @{
  *
@@ -14,6 +24,9 @@
 
 using namespace std;
 
+/** 
+ * Classe que representa as informacoes de uma pessoa
+ */
 class Pessoa {
 public:
 	/**

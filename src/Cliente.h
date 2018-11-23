@@ -3,6 +3,17 @@
 
 #include "Pessoa.h"
 
+
+/*!
+ * \file Cliente.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
+ */
+
+
 /** @defgroup Pessoa Pessoa
  * @{
  *

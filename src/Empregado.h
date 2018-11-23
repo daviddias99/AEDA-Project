@@ -2,7 +2,17 @@
 #define EMPREGADO_H
 
 #include "Pessoa.h"
-	
+	/*!
+ * \file Empregado.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
+ */
+#ifndef CADEIA_H_
+#define CADEIA_H_
+
 /** @defgroup Pessoa Pessoa
  * @{
  *
@@ -25,7 +35,7 @@ public:
 	 */
 	Empregado(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada(), uint  sal = 0, string farmaciaNome = "FARMACIA_DEFAULT", string cargo = "CARGO_DEFAULT", int ID = -1);
 	/**
-	 *	Decrementa a variavel static currentID, usado no caso em que se criam empregados que não se adicionam a farmacia por ser repetido
+	 *	Decrementa a variavel static currentID, usado no caso em que se criam empregados que nï¿½o se adicionam a farmacia por ser repetido
 	 */
 	static void decID();
 	/**

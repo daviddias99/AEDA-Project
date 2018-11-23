@@ -3,6 +3,22 @@
 
 #include "Produto.h"
 
+/*!
+ * \file Medicamento.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
+ */
+
+/** @defgroup Produto Produto
+ * @{
+ *
+ * Classe produto e classe derivada medicamento 
+ */
+
+
 class Medicamento : public Produto {
 public:
 	/**

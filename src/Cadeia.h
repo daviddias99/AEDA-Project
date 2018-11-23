@@ -1,10 +1,10 @@
 /*!
  * \file Cadeia.h
  *
- * \author FEUP AEDA1819 MIEIC Turma5_G1:
- * \author 
- * \author
- * \author
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
  */
 #ifndef CADEIA_H_
 #define CADEIA_H_
@@ -61,7 +61,7 @@ public:
 	*/
 	bool addCliente(Cliente* cliente);
 	/**
-	* @brief Adiciona um empregado a lista de empregados da cadeia e à farmacia a que pertence
+	* @brief Adiciona um empregado a lista de empregados da cadeia e ï¿½ farmacia a que pertence
 	* @param empregado			Apontador para o empregado a ser adicionado a lista
 	* @return					true se o empregado foi adicionado a lista com sucesso
 	*							false se o empregado nao foi adicionado porque ja existe na lista

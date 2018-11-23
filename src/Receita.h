@@ -8,6 +8,23 @@
 
 using namespace std;
 
+/*!
+ * \file Receita.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
+ */
+
+/** @defgroup Receita Receita
+ * @{
+ *
+ * Classe receita 
+ */
+
+
+
 class Receita {
 public:
 	Receita(int numReceita, string cliente, string Medico, uint nifPaciente);

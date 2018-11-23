@@ -5,6 +5,22 @@
 #include "util.h"
 using namespace std;
 
+/*!
+ * \file funcoes_main.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
+ */
+
+/** @defgroup funcoes_main funcoes_main
+ * @{
+ *
+ * Funcoes usadas na interface do programa 
+ */
+
+
 const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 
 /**

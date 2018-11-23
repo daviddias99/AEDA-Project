@@ -14,12 +14,17 @@ using namespace std;
 
 typedef unsigned int uint;
 
+/**
+ * @brief Enumeracao que contem os modos de ordenacao de uma lista de pessoas
+ * 
+ */
 enum ord_pessoas { id_cres = 0, id_dec, idade_cres, idade_dec, nome_cres, nome_dec, nif_cres, nif_dec, n_comp_cres, n_comp_dec, sal_cres, sal_dec };
 
 // ----------Classes----------
-
-
-
+/**
+ * @brief Classe que representa uma morada
+ * 
+ */
 class Morada {
 
 public:
@@ -58,7 +63,7 @@ public:
 
 	/**
 	* @brief Envia para uma output stream os valores dos atributos da morada com o formato
-	* endere�o endl codigoPostal space cidade
+	* endereco endl codigoPostal space cidade
 	*
 	* @param	os			valor do atributo morada
 	* @param	mor
@@ -89,6 +94,9 @@ private:
 	string cidade;
 };
 
+/** 
+ * Classe que representa uma data
+ */
 class Data {
 
 public:
@@ -185,6 +193,10 @@ protected:
 
 };
 
+/**
+ * @brief Classe que representa uma hora do dia (horas, minutos, segundos)
+ * 
+ */
 class Time {
 
 protected:
@@ -268,6 +280,10 @@ public:
 
 };
 
+/**
+ * @brief Classe que representa uma data e hora 
+ * 
+ */
 class Timestamp: public Time, public Data {
 
 public:

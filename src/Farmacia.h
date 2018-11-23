@@ -17,6 +17,26 @@
 
 using namespace std;
 
+/*!
+ * \file Farmacia.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
+ */
+
+/** @defgroup Farmacia Farmacia
+ * @{
+ *
+ * Farmacia 
+ */
+
+
+/**
+ * @brief Classe que representa uma farmacia
+ * 
+ */
 class Farmacia {
 public:
 	/**

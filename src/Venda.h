@@ -11,6 +11,22 @@
 
 using namespace std;
 
+/*!
+ * \file Venda.h
+ *
+ * \author FEUP AEDA1819 MIEIC Turma5_G1
+ * \author David Silva
+ * \author Gaspar Pinheiro
+ * \author Luis Cunha
+ */
+
+/** @defgroup Venda Venda
+ * @{
+ *
+ * Classe venda 
+ */
+
+
 /**
  * @brief Classe que representa as vendas realizada por uma farmacia
  */
