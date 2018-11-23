@@ -1,3 +1,6 @@
+
+#ifndef CADEIA_H_
+#define CADEIA_H_
 /*!
  * \file Cadeia.h
  *
@@ -6,8 +9,6 @@
  * \author Gaspar Pinheiro
  * \author Luis Cunha
  */
-#ifndef CADEIA_H_
-#define CADEIA_H_
 
 /** @defgroup Cadeia Cadeia
  * @{
@@ -31,6 +32,9 @@
 
 using namespace std;
 
+/**
+ * @brief Classe que representa uma cadeia de farmacias
+ */
 class Cadeia{
 public:
 	/**

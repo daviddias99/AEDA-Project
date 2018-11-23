@@ -18,7 +18,9 @@
  * Classe produto e classe derivada medicamento 
  */
 
-
+/**
+ * Classe que representa um medicamento 
+ */
 class Medicamento : public Produto {
 public:
 	/**

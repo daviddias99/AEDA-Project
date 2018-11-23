@@ -17,6 +17,9 @@
  * Classe pessoa e suas classes derivadas
  */
 
+/**
+ * @brief Classe que representa um empregado
+ */
 class Empregado :public Pessoa {
 public:
 	/**

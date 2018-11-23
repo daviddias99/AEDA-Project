@@ -20,6 +20,10 @@
  * Classe pessoa e suas classes derivadas
  */
 
+
+/**
+ * Classe que representa uma pessoa
+ */
 class Cliente :public Pessoa {
 public:
 	/**

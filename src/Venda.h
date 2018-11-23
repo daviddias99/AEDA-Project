@@ -28,7 +28,7 @@ using namespace std;
 
 
 /**
- * @brief Classe que representa as vendas realizada por uma farmacia
+ * @brief Classe que representa uma venda realizada por uma farmacia
  */
 class Venda {
 public:
