@@ -23,6 +23,9 @@ using namespace std;
  * Classe receita 
  */
 
+/**
+ * Classe que representa as informacoes de uma receita 
+ */
 class Receita {
 public:
 	/**

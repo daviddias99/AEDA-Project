@@ -32,6 +32,9 @@
 
 using namespace std;
 
+/**
+ * @brief Classe que representa uma cadeia de farmacias
+ */
 class Cadeia{
 public:
 	/**
