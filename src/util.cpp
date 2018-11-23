@@ -236,6 +236,20 @@ ostream & operator<<(ostream & os, const Data & d)
 	return os;
 }
 
+ostream & operator<<(ostream & os, const Time & d)
+{
+	os << setfill('0') << setw(2) << d.hora << ":" << setfill('0') << setw(2) << d.minuto << ":" << setw(2) << d.segundo;
+
+	return os;
+}
+
+ostream & operator<<(ostream & os, const Timestamp & d)
+{ 
+	os << setfill('0') << setw(2) << d.dia << "-" << setfill('0') << setw(2) << d.mes << "-" << setw(4) << d.ano << "||" << setfill('0') << setw(2) << d.hora << ":" << setfill('0') << setw(2) << d.minuto << ":" << setw(2) << d.segundo;
+
+	return os;
+}
+
 //This function returns true if the given year is a Leap Year and false otherwise
 bool isLeap(int year)
 {

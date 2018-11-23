@@ -165,7 +165,7 @@ public:
 	*/
 	friend ostream& operator<<(ostream& os, const Data& d);
 
-private:
+protected:
 	uint dia;
 	uint mes;
 	uint ano;
@@ -174,7 +174,7 @@ private:
 
 class Time {
 
-private:
+protected:
 
 	uint segundo;
 	uint minuto;
@@ -228,6 +228,15 @@ public:
 	*/
 	uint getSeg() const;
 
+	/**
+	* @brief envia para a stream os a data no formato DD-MM-YYYY
+	*
+	* @param os	referência para uma output stream
+	* @param d	referência para uma hora
+	* @return	a output stream de argumento
+	*/
+	friend ostream& operator<<(ostream& os, const Time& d);
+
 };
 
 class Timestamp: public Time, public Data {
@@ -252,6 +261,14 @@ public:
 	* @return	timestamp no formato DD/MM//YYYY | HH:MM:SS
 	*/
 	string getTstamp();
+	/**
+	* @brief envia para a stream os a data e horas no formato DD-MM-YYYY e HH:MM:SS
+	*
+	* @param os	referência para uma output stream
+	* @param d	referência para uma timestamp
+	* @return	a output stream de argumento
+	*/
+	friend ostream& operator<<(ostream& os, const Timestamp& d);
 };
 
 

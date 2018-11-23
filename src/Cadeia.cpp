@@ -83,7 +83,7 @@ Farmacia* Cadeia::getFarmacia(string nome) const
 	unsigned int i = procura2(farmacias, nome);
 	if(i != -1) return farmacias[i];
 
-	throw FarmaciaNaoExiste(nome);
+	throw FarmaciaNaoExiste("Nao existe nenhuma farmacia com o nome " + nome + ".");
 }
 
 Cliente* Cadeia::getCliente(uint ID) const
@@ -504,11 +504,13 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 
 
 	Venda * novaVenda;
-	//Produto * produto;
 
 	getline(ficheiro, linha);
 	if (linha != "") {
 
+		/*
+		preco = stof(produtoSimp.substr(0, produtoSimp.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\'));*/
 		nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		idCliente = stoi(linha.substr(0, linha.find_first_of('\\')));

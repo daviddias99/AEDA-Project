@@ -87,9 +87,11 @@ map<Produto*, uint> Venda::getProdutos()
 
 ostream & Venda::print(ostream & os) const
 {
+	os << endl << "RECIBO VENDA" << endl << endl;
+	os << time << endl;
 	os << "Farmacia: " << nomeFarmacia << endl;
 	os << "Cliente - ID: " << idCliente << "     Nome: " << nomeCliente << endl;
-	os << "Empregado - ID: " << idCliente << "     Nome: " << nomeCliente << endl;
+	os << "Empregado - ID: " << idEmpregado << "     Nome: " << nomeEmpregado << endl;
 	os << "Produtos: " << endl;
 
 	for (map<Produto *, uint>::const_iterator it = produtos.begin(); it != produtos.end(); it++) {
@@ -97,12 +99,14 @@ ostream & Venda::print(ostream & os) const
 		it->first->print(cout) << "#Quantidade: " << it->second << endl << endl;
 	}
 
+	os << "Preco final: " << preco;
+
 	return os;
 }
 
 ostream & Venda::printSimp(ostream & os) const
 {
-	os << nomeFarmacia << "\\" << idCliente << "\\" << nomeCliente << "\\" << idEmpregado << "\\" << nomeEmpregado << "\\";
+	os << time << "\\" << nomeFarmacia << "\\" << idCliente << "\\" << nomeCliente << "\\" << idEmpregado << "\\" << nomeEmpregado << "\\";
 
 	for (map<Produto *, unsigned int>::const_iterator it = produtos.begin(); it != produtos.end(); it++) {
 
