@@ -23,8 +23,6 @@ using namespace std;
  * Classe receita 
  */
 
-
-
 class Receita {
 public:
 	/**
