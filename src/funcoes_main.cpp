@@ -611,7 +611,7 @@ void realizarVenda(Cadeia & cadeia)
 	//GET PRODUTOS
 
 	user_getProdutos(farmacia, venda);
-	cout << "Preco final: " << venda->getCusto() << " euros" << endl;
+	cout << "Preco final: " << setprecision(2) << venda->getCusto() << " euros" << endl;
 	cout << "Finalizar venda(S/N)? ";
 	string userChoice;
 	getline(cin, userChoice);
@@ -641,6 +641,7 @@ void realizarVenda(Cadeia & cadeia)
 		}
 		catch (const ClienteNaoExiste &c1)
 		{
+			c1.getInfo();
 			cadeia.addCliente(cliente);
 		}
 
@@ -1403,7 +1404,7 @@ void removerEmpregado(Cadeia& cadeia)
 	// remover empregado
 	try {
 		cadeia.removeEmpregado(ID);
-		cout << "Cliente removido" << endl;
+		cout << "Empregado removido" << endl;
 	}
 	catch (EmpregadoNaoExiste &c1) {
 		cout << c1.getInfo() << endl;
