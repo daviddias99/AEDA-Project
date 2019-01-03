@@ -162,7 +162,6 @@ void Farmacia::addQuantidade(long unsigned int codigo, uint quantidade)
 	throw ProdutoNaoExiste("O produto com o codigo " + to_string(codigo) + " nao existe.");
 }
 
-
 bool Farmacia::existeProduto(unsigned long int codigo)
 {
 	for (map<Produto *, unsigned int>::const_iterator it = stock.begin(); it != stock.end(); it++) {
@@ -274,23 +273,18 @@ void Farmacia::addVenda(Venda * venda)
 	vendas.push_back(venda);
 }
 
-void Farmacia::constroiFilaPrioridade(uint quantidade_limite)
+
+
+void Farmacia::constroiFilaPrioridade()
 {
-	if (!this->prioridade_reabastecimento.empty()) {
-
-		this->esvaziaFilaReabastecimento();
-	}
-
-
 	map<Produto*, uint>::iterator it = this->stock.begin();
 	map<Produto*, uint>::iterator ite = this->stock.end();
 
 	while (it != ite) {
 
 		pair<Produto*, uint> current = *it;
-
-		if (current.second < quantidade_limite)
-			this->prioridade_reabastecimento.push(current);
+		
+		this->prioridade_reabastecimento.push(current);
 
 		it++;
 	}
@@ -363,10 +357,13 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 	Encomenda encomendaProdutos(this->getNome(), fornecedor_produtos->getNome());
 	Encomenda encomendaMedicamentos(this->getNome(), fornecedor_medicamentos->getNome());
 
-	// construir a heap com a quantidade limite
-	this->constroiFilaPrioridade(quantidade_limite);
+	// construir a heap ALTERAR ISTO
+	this->constroiFilaPrioridade();
 
-	while (!this->prioridade_reabastecimento.empty()) {
+	if (this->prioridade_reabastecimento.empty())
+		return;
+
+	while ((!this->prioridade_reabastecimento.empty()) || (this->prioridade_reabastecimento.top().second > quantidade_limite)) {
 
 		// produto atual
 		pair<Produto*, uint> produtoTemp = prioridade_reabastecimento.top();
@@ -405,8 +402,9 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 		Produto* current = itp->first;
 		uint quantidade = itp->second;
 
+		// atualiza tanto o vetor stock como a fila de prioridade
 		this->addProduto(current, quantidade);
-
+		this->prioridade_reabastecimento.push(this->getProduto(current->getCodigo()));
 		itp++;
 	}
 
@@ -419,8 +417,9 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 		Produto* current = itm->first;
 		uint quantidade = itm->second;
 
+		// atualiza tanto o vetor stock como a fila de prioridade
 		this->addProduto(current, quantidade);
-
+		this->prioridade_reabastecimento.push(this->getProduto(current->getCodigo()));
 		itm++;
 	}
 
@@ -446,6 +445,7 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 	fornecedores_medicamentos.push(fornecedor_medicamentos);
 
 }
+
 
 unsigned int Farmacia::numEmpregados() const
 {

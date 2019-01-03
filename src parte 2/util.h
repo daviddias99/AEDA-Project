@@ -19,6 +19,7 @@ typedef unsigned int uint;
  * 
  */
 enum ord_pessoas { id_cres = 0, id_dec, idade_cres, idade_dec, nome_cres, nome_dec, nif_cres, nif_dec, n_comp_cres, n_comp_dec, sal_cres, sal_dec };
+enum ord_fornece { nome_cres_f = 0, nome_dec_f, n_enc_cres_f, n_enc_dec_f, tipo_cres_f, tipo_dec_f };
 
 // ----------Classes----------
 /**
@@ -132,7 +133,7 @@ public:
 	* @param	dmy	true se formato DD-MM-YYYY, falso caso YYYY-MM-DD
 	* @return		string com a data no formato pretendido 
 	*/
-	string getData(bool dmy = true);
+	string getData(bool dmy = true) const;
 
 
 	/**
@@ -246,7 +247,7 @@ public:
 	* @param mostraSegundos	mostra tempo no formato HH:MM:SS se true e HH:MM se false
 	* @return				string com o tempo num formato pretendido
 	*/
-	string getTime(bool mostraSegundos = false);
+	string getTime(bool mostraSegundos = false) const;
 
 	/**
 	* @brief retorna a hora associado ao objeto tempo
@@ -312,7 +313,7 @@ public:
 	*
 	* @return	timestamp no formato DD/MM//YYYY | HH:MM:SS
 	*/
-	string getTstamp();
+	string getTstamp() const;
 	/**
 	* @brief envia para a stream os a data e horas no formato DD-MM-YYYY e HH:MM:SS
 	*

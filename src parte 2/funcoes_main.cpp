@@ -13,7 +13,8 @@ void showMenuPrincipal() {
 	cout << "1 - Gerir Farmacias" << endl;
 	cout << "2 - Gerir Clientes" << endl;
 	cout << "3 - Gerir Empregados" << endl;
-	cout << "4 - Realizar Venda" << endl;
+	cout << "4 - Gerir Fornecedores" << endl;
+	cout << "5 - Realizar Venda" << endl;
 	cout << "0 - Sair da aplicacao" << endl;
 }
 
@@ -346,6 +347,39 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	}
 
 	return produto;
+}
+
+Fornecedor* user_getFornecedor() {
+
+	string nome;
+	Morada morada;
+	TipoFornecedor tipo;
+
+	nome = getInputString("Nome: ", "Nome invalido.");
+	morada = user_getMorada();
+
+	string tipoStr;
+
+	cout << "-Tipo de fornecedor (medicamentos ou produtos):"; 
+	getline(cin, tipoStr);
+
+	while (cin.eof() || (tipoStr != "medicamentos" && tipoStr != "produtos"))
+	{
+		if (cin.eof())
+			cin.clear();
+
+		cout << "ERRO:Tipo invalido." << endl << endl;
+		cout << "-Tipo de fornecedor (medicamentos ou produtos):";
+		getline(cin, tipoStr);
+	}
+
+	(tipoStr == "medicamentos") ? (tipo = medicamentos) : (tipo = produtos);
+
+
+	Fornecedor* newFr = new Fornecedor(nome,morada,tipo);
+
+	return newFr;
+
 }
 
 Data user_getData() {
@@ -1639,6 +1673,147 @@ void gerirEmpregado(Cadeia & cadeia)
 	return;
 }
 
+//////////////////
+// FORNECEDORES //
+//////////////////
+
+void menuFornecedores(Cadeia& cadeia) {
+
+	bool continuarNesteMenu = true;
+
+
+	while (continuarNesteMenu) {
+		int opcao;
+
+		cout << endl << "GERIR FORNECEDORES" << endl << endl;
+		cout << "1 - Resumo fornecedores" << endl;
+		cout << "2 - Adicionar fornecedor" << endl;
+		cout << "3 - Consultar fornecedor" << endl;
+		cout << "0 - Menu anterior" << endl;
+
+		bool opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Opcao: ";
+				opcao = getInputNumber(0, 3);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+
+		switch (opcao) {
+		case 1:
+			resumoFornecedores(cadeia);
+			break;
+		case 2:
+			adicionarFornecedor(cadeia);
+			break;
+		case 3:
+			//consultarFornecedor(cadeia);
+			break;
+
+		case 0:
+			continuarNesteMenu = false;
+			break;
+		}
+	}
+}
+
+void resumoFornecedores(Cadeia& cadeia)
+{
+	cout << endl << "RESUMO FORNECEDORES" << endl << endl;
+
+	if (cadeia.getNumFornecedores() == 0) {
+		cout << "A cadeia \"" << cadeia.getNome() << "\" ainda nao tem fornecedores." << endl;
+		return;
+	}
+
+	int opcao;
+
+	cout << "Ordenar por: " << endl;
+	cout << "0 - nome (crescente)" << endl;
+	cout << "1 - nome (decrescente)" << endl;
+	cout << "2 - numero de encomendas (crescente)" << endl;
+	cout << "3 - numero de encomendas (decrescente)" << endl;
+	cout << "4 - tipo (crescente)" << endl;
+	cout << "5 - tipo (decrescente)" << endl;
+
+
+	bool opcaoInvalida = true;
+	while (opcaoInvalida) {
+
+		try {
+			cout << "Opcao: ";
+			opcao = getInputNumber(0, 5);
+		}
+		catch (OpcaoInvalida& opIn) {
+			cout << opIn.getInfo() << endl;
+			continue;
+		}
+
+		opcaoInvalida = false;
+	}
+
+	cout << endl << endl;
+
+	cadeia.sortFornecedores((ord_fornece)opcao);
+
+	cadeia.mostraFornecedores();
+
+	cadeia.sortFornecedores(nome_cres_f);
+}
+
+void adicionarFornecedor(Cadeia& cadeia)
+{
+	cout << endl << "ADICIONAR FORNECEDOR" << endl << endl;
+
+	Fornecedor* newFr = user_getFornecedor();
+
+	if (cadeia.addFornecedor(newFr)) {
+
+		cout << "Fornecedor adicionado." << endl;
+	}
+	else {
+		cout << "O fornecedor com o nome " << newFr->getNome() << " ja existe." << endl;
+	}
+}
+
+void consultarFornecedor(Cadeia& cadeia) {
+
+	cout << endl;
+
+	if (cadeia.getNumFornecedores() == 0) {
+
+		cout << "A cadeia " << cadeia.getNome() << " ainda nao tem fornecedores." << endl;
+		return;
+	}
+
+	Fornecedor * fornecedor;
+
+	string fornecedorNome = getInputString("Nome do fornecedor que pretende consultar: ", "Nome invalido.");
+
+	try
+	{
+		fornecedor = cadeia.getFornecedor(fornecedorNome);
+	}
+	catch (FornecedorNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	cout << endl << "CONSULTAR FORNECEDOR" << endl << endl;
+	fornecedor->print(cout) << endl << endl;
+	fornecedor->print_encomendas_resumo(cout) << endl;
+
+		
+
+}
 
 
 /////////////////

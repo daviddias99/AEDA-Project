@@ -66,7 +66,7 @@ bool Encomenda::terminaEncomenda()
 	return true;
 }
 
-float Encomenda::getValor()
+float Encomenda::getValor() const
 {
 
 	return this->valorEncomenda;
@@ -106,6 +106,15 @@ const ListaProdutos & Encomenda::getProdutos()
 void Encomenda::mudaFornecedor(string novoFornecedor)
 {
 	this->fornecedorOrigem = novoFornecedor;
+}
+
+ostream & Encomenda::print_resumo(ostream & os) const
+{
+	os << "Origem: " << this->farmaciaOrigem << endl;
+	os << "Data da encomenda: " << this->stamp.getTstamp() << endl;
+	os << "Valor: " << this->getValor() << endl;
+
+	return os;
 }
 
 Encomenda::Encomenda(string nomeFarmacia, string nomeFornecedor) {
