@@ -28,8 +28,22 @@ public:
 	Morada getMoradaSede() const;
 	const list<Encomenda>& getEncomendasSatisfeitas() const;
 	TipoFornecedor getTipo() const;
-
+	/**
+	* @brief Mostra o nome e a morada do fornecedor no ecra
+	*/
+	ostream& print(ostream& os) const;
+	bool operator<(Fornecedor& f2);
+	bool operator==(Fornecedor& f2);
 };
+
+
+
+bool fornecedor_SortFunc_Nome_Crescente(Fornecedor * f1, Fornecedor * f2);
+bool fornecedor_SortFunc_Nome_Decrescente(Fornecedor * f1, Fornecedor * f2);
+bool fornecedor_SortFunc_Tipo_Crescente(Fornecedor * f1, Fornecedor * f2);
+bool fornecedor_SortFunc_Tipo_Decrescente(Fornecedor * f1, Fornecedor * f2);
+bool fornecedor_SortFunc_NumEncomendas_Crescente(Fornecedor * f1, Fornecedor * f2);
+bool fornecedor_SortFunc_NumEncomendas_Decrescente(Fornecedor * f1, Fornecedor * f2);
 
 struct fornecedor_heap_sort_func {
 	bool operator()(const Fornecedor* lhs, const Fornecedor* rhs) {

@@ -237,7 +237,7 @@ public:
 	void addVenda(Venda* venda);
 
 	//--------------------------------------------------------------------
-	void constroiFilaPrioridade(uint quantidade_limite);
+	void constroiFilaPrioridade();
 
 	void repoeStock(uint quantidade_limite, int quantidade_nova = -1);
 

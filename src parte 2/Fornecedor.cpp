@@ -50,3 +50,86 @@ TipoFornecedor Fornecedor::getTipo() const
 	return this->tipo;
 }
 
+
+
+ostream& Fornecedor::print(ostream& os) const {
+
+	os << nome << endl << this->morada_sede;
+	cout << endl << "Tipo: " << ((this->tipo == medicamentos) ? "medicamentos" : "produtos");
+	cout << endl << "Numero encomendas: " << this->getNumEncomendas();
+
+	return os;
+}
+
+bool Fornecedor::operator<(Fornecedor & f2)
+{
+	return this->nome < f2.getNome();
+}
+
+bool Fornecedor::operator==(Fornecedor & f2)
+{
+	return this->nome == f2.getNome();
+}
+
+bool fornecedor_SortFunc_Nome_Crescente(Fornecedor * f1, Fornecedor * f2) {
+
+	if (f1->getNome() < f2->getNome())
+		return true;
+	else
+		return false;
+}
+
+bool fornecedor_SortFunc_Nome_Decrescente(Fornecedor * f1, Fornecedor * f2)
+{
+	if (f1->getNome() > f2->getNome())
+		return true;
+	else
+		return false;
+}
+
+bool fornecedor_SortFunc_Tipo_Crescente(Fornecedor * f1, Fornecedor * f2)
+{
+	if (f1->getTipo() == f2->getTipo()) {
+		return f1->getNome() < f2->getNome();
+	}
+	else {
+
+		if (f1->getTipo() == medicamentos && f2->getTipo() == produtos)
+			return true;
+		else
+			return false;
+	}
+}
+
+bool fornecedor_SortFunc_Tipo_Decrescente(Fornecedor * f1, Fornecedor * f2)
+{
+	if (f1->getTipo() == f2->getTipo()) {
+		return f1->getNome() < f2->getNome();
+	}
+	else {
+
+		if (f1->getTipo() == medicamentos && f2->getTipo() == produtos)
+			return false;
+		else
+			return true;
+	}
+}
+
+bool fornecedor_SortFunc_NumEncomendas_Crescente(Fornecedor * f1, Fornecedor * f2)
+{
+	if (f1->getNumEncomendas() == f2->getNumEncomendas())
+		return f1->getNome() < f2->getNome();
+	else {
+		return f1->getNumEncomendas() < f2->getNumEncomendas();
+	}
+}
+
+bool fornecedor_SortFunc_NumEncomendas_Decrescente(Fornecedor * f1, Fornecedor * f2)
+{
+	if (f1->getNumEncomendas() == f2->getNumEncomendas())
+		return f1->getNome() > f2->getNome();
+	else {
+		return f1->getNumEncomendas() > f2->getNumEncomendas();
+	}
+}
+

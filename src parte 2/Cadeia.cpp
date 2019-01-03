@@ -48,6 +48,16 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 	return true;
 }
 
+bool Cadeia::addFornecedor(Fornecedor * fornecedor)
+{
+	if (procura(fornecedores, fornecedor) != -1) return false;
+
+	fornecedores.push_back(fornecedor);
+
+	sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Nome_Crescente);
+	return true;
+}
+
 void Cadeia::removeFarmacia(string nome)
 {
 	int i = procura(farmacias, nome);
@@ -78,6 +88,17 @@ void Cadeia::removeEmpregado(uint ID)
 	else throw EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
 }
 
+void Cadeia::removeFornecedor(string nome)
+{
+	int i = procura(fornecedores, nome);
+	if (i != -1) { //Fornecedor encontrado 
+		fornecedores.erase(fornecedores.begin() + i);
+
+	}
+	else throw FornecedorNaoExiste(nome);
+
+}
+
 Farmacia* Cadeia::getFarmacia(string nome) const
 {
 	unsigned int i = procura(farmacias, nome);
@@ -103,6 +124,15 @@ Empregado* Cadeia::getEmpregado(uint ID) const
 		return empregados[i];
 
 	throw  EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
+}
+
+Fornecedor * Cadeia::getFornecedor(string nome) const
+{
+	unsigned int i = procura(fornecedores, nome);
+	if (i != -1) //Fornecedor encontrada
+		return fornecedores[i];
+
+	throw FornecedorNaoExiste("Nao existe nenhum fornecedor com o nome " + nome + ".");
 }
 
 vector<Cliente*> Cadeia::getClientes(string nome) const
@@ -150,11 +180,15 @@ unsigned int Cadeia::getNumClientes() const
 	return clientes.size();
 }
 
+unsigned int Cadeia::getNumFornecedores() const
+{
+	return fornecedores.size();
+}
+
 string Cadeia::getNome() const
 {
 	return nome;
 }
-
 
 
 
@@ -260,6 +294,31 @@ void Cadeia::sortEmpregados(ord_pessoas modo)
 	}
 }
 
+void Cadeia::sortFornecedores(ord_fornece modo)
+{
+	switch (modo) {
+	case nome_cres_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Nome_Crescente);
+		break;
+	case nome_dec_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Nome_Decrescente);
+		break;
+	case n_enc_cres_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_NumEncomendas_Crescente);
+		break;
+	case n_enc_dec_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_NumEncomendas_Decrescente);
+		break;
+	case tipo_cres_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Tipo_Crescente);
+		break;
+	case tipo_dec_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Tipo_Decrescente);
+		break;
+	}
+}
+
+
 void Cadeia::mostrarFarmacias()
 {
 	if (farmacias.size() == 0) {
@@ -282,6 +341,17 @@ void Cadeia::mostrarEmpregados()
 		empregados.at(i)->print(cout) << endl << endl;
 }
 
+void Cadeia::mostraFornecedores()
+{
+	if (fornecedores.size() == 0) {
+		cout << "A cadeia " + nome + " ainda nao tem fornecedores." << endl << endl;
+		return;
+	}
+	for (size_t i = 0; i < fornecedores.size(); i++)
+		fornecedores.at(i)->print(cout) << endl << endl;
+
+
+}
 
 void Cadeia::guardarDados()
 {

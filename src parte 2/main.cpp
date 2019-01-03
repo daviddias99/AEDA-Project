@@ -58,7 +58,7 @@ int main() {
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 4);
+				opcao = getInputNumber(0, 5);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -79,6 +79,9 @@ int main() {
 			menuEmpregados(cadeia);
 			break;
 		case 4:
+			menuFornecedores(cadeia);
+			break;
+		case 5:
 			realizarVenda(cadeia);
 			break;
 		case 0:
