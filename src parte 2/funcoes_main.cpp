@@ -1779,6 +1779,38 @@ void adicionarFornecedor(Cadeia& cadeia)
 	}
 }
 
+void consultarFornecedor(Cadeia& cadeia) {
+
+	cout << endl;
+
+	if (cadeia.getNumFornecedores() == 0) {
+
+		cout << "A cadeia " << cadeia.getNome() << " ainda nao tem fornecedores." << endl;
+		return;
+	}
+
+	Fornecedor * fornecedor;
+
+	string fornecedorNome = getInputString("Nome do fornecedor que pretende consultar: ", "Nome invalido.");
+
+	try
+	{
+		fornecedor = cadeia.getFornecedor(fornecedorNome);
+	}
+	catch (FornecedorNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	cout << endl << "CONSULTAR FORNECEDOR" << endl << endl;
+	fornecedor->print(cout) << endl << endl;
+	fornecedor->print_encomendas_resumo(cout) << endl;
+
+		
+
+}
+
 
 /////////////////
 //  FARMACIAS  //

@@ -133,7 +133,7 @@ public:
 	* @param	dmy	true se formato DD-MM-YYYY, falso caso YYYY-MM-DD
 	* @return		string com a data no formato pretendido 
 	*/
-	string getData(bool dmy = true);
+	string getData(bool dmy = true) const;
 
 
 	/**
@@ -247,7 +247,7 @@ public:
 	* @param mostraSegundos	mostra tempo no formato HH:MM:SS se true e HH:MM se false
 	* @return				string com o tempo num formato pretendido
 	*/
-	string getTime(bool mostraSegundos = false);
+	string getTime(bool mostraSegundos = false) const;
 
 	/**
 	* @brief retorna a hora associado ao objeto tempo
@@ -313,7 +313,7 @@ public:
 	*
 	* @return	timestamp no formato DD/MM//YYYY | HH:MM:SS
 	*/
-	string getTstamp();
+	string getTstamp() const;
 	/**
 	* @brief envia para a stream os a data e horas no formato DD-MM-YYYY e HH:MM:SS
 	*

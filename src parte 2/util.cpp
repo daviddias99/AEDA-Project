@@ -82,7 +82,7 @@ Data::Data(string dataDMY)
 		throw DataInvalida("Dia invalido.");
 }
 
-string Data::getData(bool dmy)
+string Data::getData(bool dmy) const
 {
 	string result;
 
@@ -189,7 +189,7 @@ Time::Time(string time) {
 }
 
 
-string Time::getTime(bool mostraSegundos)
+string Time::getTime(bool mostraSegundos) const
 {
 	string result;
 
@@ -242,7 +242,7 @@ Timestamp::Timestamp(string time)
 	Time(time.substr(time.find_last_of('|') + 1, string::npos));
 }
 
-string Timestamp::getTstamp()
+string Timestamp::getTstamp() const
 {
 	string result;
 

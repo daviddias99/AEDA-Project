@@ -32,6 +32,7 @@ public:
 	* @brief Mostra o nome e a morada do fornecedor no ecra
 	*/
 	ostream& print(ostream& os) const;
+	ostream& print_encomendas_resumo(ostream& os) const;
 	bool operator<(Fornecedor& f2);
 	bool operator==(Fornecedor& f2);
 };

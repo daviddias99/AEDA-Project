@@ -18,12 +18,13 @@ public:
 	bool adicionaProduto(Produto* novoProduto, uint quantidade);
 	bool removeProduto(Produto* produto, uint quantidade, bool removeTudo = false);
 	bool terminaEncomenda();
-	float getValor();
+	float getValor() const;
 	string getNomeFarmacia();
 	string getNomeFornecedor();
 	uint getQuantidadeProdutos();
 	const ListaProdutos& getProdutos();
 	void mudaFornecedor(string novoFornecedor);
+	ostream& print_resumo(ostream& os) const;
 
 
 private:

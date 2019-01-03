@@ -14,7 +14,6 @@ void Fornecedor::adicionaEncomenda(Encomenda encomenda)
 	this->encomendas_satisfeitas.insert(this->encomendas_satisfeitas.begin(), encomenda);
 }
 
-
 bool Fornecedor::satisfazEncomenda(Encomenda encomenda)
 {
 
@@ -56,7 +55,23 @@ ostream& Fornecedor::print(ostream& os) const {
 
 	os << nome << endl << this->morada_sede;
 	cout << endl << "Tipo: " << ((this->tipo == medicamentos) ? "medicamentos" : "produtos");
-	cout << endl << "Numero encomendas: " << this->getNumEncomendas();
+	cout << endl << "Numero encomendas: " << this->getNumEncomendas() << endl << endl;
+	return os;
+}
+
+ostream & Fornecedor::print_encomendas_resumo(ostream & os) const
+{
+	list<Encomenda>::const_iterator it = this->encomendas_satisfeitas.begin();
+	list<Encomenda>::const_iterator ite = this->encomendas_satisfeitas.end();
+
+	while (it != ite) {
+
+		Encomenda encomenda_atual = *it;
+
+		encomenda_atual.print_resumo(os);
+
+		it++;
+	}
 
 	return os;
 }
