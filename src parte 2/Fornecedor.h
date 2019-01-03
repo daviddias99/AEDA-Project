@@ -33,6 +33,7 @@ public:
 	*/
 	ostream& print(ostream& os) const;
 	ostream& print_encomendas_resumo(ostream& os) const;
+	ostream& print_resumo_lista(ostream& os) const;
 	bool operator<(Fornecedor& f2);
 	bool operator==(Fornecedor& f2);
 };

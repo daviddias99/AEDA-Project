@@ -146,6 +146,8 @@ public:
 	*/
 	vector<Empregado*> getEmpregados(string nome) const;
 
+	const vector<Fornecedor*>  getFornecedores() const;
+
 	/**
 	* @brief Devolve o numero de farmacias da cadeia
 	* @return					numero de farmacias da cadeia

@@ -134,6 +134,11 @@ public:
 	* @return Vetor de apontadores para empregados com o nome indicado no parametro que trabalham na farmacia
 	*/
 	vector<Empregado*> getEmpregados(string nome) const;
+
+	vector<Fornecedor*> getFornecedores() const;
+
+	Fornecedor* getFornecedor(string nome) const;
+
 	/**
 	* @brief Devolve o numero de empregados que trabalham na farmacia
 	* @return Numero de empregados da farmacia
@@ -247,7 +252,7 @@ public:
 
 	bool addFornecedor(Fornecedor* novo_fornecedor);
 	bool removeFornecedor(Fornecedor * fornecedor);
-
+	ostream& print_lista_fornecedores(ostream& os);
 
 	//--------------------------------------------------------------------
 
@@ -281,6 +286,7 @@ private:
 
 	//--------------------------------------------------------------------
 	vector<Encomenda> encomendas;
+	vector<Fornecedor*> fornecedores;
 	HeapFornecedores fornecedores_medicamentos;
 	HeapFornecedores fornecedores_produtos;
 	HeapStock prioridade_reabastecimento;

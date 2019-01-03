@@ -199,6 +199,23 @@ vector<Empregado*> Farmacia::getEmpregados(string nome) const
 	return v1;
 }
 
+vector<Fornecedor*> Farmacia::getFornecedores() const
+{
+	return this->fornecedores;
+}
+
+Fornecedor * Farmacia::getFornecedor(string nome) const
+{
+	int fornecedorPos = procura(this->fornecedores,nome);
+
+	if (fornecedorPos == -1)
+		throw FornecedorNaoExiste("O fornecedor nao existe");
+	else
+		return fornecedores.at(fornecedorPos);
+
+	return NULL;
+}
+
 unsigned int Farmacia::getNumEmpregados() const
 {
 	return empregados.size();
@@ -298,12 +315,19 @@ HeapStock Farmacia::getFilaReabastecimento()
 
 bool Farmacia::addFornecedor(Fornecedor * novo_fornecedor)
 {
-	if (novo_fornecedor->getTipo() == medicamentos)
+	if (novo_fornecedor->getTipo() == medicamentos) {
+		this->fornecedores.insert(fornecedores.begin(), novo_fornecedor);
 		this->fornecedores_medicamentos.push(novo_fornecedor);
-	else if (novo_fornecedor->getTipo() == produtos)
+	}
+	else if (novo_fornecedor->getTipo() == produtos) {
+		this->fornecedores.insert(fornecedores.begin(), novo_fornecedor);
 		this->fornecedores_produtos.push(novo_fornecedor);
-	else
+	}	
+	else {
+
 		return false;
+	}
+		
 
 	return true;
 }
@@ -332,11 +356,30 @@ bool Farmacia::removeFornecedor(Fornecedor * fornecedor) {
 
 	}
 
+	for (int i = 0; i < this->fornecedores.size(); i++) {
+
+		if (fornecedores.at(i) == fornecedor) {
+			fornecedores.erase(fornecedores.begin() + i);
+			break;
+		}
+	}
+
 	// colocar heap novo;
 	*heap_a_alterar = novoHeap;
 
 	return true;
 
+}
+
+ostream & Farmacia::print_lista_fornecedores(ostream & os)
+{
+	for (size_t i = 0; i < this->fornecedores.size(); i++) {
+
+		fornecedores.at(i)->print_resumo_lista(os);
+	}
+	cout << endl;
+
+	return os;
 }
 
 void Farmacia::esvaziaFilaReabastecimento()

@@ -1828,6 +1828,8 @@ void menuFarmacias(Cadeia& cadeia)
 		cout << "3 - Adicionar Farmacia" << endl;
 		cout << "4 - Gerir stock" << endl;
 		cout << "5 - Alterar gerente" << endl;
+		cout << "6 - Adicionar fornecedor " << endl;
+		cout << "7 - Remover fornecedor " << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -1835,7 +1837,7 @@ void menuFarmacias(Cadeia& cadeia)
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 5);
+				opcao = getInputNumber(0, 7);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -1860,6 +1862,13 @@ void menuFarmacias(Cadeia& cadeia)
 			break;
 		case 5:
 			farmacia_alterarGerente(cadeia);
+			break;
+		case 6:
+			farmacia_adicionarFornecedor(cadeia);
+			break;
+		case 7:
+			farmacia_removerFornecedor(cadeia);
+			break;
 		case 0:
 			continuarNesteMenu = false;
 		}
@@ -1913,7 +1922,8 @@ void consultarFarmacia(Cadeia& cadeia) {
 		cout << "1 - Empregados" << endl;
 		cout << "2 - Produtos" << endl;
 		cout << "3 - Vendas" << endl;
-		cout << "4 - Outra farmacia" << endl;
+		cout << "4 - Fornecedores" << endl;
+		cout << "5 - Outra farmacia" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -1941,7 +1951,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 		case 3:
 			farmacia_consultarVendas(*farmacia);
 			break;
-		case 4:
+		case 5:
 			cout << "Farmacia: ";
 			getline(cin, farmaciaNome);
 
@@ -1954,6 +1964,9 @@ void consultarFarmacia(Cadeia& cadeia) {
 				cout << f.getInfo() << endl;
 				return;
 			}
+			break;
+		case 4:
+			farmacia_consultaFornecedores(*farmacia);
 			break;
 		case 0:
 			continuarNesteMenu = false;
@@ -2397,6 +2410,130 @@ void farmacia_removerProduto(Farmacia & farmacia)
 	}
 }
 
+void farmacia_adicionarFornecedor(Cadeia & cadeia)
+{
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "Adicione uma farmacia primeiro." << endl;
+		return;
+
+	}
+
+	cout << endl;
+
+	Farmacia * farmacia;
+
+	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
+
+
+	try
+	{
+		farmacia = cadeia.getFarmacia(farmaciaNome);
+	}
+	catch (FarmaciaNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	farmacia->print(cout);
+	cout << endl << endl;
+
+	vector<Fornecedor *> fornecedores = cadeia.getFornecedores();
+
+	for (size_t i = 0; i < fornecedores.size(); i++) {
+
+		Fornecedor* atual = fornecedores.at(i);
+
+		atual->print_resumo_lista(cout);
+
+	}
+	cout << endl;
+
+	string fornecedorNome = getInputString("Nome do fornecedor a adicionar: ", "Nome invalido.");
+	Fornecedor * fornecedor;
+
+	try
+	{
+		fornecedor = cadeia.getFornecedor(fornecedorNome);
+	}
+	catch (FornecedorNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	farmacia->addFornecedor(fornecedor);
+
+	cout << "Adicionado." << endl;
+}
+
+void farmacia_removerFornecedor(Cadeia & cadeia)
+{
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "Adicione uma farmacia primeiro." << endl;
+		return;
+
+	}
+
+	cout << endl;
+
+	Farmacia * farmacia;
+
+	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
+
+
+	try
+	{
+		farmacia = cadeia.getFarmacia(farmaciaNome);
+	}
+	catch (FarmaciaNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	farmacia->print(cout);
+	cout << endl;
+
+	vector<Fornecedor *> fornecedores = farmacia->getFornecedores();
+
+	for (size_t i = 0; i < fornecedores.size(); i++) {
+
+		Fornecedor* atual = fornecedores.at(i);
+
+		atual->print_resumo_lista(cout);
+
+	}
+	cout << endl;
+
+	string fornecedorNome = getInputString("Nome do fornecedor a remover: ", "Nome invalido.");
+	Fornecedor * fornecedor;
+
+	try
+	{
+		fornecedor = farmacia->getFornecedor(fornecedorNome);
+	}
+	catch (FornecedorNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	farmacia->removeFornecedor(fornecedor);
+
+	cout << "Removido." << endl;
+
+}
+
+void farmacia_consultaFornecedores(Farmacia& farmacia) {
+
+	cout << endl << " --- Fornecedores da Farmacia " << farmacia.getNome() << " ---" << endl;
+	farmacia.print_lista_fornecedores(cout);
+	cout << endl;
+}
+
 void adicionarFarmacia(Cadeia& cadeia)
 {
 	Empregado* newEmp;
@@ -2427,5 +2564,3 @@ void adicionarFarmacia(Cadeia& cadeia)
 	cout << endl << "Gerente adicionado, farmacia criada." << endl;
 
 }
-
-

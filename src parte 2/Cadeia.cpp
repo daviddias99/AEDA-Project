@@ -165,6 +165,11 @@ vector<Empregado*> Cadeia::getEmpregados(string nome) const
 	return resultado;
 }
 
+const vector<Fornecedor*>  Cadeia::getFornecedores() const {
+
+	return this->fornecedores;
+}
+
 unsigned int Cadeia::getNumFarmacias() const
 {
 	return farmacias.size();
