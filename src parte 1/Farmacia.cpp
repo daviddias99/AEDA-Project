@@ -274,7 +274,178 @@ void Farmacia::addVenda(Venda * venda)
 	vendas.push_back(venda);
 }
 
+void Farmacia::constroiFilaPrioridade(uint quantidade_limite)
+{
+	if (!this->prioridade_reabastecimento.empty()) {
 
+		this->esvaziaFilaReabastecimento();
+	}
+
+
+	map<Produto*, uint>::iterator it = this->stock.begin();
+	map<Produto*, uint>::iterator ite = this->stock.end();
+
+	while (it != ite) {
+
+		pair<Produto*, uint> current = *it;
+
+		if (current.second < quantidade_limite)
+			this->prioridade_reabastecimento.push(current);
+
+		it++;
+	}
+
+}
+
+HeapStock Farmacia::getFilaReabastecimento()
+{
+	return this->prioridade_reabastecimento;
+}
+
+bool Farmacia::addFornecedor(Fornecedor * novo_fornecedor)
+{
+	if (novo_fornecedor->getTipo() == medicamentos)
+		this->fornecedores_medicamentos.push(novo_fornecedor);
+	else if (novo_fornecedor->getTipo() == produtos)
+		this->fornecedores_produtos.push(novo_fornecedor);
+	else
+		return false;
+
+	return true;
+}
+
+bool Farmacia::removeFornecedor(Fornecedor * fornecedor) {
+
+	HeapFornecedores novoHeap;
+	HeapFornecedores* heap_a_alterar;
+
+	// guardar heap a alterar
+	if (fornecedor->getTipo() == produtos)
+		heap_a_alterar = &this->fornecedores_produtos;
+	else if (fornecedor->getTipo() == medicamentos)
+		heap_a_alterar = &this->fornecedores_medicamentos;
+	else
+		return false;
+
+	// esvaziar heap, preenchendo o novo heap (nao adicionando o fornecedor a remover)
+	while (!heap_a_alterar->empty()) {
+
+		Fornecedor* atual = heap_a_alterar->top();
+		heap_a_alterar->pop();
+
+		if (atual->getNome() != fornecedor->getNome())
+			novoHeap.push(atual);
+
+	}
+
+	// colocar heap novo;
+	*heap_a_alterar = novoHeap;
+
+	return true;
+
+}
+
+void Farmacia::esvaziaFilaReabastecimento()
+{
+	while (!this->prioridade_reabastecimento.empty())
+		this->prioridade_reabastecimento.pop();
+}
+
+void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
+
+	// obter o fornecedor de cada tipo
+	Fornecedor* fornecedor_produtos = fornecedores_produtos.top();
+	fornecedores_produtos.pop();
+	Fornecedor* fornecedor_medicamentos = fornecedores_medicamentos.top();
+	fornecedores_medicamentos.pop();
+
+	// criar duas novas encomendas
+	Encomenda encomendaProdutos(this->getNome(), fornecedor_produtos->getNome());
+	Encomenda encomendaMedicamentos(this->getNome(), fornecedor_medicamentos->getNome());
+
+	// construir a heap com a quantidade limite
+	this->constroiFilaPrioridade(quantidade_limite);
+
+	while (!this->prioridade_reabastecimento.empty()) {
+
+		// produto atual
+		pair<Produto*, uint> produtoTemp = prioridade_reabastecimento.top();
+		prioridade_reabastecimento.pop();
+
+		// verificar que tipo de produto se trata
+		Medicamento* mediTemp = dynamic_cast<Medicamento*> (produtoTemp.first);
+
+		if (mediTemp != NULL) {
+
+			// criar entrada na encomenda com a quantidade necessaria
+			if( (quantidade_nova = -1) || (quantidade_nova < quantidade_limite) )
+				encomendaMedicamentos.adicionaProduto(produtoTemp.first, quantidade_limite - produtoTemp.second);
+			else
+				encomendaMedicamentos.adicionaProduto(produtoTemp.first, quantidade_nova - produtoTemp.second);
+		}
+		else {
+
+			// criar entrada na encomenda com a quantidade necessaria
+			if ((quantidade_nova = -1) || (quantidade_nova < quantidade_limite))
+				encomendaProdutos.adicionaProduto(produtoTemp.first, quantidade_limite - produtoTemp.second);
+			else
+				encomendaProdutos.adicionaProduto(produtoTemp.first, quantidade_nova - produtoTemp.second);
+
+		}
+
+	}
+
+	// atualizar stock da farmacia
+	ListaProdutos produtos = encomendaProdutos.getProdutos();
+	ListaProdutos::iterator itp = produtos.begin();
+	ListaProdutos::iterator itep = produtos.end();
+
+	while (itp != itep) {
+
+		Produto* current = itp->first;
+		uint quantidade = itp->second;
+
+		this->addProduto(current, quantidade);
+
+		itp++;
+	}
+
+	ListaProdutos medicamentos = encomendaMedicamentos.getProdutos();
+	ListaProdutos::iterator itm = produtos.begin();
+	ListaProdutos::iterator item = produtos.end();
+
+	while (itm != item) {
+
+		Produto* current = itm->first;
+		uint quantidade = itm->second;
+
+		this->addProduto(current, quantidade);
+
+		itm++;
+	}
+
+	// adicionar registo das encomendas ao fornecedor e à farmacia
+	// terminar encomenda parar registar o timestamp
+
+	if (!medicamentos.empty()) {
+
+		encomendaMedicamentos.terminaEncomenda();
+		fornecedor_medicamentos->satisfazEncomenda(encomendaMedicamentos);
+		this->encomendas.push_back(encomendaMedicamentos);
+	}
+
+	if (!produtos.empty()) {
+
+		encomendaProdutos.terminaEncomenda();
+		fornecedor_medicamentos->satisfazEncomenda(encomendaProdutos);
+		this->encomendas.push_back(encomendaProdutos);
+	}
+
+	// readicionar os fornecedores aos heaps
+	fornecedores_produtos.push(fornecedor_produtos);
+	fornecedores_medicamentos.push(fornecedor_medicamentos);
+
+}
 
 unsigned int Farmacia::numEmpregados() const
 {
@@ -289,6 +460,16 @@ unsigned int Farmacia::tamanhoStock() const
 unsigned int Farmacia::numVendas() const
 {
 	return vendas.size();
+}
+
+bool operator>(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2)
+{
+	return p1.second < p2.second;
+}
+
+bool operator==(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2)
+{
+	return p1.first->getCodigo() == p2.first->getCodigo();
 }
 
 bool farmacia_SortFunc_Nome_Crescente(Farmacia * f1, Farmacia * f2)

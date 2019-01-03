@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
+#include <queue>
 
 
 #include "Empregado.h"
@@ -14,6 +15,8 @@
 #include "Produto.h"
 #include "Medicamento.h"
 #include "Excecoes.h"
+#include "Fornecedor.h"
+#include "Encomenda.h"
 
 using namespace std;
 
@@ -37,6 +40,11 @@ using namespace std;
  * @brief Classe que representa uma farmacia
  * 
  */
+
+typedef priority_queue<Fornecedor*, vector<Fornecedor*>, fornecedor_heap_sort_func> HeapFornecedores;
+typedef priority_queue<pair<Produto*, uint>> HeapStock;
+
+
 class Farmacia {
 public:
 	/**
@@ -228,6 +236,21 @@ public:
 	 */
 	void addVenda(Venda* venda);
 
+	//--------------------------------------------------------------------
+	void constroiFilaPrioridade(uint quantidade_limite);
+
+	void repoeStock(uint quantidade_limite, int quantidade_nova = -1);
+
+	void esvaziaFilaReabastecimento();
+
+	HeapStock getFilaReabastecimento();
+
+	bool addFornecedor(Fornecedor* novo_fornecedor);
+	bool removeFornecedor(Fornecedor * fornecedor);
+
+
+	//--------------------------------------------------------------------
+
 private:
 	/**
 	 * @brief Nome da farmacia
@@ -255,7 +278,20 @@ private:
 	 * @brief Vetor de apontadores para vendas
 	 */
 	vector <Venda *> vendas;
+
+	//--------------------------------------------------------------------
+	vector<Encomenda> encomendas;
+	HeapFornecedores fornecedores_medicamentos;
+	HeapFornecedores fornecedores_produtos;
+	HeapStock prioridade_reabastecimento;
+	//--------------------------------------------------------------------
 };
+
+bool operator>(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
+
+bool operator==(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
+
+
 
 /**
 * @brief Usada para ordenar a lista de farmacias da cadeia. Compara duas farmacias.

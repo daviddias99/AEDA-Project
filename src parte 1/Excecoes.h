@@ -210,6 +210,18 @@ public:
 	TimeInvalido(string i) : ExcecaoGeral(i) {}
 };
 
+class EncomendaInvalida : public ExcecaoGeral {
+
+public:
+	/**
+	 * @brief Cria uma excecao com a informacao passada por argumento
+	 *
+	 * @param i informacao sobre a excecao
+	 */
+	EncomendaInvalida(string i) : ExcecaoGeral(i) {}
+
+};
+
 /** @} */
 
 #endif
