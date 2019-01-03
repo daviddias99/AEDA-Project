@@ -49,7 +49,7 @@ bool fornecedor_SortFunc_NumEncomendas_Decrescente(Fornecedor * f1, Fornecedor *
 
 struct fornecedor_heap_sort_func {
 	bool operator()(const Fornecedor* lhs, const Fornecedor* rhs) {
-		return lhs->getNumEncomendas() < lhs->getNumEncomendas();
+		return lhs->getNumEncomendas() > rhs->getNumEncomendas();
 	}
 };
 

@@ -3,6 +3,8 @@
 
 #include <string>
 #include <iostream>
+#include <iomanip>
+#include "util.h"
 using namespace std;
 
 /*!
@@ -24,6 +26,7 @@ using namespace std;
  * @brief Classe que representa as informacoes de um produto
  * 
  */
+
 class Produto {
 public:
 	/**
@@ -92,6 +95,10 @@ public:
 	* @brief Copia para um ficheiro indicado no seu argumento os atributos do objeto de forma a que essa informacao seja facilmente carregada
 	*/
 	virtual ostream& printSimp(ostream& os) const;
+
+	virtual ostream& printListForm(ostream& os) const;
+
+
 protected:
 	/**
 	 * @brief Codigo do produto
@@ -113,6 +120,12 @@ protected:
 	 * @brief Imposto sobre o produto
 	 */
 	float iva;
+};
+
+struct produtos_heap_sort_func {
+	bool operator()(const pair<Produto*, uint> lhs, const pair<Produto*, uint> rhs) {
+		return lhs.second > rhs.second;
+	}
 };
 
 /** @} */

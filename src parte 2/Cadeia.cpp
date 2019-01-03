@@ -361,7 +361,7 @@ void Cadeia::mostraFornecedores()
 		return;
 	}
 	for (size_t i = 0; i < fornecedores.size(); i++)
-		fornecedores.at(i)->print(cout) << endl << endl;
+		fornecedores.at(i)->print(cout);
 
 
 }

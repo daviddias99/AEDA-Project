@@ -2059,8 +2059,21 @@ void gerirStock(Cadeia& cadeia) {
 		return;
 	}
 
-
 	bool continuarNesteMenu = true;
+
+	if (!farmacia->temFornecedorMed()) {
+
+		cout << "Por favor adicione um fornecedor de medicamentos antes de adicionar medicamentos." << endl;
+		continuarNesteMenu = false;
+	}
+
+	if (!farmacia->temFornecedorProd()) {
+		cout << "Por favor adicione um fornecedor de produtos antes de adicionar produtos." << endl;
+		continuarNesteMenu = false;
+	}
+
+
+	
 	while (continuarNesteMenu) {
 		int opcao;
 		cout << endl << "GERIR STOCK" << endl << endl;
@@ -2068,7 +2081,8 @@ void gerirStock(Cadeia& cadeia) {
 		cout << "1 - Consultar produtos" << endl;
 		cout << "2 - Adicionar produtos" << endl;
 		cout << "3 - Remover produtos" << endl;
-		cout << "4 - Outra farmacia" << endl;
+		cout << "4 - Repor stock" << endl;
+		cout << "5 - Outra farmacia" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -2097,6 +2111,9 @@ void gerirStock(Cadeia& cadeia) {
 			farmacia_removerProduto(*farmacia);
 			break;
 		case 4:
+			farmacia_reposicaoStock(*farmacia);
+			break;
+		case 5:
 			cout << "Farmacia: ";
 			getline(cin, farmaciaNome);
 
@@ -2114,6 +2131,72 @@ void gerirStock(Cadeia& cadeia) {
 			continuarNesteMenu = false;
 		}
 	}
+
+}
+
+void farmacia_reposicaoStock(Farmacia& farmacia) {
+
+	cout << endl << "REPOR STOCK" << endl << endl;
+	
+	int quantidade_minima;
+	bool opcaoInvalida = true;
+	while (opcaoInvalida) {
+
+		try {
+			cout << "Repor produtos com quantidade inferiores a: ";
+			quantidade_minima = getInputNumber(0, 9999);
+		}
+		catch (OpcaoInvalida& opIn) {
+			cout << opIn.getInfo() << endl;
+			continue;
+		}
+
+		opcaoInvalida = false;
+	}
+
+	farmacia.constroiFilaPrioridade();
+	cout << "Produtos a repor:" << endl << endl;
+	farmacia.mostrarPrioridadeEncomenda_listForm((uint)quantidade_minima);
+	cout << endl << endl;
+
+	cout << "Efetuar reposicao? ";
+
+	string userChoice;
+
+	getline(cin, userChoice);
+	cout << endl;
+	toUpper(userChoice);
+
+	if ((userChoice == "S") || (userChoice == "SIM")) {
+
+		int quantidade_nova;
+		opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Nova quantidade dos produtos: ";
+				quantidade_nova = getInputNumber(quantidade_minima - 1, 9999);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+
+		farmacia.repoeStock(quantidade_minima, quantidade_nova);
+		cout << "Encomenda efetuada." << endl;
+
+
+		
+	}
+	else if ((userChoice == "N") || (userChoice == "NAO")) {
+
+		cout << "Encomenda cancelada." << endl;
+	}
+	else
+		cout << "Encomenda cancelada." << endl;
 
 }
 
@@ -2467,9 +2550,10 @@ void farmacia_adicionarFornecedor(Cadeia & cadeia)
 		return;
 	}
 
-	farmacia->addFornecedor(fornecedor);
-
-	cout << "Adicionado." << endl;
+	if (farmacia->addFornecedor(fornecedor))
+		cout << "Adicionado." << endl;
+	else
+		cout << "Erro a adicionar fornecedor" << endl;
 }
 
 void farmacia_removerFornecedor(Cadeia & cadeia)
@@ -2568,3 +2652,4 @@ void adicionarFarmacia(Cadeia& cadeia)
 	cout << endl << "Gerente adicionado, farmacia criada." << endl;
 
 }
+

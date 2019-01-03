@@ -56,3 +56,12 @@ ostream& Produto::printSimp(ostream& os) const {
 	return os;
 }
 
+ostream & Produto::printListForm(ostream & os) const
+{
+	os << "Nome: " << setw(10) << nome;
+	os << " Codigo: " << setw(6) << this->codigo;
+	os << " Tipo: " << setw(15) << " produto ";
+
+	return os;
+}
+

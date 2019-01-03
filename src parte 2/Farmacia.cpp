@@ -72,11 +72,13 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 	for (it = stock.begin(); it != stock.end(); it++) {
 		if( *(it->first) == *produto ) {
 			it->second += quantidade;
+			this->constroiFilaPrioridade();
 			return;
 		}
 	}
 
 	stock[produto] = quantidade;
+	this->constroiFilaPrioridade();
 }
 
 bool Farmacia::addEmpregado(Empregado* empregado)
@@ -107,6 +109,7 @@ void Farmacia::removeQuantidade(long unsigned int codigo, uint quantidade)
 			}
 			else {
 				it->second -= quantidade;
+				this->constroiFilaPrioridade();
 				return;
 			}
 		}
@@ -122,6 +125,7 @@ void Farmacia::remProduto(long unsigned int codigo)
 			Produto* prod = it->first;
 			stock.erase(it);
 			delete prod;
+			this->constroiFilaPrioridade();
 			return;
 		}
 	}
@@ -156,6 +160,7 @@ void Farmacia::addQuantidade(long unsigned int codigo, uint quantidade)
 	for (it = stock.begin(); it != stock.end(); it++) {
 		if (it->first->getCodigo() == codigo) {
 			it->second += quantidade;
+			this->constroiFilaPrioridade();
 			return;
 		}
 	}
@@ -294,6 +299,10 @@ void Farmacia::addVenda(Venda * venda)
 
 void Farmacia::constroiFilaPrioridade()
 {
+	if (!this->prioridade_reabastecimento.empty())
+		this->esvaziaFilaReabastecimento();
+
+
 	map<Produto*, uint>::iterator it = this->stock.begin();
 	map<Produto*, uint>::iterator ite = this->stock.end();
 
@@ -315,6 +324,9 @@ HeapStock Farmacia::getFilaReabastecimento()
 
 bool Farmacia::addFornecedor(Fornecedor * novo_fornecedor)
 {
+	if (procura(this->fornecedores, novo_fornecedor->getNome()) != -1)
+		return false;
+
 	if (novo_fornecedor->getTipo() == medicamentos) {
 		this->fornecedores.insert(fornecedores.begin(), novo_fornecedor);
 		this->fornecedores_medicamentos.push(novo_fornecedor);
@@ -382,6 +394,16 @@ ostream & Farmacia::print_lista_fornecedores(ostream & os)
 	return os;
 }
 
+bool Farmacia::temFornecedorMed()
+{
+	return !this->fornecedores_medicamentos.empty();
+}
+
+bool Farmacia::temFornecedorProd()
+{
+	return !this->fornecedores_produtos.empty();
+}
+
 void Farmacia::esvaziaFilaReabastecimento()
 {
 	while (!this->prioridade_reabastecimento.empty())
@@ -401,12 +423,12 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 	Encomenda encomendaMedicamentos(this->getNome(), fornecedor_medicamentos->getNome());
 
 	// construir a heap ALTERAR ISTO
-	this->constroiFilaPrioridade();
+	//this->constroiFilaPrioridade();
 
 	if (this->prioridade_reabastecimento.empty())
 		return;
 
-	while ((!this->prioridade_reabastecimento.empty()) || (this->prioridade_reabastecimento.top().second > quantidade_limite)) {
+	while ((!this->prioridade_reabastecimento.empty()) && (this->prioridade_reabastecimento.top().second < quantidade_limite)) {
 
 		// produto atual
 		pair<Produto*, uint> produtoTemp = prioridade_reabastecimento.top();
@@ -418,7 +440,7 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 		if (mediTemp != NULL) {
 
 			// criar entrada na encomenda com a quantidade necessaria
-			if( (quantidade_nova = -1) || (quantidade_nova < quantidade_limite) )
+			if( (quantidade_nova == -1) || (quantidade_nova < quantidade_limite) )
 				encomendaMedicamentos.adicionaProduto(produtoTemp.first, quantidade_limite - produtoTemp.second);
 			else
 				encomendaMedicamentos.adicionaProduto(produtoTemp.first, quantidade_nova - produtoTemp.second);
@@ -426,7 +448,7 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 		else {
 
 			// criar entrada na encomenda com a quantidade necessaria
-			if ((quantidade_nova = -1) || (quantidade_nova < quantidade_limite))
+			if ((quantidade_nova == -1) || (quantidade_nova < quantidade_limite))
 				encomendaProdutos.adicionaProduto(produtoTemp.first, quantidade_limite - produtoTemp.second);
 			else
 				encomendaProdutos.adicionaProduto(produtoTemp.first, quantidade_nova - produtoTemp.second);
@@ -447,13 +469,13 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 
 		// atualiza tanto o vetor stock como a fila de prioridade
 		this->addProduto(current, quantidade);
-		this->prioridade_reabastecimento.push(this->getProduto(current->getCodigo()));
+		//this->prioridade_reabastecimento.push(this->getProduto(current->getCodigo()));
 		itp++;
 	}
 
 	ListaProdutos medicamentos = encomendaMedicamentos.getProdutos();
-	ListaProdutos::iterator itm = produtos.begin();
-	ListaProdutos::iterator item = produtos.end();
+	ListaProdutos::iterator itm = medicamentos.begin();
+	ListaProdutos::iterator item = medicamentos.end();
 
 	while (itm != item) {
 
@@ -462,7 +484,7 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 
 		// atualiza tanto o vetor stock como a fila de prioridade
 		this->addProduto(current, quantidade);
-		this->prioridade_reabastecimento.push(this->getProduto(current->getCodigo()));
+		//this->prioridade_reabastecimento.push(this->getProduto(current->getCodigo()));
 		itm++;
 	}
 
@@ -489,6 +511,55 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 
 }
 
+void Farmacia::efetuaEncomenda(Produto * produto, uint quantidade)
+{
+
+	// verificar que tipo de produto se trata
+	Medicamento* mediTemp = dynamic_cast<Medicamento*> (produto);
+	Fornecedor*  fornecedor;
+
+	if (mediTemp != NULL) {
+
+		fornecedor = fornecedores_medicamentos.top();
+		fornecedores_medicamentos.pop();
+	}
+	else {
+
+		fornecedor = fornecedores_medicamentos.top();
+		fornecedores_medicamentos.pop();
+	}
+
+	// criar uma nova encomenda
+	Encomenda encomenda(this->getNome(), fornecedor->getNome());
+	
+	encomenda.adicionaProduto(produto, quantidade);
+
+
+	this->addProduto(produto, quantidade);
+	//this->prioridade_reabastecimento.push(this->getProduto(produto->getCodigo()));
+
+
+	// adicionar registo das encomendas ao fornecedor e à farmacia
+	// terminar encomenda parar registar o timestamp
+
+	if (mediTemp != NULL) {
+
+		encomenda.terminaEncomenda();
+		fornecedor->satisfazEncomenda(encomenda);
+		this->encomendas.push_back(encomenda);
+		fornecedores_medicamentos.push(fornecedor);
+	}
+	else{
+
+		encomenda.terminaEncomenda();
+		fornecedor->satisfazEncomenda(encomenda);
+		this->encomendas.push_back(encomenda);
+		fornecedores_produtos.push(fornecedor);
+	}
+
+
+}
+
 
 unsigned int Farmacia::numEmpregados() const
 {
@@ -505,9 +576,9 @@ unsigned int Farmacia::numVendas() const
 	return vendas.size();
 }
 
-bool operator>(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2)
+bool operator<(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2)
 {
-	return p1.second < p2.second;
+	return p1.second > p2.second;
 }
 
 bool operator==(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2)
@@ -567,6 +638,36 @@ bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia * f1, Farmacia * f2)
 	else if(f1->tamanhoStock() == f2->tamanhoStock())
 	{
 		if(f1->getNome() < f2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool farmacia_SortFunc_NumVendas_Crescente(Farmacia *f1, Farmacia *f2)
+{
+	if (f1->numVendas() > f2->numVendas())
+		return true;
+	else if (f1->numVendas() == f2->numVendas())
+	{
+		if (f1->getNome() < f2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2)
+{
+	if (f1->numVendas() < f2->numVendas())
+		return true;
+	else if (f1->numVendas() == f2->numVendas())
+	{
+		if (f1->getNome() > f2->getNome())
 			return true;
 		else
 			return false;
@@ -659,39 +760,25 @@ void Farmacia::mostrarStock() const
 	}
 }
 
+void Farmacia::mostrarPrioridadeEncomenda_listForm(uint quantidade_minima) const
+{
+	HeapStock heapCopia = this->prioridade_reabastecimento;
+	
+	while (!heapCopia.empty()) {
+
+		ItemListaProdutos atual = heapCopia.top();
+		heapCopia.pop();
+		if (atual.second >= quantidade_minima)
+			break;
+		atual.first->printListForm(cout) << " #Quantidade: " << atual.second << endl;
+	}
+}
+
 void Farmacia::mostrarVendas() const
 {
 	for (size_t i = 0; i < vendas.size(); i++)
 		vendas[i]->print(cout) << endl << endl;
 }
 
-bool farmacia_SortFunc_NumVendas_Crescente(Farmacia *f1, Farmacia *f2)
-{
-	if(f1->numVendas() > f2->numVendas())
-		return true;
-	else if(f1->numVendas() == f2->numVendas())
-	{
-		if(f1->getNome() < f2->getNome())
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
 
-bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2)
-{
-	if (f1->numVendas() < f2->numVendas())
-		return true;
-	else if (f1->numVendas() == f2->numVendas())
-	{
-		if (f1->getNome() > f2->getNome())
-			return true;
-		else
-			return false;
-	}
-	else
-		return false;
-}
 

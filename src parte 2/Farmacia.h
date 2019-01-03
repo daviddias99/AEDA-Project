@@ -42,7 +42,7 @@ using namespace std;
  */
 
 typedef priority_queue<Fornecedor*, vector<Fornecedor*>, fornecedor_heap_sort_func> HeapFornecedores;
-typedef priority_queue<pair<Produto*, uint>> HeapStock;
+typedef priority_queue<pair<Produto*, uint>, vector<pair<Produto*, uint>>, produtos_heap_sort_func> HeapStock;
 
 
 class Farmacia {
@@ -228,6 +228,9 @@ public:
 	* @brief Mostra alguns atributos de todos os produtos em stock no ecra e ainda as suas quantidades
 	*/
 	void mostrarStock() const;
+
+	void mostrarPrioridadeEncomenda_listForm(uint quantidade_minima) const;
+
 	/**
 	 * @brief Mostra vendas da farmacia no ecra
 	 */
@@ -245,6 +248,7 @@ public:
 	void constroiFilaPrioridade();
 
 	void repoeStock(uint quantidade_limite, int quantidade_nova = -1);
+	void efetuaEncomenda(Produto* produto, uint quantidade);
 
 	void esvaziaFilaReabastecimento();
 
@@ -253,6 +257,9 @@ public:
 	bool addFornecedor(Fornecedor* novo_fornecedor);
 	bool removeFornecedor(Fornecedor * fornecedor);
 	ostream& print_lista_fornecedores(ostream& os);
+
+	bool temFornecedorMed();
+	bool temFornecedorProd();
 
 	//--------------------------------------------------------------------
 
@@ -293,7 +300,7 @@ private:
 	//--------------------------------------------------------------------
 };
 
-bool operator>(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
+bool operator<(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
 
 bool operator==(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
 
