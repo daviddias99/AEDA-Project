@@ -1285,6 +1285,8 @@ void resumoEmpregados(Cadeia& cadeia)
 {
 	cout << endl << "RESUMO EMPREGADOS" << endl << endl;
 
+	/*
+
 	if (cadeia.getNumEmpregados() == 0) {
 		cout << "A cadeia \"" << cadeia.getNome() << "\" ainda nao tem empregados." << endl;
 		return;
@@ -1326,9 +1328,11 @@ void resumoEmpregados(Cadeia& cadeia)
 
 	cadeia.sortEmpregados((ord_pessoas)opcao);
 
+	*/
+
 	cadeia.mostrarEmpregados();
 
-	cadeia.sortEmpregados(id_cres);
+	//cadeia.sortEmpregados(id_cres);
 }
 
 void adicionarEmpregado(Cadeia& cadeia)

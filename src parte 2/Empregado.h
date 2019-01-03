@@ -2,6 +2,7 @@
 #define EMPREGADO_H
 
 #include "Pessoa.h"
+#include <unordered_set>
 	/*!
  * \file Empregado.h
  *
@@ -16,6 +17,7 @@
  *
  * Classe pessoa e suas classes derivadas
  */
+
 
 /**
  * @brief Classe que representa um empregado
@@ -197,6 +199,27 @@ bool Empregado_SortFunc_numVendas_Crescente(Empregado* p1, Empregado* p2);
 bool Empregado_SortFunc_numVendas_Decrescente(Empregado* p1, Empregado* p2);
 
 /** @} */
+
+
+
+
+struct empregadoHash
+{
+	int operator() (const Empregado* emp) const
+	{
+		return emp->getNIF() % 37;
+	}
+
+	bool operator() (const Empregado* emp1, const Empregado* emp2) const
+	{
+		return emp1->getNIF() == emp2->getNIF();
+	}
+};
+
+typedef unordered_set<Empregado*, empregadoHash, empregadoHash> empregadoHashTable;
+
+
+
 
 #endif // !EMPREGADO_H
 

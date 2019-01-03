@@ -145,7 +145,7 @@ ostream & Venda::print(ostream & os) const
 		it->first->print(cout) << "#Quantidade: " << it->second << endl << endl;
 	}
 
-	os << "Preco final: " << preco;
+	os << "Preco final: " << setprecision(2) << preco;
 
 	return os;
 }

@@ -34,7 +34,8 @@ bool Cadeia::addCliente(Cliente* cliente)
 }
 
 bool Cadeia::addEmpregado(Empregado* empregado)
-{
+{	
+	/*
 	if(procuraseq(empregados, empregado) != -1) return false; //Empregado ja existe
 
 	empregados.push_back(empregado);
@@ -42,8 +43,10 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 
 	size_t i = procura(farmacias, empregado->getNomeFarmacia());
 
-	this->farmacias.at(i)->addEmpregado(empregado);
+	this->farmacias.at(i)->addEmpregado(empregado);*/
 
+
+	if (!empregados2.insert(empregado).second) return false;
 
 	return true;
 }
@@ -324,7 +327,7 @@ void Cadeia::sortFornecedores(ord_fornece modo)
 }
 
 
-void Cadeia::mostrarFarmacias()
+void Cadeia::mostrarFarmacias() const
 {
 	if (farmacias.size() == 0) {
 		cout << "A cadeia " + nome + " ainda nao tem farmacias." << endl << endl;
@@ -334,16 +337,21 @@ void Cadeia::mostrarFarmacias()
 		farmacias.at(i)->print(cout) << endl << endl;
 }
 
-void Cadeia::mostrarClientes()
+void Cadeia::mostrarClientes() const
 {
 	for (size_t i = 0; i < clientes.size(); i++)
 		clientes.at(i)->print(cout) << endl << endl;
 }
 
-void Cadeia::mostrarEmpregados()
-{
+void Cadeia::mostrarEmpregados() const
+{	
+	/*
 	for (size_t i = 0; i < empregados.size(); i++)
-		empregados.at(i)->print(cout) << endl << endl;
+		empregados.at(i)->print(cout) << endl << endl;*/
+
+	for (empregadoHashTable::const_iterator it = empregados2.begin(); it != empregados2.end(); it++) {
+		(*it)->print(cout) << endl << endl;
+	}
 }
 
 void Cadeia::mostraFornecedores()
@@ -358,7 +366,7 @@ void Cadeia::mostraFornecedores()
 
 }
 
-void Cadeia::guardarDados()
+void Cadeia::guardarDados() const
 {
 	string nomeFichFarmacias = nome + "-farmacias.txt";
 
@@ -519,7 +527,7 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 		
 		novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, ID);
 	
-		empregados.push_back(novoEmp);
+		addEmpregado(novoEmp);
 		getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
 	}
 

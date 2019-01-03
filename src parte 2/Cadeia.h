@@ -19,6 +19,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 #include <fstream>
 #include <sstream>
 #include <algorithm>
@@ -29,7 +30,6 @@
 #include "Excecoes.h"
 #include "Fornecedor.h"
 #include "util.h"
-
 
 using namespace std;
 
@@ -202,25 +202,23 @@ public:
 	/**
 	* @brief Mostra no ecra alguns memrbos-dado de todas as farmacias pertencentes a lista
 	*/
-	void mostrarFarmacias();
+	void mostrarFarmacias() const;
 	/**
 	* @brief Mostra no ecra alguns memrbos-dado de todas os clientes pertencentes a lista
 	*/
-	void mostrarClientes();
+	void mostrarClientes() const;
 	/**
-	* @brief Mostra no ecra alguns memrbos-dado de todas os empregados pertencentes a lista
+	* @brief Mostra no ecra alguns membros-dado de todas os empregados pertencentes a lista
 	*/
-	void mostrarEmpregados();
-
+	void mostrarEmpregados() const;
 	/**
-	* @brief Mostra no ecra alguns memrbos-dado de todas os fornecedores pertencentes a lista
+	* @brief Mostra no ecra alguns membros - dado de todas os fornecedores pertencentes a lista
 	*/
 	void mostraFornecedores();
-
 	/**
 	* @brief guarda as informacao de todas as farmacias, empregados e clientes num fihceiro txt para que depois possa ser reutilizado
 	*/
-	void guardarDados();
+	void guardarDados() const;
 	/**
 	* @brief Carrega os dados das farmacias, empregados e clientes de um ficheiro txt e permite a continuacao da gerencia dessa cadeia carregada
 	*/
@@ -268,6 +266,9 @@ private:
 	 * @brief Nome da cadeia de farmacias
 	 */
 	string nome;
+
+	// parte 2
+	empregadoHashTable empregados2;
 };
 
 /** @} */
