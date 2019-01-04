@@ -41,7 +41,8 @@ bool Cadeia::addCliente(Cliente* cliente)
 }
 
 bool Cadeia::addEmpregado(Empregado* empregado)
-{
+{	
+	/*
 	if(procuraseq(empregados, empregado) != -1) return false; //Empregado ja existe
 
 	empregados.push_back(empregado);
@@ -49,9 +50,21 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 
 	size_t i = procura(farmacias, empregado->getNomeFarmacia());
 
-	this->farmacias.at(i)->addEmpregado(empregado);
+	this->farmacias.at(i)->addEmpregado(empregado);*/
 
 
+	if (!empregados2.insert(empregado).second) return false;
+
+	return true;
+}
+
+bool Cadeia::addFornecedor(Fornecedor * fornecedor)
+{
+	if (procura(fornecedores, fornecedor) != -1) return false;
+
+	fornecedores.push_back(fornecedor);
+
+	sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Nome_Crescente);
 	return true;
 }
 
@@ -85,6 +98,17 @@ void Cadeia::removeEmpregado(uint ID)
 		
 	}
 	else throw EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
+}
+
+void Cadeia::removeFornecedor(string nome)
+{
+	int i = procura(fornecedores, nome);
+	if (i != -1) { //Fornecedor encontrado 
+		fornecedores.erase(fornecedores.begin() + i);
+
+	}
+	else throw FornecedorNaoExiste(nome);
+
 }
 
 Farmacia* Cadeia::getFarmacia(string nome) const
@@ -122,6 +146,15 @@ Empregado* Cadeia::getEmpregado(uint ID) const
 		return empregados[i];
 
 	throw  EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
+}
+
+Fornecedor * Cadeia::getFornecedor(string nome) const
+{
+	unsigned int i = procura(fornecedores, nome);
+	if (i != -1) //Fornecedor encontrada
+		return fornecedores[i];
+
+	throw FornecedorNaoExiste("Nao existe nenhum fornecedor com o nome " + nome + ".");
 }
 
 vector<Cliente*> Cadeia::getClientes(string nome) const
@@ -162,6 +195,11 @@ vector<Empregado*> Cadeia::getEmpregados(string nome) const
 	return resultado;
 }
 
+const vector<Fornecedor*>  Cadeia::getFornecedores() const {
+
+	return this->fornecedores;
+}
+
 unsigned int Cadeia::getNumFarmacias() const
 {
 	return farmacias.size();
@@ -176,6 +214,12 @@ unsigned int Cadeia::getNumClientes() const
 {
 	return clientes.size();
 }
+
+unsigned int Cadeia::getNumFornecedores() const
+{
+	return fornecedores.size();
+}
+
 
 string Cadeia::getNome() const
 {
@@ -284,7 +328,32 @@ void Cadeia::sortEmpregados(ord_empregados modo)
 	}
 }
 
-void Cadeia::mostrarFarmacias()
+void Cadeia::sortFornecedores(ord_fornece modo)
+{
+	switch (modo) {
+	case nome_cres_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Nome_Crescente);
+		break;
+	case nome_dec_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Nome_Decrescente);
+		break;
+	case n_enc_cres_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_NumEncomendas_Crescente);
+		break;
+	case n_enc_dec_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_NumEncomendas_Decrescente);
+		break;
+	case tipo_cres_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Tipo_Crescente);
+		break;
+	case tipo_dec_f:
+		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Tipo_Decrescente);
+		break;
+	}
+}
+
+
+void Cadeia::mostrarFarmacias() const
 {
 	if (farmacias.size() == 0) {
 		cout << "A cadeia " + nome + " ainda nao tem farmacias." << endl << endl;
@@ -294,20 +363,34 @@ void Cadeia::mostrarFarmacias()
 		farmacias.at(i)->print(cout) << endl << endl;
 }
 
-void Cadeia::mostrarClientes()
+void Cadeia::mostrarClientes() const
 {
 	for (size_t i = 0; i < clientesSort.size(); i++)
 		clientesSort.at(i)->print(cout) << endl << endl;
 }
 
-void Cadeia::mostrarEmpregados()
-{
+void Cadeia::mostrarEmpregados() const
+{	
+	/*
 	for (size_t i = 0; i < empregados.size(); i++)
-		empregados.at(i)->print(cout) << endl << endl;
+		empregados.at(i)->print(cout) << endl << endl;*/
+
+	for (empregadoHashTable::const_iterator it = empregados2.begin(); it != empregados2.end(); it++) {
+		(*it)->print(cout) << endl << endl;
+	}
 }
 
+void Cadeia::mostraFornecedores()
+{
+	if (fornecedores.size() == 0) {
+		cout << "A cadeia " + nome + " ainda nao tem fornecedores." << endl << endl;
+		return;
+	}
+	for (size_t i = 0; i < fornecedores.size(); i++)
+		fornecedores.at(i)->print(cout);
+}
 
-void Cadeia::guardarDados()
+void Cadeia::guardarDados() const
 {
 	string nomeFichFarmacias = nome + "-farmacias.txt";
 
@@ -468,7 +551,7 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 		
 		novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, ID);
 	
-		empregados.push_back(novoEmp);
+		addEmpregado(novoEmp);
 		getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
 	}
 

@@ -15,29 +15,24 @@ using namespace std;
 typedef unsigned int uint;
 
 /**
- * @brief Enumeracao que contem os modos de ordenacao de uma lista de clientes
- * 
- */
-enum ord_clientes {distrito_cres = 0, distrito_dec, cliente_idade_cres, cliente_idade_dec, cliente_nome_cres, cliente_nome_dec, cliente_nif_cres, cliente_nif_dec, n_comp_cres, n_comp_dec};
-
-/**
- * @brief Enumeracao que contem os modos de ordenacao de uma lista de funcionarios
+ * @brief Enumeracao que contem os modos de ordenacao de uma lista de pessoas
  *
  */
+enum ord_clientes { distrito_cres = 0, distrito_dec, cliente_idade_cres, cliente_idade_dec, cliente_nome_cres, cliente_nome_dec, cliente_nif_cres, cliente_nif_dec, n_comp_cres, n_comp_dec };
 enum ord_empregados { id_cres = 0, id_dec, empregado_idade_cres, empregado_idade_dec, empregado_nome_cres, empregado_nome_dec, empregado_nif_cres, empregado_nif_dec, n_vendas_cres, n_vendas_dec, sal_cres, sal_dec };
-
+enum ord_fornece { nome_cres_f = 0, nome_dec_f, n_enc_cres_f, n_enc_dec_f, tipo_cres_f, tipo_dec_f };
 
 // ----------Classes----------
 /**
  * @brief Classe que representa uma morada
- * 
+ *
  */
 class Morada {
 
 public:
 
 	/**
-	* @brief Construtor default da classe Morada, constroi o objeto com a cidade igual a SEM_CIDADE, 
+	* @brief Construtor default da classe Morada, constroi o objeto com a cidade igual a SEM_CIDADE,
 	* o endereco igual a SEM_ENDERECO e o codigo postal igual a 0000-000
 	*/
 
@@ -55,7 +50,7 @@ public:
 
 	/**
 	 * @brief Constroi um objeto do tipo morada a partir de uma string que contem as informacoes de uma morda, no formato lido de um ficheiro de texto
-	 * 
+	 *
 	 * @param simp String que contem as informacoes da morada
 	 */
 	Morada(string simp);
@@ -101,7 +96,7 @@ private:
 	string cidade;
 };
 
-/** 
+/**
  * Classe que representa uma data
  */
 class Data {
@@ -121,10 +116,10 @@ public:
 	* @param mes mes associado a data
 	* @param ano ano associado a data
 	*/
-	Data(uint dia,uint mes,uint ano);
+	Data(uint dia, uint mes, uint ano);
 
 	/**
-	* @brief constroi a classe Data a partir de um string no formato DD-MM-YYYY em 
+	* @brief constroi a classe Data a partir de um string no formato DD-MM-YYYY em
 	* os valores de '-' podem ser um simbolo qualquer
 	*
 	* @param dataDMY string no formato DD-MM-YYYY
@@ -137,9 +132,9 @@ public:
 	* dmy a true e YYYY-MM-DD se dmy a falso
 	*
 	* @param	dmy	true se formato DD-MM-YYYY, falso caso YYYY-MM-DD
-	* @return		string com a data no formato pretendido 
+	* @return		string com a data no formato pretendido
 	*/
-	string getData(bool dmy = true);
+	string getData(bool dmy = true) const;
 
 
 	/**
@@ -202,7 +197,7 @@ protected:
 
 /**
  * @brief Classe que representa uma hora do dia (horas, minutos, segundos)
- * 
+ *
  */
 class Time {
 
@@ -231,7 +226,7 @@ public:
 
 	/**
 	* @brief Constroi um objeto da classe Time a partir das informacoes contidas na string passada como argumento
-	* 
+	*
 	* @return string com as horas no formato HH:MM:SS
 	*/
 	Time(string time);
@@ -253,7 +248,7 @@ public:
 	* @param mostraSegundos	mostra tempo no formato HH:MM:SS se true e HH:MM se false
 	* @return				string com o tempo num formato pretendido
 	*/
-	string getTime(bool mostraSegundos = false);
+	string getTime(bool mostraSegundos = false) const;
 
 	/**
 	* @brief retorna a hora associado ao objeto tempo
@@ -288,10 +283,10 @@ public:
 };
 
 /**
- * @brief Classe que representa uma data e hora 
- * 
+ * @brief Classe que representa uma data e hora
+ *
  */
-class Timestamp: public Time, public Data {
+class Timestamp : public Time, public Data {
 
 public:
 	/**
@@ -319,7 +314,7 @@ public:
 	*
 	* @return	timestamp no formato DD/MM//YYYY | HH:MM:SS
 	*/
-	string getTstamp();
+	string getTstamp() const;
 	/**
 	* @brief envia para a stream os a data e horas no formato DD-MM-YYYY e HH:MM:SS
 	*
@@ -362,17 +357,17 @@ bool codigoPostalValido(string codigoPostal);
 * @brief coloca a string dada em letras maiusculas
 *
 * @param	input		referencia para a string a alterar
-* @return				
+* @return
 */
 void toUpper(string& input);
 
 /**
  * @brief Aplica pesquisa binaria a um vetor
- * 
- * @tparam T 
+ *
+ * @tparam T
  * @param v Vetor sobre o qual se pretende aplicar a pesquisa
  * @param x Elemento do vetor
- * @return Indice onde esta o elemento que se pretende procurar 
+ * @return Indice onde esta o elemento que se pretende procurar
  */
 template<class T>
 int procura(vector<T>& v, T x)
@@ -397,8 +392,8 @@ int procura(vector<T>& v, T x)
 
 /**
  * @brief Aplica pesquisa sequencial a um vetor
- * 
- * @tparam T 
+ *
+ * @tparam T
  * @param v Vetor ao qual se pretende aplicar a pesquisa
  * @param x Objeto do tipo dos objetos do vetor
  * @return Indice do vetor onde esta o elemento procurado
@@ -419,8 +414,8 @@ int procuraseq(vector<T>& v, T x)
 
 /**
  * @brief Aplica pesquisa binaria a um vetor, destina a procurar objetos pelo nome
- * 
- * @tparam X 
+ *
+ * @tparam X
  * @param v Vetor sobre o qual queremos aplicar a pesquisa
  * @param nome Nome do objeto a procurar
  * @return Indice da posicao onde esta o elemento procurado
@@ -448,8 +443,8 @@ int procura(const vector<X>& v, string nome)
 
 /**
  * @brief Aplica pesquisa binaria a um vetor, destina a procurar um elemento pelo ID
- * 
- * @tparam X 
+ *
+ * @tparam X
  * @param v Vetor ao qual se aplica a pesquisa binaria
  * @param ID ID do elemento que pretendemos procurar
  * @return Indice do vetor onde se encontra o elemento procurado
@@ -475,7 +470,7 @@ int procura(const vector<X>& v, uint ID)
 	return -1;
 }
 
-/** @} */
+/* @} */
 
 #endif /* SRC_UTIL_H_ */
 

@@ -38,3 +38,12 @@ ostream & Medicamento::print(ostream & os) const
 	return os;
  }
 
+ostream & Medicamento::printListForm(ostream & os) const
+{
+	os << "Nome: " << setw(10) << nome;
+	os << " Codigo: " << setw(6) << this->codigo;
+	os << " Tipo: " << setw(15) << " medicamento ";
+
+	return os;
+}
+

@@ -238,6 +238,13 @@ void farmacia_adicionarProduto(Farmacia& farmacia);
  */
 void farmacia_removerProduto(Farmacia& farmacia);
 
+void farmacia_adicionarFornecedor(Cadeia& cadeia);
+
+void farmacia_removerFornecedor(Cadeia& cadeia);
+
+void farmacia_consultaFornecedores(Farmacia& farmacia);
+
+void farmacia_reposicaoStock(Farmacia& farmacia);
 /** @} */
 
 #endif

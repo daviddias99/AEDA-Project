@@ -44,7 +44,7 @@ ostream& Morada::printSimp(ostream& os) const {
 	return os;
 }
 
-Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia){
+Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
 
 	if (mes > 12)
 		throw DataInvalida("Mes invalido.");
@@ -65,7 +65,7 @@ Data::Data(string dataDMY)
 		throw DataInvalida("Formato invalido.");
 	ss.ignore();
 
-	ss >> mes; 
+	ss >> mes;
 	if (ss.fail())
 		DataInvalida("Formato invalido.");
 	if (mes > 12)
@@ -82,7 +82,7 @@ Data::Data(string dataDMY)
 		throw DataInvalida("Dia invalido.");
 }
 
-string Data::getData(bool dmy)
+string Data::getData(bool dmy) const
 {
 	string result;
 
@@ -101,7 +101,7 @@ Data::Data() {
 	time_t tempoAtual = time(NULL);
 
 	tm* tempAtualStruct = new tm;
-	localtime_s(tempAtualStruct,&tempoAtual);
+	localtime_s(tempAtualStruct, &tempoAtual);
 
 	this->ano = tempAtualStruct->tm_year + 1900;
 	this->mes = tempAtualStruct->tm_mon + 1;
@@ -168,7 +168,7 @@ Time::Time(string time) {
 	if (hora > 23) {
 		throw TimeInvalido("Hora invalida.");
 	}
-	if (ss.peek() != ':' )
+	if (ss.peek() != ':')
 		throw TimeInvalido("Formato invalido.");
 	ss.ignore();
 
@@ -189,13 +189,13 @@ Time::Time(string time) {
 }
 
 
-string Time::getTime(bool mostraSegundos)
+string Time::getTime(bool mostraSegundos) const
 {
 	string result;
 
 	result = this->getHora() + ':' + this->getMin();
 
-	if(mostraSegundos)
+	if (mostraSegundos)
 		result += ':' + this->getSeg();
 
 	return result;
@@ -221,7 +221,7 @@ Time::Time() {
 	time_t tempoAtual = time(NULL);
 
 	tm* tempAtualStruct = new tm;
-	localtime_s(tempAtualStruct,&tempoAtual);
+	localtime_s(tempAtualStruct, &tempoAtual);
 
 	this->hora = tempAtualStruct->tm_hour;
 	this->minuto = tempAtualStruct->tm_min;
@@ -230,10 +230,10 @@ Time::Time() {
 
 }
 
-Timestamp::Timestamp(): Data(), Time() {
+Timestamp::Timestamp() : Data(), Time() {
 }
 
-Timestamp::Timestamp(Data data, Time time): Data(data), Time(time){
+Timestamp::Timestamp(Data data, Time time) : Data(data), Time(time) {
 }
 
 Timestamp::Timestamp(string time)
@@ -242,7 +242,7 @@ Timestamp::Timestamp(string time)
 	Time(time.substr(time.find_last_of('|') + 1, string::npos));
 }
 
-string Timestamp::getTstamp()
+string Timestamp::getTstamp() const
 {
 	string result;
 
@@ -261,7 +261,7 @@ ostream & operator<<(ostream & os, const Morada & mor)
 
 ostream & operator<<(ostream & os, const Data & d)
 {
-	os  << setfill('0') << setw(2) << d.dia << "-" << setfill('0') << setw(2) << d.mes << "-" << setw(4) << d.ano ;
+	os << setfill('0') << setw(2) << d.dia << "-" << setfill('0') << setw(2) << d.mes << "-" << setw(4) << d.ano;
 
 	return os;
 }
@@ -274,7 +274,7 @@ ostream & operator<<(ostream & os, const Time & d)
 }
 
 ostream & operator<<(ostream & os, const Timestamp & d)
-{ 
+{
 	os << setfill('0') << setw(2) << d.dia << "-" << setfill('0') << setw(2) << d.mes << "-" << setw(4) << d.ano << "||" << setfill('0') << setw(2) << d.hora << ":" << setfill('0') << setw(2) << d.minuto << ":" << setw(2) << d.segundo;
 
 	return os;
@@ -347,7 +347,7 @@ bool codigoPostalValido(string codigoPostal)
 	}
 
 	try {
-		
+
 		stoi(codigoPostal.substr(0, 4));
 
 	}

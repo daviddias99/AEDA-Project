@@ -530,7 +530,7 @@ void realizarVenda(Cadeia & cadeia)
 
 		//Get NIF
 		cout << "NIF do cliente: ";
-		
+
 		// validar input do NIF
 		while (!(cin >> NIF))
 		{
@@ -595,7 +595,7 @@ void realizarVenda(Cadeia & cadeia)
 	toUpper(userChoice);
 
 	if ((userChoice == "S") || (userChoice == "SIM")) {
-		
+
 		// adicionar a venda a farmacia
 		farmacia->addVenda(venda);
 
@@ -610,7 +610,7 @@ void realizarVenda(Cadeia & cadeia)
 			it++;
 		}
 		cout << endl << "Venda efetuada." << endl;
-		
+
 		try
 		{
 			cadeia.getCliente(cliente->getNIF(), cliente->getNome(), cliente->getDistrito());
@@ -656,9 +656,9 @@ void user_addReceita(Farmacia* farmacia, Venda* venda) {
 	getline(ficheiro, tempString);
 	getline(ficheiro, tempString);
 	getline(ficheiro, tempString);
-	receitaNumStr = tempString.substr(tempString.find_first_of(" ")+1);
+	receitaNumStr = tempString.substr(tempString.find_first_of(" ") + 1);
 	getline(ficheiro, tempString);
-	nomePaciente= tempString.substr(tempString.find_first_of(" ") + 1);
+	nomePaciente = tempString.substr(tempString.find_first_of(" ") + 1);
 	getline(ficheiro, tempString);
 	nifPacienteStr = tempString.substr(tempString.find_first_of(" ") + 1);
 	getline(ficheiro, tempString);
@@ -674,19 +674,19 @@ void user_addReceita(Farmacia* farmacia, Venda* venda) {
 		cout << "Esta receita nao e sua." << endl;
 		return;
 	}
-	
+
 
 	Receita receita = Receita(stoi(receitaNumStr), nomePaciente, nomeMedico, stoi(nifPacienteStr));
-	
+
 	getline(ficheiro, tempString);
-	while(tempString != "--"){
-		
+	while (tempString != "--") {
+
 		istringstream iss(tempString);
 		iss >> prodId;
 		iss.ignore();
 		iss.ignore();
 		iss >> quantidade;
-		pair<Produto*,uint>produtoTemp = farmacia->getProduto(prodId);
+		pair<Produto*, uint>produtoTemp = farmacia->getProduto(prodId);
 
 		if (produtoTemp.first == NULL) {
 			cout << "A farmacia nao consegue satisfazer a receita." << endl;
@@ -698,7 +698,7 @@ void user_addReceita(Farmacia* farmacia, Venda* venda) {
 		else
 			quantExistente = venda->getProd(produtoTemp.first->getCodigo()).second;
 
-		if (produtoTemp.second-quantExistente < quantidade) {
+		if (produtoTemp.second - quantExistente < quantidade) {
 			cout << "A farmacia nao consegue satisfazer a receita." << endl;
 			return;
 		}
@@ -711,7 +711,7 @@ void user_addReceita(Farmacia* farmacia, Venda* venda) {
 	ficheiro.close();
 
 	venda->addReceita(receita);
-	
+
 	return;
 }
 
@@ -720,7 +720,7 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 	int opcao, quantExistente;
 	string nomeProduto;
 	pair<Produto*, uint> produtoTemp;
-	map<Produto*, uint>::iterator it,ite;
+	map<Produto*, uint>::iterator it, ite;
 	map<Produto*, uint>::const_iterator cit, cite;
 	uint quantidade;
 	map<Produto*, uint> tempProd_map;
@@ -846,8 +846,8 @@ void user_getProdutos(Farmacia* farmacia, Venda* venda) {
 				quantExistente = 0;
 			else
 				quantExistente = venda->getProd(produtoTemp.first->getCodigo()).second;
-			
-			cout << "Medicamento: " << produtoTemp.first->getNome() << " Quantidade disponivel: " << produtoTemp.second -quantExistente<< " Preco: " << produtoTemp.first->getPreco() << endl;
+
+			cout << "Medicamento: " << produtoTemp.first->getNome() << " Quantidade disponivel: " << produtoTemp.second - quantExistente << " Preco: " << produtoTemp.first->getPreco() << endl;
 
 			opcaoInvalida = true;
 			while (opcaoInvalida) {
@@ -1016,7 +1016,7 @@ void resumoClientes(Cadeia& cadeia)
 		opcaoInvalida = false;
 	}
 
-	cadeia.sortClientes((ord_clientes) opcao);
+	cadeia.sortClientes((ord_clientes)opcao);
 	cadeia.mostrarClientes();
 }
 
@@ -1066,7 +1066,7 @@ void gerirCliente(Cadeia & cadeia)
 
 	try {
 		cliente = cadeia.getCliente(NIF, nomeCliente, distrito);
-	} 
+	}
 	catch (ClienteNaoExiste & c1) {
 		cout << c1.getInfo() << endl;
 		return;
@@ -1184,6 +1184,8 @@ void resumoEmpregados(Cadeia& cadeia)
 {
 	cout << endl << "RESUMO EMPREGADOS" << endl << endl;
 
+	/*
+
 	if (cadeia.getNumEmpregados() == 0) {
 		cout << "A cadeia \"" << cadeia.getNome() << "\" ainda nao tem empregados." << endl;
 		return;
@@ -1225,9 +1227,11 @@ void resumoEmpregados(Cadeia& cadeia)
 
 	cadeia.sortEmpregados( (ord_empregados) opcao);
 
+	*/
+
 	cadeia.mostrarEmpregados();
 
-	cadeia.sortEmpregados(id_cres);
+	//cadeia.sortEmpregados(id_cres);
 }
 
 void adicionarEmpregado(Cadeia& cadeia)
@@ -1630,7 +1634,7 @@ void resumoFarmacias(Cadeia& cadeia) {
 
 	if (cadeia.getNumFarmacias() == 0) {
 
-		cout << "A cadeia " << cadeia.getNome() << " ainda nao tem farmacias."<< endl;
+		cout << "A cadeia " << cadeia.getNome() << " ainda nao tem farmacias." << endl;
 		return;
 	}
 
@@ -1763,7 +1767,7 @@ void farmacia_consultarEmpregados(Farmacia& farmacia) {
 	}
 
 
-	farmacia.sortEmpregados((ord_empregados) opcao);
+	farmacia.sortEmpregados((ord_empregados)opcao);
 
 	farmacia.mostrarEmpregados();
 
@@ -1800,8 +1804,21 @@ void gerirStock(Cadeia& cadeia) {
 		return;
 	}
 
-
 	bool continuarNesteMenu = true;
+
+	if (!farmacia->temFornecedorMed()) {
+
+		cout << "Por favor adicione um fornecedor de medicamentos antes de adicionar medicamentos." << endl;
+		continuarNesteMenu = false;
+	}
+
+	if (!farmacia->temFornecedorProd()) {
+		cout << "Por favor adicione um fornecedor de produtos antes de adicionar produtos." << endl;
+		continuarNesteMenu = false;
+	}
+
+
+
 	while (continuarNesteMenu) {
 		int opcao;
 		cout << endl << "GERIR STOCK" << endl << endl;
@@ -1809,7 +1826,8 @@ void gerirStock(Cadeia& cadeia) {
 		cout << "1 - Consultar produtos" << endl;
 		cout << "2 - Adicionar produtos" << endl;
 		cout << "3 - Remover produtos" << endl;
-		cout << "4 - Outra farmacia" << endl;
+		cout << "4 - Repor stock" << endl;
+		cout << "5 - Outra farmacia" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -1838,6 +1856,9 @@ void gerirStock(Cadeia& cadeia) {
 			farmacia_removerProduto(*farmacia);
 			break;
 		case 4:
+			farmacia_reposicaoStock(*farmacia);
+			break;
+		case 5:
 			cout << "Farmacia: ";
 			getline(cin, farmaciaNome);
 
@@ -1855,6 +1876,72 @@ void gerirStock(Cadeia& cadeia) {
 			continuarNesteMenu = false;
 		}
 	}
+
+}
+
+void farmacia_reposicaoStock(Farmacia& farmacia) {
+
+	cout << endl << "REPOR STOCK" << endl << endl;
+
+	int quantidade_minima;
+	bool opcaoInvalida = true;
+	while (opcaoInvalida) {
+
+		try {
+			cout << "Repor produtos com quantidade inferiores a: ";
+			quantidade_minima = getInputNumber(0, 9999);
+		}
+		catch (OpcaoInvalida& opIn) {
+			cout << opIn.getInfo() << endl;
+			continue;
+		}
+
+		opcaoInvalida = false;
+	}
+
+	farmacia.constroiFilaPrioridade();
+	cout << "Produtos a repor:" << endl << endl;
+	farmacia.mostrarPrioridadeEncomenda_listForm((uint)quantidade_minima);
+	cout << endl << endl;
+
+	cout << "Efetuar reposicao? ";
+
+	string userChoice;
+
+	getline(cin, userChoice);
+	cout << endl;
+	toUpper(userChoice);
+
+	if ((userChoice == "S") || (userChoice == "SIM")) {
+
+		int quantidade_nova;
+		opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Nova quantidade dos produtos: ";
+				quantidade_nova = getInputNumber(quantidade_minima - 1, 9999);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+
+		farmacia.repoeStock(quantidade_minima, quantidade_nova);
+		cout << "Encomenda efetuada." << endl;
+
+
+
+	}
+	else if ((userChoice == "N") || (userChoice == "NAO")) {
+
+		cout << "Encomenda cancelada." << endl;
+	}
+	else
+		cout << "Encomenda cancelada." << endl;
 
 }
 
@@ -2155,6 +2242,131 @@ void farmacia_removerProduto(Farmacia & farmacia)
 	}
 }
 
+void farmacia_adicionarFornecedor(Cadeia & cadeia)
+{
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "Adicione uma farmacia primeiro." << endl;
+		return;
+
+	}
+
+	cout << endl;
+
+	Farmacia * farmacia;
+
+	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
+
+
+	try
+	{
+		farmacia = cadeia.getFarmacia(farmaciaNome);
+	}
+	catch (FarmaciaNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	farmacia->print(cout);
+	cout << endl << endl;
+
+	vector<Fornecedor *> fornecedores = cadeia.getFornecedores();
+
+	for (size_t i = 0; i < fornecedores.size(); i++) {
+
+		Fornecedor* atual = fornecedores.at(i);
+
+		atual->print_resumo_lista(cout);
+
+	}
+	cout << endl;
+
+	string fornecedorNome = getInputString("Nome do fornecedor a adicionar: ", "Nome invalido.");
+	Fornecedor * fornecedor;
+
+	try
+	{
+		fornecedor = cadeia.getFornecedor(fornecedorNome);
+	}
+	catch (FornecedorNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	if (farmacia->addFornecedor(fornecedor))
+		cout << "Adicionado." << endl;
+	else
+		cout << "Erro a adicionar fornecedor" << endl;
+}
+
+void farmacia_removerFornecedor(Cadeia & cadeia)
+{
+	if (cadeia.getNumFarmacias() == 0) {
+
+		cout << "Adicione uma farmacia primeiro." << endl;
+		return;
+
+	}
+
+	cout << endl;
+
+	Farmacia * farmacia;
+
+	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
+
+
+	try
+	{
+		farmacia = cadeia.getFarmacia(farmaciaNome);
+	}
+	catch (FarmaciaNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	farmacia->print(cout);
+	cout << endl;
+
+	vector<Fornecedor *> fornecedores = farmacia->getFornecedores();
+
+	for (size_t i = 0; i < fornecedores.size(); i++) {
+
+		Fornecedor* atual = fornecedores.at(i);
+
+		atual->print_resumo_lista(cout);
+
+	}
+	cout << endl;
+
+	string fornecedorNome = getInputString("Nome do fornecedor a remover: ", "Nome invalido.");
+	Fornecedor * fornecedor;
+
+	try
+	{
+		fornecedor = farmacia->getFornecedor(fornecedorNome);
+	}
+	catch (FornecedorNaoExiste& f)
+	{
+		cout << f.getInfo() << endl;
+		return;
+	}
+
+	farmacia->removeFornecedor(fornecedor);
+
+	cout << "Removido." << endl;
+
+}
+
+void farmacia_consultaFornecedores(Farmacia& farmacia) {
+
+	cout << endl << " --- Fornecedores da Farmacia " << farmacia.getNome() << " ---" << endl;
+	farmacia.print_lista_fornecedores(cout);
+	cout << endl;
+}
+
 void adicionarFarmacia(Cadeia& cadeia)
 {
 	Empregado* newEmp;
@@ -2185,5 +2397,4 @@ void adicionarFarmacia(Cadeia& cadeia)
 	cout << endl << "Gerente adicionado, farmacia criada." << endl;
 
 }
-
 

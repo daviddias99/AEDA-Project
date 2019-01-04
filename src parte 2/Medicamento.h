@@ -63,6 +63,9 @@ public:
 	* @brief Mostra no ecra os atributos do medicamento
 	*/
 	ostream& print(ostream& os) const;
+
+	ostream& printListForm(ostream& os) const;
+
 private:
 	/**
 	 * @brief True se o medicamento pode ser vendido sem receita medica
