@@ -2,19 +2,8 @@
 
 uint Cliente::currentID = 0;
 
-Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada, int ID) : Pessoa(nome, nif, dataNasc, morada)
-{
-	if (ID == -1) { //Primeiro cliente
-		this->ID = currentID;
-		currentID++;
-	}
-	else {
-		this->ID = ID;
-		if (ID >= (int) currentID) {
-			currentID = ID + 1;
-		}
-	}
-}
+Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada, string distrito) : Pessoa(nome, nif, dataNasc, morada), distrito(distrito)
+{}
 
 bool Cliente::adicionaCompra(Venda * novaVenda)
 {
@@ -34,15 +23,16 @@ uint Cliente::getNumCompras() const
 	return this->historicoCompras.size();
 }
 
-uint Cliente::getID() const
-{
-	return this->ID;
-}
 
+string Cliente::getDistrito() const
+{
+	return this->distrito;
+}
 
 ostream & Cliente::print(ostream & os) const
 {
-	os << "ID: " << ID << endl;
+	//os << "ID: " << ID << endl;
+	os << "Distrito: " << this->distrito << endl;
 	Pessoa::print(os) << endl << "Numero de compras: " << getNumCompras() ;
 
 	return os;
@@ -50,7 +40,7 @@ ostream & Cliente::print(ostream & os) const
 
 ostream & Cliente::printSimp(ostream & os) const
 {
-	os << ID << "\\";
+	//os << ID << "\\";
 	Pessoa::printSimp(os);
 
 	return os;
@@ -58,11 +48,18 @@ ostream & Cliente::printSimp(ostream & os) const
 
 bool operator<(const Cliente & c1, const Cliente & c2)
 {
-	if (c1.getNIF() < c2.getNIF()) {
+	if (c1.getDistrito() < c2.getDistrito()) {
 		return true;
 	}
-	else
-		return false;
+	else if (c1.getDistrito() == c2.getDistrito()) {
+		if (c1.getNome() < c2.getNome())
+			return true;
+		else if (c1.getNome() == c2.getNome()) {
+			if (c1.getNIF() < c2.getNIF())
+				return true;
+		}
+	}
+	return false;
 }
 
 bool operator==(const Cliente & c1, const Cliente & c2)
@@ -74,12 +71,11 @@ bool operator==(const Cliente & c1, const Cliente & c2)
 }
 
 
+bool Cliente_SortFunc_Distrito_Crescente(Cliente* p1, Cliente* p2) {
 
-bool Cliente_SortFunc_ID_Crescente(Cliente* p1, Cliente* p2) {
-
-	if (p1->getID() < p2->getID())
+	if (p1->getDistrito() < p2->getDistrito())
 		return true;
-	else if (p1->getID() == p2->getID())
+	else if (p1->getDistrito() == p2->getDistrito())
 	{
 		if (p1->getNome() < p2->getNome())
 			return true;
@@ -90,11 +86,11 @@ bool Cliente_SortFunc_ID_Crescente(Cliente* p1, Cliente* p2) {
 		return false;
 }
 
-bool Cliente_SortFunc_ID_Decrescente(Cliente* p1, Cliente* p2) {
+bool Cliente_SortFunc_Distrito_Decrescente(Cliente* p1, Cliente* p2) {
 
-	if (p1->getID() > p2->getID())
+	if (p1->getDistrito() > p2->getDistrito())
 		return true;
-	else if (p1->getID() == p2->getID())
+	else if (p1->getDistrito() == p2->getDistrito())
 	{
 		if (p1->getNome() < p2->getNome())
 			return true;

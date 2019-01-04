@@ -13,8 +13,7 @@ void showMenuPrincipal() {
 	cout << "1 - Gerir Farmacias" << endl;
 	cout << "2 - Gerir Clientes" << endl;
 	cout << "3 - Gerir Empregados" << endl;
-	cout << "4 - Gerir Fornecedores" << endl;
-	cout << "5 - Realizar Venda" << endl;
+	cout << "4 - Realizar Venda" << endl;
 	cout << "0 - Sair da aplicacao" << endl;
 }
 
@@ -167,6 +166,7 @@ Cliente* user_getCliente()
 	uint NIF;
 	Data dataNascimento;
 	Morada morada;
+	string distrito;
 
 	nome = getInputString("Nome: ", "Nome invalido.");
 
@@ -190,10 +190,13 @@ Cliente* user_getCliente()
 
 	cin.ignore(MAX_STREAM_SIZE, '\n');
 
+	cout << "Distrito: ";
+	getline(cin, distrito);
+
 	morada = user_getMorada();
 	dataNascimento = user_getData();
 
-	Cliente* newCliente = new Cliente(nome, NIF, dataNascimento, morada);
+	Cliente* newCliente = new Cliente(nome, NIF, dataNascimento, morada, distrito);
 
 	return newCliente;
 }
@@ -349,39 +352,6 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	return produto;
 }
 
-Fornecedor* user_getFornecedor() {
-
-	string nome;
-	Morada morada;
-	TipoFornecedor tipo;
-
-	nome = getInputString("Nome: ", "Nome invalido.");
-	morada = user_getMorada();
-
-	string tipoStr;
-
-	cout << "-Tipo de fornecedor (medicamentos ou produtos):"; 
-	getline(cin, tipoStr);
-
-	while (cin.eof() || (tipoStr != "medicamentos" && tipoStr != "produtos"))
-	{
-		if (cin.eof())
-			cin.clear();
-
-		cout << "ERRO:Tipo invalido." << endl << endl;
-		cout << "-Tipo de fornecedor (medicamentos ou produtos):";
-		getline(cin, tipoStr);
-	}
-
-	(tipoStr == "medicamentos") ? (tipo = medicamentos) : (tipo = produtos);
-
-
-	Fornecedor* newFr = new Fornecedor(nome,morada,tipo);
-
-	return newFr;
-
-}
-
 Data user_getData() {
 
 	Data dataNascimento;
@@ -436,7 +406,8 @@ void realizarVenda(Cadeia & cadeia)
 	Farmacia* farmacia = NULL;
 	Empregado* empregado;
 	Cliente* cliente;
-	uint ID;
+	uint ID, NIF;
+	string distrito;
 
 
 	cout << endl << "REALIZAR VENDA" << endl << endl;
@@ -553,26 +524,36 @@ void realizarVenda(Cadeia & cadeia)
 
 	if (nomeCliente.size() != 0) {
 
-		// get clientes com o nome dado
-		vector<Cliente*> clientes_busca = cadeia.getClientes(nomeCliente);
+		//Get distrito
+		cout << "Distrito de residencia do cliente: ";
+		getline(cin, distrito);
 
-		// imprime clientes encontrados
-		for (size_t i = 0; i < clientes_busca.size(); i++) {
+		//Get NIF
+		cout << "NIF do cliente: ";
+		
+		// validar input do NIF
+		while (!(cin >> NIF))
+		{
+			if (cin.eof())
+			{
+				cin.clear();
+			}
+			else
+			{
+				cin.clear();
+				cin.ignore(MAX_STREAM_SIZE, '\n');
+			}
 
-			cout << "ID: " << clientes_busca.at(i)->getID()
-				<< "| Nome: " << clientes_busca.at(i)->getNome()
-				<< "| Idade: " << clientes_busca.at(i)->getIdade()
-				<< "| Numero de compras: " << clientes_busca.at(i)->getNumCompras() << endl;
-
+			cout << "NIF: ";
 		}
 
-		cout << endl;
-
-		// se n�o encontrar nenhum cliente com o nome dado, pergunta ao user se pretende adicionar um cliente novo
-		if (clientes_busca.size() == 0) {
+		try {
+			cliente = cadeia.getCliente(NIF, nomeCliente, distrito);
+		}
+		catch (ClienteNaoExiste &c1) {
+			cout << c1.getInfo() << "Deseja adicionar um cliente novo (S/N)? ";
 			string userChoice;
 
-			cout << "Nao foi encontrado nenhum cliente com esse nome, adicionar um cliente novo (S/N)? ";
 			getline(cin, userChoice);
 			cout << endl;
 			toUpper(userChoice);
@@ -586,61 +567,22 @@ void realizarVenda(Cadeia & cadeia)
 			}
 			else
 				return;
-		}
-		else if (clientes_busca.size() != 1) {
-
-			// get ID do cliente
-			cout << "ID: ";
-
-			while (!(cin >> ID))
-			{
-				if (cin.eof())
-				{
-					cin.clear();
-				}
-				else
-				{
-					cin.clear();
-					cin.ignore(MAX_STREAM_SIZE, '\n');
-				}
-
-				cout << "ID: ";
-			}
-
-			cin.ignore(MAX_STREAM_SIZE, '\n');
-
-			// verificar se o ID dado pertence a alguma das pessoas com o nome dado
-			for (size_t i = 0; i < clientes_busca.size(); i++) {
-
-				if (clientes_busca.at(i)->getID() == ID) {
-					break;
-				}
-				if (i == clientes_busca.size() - 1) {
-
-					cout << "Nao existe nenhum cliente com esse par Nome/ID." << endl;
-					return;
-
-				}
-			}
 
 
 		}
-		else {
-
-			ID = clientes_busca.at(0)->getID();
-		}
-		cliente = cadeia.getCliente(ID);
 	}
 	else {
 
 		cliente = user_getCliente();
-
 	}
 
-	cout << endl;
+	if (cadeia.addCliente(cliente))
+		cout << "Cliente adicionado com sucesso!" << endl;
+	else
+		cout << "Cliente ja existe." << endl;
 
 	//criar uma nova venda
-	Venda* venda = new Venda(cliente->getID(), cliente->getNome(), empregado->getID(), empregado->getNome(), farmacia->getNome());
+	Venda* venda = new Venda(cliente->getNIF(), cliente->getNome(), empregado->getID(), empregado->getNome(), farmacia->getNome());
 
 	//GET PRODUTOS
 
@@ -671,7 +613,7 @@ void realizarVenda(Cadeia & cadeia)
 		
 		try
 		{
-			cadeia.getCliente(cliente->getID());
+			cadeia.getCliente(cliente->getNIF(), cliente->getNome(), cliente->getDistrito());
 		}
 		catch (const ClienteNaoExiste &c1)
 		{
@@ -771,12 +713,6 @@ void user_addReceita(Farmacia* farmacia, Venda* venda) {
 	venda->addReceita(receita);
 	
 	return;
-
-
-
-
-
-
 }
 
 void user_getProdutos(Farmacia* farmacia, Venda* venda) {
@@ -1054,8 +990,8 @@ void resumoClientes(Cadeia& cadeia)
 	int opcao;
 
 	cout << "Ordenar por: " << endl;
-	cout << "0 - ID (crescente)" << endl;
-	cout << "1 - ID (decrescente)" << endl;
+	cout << "0 - Distrito (crescente)" << endl;
+	cout << "1 - Distrito (decrescente)" << endl;
 	cout << "2 - idade (crescente)" << endl;
 	cout << "3 - idade (decrescente)" << endl;
 	cout << "4 - nome (crescente)" << endl;
@@ -1064,7 +1000,6 @@ void resumoClientes(Cadeia& cadeia)
 	cout << "7 - NIF (decrescente)" << endl;
 	cout << "8 - numero de compras (crescente)" << endl;
 	cout << "9 - numero de compras (decrescente)" << endl;
-
 
 	bool opcaoInvalida = true;
 	while (opcaoInvalida) {
@@ -1081,11 +1016,8 @@ void resumoClientes(Cadeia& cadeia)
 		opcaoInvalida = false;
 	}
 
-	cadeia.sortClientes((ord_pessoas)opcao);
+	cadeia.sortClientes((ord_clientes) opcao);
 	cadeia.mostrarClientes();
-
-
-	cadeia.sortClientes(id_cres);
 }
 
 void cliente_consultarCompras(Cliente* c)
@@ -1098,79 +1030,46 @@ void cliente_consultarCompras(Cliente* c)
 
 void gerirCliente(Cadeia & cadeia)
 {
-	string nomeCliente;
-	uint ID;
+	string nomeCliente, distrito;
 	Morada morada;
+	Cliente* cliente;
+	uint NIF;
 
 	cout << endl << "GERIR CLIENTE" << endl << endl;
 
-	//get nome do empregado a remover
+	//get nome do cliente a remover
 	cout << "Nome do cliente: ";
 	getline(cin, nomeCliente);
 
-	// get empregados com o nome dado
-	vector<Cliente*> clientes_busca = cadeia.getClientes(nomeCliente);
+	//Get distrito
+	cout << "Distrito de residencia do cliente: ";
+	getline(cin, distrito);
 
-	// imprime empregados encontrados
-	for (size_t i = 0; i < clientes_busca.size(); i++) {
+	//Get NIF
+	cout << "NIF do cliente: ";
 
-		cout << "ID: " << clientes_busca.at(i)->getID()
-			<< "| Nome: " << clientes_busca.at(i)->getNome()
-			<< "| Idade: " << clientes_busca.at(i)->getIdade() << endl;
-
-	}
-
-	cout << endl;
-
-	// se n�o encontrar nenhum empregado com o nome dado, retorna
-	if (clientes_busca.size() == 0) {
-
-		cout << "Nao foi encontrado nenhum cliente com esse nome." << endl;
-		return;
-	}
-
-
-	if (clientes_busca.size() != 1) {
-
-		// get ID da pessoa
-		cout << "ID: ";
-
-		while (!(cin >> ID))
+	// validar input do NIF
+	while (!(cin >> NIF))
+	{
+		if (cin.eof())
 		{
-			if (cin.eof())
-			{
-				cin.clear();
-			}
-			else
-			{
-				cin.clear();
-				cin.ignore(MAX_STREAM_SIZE, '\n');
-			}
-
-			cout << "ID: ";
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
 		}
 
-		cin.ignore(MAX_STREAM_SIZE, '\n');
-
-		// verificar se o ID dado pertence a alguma das pessoas com o nome dado
-		for (size_t i = 0; i < clientes_busca.size(); i++) {
-
-			if (clientes_busca.at(i)->getID() == ID) {
-				break;
-			}
-			if (i == clientes_busca.size() - 1) {
-
-				cout << "Nao existe nenhum cliente com esse par Nome/ID." << endl;
-				return;
-
-			}
-		}
-
-
+		cout << "NIF: ";
 	}
-	else {
 
-		ID = clientes_busca.at(0)->getID();
+	try {
+		cliente = cadeia.getCliente(NIF, nomeCliente, distrito);
+	} 
+	catch (ClienteNaoExiste & c1) {
+		cout << c1.getInfo() << endl;
+		return;
 	}
 
 	int opcao = -1;
@@ -1178,7 +1077,7 @@ void gerirCliente(Cadeia & cadeia)
 
 	do {
 
-		cout << endl << "O que pretende em relacao ao cliente  " << cadeia.getCliente(ID)->getNome() << " ?" << endl;
+		cout << endl << "O que pretende em relacao ao cliente  " << cliente->getNome() << " ?" << endl;
 		cout << "1 - Alterar Morada" << endl;
 		cout << "2 - Consultar Compras" << endl;
 		cout << "0 - Terminar" << endl << endl;
@@ -1204,12 +1103,12 @@ void gerirCliente(Cadeia & cadeia)
 		case 1:
 
 			morada = user_getMorada();
-			cadeia.getCliente(ID)->setMorada(morada);
+			cliente->setMorada(morada);
 			cout << "Alterado." << endl;
 
 			break;
 		case 2:
-			cliente_consultarCompras(cadeia.getCliente(ID));
+			cliente_consultarCompras(cliente);
 			break;
 		case 0:
 			break;
@@ -1324,7 +1223,7 @@ void resumoEmpregados(Cadeia& cadeia)
 
 	cout << endl << endl;
 
-	cadeia.sortEmpregados((ord_pessoas)opcao);
+	cadeia.sortEmpregados( (ord_empregados) opcao);
 
 	cadeia.mostrarEmpregados();
 
@@ -1669,147 +1568,6 @@ void gerirEmpregado(Cadeia & cadeia)
 	return;
 }
 
-//////////////////
-// FORNECEDORES //
-//////////////////
-
-void menuFornecedores(Cadeia& cadeia) {
-
-	bool continuarNesteMenu = true;
-
-
-	while (continuarNesteMenu) {
-		int opcao;
-
-		cout << endl << "GERIR FORNECEDORES" << endl << endl;
-		cout << "1 - Resumo fornecedores" << endl;
-		cout << "2 - Adicionar fornecedor" << endl;
-		cout << "3 - Consultar fornecedor" << endl;
-		cout << "0 - Menu anterior" << endl;
-
-		bool opcaoInvalida = true;
-		while (opcaoInvalida) {
-
-			try {
-				cout << "Opcao: ";
-				opcao = getInputNumber(0, 3);
-			}
-			catch (OpcaoInvalida& opIn) {
-				cout << opIn.getInfo() << endl;
-				continue;
-			}
-
-			opcaoInvalida = false;
-		}
-
-		switch (opcao) {
-		case 1:
-			resumoFornecedores(cadeia);
-			break;
-		case 2:
-			adicionarFornecedor(cadeia);
-			break;
-		case 3:
-			//consultarFornecedor(cadeia);
-			break;
-
-		case 0:
-			continuarNesteMenu = false;
-			break;
-		}
-	}
-}
-
-void resumoFornecedores(Cadeia& cadeia)
-{
-	cout << endl << "RESUMO FORNECEDORES" << endl << endl;
-
-	if (cadeia.getNumFornecedores() == 0) {
-		cout << "A cadeia \"" << cadeia.getNome() << "\" ainda nao tem fornecedores." << endl;
-		return;
-	}
-
-	int opcao;
-
-	cout << "Ordenar por: " << endl;
-	cout << "0 - nome (crescente)" << endl;
-	cout << "1 - nome (decrescente)" << endl;
-	cout << "2 - numero de encomendas (crescente)" << endl;
-	cout << "3 - numero de encomendas (decrescente)" << endl;
-	cout << "4 - tipo (crescente)" << endl;
-	cout << "5 - tipo (decrescente)" << endl;
-
-
-	bool opcaoInvalida = true;
-	while (opcaoInvalida) {
-
-		try {
-			cout << "Opcao: ";
-			opcao = getInputNumber(0, 5);
-		}
-		catch (OpcaoInvalida& opIn) {
-			cout << opIn.getInfo() << endl;
-			continue;
-		}
-
-		opcaoInvalida = false;
-	}
-
-	cout << endl << endl;
-
-	cadeia.sortFornecedores((ord_fornece)opcao);
-
-	cadeia.mostraFornecedores();
-
-	cadeia.sortFornecedores(nome_cres_f);
-}
-
-void adicionarFornecedor(Cadeia& cadeia)
-{
-	cout << endl << "ADICIONAR FORNECEDOR" << endl << endl;
-
-	Fornecedor* newFr = user_getFornecedor();
-
-	if (cadeia.addFornecedor(newFr)) {
-
-		cout << "Fornecedor adicionado." << endl;
-	}
-	else {
-		cout << "O fornecedor com o nome " << newFr->getNome() << " ja existe." << endl;
-	}
-}
-
-void consultarFornecedor(Cadeia& cadeia) {
-
-	cout << endl;
-
-	if (cadeia.getNumFornecedores() == 0) {
-
-		cout << "A cadeia " << cadeia.getNome() << " ainda nao tem fornecedores." << endl;
-		return;
-	}
-
-	Fornecedor * fornecedor;
-
-	string fornecedorNome = getInputString("Nome do fornecedor que pretende consultar: ", "Nome invalido.");
-
-	try
-	{
-		fornecedor = cadeia.getFornecedor(fornecedorNome);
-	}
-	catch (FornecedorNaoExiste& f)
-	{
-		cout << f.getInfo() << endl;
-		return;
-	}
-
-	cout << endl << "CONSULTAR FORNECEDOR" << endl << endl;
-	fornecedor->print(cout) << endl << endl;
-	fornecedor->print_encomendas_resumo(cout) << endl;
-
-		
-
-}
 
 
 /////////////////
@@ -1828,8 +1586,6 @@ void menuFarmacias(Cadeia& cadeia)
 		cout << "3 - Adicionar Farmacia" << endl;
 		cout << "4 - Gerir stock" << endl;
 		cout << "5 - Alterar gerente" << endl;
-		cout << "6 - Adicionar fornecedor " << endl;
-		cout << "7 - Remover fornecedor " << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -1837,7 +1593,7 @@ void menuFarmacias(Cadeia& cadeia)
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 7);
+				opcao = getInputNumber(0, 5);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -1862,13 +1618,6 @@ void menuFarmacias(Cadeia& cadeia)
 			break;
 		case 5:
 			farmacia_alterarGerente(cadeia);
-			break;
-		case 6:
-			farmacia_adicionarFornecedor(cadeia);
-			break;
-		case 7:
-			farmacia_removerFornecedor(cadeia);
-			break;
 		case 0:
 			continuarNesteMenu = false;
 		}
@@ -1922,8 +1671,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 		cout << "1 - Empregados" << endl;
 		cout << "2 - Produtos" << endl;
 		cout << "3 - Vendas" << endl;
-		cout << "4 - Fornecedores" << endl;
-		cout << "5 - Outra farmacia" << endl;
+		cout << "4 - Outra farmacia" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -1951,7 +1699,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 		case 3:
 			farmacia_consultarVendas(*farmacia);
 			break;
-		case 5:
+		case 4:
 			cout << "Farmacia: ";
 			getline(cin, farmaciaNome);
 
@@ -1964,9 +1712,6 @@ void consultarFarmacia(Cadeia& cadeia) {
 				cout << f.getInfo() << endl;
 				return;
 			}
-			break;
-		case 4:
-			farmacia_consultaFornecedores(*farmacia);
 			break;
 		case 0:
 			continuarNesteMenu = false;
@@ -2018,7 +1763,7 @@ void farmacia_consultarEmpregados(Farmacia& farmacia) {
 	}
 
 
-	farmacia.sortEmpregados((ord_pessoas)opcao);
+	farmacia.sortEmpregados((ord_empregados) opcao);
 
 	farmacia.mostrarEmpregados();
 
@@ -2410,130 +2155,6 @@ void farmacia_removerProduto(Farmacia & farmacia)
 	}
 }
 
-void farmacia_adicionarFornecedor(Cadeia & cadeia)
-{
-	if (cadeia.getNumFarmacias() == 0) {
-
-		cout << "Adicione uma farmacia primeiro." << endl;
-		return;
-
-	}
-
-	cout << endl;
-
-	Farmacia * farmacia;
-
-	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
-
-
-	try
-	{
-		farmacia = cadeia.getFarmacia(farmaciaNome);
-	}
-	catch (FarmaciaNaoExiste& f)
-	{
-		cout << f.getInfo() << endl;
-		return;
-	}
-
-	farmacia->print(cout);
-	cout << endl << endl;
-
-	vector<Fornecedor *> fornecedores = cadeia.getFornecedores();
-
-	for (size_t i = 0; i < fornecedores.size(); i++) {
-
-		Fornecedor* atual = fornecedores.at(i);
-
-		atual->print_resumo_lista(cout);
-
-	}
-	cout << endl;
-
-	string fornecedorNome = getInputString("Nome do fornecedor a adicionar: ", "Nome invalido.");
-	Fornecedor * fornecedor;
-
-	try
-	{
-		fornecedor = cadeia.getFornecedor(fornecedorNome);
-	}
-	catch (FornecedorNaoExiste& f)
-	{
-		cout << f.getInfo() << endl;
-		return;
-	}
-
-	farmacia->addFornecedor(fornecedor);
-
-	cout << "Adicionado." << endl;
-}
-
-void farmacia_removerFornecedor(Cadeia & cadeia)
-{
-	if (cadeia.getNumFarmacias() == 0) {
-
-		cout << "Adicione uma farmacia primeiro." << endl;
-		return;
-
-	}
-
-	cout << endl;
-
-	Farmacia * farmacia;
-
-	string farmaciaNome = getInputString("Nome da farmacia a abrir: ", "Nome invalido.");
-
-
-	try
-	{
-		farmacia = cadeia.getFarmacia(farmaciaNome);
-	}
-	catch (FarmaciaNaoExiste& f)
-	{
-		cout << f.getInfo() << endl;
-		return;
-	}
-
-	farmacia->print(cout);
-	cout << endl;
-
-	vector<Fornecedor *> fornecedores = farmacia->getFornecedores();
-
-	for (size_t i = 0; i < fornecedores.size(); i++) {
-
-		Fornecedor* atual = fornecedores.at(i);
-
-		atual->print_resumo_lista(cout);
-
-	}
-	cout << endl;
-
-	string fornecedorNome = getInputString("Nome do fornecedor a remover: ", "Nome invalido.");
-	Fornecedor * fornecedor;
-
-	try
-	{
-		fornecedor = farmacia->getFornecedor(fornecedorNome);
-	}
-	catch (FornecedorNaoExiste& f)
-	{
-		cout << f.getInfo() << endl;
-		return;
-	}
-
-	farmacia->removeFornecedor(fornecedor);
-
-	cout << "Removido." << endl;
-
-}
-
-void farmacia_consultaFornecedores(Farmacia& farmacia) {
-
-	cout << endl << " --- Fornecedores da Farmacia " << farmacia.getNome() << " ---" << endl;
-	farmacia.print_lista_fornecedores(cout);
-	cout << endl;
-}
-
 void adicionarFarmacia(Cadeia& cadeia)
 {
 	Empregado* newEmp;
@@ -2564,3 +2185,5 @@ void adicionarFarmacia(Cadeia& cadeia)
 	cout << endl << "Gerente adicionado, farmacia criada." << endl;
 
 }
+
+

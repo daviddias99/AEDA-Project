@@ -6,8 +6,13 @@ Cadeia::Cadeia(string n) : nome(n) {}
 
 Cadeia::~Cadeia() 
 {
-	for (size_t i = 0; i < this->clientes.size(); i++) 
-		delete this->clientes.at(i);
+	/*for (size_t i = 0; i < this->clientes.size(); i++) 
+		delete this->clientes.at(i);*/
+
+	set<Cliente*>::iterator it;
+	for (it = clientes.begin(); it != clientes.end(); it++)
+		delete (*it);
+
 	for (size_t i = 0; i < this->farmacias.size(); i++)
 		delete this->farmacias.at(i);
 	for (size_t i = 0; i < this->empregados.size(); i++)
@@ -26,10 +31,12 @@ bool Cadeia::addFarmacia(Farmacia* farmacia)
 
 bool Cadeia::addCliente(Cliente* cliente)
 {
-	if(procura(clientes, cliente) != -1) return false; //Cliente ja existe
+	if( clientes.find(cliente) != clientes.end()) return false; //Cliente ja existe
 
-	clientes.push_back(cliente);
-	sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
+	clientes.insert(cliente);
+
+	clientesSort.push_back(cliente);
+	sort(clientesSort.begin(), clientesSort.end(), Cliente_SortFunc_Distrito_Crescente);
 	return true;
 }
 
@@ -48,16 +55,6 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 	return true;
 }
 
-bool Cadeia::addFornecedor(Fornecedor * fornecedor)
-{
-	if (procura(fornecedores, fornecedor) != -1) return false;
-
-	fornecedores.push_back(fornecedor);
-
-	sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Nome_Crescente);
-	return true;
-}
-
 void Cadeia::removeFarmacia(string nome)
 {
 	int i = procura(farmacias, nome);
@@ -70,12 +67,14 @@ void Cadeia::removeFarmacia(string nome)
 
 void Cadeia::removeCliente(uint ID)
 {
-	int i = procura(clientes, ID);
+	/*int i = procura(clientes, ID);
 	if(i != -1) { //Cliente encontrado
 		clientes.erase(clientes.begin() +i);
 		
 	} 
-	else throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");
+	else throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");*/
+
+
 }
 
 void Cadeia::removeEmpregado(uint ID)
@@ -88,17 +87,6 @@ void Cadeia::removeEmpregado(uint ID)
 	else throw EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
 }
 
-void Cadeia::removeFornecedor(string nome)
-{
-	int i = procura(fornecedores, nome);
-	if (i != -1) { //Fornecedor encontrado 
-		fornecedores.erase(fornecedores.begin() + i);
-
-	}
-	else throw FornecedorNaoExiste(nome);
-
-}
-
 Farmacia* Cadeia::getFarmacia(string nome) const
 {
 	unsigned int i = procura(farmacias, nome);
@@ -108,13 +96,23 @@ Farmacia* Cadeia::getFarmacia(string nome) const
 	throw FarmaciaNaoExiste("Nao existe nenhuma farmacia com o nome " + nome + ".");
 }
 
-Cliente* Cadeia::getCliente(uint ID) const
+Cliente* Cadeia::getCliente(uint NIF, string nome, string distrito) const
 {
-	int i = procura(clientes, ID);
+	/*int i = procura(clientes, ID);
 	if(i != -1) //Cliente encontrado
 		return clientes[i];
 
-	throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");
+	clientesSet::iterator it = clientes.find(cliente);
+
+	throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");*/
+
+	Cliente* c1 = new Cliente(nome, NIF, Data(), Morada(), distrito);
+	clientesSet::iterator it = clientes.find(c1);
+
+	if (it != clientes.end())
+		return (*it);
+	else 
+		throw ClienteNaoExiste("O cliente com o NIF " + to_string(NIF) + " nao existe");
 }
 
 Empregado* Cadeia::getEmpregado(uint ID) const
@@ -126,25 +124,24 @@ Empregado* Cadeia::getEmpregado(uint ID) const
 	throw  EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
 }
 
-Fornecedor * Cadeia::getFornecedor(string nome) const
-{
-	unsigned int i = procura(fornecedores, nome);
-	if (i != -1) //Fornecedor encontrada
-		return fornecedores[i];
-
-	throw FornecedorNaoExiste("Nao existe nenhum fornecedor com o nome " + nome + ".");
-}
-
 vector<Cliente*> Cadeia::getClientes(string nome) const
 {
 	vector<Cliente*> resultado;
 
-	for (size_t i = 0; i < this->clientes.size(); i++) {
+	/*for (size_t i = 0; i < this->clientes.size(); i++) {
 
 		if (this->clientes.at(i)->getNome() == nome) {
 			resultado.push_back(this->clientes.at(i));
 		}
 
+	}*/
+	
+	clientesSet::iterator it;
+	for (it = clientes.begin(); it != clientes.end(); it++) {
+
+		if ((*it)->getNome() == nome) {
+			resultado.push_back(*it);
+		}
 	}
 
 	return resultado;
@@ -165,11 +162,6 @@ vector<Empregado*> Cadeia::getEmpregados(string nome) const
 	return resultado;
 }
 
-const vector<Fornecedor*>  Cadeia::getFornecedores() const {
-
-	return this->fornecedores;
-}
-
 unsigned int Cadeia::getNumFarmacias() const
 {
 	return farmacias.size();
@@ -185,17 +177,10 @@ unsigned int Cadeia::getNumClientes() const
 	return clientes.size();
 }
 
-unsigned int Cadeia::getNumFornecedores() const
-{
-	return fornecedores.size();
-}
-
 string Cadeia::getNome() const
 {
 	return nome;
 }
-
-
 
 void Cadeia::sortFarmacias(char modo)
 {
@@ -221,43 +206,43 @@ void Cadeia::sortFarmacias(char modo)
 	}
 }
 
-void Cadeia::sortClientes(ord_pessoas modo)
+void Cadeia::sortClientes(ord_clientes modo)
 {
 	switch (modo) {
-	case id_cres:
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Crescente);
+	case distrito_cres:
+		sort(clientesSort.begin(), clientesSort.end(), Cliente_SortFunc_Distrito_Crescente);
 		break;
-	case id_dec:
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_ID_Decrescente);
+	case distrito_dec:
+		sort(clientesSort.begin(), clientesSort.end(), Cliente_SortFunc_Distrito_Decrescente);
 		break;
-	case idade_cres:
-		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_Idade_Crescente);
+	case cliente_idade_cres:
+		sort(clientesSort.begin(), clientesSort.end(), Pessoa_SortFunc_Idade_Crescente);
 		break;
-	case idade_dec:
-		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_Idade_Decrescente);
+	case cliente_idade_dec:
+		sort(clientesSort.begin(), clientesSort.end(), Pessoa_SortFunc_Idade_Decrescente);
 		break;
-	case nome_cres:
-		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_Nome_Crescente);
+	case cliente_nome_cres:
+		sort(clientesSort.begin(), clientesSort.end(), Pessoa_SortFunc_Nome_Crescente);
 		break;
-	case nome_dec:
-		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_Nome_Decrescente);
+	case cliente_nome_dec:
+		sort(clientesSort.begin(), clientesSort.end(), Pessoa_SortFunc_Nome_Decrescente);
 		break;
-	case nif_cres:
-		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Crescente);
+	case cliente_nif_cres:
+		sort(clientesSort.begin(), clientesSort.end(), Pessoa_SortFunc_NIF_Crescente);
 		break;
-	case nif_dec:
-		sort(clientes.begin(), clientes.end(), Pessoa_SortFunc_NIF_Decrescente);
+	case cliente_nif_dec:
+		sort(clientesSort.begin(), clientesSort.end(), Pessoa_SortFunc_NIF_Decrescente);
 		break;
 	case n_comp_cres:
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_numCompras_Crescente);
+		sort(clientesSort.begin(), clientesSort.end(), Cliente_SortFunc_numCompras_Crescente);
 		break;
 	case n_comp_dec:
-		sort(clientes.begin(), clientes.end(), Cliente_SortFunc_numCompras_Decrescente);
+		sort(clientesSort.begin(), clientesSort.end(), Cliente_SortFunc_numCompras_Decrescente);
 		break;
 	}
 }
 
-void Cadeia::sortEmpregados(ord_pessoas modo)
+void Cadeia::sortEmpregados(ord_empregados modo)
 {
 	switch (modo) {
 	case id_cres:
@@ -266,28 +251,28 @@ void Cadeia::sortEmpregados(ord_pessoas modo)
 	case id_dec:
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Decrescente);
 		break;
-	case idade_cres:
+	case empregado_idade_cres:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Crescente);
 		break;
-	case idade_dec:
+	case empregado_idade_dec:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Decrescente);
 		break;
-	case nome_cres:
+	case empregado_nome_cres:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Crescente);
 		break;
-	case nome_dec:
+	case empregado_nome_dec:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Decrescente);
 		break;
-	case nif_cres:
+	case empregado_nif_cres:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
 		break;
-	case nif_dec:
+	case empregado_nif_dec:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Decrescente);
 		break;
-	case n_comp_cres:
+	case n_vendas_cres:
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Crescente);
 		break;
-	case n_comp_dec:
+	case n_vendas_dec:
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Decrescente);
 		break;
 	case sal_cres:
@@ -298,31 +283,6 @@ void Cadeia::sortEmpregados(ord_pessoas modo)
 		break;
 	}
 }
-
-void Cadeia::sortFornecedores(ord_fornece modo)
-{
-	switch (modo) {
-	case nome_cres_f:
-		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Nome_Crescente);
-		break;
-	case nome_dec_f:
-		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Nome_Decrescente);
-		break;
-	case n_enc_cres_f:
-		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_NumEncomendas_Crescente);
-		break;
-	case n_enc_dec_f:
-		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_NumEncomendas_Decrescente);
-		break;
-	case tipo_cres_f:
-		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Tipo_Crescente);
-		break;
-	case tipo_dec_f:
-		sort(fornecedores.begin(), fornecedores.end(), fornecedor_SortFunc_Tipo_Decrescente);
-		break;
-	}
-}
-
 
 void Cadeia::mostrarFarmacias()
 {
@@ -336,8 +296,8 @@ void Cadeia::mostrarFarmacias()
 
 void Cadeia::mostrarClientes()
 {
-	for (size_t i = 0; i < clientes.size(); i++)
-		clientes.at(i)->print(cout) << endl << endl;
+	for (size_t i = 0; i < clientesSort.size(); i++)
+		clientesSort.at(i)->print(cout) << endl << endl;
 }
 
 void Cadeia::mostrarEmpregados()
@@ -346,17 +306,6 @@ void Cadeia::mostrarEmpregados()
 		empregados.at(i)->print(cout) << endl << endl;
 }
 
-void Cadeia::mostraFornecedores()
-{
-	if (fornecedores.size() == 0) {
-		cout << "A cadeia " + nome + " ainda nao tem fornecedores." << endl << endl;
-		return;
-	}
-	for (size_t i = 0; i < fornecedores.size(); i++)
-		fornecedores.at(i)->print(cout) << endl << endl;
-
-
-}
 
 void Cadeia::guardarDados()
 {
@@ -377,7 +326,7 @@ void Cadeia::guardarDados()
 	ofstream fichClientes;
 	fichClientes.open(nomeFichClientes);
 
-	for (vector<Cliente *>::const_iterator it = clientes.begin(); it != clientes.end(); it++) {
+	for (clientesSet::iterator it = clientes.begin(); it != clientes.end(); it++) {
 
 		(*it)->printSimp(fichClientes) << endl;
 	}
@@ -459,9 +408,9 @@ void Cadeia::carregarClientes(ifstream& ficheiro)
 		morada = linha;
 		
 
-		novoCli = new Cliente(nome, NIF, data, morada, ID);
+		//novoCli = new Cliente(nome, NIF, data, morada, distrito);
 
-		clientes.push_back(novoCli);
+		//clientes.insert(novoCli);
 	}
 
 	while (!ficheiro.eof()) {
@@ -478,9 +427,9 @@ void Cadeia::carregarClientes(ifstream& ficheiro)
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			morada = linha;
 
-			novoCli = new Cliente(nome, NIF, data, morada, ID);
+			//novoCli = new Cliente(nome, NIF, data, morada, distrito);
 
-			clientes.push_back(novoCli);
+			//clientes.insert(novoCli);
 		}
 	}
 }
@@ -645,7 +594,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		}
 
 		getFarmacia(nomeFarmacia)->addVenda(novaVenda);
-		getCliente(idCliente)->adicionaCompra(novaVenda);
+		//getCliente(idCliente)->adicionaCompra(novaVenda);
 		getEmpregado(idEmpregado)->addVenda(novaVenda);
 	}
 
@@ -710,7 +659,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 			}
 
 			getFarmacia(nomeFarmacia)->addVenda(novaVenda);
-			getCliente(idCliente)->adicionaCompra(novaVenda);
+			//getCliente(idCliente)->adicionaCompra(novaVenda);
 			getEmpregado(idEmpregado)->addVenda(novaVenda);
 		}
 	}

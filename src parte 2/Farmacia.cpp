@@ -162,6 +162,7 @@ void Farmacia::addQuantidade(long unsigned int codigo, uint quantidade)
 	throw ProdutoNaoExiste("O produto com o codigo " + to_string(codigo) + " nao existe.");
 }
 
+
 bool Farmacia::existeProduto(unsigned long int codigo)
 {
 	for (map<Produto *, unsigned int>::const_iterator it = stock.begin(); it != stock.end(); it++) {
@@ -197,23 +198,6 @@ vector<Empregado*> Farmacia::getEmpregados(string nome) const
 	}
 
 	return v1;
-}
-
-vector<Fornecedor*> Farmacia::getFornecedores() const
-{
-	return this->fornecedores;
-}
-
-Fornecedor * Farmacia::getFornecedor(string nome) const
-{
-	int fornecedorPos = procura(this->fornecedores,nome);
-
-	if (fornecedorPos == -1)
-		throw FornecedorNaoExiste("O fornecedor nao existe");
-	else
-		return fornecedores.at(fornecedorPos);
-
-	return NULL;
 }
 
 unsigned int Farmacia::getNumEmpregados() const
@@ -292,204 +276,6 @@ void Farmacia::addVenda(Venda * venda)
 
 
 
-void Farmacia::constroiFilaPrioridade()
-{
-	map<Produto*, uint>::iterator it = this->stock.begin();
-	map<Produto*, uint>::iterator ite = this->stock.end();
-
-	while (it != ite) {
-
-		pair<Produto*, uint> current = *it;
-		
-		this->prioridade_reabastecimento.push(current);
-
-		it++;
-	}
-
-}
-
-HeapStock Farmacia::getFilaReabastecimento()
-{
-	return this->prioridade_reabastecimento;
-}
-
-bool Farmacia::addFornecedor(Fornecedor * novo_fornecedor)
-{
-	if (novo_fornecedor->getTipo() == medicamentos) {
-		this->fornecedores.insert(fornecedores.begin(), novo_fornecedor);
-		this->fornecedores_medicamentos.push(novo_fornecedor);
-	}
-	else if (novo_fornecedor->getTipo() == produtos) {
-		this->fornecedores.insert(fornecedores.begin(), novo_fornecedor);
-		this->fornecedores_produtos.push(novo_fornecedor);
-	}	
-	else {
-
-		return false;
-	}
-		
-
-	return true;
-}
-
-bool Farmacia::removeFornecedor(Fornecedor * fornecedor) {
-
-	HeapFornecedores novoHeap;
-	HeapFornecedores* heap_a_alterar;
-
-	// guardar heap a alterar
-	if (fornecedor->getTipo() == produtos)
-		heap_a_alterar = &this->fornecedores_produtos;
-	else if (fornecedor->getTipo() == medicamentos)
-		heap_a_alterar = &this->fornecedores_medicamentos;
-	else
-		return false;
-
-	// esvaziar heap, preenchendo o novo heap (nao adicionando o fornecedor a remover)
-	while (!heap_a_alterar->empty()) {
-
-		Fornecedor* atual = heap_a_alterar->top();
-		heap_a_alterar->pop();
-
-		if (atual->getNome() != fornecedor->getNome())
-			novoHeap.push(atual);
-
-	}
-
-	for (int i = 0; i < this->fornecedores.size(); i++) {
-
-		if (fornecedores.at(i) == fornecedor) {
-			fornecedores.erase(fornecedores.begin() + i);
-			break;
-		}
-	}
-
-	// colocar heap novo;
-	*heap_a_alterar = novoHeap;
-
-	return true;
-
-}
-
-ostream & Farmacia::print_lista_fornecedores(ostream & os)
-{
-	for (size_t i = 0; i < this->fornecedores.size(); i++) {
-
-		fornecedores.at(i)->print_resumo_lista(os);
-	}
-	cout << endl;
-
-	return os;
-}
-
-void Farmacia::esvaziaFilaReabastecimento()
-{
-	while (!this->prioridade_reabastecimento.empty())
-		this->prioridade_reabastecimento.pop();
-}
-
-void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
-
-	// obter o fornecedor de cada tipo
-	Fornecedor* fornecedor_produtos = fornecedores_produtos.top();
-	fornecedores_produtos.pop();
-	Fornecedor* fornecedor_medicamentos = fornecedores_medicamentos.top();
-	fornecedores_medicamentos.pop();
-
-	// criar duas novas encomendas
-	Encomenda encomendaProdutos(this->getNome(), fornecedor_produtos->getNome());
-	Encomenda encomendaMedicamentos(this->getNome(), fornecedor_medicamentos->getNome());
-
-	// construir a heap ALTERAR ISTO
-	this->constroiFilaPrioridade();
-
-	if (this->prioridade_reabastecimento.empty())
-		return;
-
-	while ((!this->prioridade_reabastecimento.empty()) || (this->prioridade_reabastecimento.top().second > quantidade_limite)) {
-
-		// produto atual
-		pair<Produto*, uint> produtoTemp = prioridade_reabastecimento.top();
-		prioridade_reabastecimento.pop();
-
-		// verificar que tipo de produto se trata
-		Medicamento* mediTemp = dynamic_cast<Medicamento*> (produtoTemp.first);
-
-		if (mediTemp != NULL) {
-
-			// criar entrada na encomenda com a quantidade necessaria
-			if( (quantidade_nova = -1) || (quantidade_nova < quantidade_limite) )
-				encomendaMedicamentos.adicionaProduto(produtoTemp.first, quantidade_limite - produtoTemp.second);
-			else
-				encomendaMedicamentos.adicionaProduto(produtoTemp.first, quantidade_nova - produtoTemp.second);
-		}
-		else {
-
-			// criar entrada na encomenda com a quantidade necessaria
-			if ((quantidade_nova = -1) || (quantidade_nova < quantidade_limite))
-				encomendaProdutos.adicionaProduto(produtoTemp.first, quantidade_limite - produtoTemp.second);
-			else
-				encomendaProdutos.adicionaProduto(produtoTemp.first, quantidade_nova - produtoTemp.second);
-
-		}
-
-	}
-
-	// atualizar stock da farmacia
-	ListaProdutos produtos = encomendaProdutos.getProdutos();
-	ListaProdutos::iterator itp = produtos.begin();
-	ListaProdutos::iterator itep = produtos.end();
-
-	while (itp != itep) {
-
-		Produto* current = itp->first;
-		uint quantidade = itp->second;
-
-		// atualiza tanto o vetor stock como a fila de prioridade
-		this->addProduto(current, quantidade);
-		this->prioridade_reabastecimento.push(this->getProduto(current->getCodigo()));
-		itp++;
-	}
-
-	ListaProdutos medicamentos = encomendaMedicamentos.getProdutos();
-	ListaProdutos::iterator itm = produtos.begin();
-	ListaProdutos::iterator item = produtos.end();
-
-	while (itm != item) {
-
-		Produto* current = itm->first;
-		uint quantidade = itm->second;
-
-		// atualiza tanto o vetor stock como a fila de prioridade
-		this->addProduto(current, quantidade);
-		this->prioridade_reabastecimento.push(this->getProduto(current->getCodigo()));
-		itm++;
-	}
-
-	// adicionar registo das encomendas ao fornecedor e à farmacia
-	// terminar encomenda parar registar o timestamp
-
-	if (!medicamentos.empty()) {
-
-		encomendaMedicamentos.terminaEncomenda();
-		fornecedor_medicamentos->satisfazEncomenda(encomendaMedicamentos);
-		this->encomendas.push_back(encomendaMedicamentos);
-	}
-
-	if (!produtos.empty()) {
-
-		encomendaProdutos.terminaEncomenda();
-		fornecedor_medicamentos->satisfazEncomenda(encomendaProdutos);
-		this->encomendas.push_back(encomendaProdutos);
-	}
-
-	// readicionar os fornecedores aos heaps
-	fornecedores_produtos.push(fornecedor_produtos);
-	fornecedores_medicamentos.push(fornecedor_medicamentos);
-
-}
-
-
 unsigned int Farmacia::numEmpregados() const
 {
 	return empregados.size();
@@ -503,16 +289,6 @@ unsigned int Farmacia::tamanhoStock() const
 unsigned int Farmacia::numVendas() const
 {
 	return vendas.size();
-}
-
-bool operator>(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2)
-{
-	return p1.second < p2.second;
-}
-
-bool operator==(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2)
-{
-	return p1.first->getCodigo() == p2.first->getCodigo();
 }
 
 bool farmacia_SortFunc_Nome_Crescente(Farmacia * f1, Farmacia * f2)
@@ -575,7 +351,7 @@ bool farmacia_SortFunc_TamanhoStock_Decrescente(Farmacia * f1, Farmacia * f2)
 		return false;
 }
 
-void Farmacia::sortEmpregados(ord_pessoas modo)
+void Farmacia::sortEmpregados(ord_empregados modo)
 {
 	switch (modo) {
 	case id_cres:
@@ -584,28 +360,28 @@ void Farmacia::sortEmpregados(ord_pessoas modo)
 	case id_dec:
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Decrescente);
 		break;
-	case idade_cres:
+	case empregado_idade_cres:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Crescente);
 		break;
-	case idade_dec:
+	case empregado_idade_dec:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Decrescente);
 		break;
-	case nome_cres:
+	case empregado_nome_cres:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Crescente);
 		break;
-	case nome_dec:
+	case empregado_nome_dec:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Decrescente);
 		break;
-	case nif_cres:
+	case empregado_nif_cres:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
 		break;
-	case nif_dec:
+	case empregado_nif_dec:
 		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Decrescente);
 		break;
-	case n_comp_cres:
+	case n_vendas_cres:
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Crescente);
 		break;
-	case n_comp_dec:
+	case n_vendas_dec:
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Decrescente);
 		break;
 	case sal_cres:

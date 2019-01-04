@@ -7,7 +7,6 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <queue>
 
 
 #include "Empregado.h"
@@ -15,8 +14,6 @@
 #include "Produto.h"
 #include "Medicamento.h"
 #include "Excecoes.h"
-#include "Fornecedor.h"
-#include "Encomenda.h"
 
 using namespace std;
 
@@ -40,11 +37,6 @@ using namespace std;
  * @brief Classe que representa uma farmacia
  * 
  */
-
-typedef priority_queue<Fornecedor*, vector<Fornecedor*>, fornecedor_heap_sort_func> HeapFornecedores;
-typedef priority_queue<pair<Produto*, uint>> HeapStock;
-
-
 class Farmacia {
 public:
 	/**
@@ -134,11 +126,6 @@ public:
 	* @return Vetor de apontadores para empregados com o nome indicado no parametro que trabalham na farmacia
 	*/
 	vector<Empregado*> getEmpregados(string nome) const;
-
-	vector<Fornecedor*> getFornecedores() const;
-
-	Fornecedor* getFornecedor(string nome) const;
-
 	/**
 	* @brief Devolve o numero de empregados que trabalham na farmacia
 	* @return Numero de empregados da farmacia
@@ -208,7 +195,7 @@ public:
 	* @brief Ordena a lista de empregados de acordo com o modo indicado no seu parametro
 	* @param modo Modo no qual a lista de empregados vai ser ordenada
 	*/
-	void sortEmpregados(ord_pessoas modo);
+	void sortEmpregados(ord_empregados modo);
 
 	/**
 	* @brief Escreve num ficheiro as informacoes relativas a farmacia para preservar esta informacao e ser posteriormente carregada
@@ -241,21 +228,6 @@ public:
 	 */
 	void addVenda(Venda* venda);
 
-	//--------------------------------------------------------------------
-	void constroiFilaPrioridade();
-
-	void repoeStock(uint quantidade_limite, int quantidade_nova = -1);
-
-	void esvaziaFilaReabastecimento();
-
-	HeapStock getFilaReabastecimento();
-
-	bool addFornecedor(Fornecedor* novo_fornecedor);
-	bool removeFornecedor(Fornecedor * fornecedor);
-	ostream& print_lista_fornecedores(ostream& os);
-
-	//--------------------------------------------------------------------
-
 private:
 	/**
 	 * @brief Nome da farmacia
@@ -283,21 +255,7 @@ private:
 	 * @brief Vetor de apontadores para vendas
 	 */
 	vector <Venda *> vendas;
-
-	//--------------------------------------------------------------------
-	vector<Encomenda> encomendas;
-	vector<Fornecedor*> fornecedores;
-	HeapFornecedores fornecedores_medicamentos;
-	HeapFornecedores fornecedores_produtos;
-	HeapStock prioridade_reabastecimento;
-	//--------------------------------------------------------------------
 };
-
-bool operator>(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
-
-bool operator==(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
-
-
 
 /**
 * @brief Usada para ordenar a lista de farmacias da cadeia. Compara duas farmacias.

@@ -15,11 +15,17 @@ using namespace std;
 typedef unsigned int uint;
 
 /**
- * @brief Enumeracao que contem os modos de ordenacao de uma lista de pessoas
+ * @brief Enumeracao que contem os modos de ordenacao de uma lista de clientes
  * 
  */
-enum ord_pessoas { id_cres = 0, id_dec, idade_cres, idade_dec, nome_cres, nome_dec, nif_cres, nif_dec, n_comp_cres, n_comp_dec, sal_cres, sal_dec };
-enum ord_fornece { nome_cres_f = 0, nome_dec_f, n_enc_cres_f, n_enc_dec_f, tipo_cres_f, tipo_dec_f };
+enum ord_clientes {distrito_cres = 0, distrito_dec, cliente_idade_cres, cliente_idade_dec, cliente_nome_cres, cliente_nome_dec, cliente_nif_cres, cliente_nif_dec, n_comp_cres, n_comp_dec};
+
+/**
+ * @brief Enumeracao que contem os modos de ordenacao de uma lista de funcionarios
+ *
+ */
+enum ord_empregados { id_cres = 0, id_dec, empregado_idade_cres, empregado_idade_dec, empregado_nome_cres, empregado_nome_dec, empregado_nif_cres, empregado_nif_dec, n_vendas_cres, n_vendas_dec, sal_cres, sal_dec };
+
 
 // ----------Classes----------
 /**
@@ -133,7 +139,7 @@ public:
 	* @param	dmy	true se formato DD-MM-YYYY, falso caso YYYY-MM-DD
 	* @return		string com a data no formato pretendido 
 	*/
-	string getData(bool dmy = true) const;
+	string getData(bool dmy = true);
 
 
 	/**
@@ -247,7 +253,7 @@ public:
 	* @param mostraSegundos	mostra tempo no formato HH:MM:SS se true e HH:MM se false
 	* @return				string com o tempo num formato pretendido
 	*/
-	string getTime(bool mostraSegundos = false) const;
+	string getTime(bool mostraSegundos = false);
 
 	/**
 	* @brief retorna a hora associado ao objeto tempo
@@ -313,7 +319,7 @@ public:
 	*
 	* @return	timestamp no formato DD/MM//YYYY | HH:MM:SS
 	*/
-	string getTstamp() const;
+	string getTstamp();
 	/**
 	* @brief envia para a stream os a data e horas no formato DD-MM-YYYY e HH:MM:SS
 	*

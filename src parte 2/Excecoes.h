@@ -85,21 +85,6 @@ public:
 };
 
 /**
- * @brief Excecao que ocorre quando um fornecedior nao existe
- *
- */
-class FornecedorNaoExiste : public ExcecaoGeral {
-public:
-	/**
-	 * @brief Cria uma excecao com a informacao passada por argumento
-	 *
-	 * @param i informacao sobre a excecao
-	 */
-	FornecedorNaoExiste(string i) : ExcecaoGeral(i) {}
-
-};
-
-/**
  * @brief Excecao que ocorre quando um cliente nao existe
  * 
  */
@@ -223,18 +208,6 @@ public:
 	 * @param i informacao sobre a excecao
 	 */
 	TimeInvalido(string i) : ExcecaoGeral(i) {}
-};
-
-class EncomendaInvalida : public ExcecaoGeral {
-
-public:
-	/**
-	 * @brief Cria uma excecao com a informacao passada por argumento
-	 *
-	 * @param i informacao sobre a excecao
-	 */
-	EncomendaInvalida(string i) : ExcecaoGeral(i) {}
-
 };
 
 /** @} */

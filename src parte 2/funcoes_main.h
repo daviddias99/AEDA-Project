@@ -54,13 +54,6 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride = {
  * @return Apontador para o cliente lido do utilizador 
  */
 Cliente* user_getCliente();
-
-/**
- * @brief Le um fornecedor do utilizador
- *
- * @return Apontador para o fornecedor lido do utilizador
- */
-Fornecedor* user_getFornecedor();
 /**
  * @brief Le produto do utilizador
  * 
@@ -208,27 +201,6 @@ void consultarFarmacia(Cadeia& cadeia);
 void gerirStock(Cadeia& cadeia);
 
 /**
- * @brief Menu que apresenta e permiter ao utilizador realizar as acoes disponiveis sobre os fornecedores de uma cadeia
- *
- * @param cadeia Cadeia cujaos fornecedores se pretende gerir
- */
-void menuFornecedores(Cadeia& cadeia);
-
-/**
- * @brief Mostra no ecra um resumo das informacoes dos fornecedores de uma cadeia
- *
- * @param cadeia        Cadeia que contem os fornecedores cujas informacoes se pretende consultar
- */
-void resumoFornecedores(Cadeia& cadeia);
-
-/**
- * @brief Funcao que permite ao utilizador adicionar um fornecedor a cadeia
- *
- * @param cadeia        Cadeia onde se pretende adicionar o fornecedor
- */
-void adicionarFornecedor(Cadeia& cadeia);
-
-/**
  * @brief Alterar o gerente de uma farmacia a escolher pelo user para outro empregado dessa mesma farmacia. A função atribui
  * um cargo escolhido pelo user para o gerente antigo
  * 
@@ -265,12 +237,6 @@ void farmacia_adicionarProduto(Farmacia& farmacia);
  * @param farmacia Farmacia da qual pretendemos remover produtos
  */
 void farmacia_removerProduto(Farmacia& farmacia);
-
-void farmacia_adicionarFornecedor(Cadeia& cadeia);
-
-void farmacia_removerFornecedor(Cadeia& cadeia);
-
-void farmacia_consultaFornecedores(Farmacia& farmacia);
 
 /** @} */
 
