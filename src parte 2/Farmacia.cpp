@@ -762,9 +762,9 @@ ostream& Farmacia::print(ostream & os) const
 
 void Farmacia::mostrarEmpregados() const
 {
-	for (size_t i = 0; i < empregados.size(); i++)
-		empregados.at(i)->print(cout) << endl << endl;
-
+	for (empregadoHashTable::const_iterator it = empregados2.begin(); it != empregados2.end(); it++) {
+		(*it)->print(cout) << endl << endl;
+	}
 }
 
 void Farmacia::mostrarStock() const

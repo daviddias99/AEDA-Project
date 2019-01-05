@@ -148,6 +148,11 @@ bool Data::operator<(Data & d2) const
 
 }
 
+bool Data::operator==(Data & d2) const
+{
+	return (dia == d2.dia && mes == d2.mes && ano == d2.ano);
+}
+
 
 
 Time::Time(uint hora, uint minuto, uint segundo) : hora(hora), minuto(minuto), segundo(segundo) {

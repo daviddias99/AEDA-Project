@@ -169,6 +169,14 @@ public:
 	bool operator < (Data& d2) const;
 
 	/**
+	* @brief verifica a igualdade entre duas datas
+	*
+	* @param d2 referencia para a segunda data a ser comparada
+	* @return	true caso dia, mes e ano sejam o mesmo
+	*/
+	bool operator==(Data& d2) const;
+
+	/**
 	* @brief envia para a stream os a data no formato DD-MM-YYYY
 	*
 	* @param os	referencia para uma output stream

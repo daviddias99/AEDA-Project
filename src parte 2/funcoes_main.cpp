@@ -153,11 +153,11 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 
 
 	morada = user_getMorada();
-	dataNascimento = user_getData();
+	dataNascimento = user_getData("Data de nascimento (DD/MM/AAAA): ", "Data de nascimento invalida.", true);
 
-	dataContratacao = user_getData();
+	dataContratacao = user_getData("Data de contracao (DD/MM/AAAA): ", "Data invalida.", false);
 
-	Empregado* newEmp = new Empregado(nome, (long unsigned int) NIF, dataNascimento, morada, (uint)salario, farmaciaNome, cargo);
+	Empregado* newEmp = new Empregado(nome, (long unsigned int) NIF, dataNascimento, morada, (uint)salario, farmaciaNome, cargo, dataContratacao);
 
 	return newEmp;
 }
@@ -196,7 +196,7 @@ Cliente* user_getCliente()
 	getline(cin, distrito);
 
 	morada = user_getMorada();
-	dataNascimento = user_getData();
+	dataNascimento = user_getData("Data de nascimento (DD/MM/AAAA): ", "Data de nascimento invalida.", true);
 
 	Cliente* newCliente = new Cliente(nome, NIF, dataNascimento, morada, distrito);
 
@@ -354,18 +354,45 @@ Produto* user_getProduto(Farmacia& farmacia) {
 	return produto;
 }
 
-Data user_getData() {
+Data user_getData(string pergunta, string respErro, bool nasc) {
 
-	Data dataNascimento;
-	string data_nascimentoStr;
+	
+
+	if (!nasc) {
+
+		cout << pergunta;
+
+		int opcao = 0;
+		bool opcaoInvalida = true;
+		while (opcaoInvalida) {
+
+			try {
+				cout << "Deseja introduzir a data atual ? (0 - nao, 1 - sim) ";
+				opcao = getInputNumber(0, 1);
+			}
+			catch (OpcaoInvalida& opIn) {
+				cout << opIn.getInfo() << endl;
+				continue;
+			}
+
+			opcaoInvalida = false;
+		}
+
+		if (opcao) {
+			return Data();
+		}
+	}
+
+	Data data;
+	string dataStr;
 	bool inputValido = false;
 
 
 	while (!inputValido) {
 
-		data_nascimentoStr = getInputString("Data de nascimento (DD/MM/AAAA): ", "Data de nascimento invalida.");
+		dataStr = getInputString(pergunta, respErro);
 		try {
-			dataNascimento = Data(data_nascimentoStr);
+			data = Data(dataStr);
 		}
 		catch (DataInvalida& e) {
 			cout << e.getInfo() << endl;
@@ -376,7 +403,7 @@ Data user_getData() {
 	}
 
 
-	return dataNascimento;
+	return data;
 }
 
 string getInputString(string msg, string msgErr)
@@ -1727,11 +1754,12 @@ void consultarFarmacia(Cadeia& cadeia) {
 }
 
 void farmacia_consultarEmpregados(Farmacia& farmacia) {
+
 	cout << endl << "RESUMO EMPREGADOS " << endl << endl;
 
 	farmacia.print(cout) << endl << endl;
 
-	if (farmacia.getNumEmpregados() == 0) {
+	/*if (farmacia.getNumEmpregados() == 0) {
 		cout << "A farmacia ainda nao tem empregados." << endl << endl;
 		return;
 	}
@@ -1769,7 +1797,7 @@ void farmacia_consultarEmpregados(Farmacia& farmacia) {
 	}
 
 
-	farmacia.sortEmpregados((ord_empregados)opcao);
+	farmacia.sortEmpregados((ord_empregados)opcao); */
 
 	farmacia.mostrarEmpregados();
 

@@ -421,7 +421,7 @@ void Cadeia::guardarDados() const
 	ofstream fichEmpregados;
 	fichEmpregados.open(nomeFichEmpregados);
 
-	for (vector<Empregado *>::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
+	for (empregadoHashTable::const_iterator it = empregados2.begin(); it != empregados2.end(); it++) {
 		(*it)->printSimp(fichEmpregados) << endl;
 	}
 
@@ -524,9 +524,9 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 	int ID;
 	string nome, farmaciaNome, cargo;
 	int NIF;
-	uint salario;
+	uint salario, mesesLig;
 	Morada morada;
-	Data data;
+	Data data, dataContr, dataDesp;
 	Empregado * novoEmp;
 
 
@@ -547,9 +547,18 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		cargo = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
-		salario = stoul(linha);
+		salario = stoul(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		mesesLig = stoi(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		dataContr = Data(linha.substr(0, linha.find_first_of('\\')));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		dataDesp = Data(linha);
 		
-		novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, ID);
+
+
+		// alterar
+		novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
 	
 		addEmpregado(novoEmp);
 		getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
@@ -573,12 +582,19 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			cargo = linha.substr(0, linha.find_first_of('\\'));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
-			salario = stoul(linha);
+			salario = stoul(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			mesesLig = stoi(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			dataContr = Data(linha.substr(0, linha.find_first_of('\\')));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			dataDesp = Data(linha);
 
 
-			novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, ID);
+			// alterar
+			novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
 
-			empregados.push_back(novoEmp);
+			addEmpregado(novoEmp);
 			getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
 		}
 	}

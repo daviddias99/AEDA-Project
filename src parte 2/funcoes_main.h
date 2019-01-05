@@ -38,13 +38,14 @@ Morada user_getMorada();
  * 
  * @return Data lida do utilizador
  */
-Data user_getData();
+Data user_getData(string pergunta, string respErro, bool nasc);
 /**
  * @brief Le um empregado do utilizador
  * 
  * @param cadeia        Cadeia para a qual se quer ler um empregado de modo a nao permitir que o utilizador indique um empregado com NIF  que ja existe
  * @param newFOverride  Se newFOverride for true significa que esta a ler um empregado para ser gerente de uma nova farmacia,
  * pelo que nao precisa de perguntar ao utilizador pelo cargo nem pela farmacia
+ * @param nasc			True caso a data a ler seja de nascimento
  * @return Apontador para o empregado lido do utilizador
  */
 Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride = { false, "nome_default" });
