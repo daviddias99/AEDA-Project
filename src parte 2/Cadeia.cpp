@@ -386,8 +386,12 @@ void Cadeia::mostraFornecedores()
 		cout << "A cadeia " + nome + " ainda nao tem fornecedores." << endl << endl;
 		return;
 	}
-	for (size_t i = 0; i < fornecedores.size(); i++)
+	for (size_t i = 0; i < fornecedores.size(); i++) {
+
 		fornecedores.at(i)->print(cout);
+		cout << endl;
+	}
+		
 }
 
 void Cadeia::guardarDados() const

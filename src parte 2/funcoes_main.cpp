@@ -1802,7 +1802,7 @@ void consultarFornecedor(Cadeia& cadeia) {
 
 		switch (opcao) {
 		case 1:
-			cout << endl << "Resumo das encomendas: " << endl;
+			cout << endl << "Resumo das encomendas: " << endl << endl;
 			fornecedor->print_encomendas_resumo(cout);
 			break;
 		case 2:
@@ -1816,7 +1816,34 @@ void consultarFornecedor(Cadeia& cadeia) {
 
 }
 
+void fornecedor_consultarEncomenda(Fornecedor & fornecedor)
+{
+	if (fornecedor.getNumEncomendas() == 0) {
 
+		cout << "O fornecedor " << fornecedor.getNome() << " ainda nao tem encomendas." << endl;
+		return;
+	}
+
+
+	Data dataEncomendas = user_getData( "Consultar encomendas do dia: " , "Data invalida.", false);
+	vector<Encomenda> encomendas = fornecedor.getEncomendas(dataEncomendas);
+
+	if (encomendas.empty()) {
+
+		cout << "Nao existem encomendas nessa data." << endl;
+		return;
+	}
+
+	cout << endl;
+	for (int i = 0; i < encomendas.size(); i++) {
+
+
+		encomendas.at(i).print_full(cout);
+
+		cout << endl;
+	}
+
+}
 
 /////////////////
 //  FARMACIAS  //
@@ -2178,7 +2205,7 @@ void farmacia_reposicaoStock(Farmacia& farmacia) {
 
 			try {
 				cout << "Nova quantidade dos produtos: ";
-				quantidade_nova = getInputNumber(25, 9999);
+				quantidade_nova = getInputNumber(quantidade_minima, 9999);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -2200,36 +2227,6 @@ void farmacia_reposicaoStock(Farmacia& farmacia) {
 	}
 	else
 		cout << "Encomenda cancelada." << endl;
-
-}
-
-void fornecedor_consultarEncomenda(Fornecedor & fornecedor)
-{
-	if (fornecedor.getNumEncomendas() == 0) {
-
-		cout << "O fornecedor " << fornecedor.getNome() << " ainda nao tem encomendas." << endl;
-		return;
-	}
-
-
-	cout << "Consultar encomendas do dia: ";
-	Data dataEncomendas = user_getData("Data da encomenda (DD/MM/AAAA): ", "Data invalida.", false);
-	vector<Encomenda> encomendas = fornecedor.getEncomendas(dataEncomendas);
-
-	if (encomendas.empty()) {
-
-		cout << "Nao existem encomendas nessa data." << endl;
-		return;
-	}
-
-	cout << endl;
-	for (int i = 0; i < encomendas.size(); i++) {
-
-
-		encomendas.at(i).print_full(cout);
-
-		cout << endl;
-	}
 
 }
 
@@ -2420,7 +2417,7 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 			}
 			cin.ignore(MAX_STREAM_SIZE, '\n');
 
-			farmacia.addProduto(produto, quantidade);
+			farmacia.efetuaEncomenda(produto, quantidade);
 		}
 		else {
 			long unsigned int codigo;
@@ -2487,7 +2484,8 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 			cin.ignore(MAX_STREAM_SIZE, '\n');
 
 			try {
-				farmacia.addQuantidade(codigo, quantidade);
+				pair<Produto*,uint> produto_encomendar = farmacia.getProduto(codigo);
+				farmacia.efetuaEncomenda(produto_encomendar.first, quantidade);
 			}
 			catch (ProdutoNaoExiste& e) {
 				cout << e.getInfo() << endl;
