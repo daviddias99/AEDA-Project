@@ -75,7 +75,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 
 	string nome;
 	long int NIF;
-	Data dataNascimento;
+	Data dataNascimento, dataContratacao;
 	Morada morada;
 	int salario;
 	string farmaciaNome;
@@ -155,6 +155,8 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 
 	morada = user_getMorada();
 	dataNascimento = user_getData();
+
+	dataContratacao = user_getData();
 
 	Empregado* newEmp = new Empregado(nome, (long unsigned int) NIF, dataNascimento, morada, (uint)salario, farmaciaNome, cargo);
 

@@ -36,7 +36,7 @@ public:
 	 * @param cargo Cargo do empregado
 	 * @param ID numero de identificacao, tem valor por omissao -1 para gerar ID automaticamente para quando se criam empregados durante a execucao do programa
 	 */
-	Empregado(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada(), uint  sal = 0, string farmaciaNome = "FARMACIA_DEFAULT", string cargo = "CARGO_DEFAULT", int ID = -1);
+	Empregado(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada(), uint  sal = 0, string farmaciaNome = "FARMACIA_DEFAULT", string cargo = "CARGO_DEFAULT", int ID = -1, Data dataContratacao = Data());
 	/**
 	 *	Decrementa a variavel static currentID, usado no caso em que se criam empregados que n�o se adicionam a farmacia por ser repetido
 	 */
@@ -129,6 +129,9 @@ public:
 	 */
 	friend bool operator==(const  Empregado& e1, const Empregado & e2);
 
+
+	bool trabalhaAtualmente();
+
 private:
 	/**
 	 * @brief Salario do empregado
@@ -154,6 +157,12 @@ private:
 	 * @brief Variavel static usada para determinar o ID de um novo empregado
 	 */
 	static uint currentID;
+
+
+	uint mesesLigacaoAnterior;
+
+	Data ultimaDataContratacao;
+	Data ultimaDataDespedimento;
 };
 	
 /**

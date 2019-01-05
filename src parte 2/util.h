@@ -176,6 +176,8 @@ public:
 	*/
 	friend ostream& operator<<(ostream& os, const Data& d);
 
+	static Data NULLData;
+
 protected:
 	/**
 	* @brief dia associado ao presente objeto de Data
@@ -193,6 +195,7 @@ protected:
 	uint ano;
 
 };
+
 
 /**
  * @brief Classe que representa uma hora do dia (horas, minutos, segundos)
@@ -273,8 +276,8 @@ public:
 	/**
 	* @brief envia para a stream os a data no formato DD-MM-YYYY
 	*
-	* @param os	refer�ncia para uma output stream
-	* @param d	refer�ncia para uma hora
+	* @param os	referencia para uma output stream
+	* @param d	referencia para uma hora
 	* @return	a output stream de argumento
 	*/
 	friend ostream& operator<<(ostream& os, const Time& d);

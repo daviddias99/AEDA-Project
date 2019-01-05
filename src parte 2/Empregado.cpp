@@ -3,9 +3,13 @@
 
 uint Empregado::currentID = 0;
 
-Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo, int ID) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
+Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo, int ID, Data dataContratacao) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
 {
 	this->cargo = cargo;
+
+	mesesLigacaoAnterior = 0;
+	ultimaDataContratacao = dataContratacao;
+	ultimaDataDespedimento = Data::NULLData;
 
 	if (ID == -1) {
 		this->ID = currentID;

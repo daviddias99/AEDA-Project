@@ -269,6 +269,10 @@ private:
 	 * @brief Vetor de apontadores para os empregados da farmacia
 	 */
 	vector< Empregado* > empregados;
+
+	empregadoHashTable empregados2;
+
+
 	/**
 	 * @brief Map que representa o stock da farmacia (key = apontador para produto, value = quantidade)
 	 * 
