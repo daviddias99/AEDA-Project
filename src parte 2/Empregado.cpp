@@ -86,7 +86,7 @@ void Empregado::mostrarVendas()
 ostream & Empregado::print(ostream & os) const
 {
 	os << "ID: " << ID << endl;
-	Pessoa::print(os) << endl << "Farmacia: " << farmaciaNome << endl << "Cargo: " << cargo << endl << "Salario: " << salario << endl << "Numero de vendas: " << getNumVendas();
+	Pessoa::print(os) << endl << "Farmacia: " << farmaciaNome << endl << "Cargo: " << cargo << endl << "Salario: " << salario << endl << "Numero de vendas: " << getNumVendas() << endl;
 
 	if (this->trabalhaAtualmente()) {
 		os << "Empregado com contrato." << endl;

@@ -90,9 +90,9 @@ string Data::getData(bool dmy) const
 	string result;
 
 	if (dmy)
-		result = this->getDia() + '/' + this->getMes() + '/' + this->getAno();
+		result = to_string(this->getDia()) + '/' + to_string(this->getMes()) + '/' + to_string(this->getAno());
 	else
-		result = this->getAno() + '/' + this->getMes() + '/' + this->getDia();
+		result = to_string(this->getAno()) + '/' + to_string(this->getMes()) + '/' + to_string(this->getDia());
 
 
 	return result;
@@ -150,7 +150,7 @@ bool Data::operator<(Data & d2) const
 
 bool Data::operator==(Data & d2) const
 {
-	return (dia == d2.dia && mes == d2.mes && ano == d2.ano);
+	return (dia == d2.dia) && (mes == d2.mes) && (ano == d2.ano);
 }
 
 
@@ -201,10 +201,10 @@ string Time::getTime(bool mostraSegundos) const
 {
 	string result;
 
-	result = this->getHora() + ':' + this->getMin();
+	result = to_string(this->getHora()) + ':' + to_string(this->getMin());
 
 	if (mostraSegundos)
-		result += ':' + this->getSeg();
+		result += ':' + to_string(this->getSeg());
 
 	return result;
 }
@@ -257,6 +257,16 @@ string Timestamp::getTstamp() const
 	result = this->getData() + " | " + this->getTime(true);
 
 	return result;
+}
+
+Data Timestamp::getDataObj() const
+{
+	return Data(this->dia, this->mes, this->ano);
+}
+
+Time Timestamp::getTimeObj() const
+{
+	return Time(this->hora, this->minuto, this->segundo);
 }
 
 ostream & operator<<(ostream & os, const Morada & mor)

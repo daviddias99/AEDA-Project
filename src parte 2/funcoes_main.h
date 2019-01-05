@@ -35,10 +35,14 @@ const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
 Morada user_getMorada();
 /**
  * @brief Le uma data do utilizador
- * 
+ *
+ * @param pergunta	Mensagem a apresentar ao utilizador quando pede para introduzir uma data
+ * @param respErro	Mensagem a apresentar ao utilizador caso ele introduza uma data invalida
+ * @param nasc		True caso a data seja de nascimento
  * @return Data lida do utilizador
  */
 Data user_getData(string pergunta, string respErro, bool nasc);
+
 /**
  * @brief Le um empregado do utilizador
  * 
@@ -55,6 +59,15 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride = {
  * @return Apontador para o cliente lido do utilizador 
  */
 Cliente* user_getCliente();
+
+/**
+ * @brief Le um fornecedor do utilizador
+ *
+ * @return Apontador para o fornecedor lido do utilizador
+ */
+Fornecedor* user_getFornecedor();
+
+
 /**
  * @brief Le produto do utilizador
  * 
@@ -168,6 +181,29 @@ void removerEmpregado(Cadeia& cadeia);
 void gerirEmpregado(Cadeia& cadeia);
 
 /**
+ * @brief Menu que apresenta e permiter ao utilizador realizar as acoes disponiveis sobre os fornecedores de uma cadeia
+ *
+ * @param cadeia Cadeia cujaos fornecedores se pretende gerir
+ */
+void menuFornecedores(Cadeia& cadeia);
+
+/**
+ * @brief Mostra no ecra um resumo das informacoes dos fornecedores de uma cadeia
+ *
+ * @param cadeia        Cadeia que contem os fornecedores cujas informacoes se pretende consultar
+ */
+void resumoFornecedores(Cadeia& cadeia);
+
+/**
+ * @brief Funcao que permite ao utilizador adicionar um fornecedor a cadeia
+ *
+ * @param cadeia        Cadeia onde se pretende adicionar o fornecedor
+ */
+void adicionarFornecedor(Cadeia& cadeia);
+
+void consultarFornecedor(Cadeia& cadeia);
+
+/**
  * @brief Menu que apresenta e permiter ao utilizador realizar as acoes disponiveis sobre as farmacias de uma cadeia
  * 
  * @param cadeia Cadeia cujas farmacias se pretende gerir
@@ -246,6 +282,9 @@ void farmacia_removerFornecedor(Cadeia& cadeia);
 void farmacia_consultaFornecedores(Farmacia& farmacia);
 
 void farmacia_reposicaoStock(Farmacia& farmacia);
+
+void fornecedor_consultarEncomenda(Fornecedor& fornecedor);
+
 /** @} */
 
 #endif

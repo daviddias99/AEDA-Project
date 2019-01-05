@@ -82,6 +82,11 @@ string Encomenda::getNomeFornecedor()
 	return this->fornecedorOrigem;
 }
 
+Timestamp Encomenda::getTStamp() const
+{
+	return this->stamp;
+}
+
 uint Encomenda::getQuantidadeProdutos()
 {
 
@@ -113,6 +118,25 @@ ostream & Encomenda::print_resumo(ostream & os) const
 	os << "Origem: " << this->farmaciaOrigem << endl;
 	os << "Data da encomenda: " << this->stamp.getTstamp() << endl;
 	os << "Valor: " << this->getValor() << endl;
+
+	return os;
+}
+
+ostream & Encomenda::print_full(ostream & os) const
+{
+	this->print_resumo(os);
+	cout << endl << "Produtos:" << endl;
+
+	ListaProdutos::const_iterator it = this->listaProdutos.begin();
+	ListaProdutos::const_iterator ite = this->listaProdutos.end();
+
+	while(it != ite) {
+
+		pair<Produto*, uint> atual = *it;
+		atual.first->printListForm(cout) << " #Quantidade: " << atual.second << endl;
+
+		it++;
+	}
 
 	return os;
 }

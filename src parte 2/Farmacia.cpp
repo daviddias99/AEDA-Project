@@ -515,7 +515,7 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 	if (!produtos.empty()) {
 
 		encomendaProdutos.terminaEncomenda();
-		fornecedor_medicamentos->satisfazEncomenda(encomendaProdutos);
+		fornecedor_produtos->satisfazEncomenda(encomendaProdutos);
 		this->encomendas.push_back(encomendaProdutos);
 	}
 
