@@ -34,19 +34,22 @@ const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
  */
 Morada user_getMorada();
 /**
- * @brief Le uma data do utilizador apresentando a mensagem dada como primeiro argumento e apresentando a segunda mensagem em caso de input de uma Data invalida
- * 
- * @param msg				mensagem dada para pedir a data ao user
- * @param msgErr			mensagem apresentada no caso de input de uma data invalida
+ * @brief Le uma data do utilizador
+ *
+ * @param pergunta	Mensagem a apresentar ao utilizador quando pede para introduzir uma data
+ * @param respErro	Mensagem a apresentar ao utilizador caso ele introduza uma data invalida
+ * @param nasc		True caso a data seja de nascimento
  * @return Data lida do utilizador
  */
-Data user_getData(string msg = "Data de nascimento (DD/MM/AAAA): ", string msgErr = "Data de nascimento invalida.");
+Data user_getData(string pergunta, string respErro, bool nasc);
+
 /**
  * @brief Le um empregado do utilizador
  * 
  * @param cadeia        Cadeia para a qual se quer ler um empregado de modo a nao permitir que o utilizador indique um empregado com NIF  que ja existe
  * @param newFOverride  Se newFOverride for true significa que esta a ler um empregado para ser gerente de uma nova farmacia,
  * pelo que nao precisa de perguntar ao utilizador pelo cargo nem pela farmacia
+ * @param nasc			True caso a data a ler seja de nascimento
  * @return Apontador para o empregado lido do utilizador
  */
 Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride = { false, "nome_default" });

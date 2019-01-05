@@ -34,9 +34,10 @@ public:
 	 * @param sal Salario do empregado
 	 * @param farmaciaNome Nome da farmacia onde trabalha o empregado
 	 * @param cargo Cargo do empregado
+	 * @param dataContratacao Data em que o empregado foi contratado
 	 * @param ID numero de identificacao, tem valor por omissao -1 para gerar ID automaticamente para quando se criam empregados durante a execucao do programa
 	 */
-	Empregado(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada(), uint  sal = 0, string farmaciaNome = "FARMACIA_DEFAULT", string cargo = "CARGO_DEFAULT", int ID = -1);
+	Empregado(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada(), uint  sal = 0, string farmaciaNome = "FARMACIA_DEFAULT", string cargo = "CARGO_DEFAULT",  Data dataContratacao = Data(), Data dataDespedimento = Data::NULLData, uint mesesLigacao = 0, int ID = -1);
 	/**
 	 *	Decrementa a variavel static currentID, usado no caso em que se criam empregados que n�o se adicionam a farmacia por ser repetido
 	 */
@@ -129,6 +130,13 @@ public:
 	 */
 	friend bool operator==(const  Empregado& e1, const Empregado & e2);
 
+	/**
+	* @brief Verifica se um empregado é um trabalhador atual da cadeia de farmacias
+	*
+	* @return True caso ele esteja empregado, falso caso esteja livre
+	*/
+	bool trabalhaAtualmente() const;
+
 private:
 	/**
 	 * @brief Salario do empregado
@@ -154,6 +162,12 @@ private:
 	 * @brief Variavel static usada para determinar o ID de um novo empregado
 	 */
 	static uint currentID;
+
+
+	uint mesesLigacaoAnterior;
+
+	Data ultimaDataContratacao;
+	Data ultimaDataDespedimento;
 };
 	
 /**

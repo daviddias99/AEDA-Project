@@ -82,21 +82,35 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 }
 
 bool Farmacia::addEmpregado(Empregado* empregado)
-{
-	int i = procura(empregados, empregado);
+{	
+	/*
+		int i = procura(empregados, empregado);
 
-	if (i == -1) {
-		if (empregado->getCargo() == "gerente") {
-			if (gerente != NULL)
-				cout << "O cargo do antigo gerente " << gerente->getNome() << " passou para empregado." << endl;
-			setGerente(empregado, "empregado");
+		if (i == -1) {
+			if (empregado->getCargo() == "gerente") {
+				if (gerente != NULL)
+					cout << "O cargo do antigo gerente " << gerente->getNome() << " passou para empregado." << endl;
+				setGerente(empregado, "empregado");
+			}
+
+			empregados.push_back(empregado);
+			this->sortEmpregados(id_cres);
+			return true;
 		}
+		else return false;
+	*/
 
-		empregados.push_back(empregado);
-		this->sortEmpregados(id_cres);
-		return true;
+
+
+	if (!empregados2.insert(empregado).second) return false;
+
+	if (empregado->getCargo() == "gerente") {
+		if (gerente != NULL)
+			cout << "O cargo do antigo gerente " << gerente->getNome() << " passou para empregado." << endl;
+		setGerente(empregado, "empregado");
 	}
-	else return false;
+
+	return true;
 }
 
 void Farmacia::removeQuantidade(long unsigned int codigo, uint quantidade)
@@ -748,9 +762,9 @@ ostream& Farmacia::print(ostream & os) const
 
 void Farmacia::mostrarEmpregados() const
 {
-	for (size_t i = 0; i < empregados.size(); i++)
-		empregados.at(i)->print(cout) << endl << endl;
-
+	for (empregadoHashTable::const_iterator it = empregados2.begin(); it != empregados2.end(); it++) {
+		(*it)->print(cout) << endl << endl;
+	}
 }
 
 void Farmacia::mostrarStock() const

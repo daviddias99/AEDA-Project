@@ -166,7 +166,14 @@ public:
 	*/
 	bool operator < (Data& d2) const;
 
-	bool operator== (Data& d2) const;
+
+	/**
+	* @brief verifica a igualdade entre duas datas
+	*
+	* @param d2 referencia para a segunda data a ser comparada
+	* @return	true caso dia, mes e ano sejam o mesmo
+	*/
+	bool operator==(Data& d2) const;
 
 	/**
 	* @brief envia para a stream os a data no formato DD-MM-YYYY
@@ -176,6 +183,8 @@ public:
 	* @return	a output stream de argumento
 	*/
 	friend ostream& operator<<(ostream& os, const Data& d);
+
+	static Data NULLData;
 
 protected:
 	/**
@@ -194,6 +203,7 @@ protected:
 	uint ano;
 
 };
+
 
 /**
  * @brief Classe que representa uma hora do dia (horas, minutos, segundos)
@@ -274,8 +284,8 @@ public:
 	/**
 	* @brief envia para a stream os a data no formato DD-MM-YYYY
 	*
-	* @param os	refer�ncia para uma output stream
-	* @param d	refer�ncia para uma hora
+	* @param os	referencia para uma output stream
+	* @param d	referencia para uma hora
 	* @return	a output stream de argumento
 	*/
 	friend ostream& operator<<(ostream& os, const Time& d);

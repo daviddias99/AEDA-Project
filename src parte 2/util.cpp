@@ -44,6 +44,9 @@ ostream& Morada::printSimp(ostream& os) const {
 	return os;
 }
 
+Data Data::NULLData = Data(0, 0, 0);
+
+
 Data::Data(uint dia, uint mes, uint  ano) : ano(ano), mes(mes), dia(dia) {
 
 	if (mes > 12)

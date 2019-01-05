@@ -3,9 +3,13 @@
 
 uint Empregado::currentID = 0;
 
-Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo, int ID) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
+Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo, Data dataContratacao, Data dataDespedimento, uint mesesLigacao, int ID) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
 {
 	this->cargo = cargo;
+
+	mesesLigacaoAnterior = mesesLigacao;
+	ultimaDataContratacao = dataContratacao;
+	ultimaDataDespedimento = dataDespedimento;
 
 	if (ID == -1) {
 		this->ID = currentID;
@@ -82,7 +86,15 @@ void Empregado::mostrarVendas()
 ostream & Empregado::print(ostream & os) const
 {
 	os << "ID: " << ID << endl;
-	Pessoa::print(os) << endl << "Farmacia: " << farmaciaNome << endl << "Cargo: " << cargo << endl << "Salario: " << salario << endl << " Numero de vendas: " << getNumVendas();
+	Pessoa::print(os) << endl << "Farmacia: " << farmaciaNome << endl << "Cargo: " << cargo << endl << "Salario: " << salario << endl << "Numero de vendas: " << getNumVendas() << endl;
+
+	if (this->trabalhaAtualmente()) {
+		os << "Empregado com contrato." << endl;
+		os << "Data de contratacao: " << ultimaDataContratacao << endl;
+	}
+	else {
+		os << "Empregado sem contrato." << endl << "Meses de ligacao: " << mesesLigacaoAnterior;
+	}
 
 	return os;
 }
@@ -92,9 +104,14 @@ ostream & Empregado::printSimp(ostream & os) const
 	os << ID << "\\";
 	Pessoa::printSimp(os);
 
-	os << "\\" << farmaciaNome << "\\" << cargo << "\\" << salario; 
+	os << "\\" << farmaciaNome << "\\" << cargo << "\\" << salario << "\\" << mesesLigacaoAnterior << "\\" << ultimaDataContratacao << "\\" << ultimaDataDespedimento;
 
 	return os;
+}
+
+bool Empregado::trabalhaAtualmente() const
+{
+	return ultimaDataDespedimento == Data::NULLData; // caso o empregado não tenha sido despedido, é porque e um trabalhador atual da farmacia
 }
 
 
