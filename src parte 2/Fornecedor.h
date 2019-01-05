@@ -14,7 +14,7 @@ private:
 
 	string nome;
 	Morada morada_sede;
-	list<Encomenda> encomendas_satisfeitas;
+	vector<Encomenda> encomendas_satisfeitas;
 	void adicionaEncomenda(Encomenda encomenda);
 	TipoFornecedor tipo;
 	
@@ -26,8 +26,9 @@ public:
 	uint getNumEncomendas() const;
 	string getNome() const;
 	Morada getMoradaSede() const;
-	const list<Encomenda>& getEncomendasSatisfeitas() const;
+	const vector<Encomenda>& getEncomendasSatisfeitas() const;
 	TipoFornecedor getTipo() const;
+	vector<Encomenda> getEncomendas(Data data) const;
 	/**
 	* @brief Mostra o nome e a morada do fornecedor no ecra
 	*/

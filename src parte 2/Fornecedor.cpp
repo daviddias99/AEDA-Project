@@ -39,7 +39,7 @@ Morada Fornecedor::getMoradaSede()  const
 	return morada_sede;
 }
 
-const list<Encomenda>& Fornecedor::getEncomendasSatisfeitas() const {
+const vector<Encomenda>& Fornecedor::getEncomendasSatisfeitas() const {
 
 	return this->encomendas_satisfeitas;
 }
@@ -49,27 +49,41 @@ TipoFornecedor Fornecedor::getTipo() const
 	return this->tipo;
 }
 
+vector<Encomenda> Fornecedor::getEncomendas(Data data) const
+{
+	vector<Encomenda> resultado;
+
+	for (size_t i = 0; i < this->encomendas_satisfeitas.size(); i++) {
+
+		if (this->encomendas_satisfeitas.at(i).getTStamp().getDataObj() == data)
+			resultado.push_back(this->encomendas_satisfeitas.at(i));
+
+	}
+	
+	return resultado;
+}
+
 
 
 ostream& Fornecedor::print(ostream& os) const {
 
 	os << nome << endl << this->morada_sede;
 	cout << endl << "Tipo: " << ((this->tipo == medicamentos) ? "medicamentos" : "produtos");
-	cout << endl << "Numero encomendas: " << this->getNumEncomendas() << endl << endl;
+	cout << endl << "Numero encomendas: " << this->getNumEncomendas() << endl;
 	return os;
 }
 
 ostream & Fornecedor::print_encomendas_resumo(ostream & os) const
 {
-	list<Encomenda>::const_iterator it = this->encomendas_satisfeitas.begin();
-	list<Encomenda>::const_iterator ite = this->encomendas_satisfeitas.end();
+	vector<Encomenda>::const_iterator it = this->encomendas_satisfeitas.begin();
+	vector<Encomenda>::const_iterator ite = this->encomendas_satisfeitas.end();
 
 	while (it != ite) {
 
 		Encomenda encomenda_atual = *it;
 
 		encomenda_atual.print_resumo(os);
-
+		cout << endl;
 		it++;
 	}
 

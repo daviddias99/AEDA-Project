@@ -158,8 +158,6 @@ public:
 	*/
 	uint getDia() const;
 
-
-
 	/**
 	* @brief verifica se uma data a "menor" que a outra
 	*
@@ -167,6 +165,8 @@ public:
 	* @return	true se a data do objeto e antes da data de d2
 	*/
 	bool operator < (Data& d2) const;
+
+	bool operator== (Data& d2) const;
 
 	/**
 	* @brief envia para a stream os a data no formato DD-MM-YYYY
@@ -315,6 +315,21 @@ public:
 	* @return	timestamp no formato DD/MM//YYYY | HH:MM:SS
 	*/
 	string getTstamp() const;
+
+	/**
+	* @brief Retorna o objeto Data associado ao timestamp
+	*
+	* @return	Data associada ao timestamp
+	*/
+	Data getDataObj() const;
+
+	/**
+	* @brief Retorna o objeto Time associado ao timestamp
+	*
+	* @return	Time associada ao timestamp
+	*/
+	Time getTimeObj() const;
+
 	/**
 	* @brief envia para a stream os a data e horas no formato DD-MM-YYYY e HH:MM:SS
 	*
@@ -323,6 +338,8 @@ public:
 	* @return	a output stream de argumento
 	*/
 	friend ostream& operator<<(ostream& os, const Timestamp& d);
+
+
 };
 
 

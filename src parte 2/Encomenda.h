@@ -21,10 +21,12 @@ public:
 	float getValor() const;
 	string getNomeFarmacia();
 	string getNomeFornecedor();
+	Timestamp getTStamp() const ;
 	uint getQuantidadeProdutos();
 	const ListaProdutos& getProdutos();
 	void mudaFornecedor(string novoFornecedor);
 	ostream& print_resumo(ostream& os) const;
+	ostream& print_full(ostream& os) const;
 
 
 private:
