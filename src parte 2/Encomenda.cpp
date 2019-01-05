@@ -120,7 +120,7 @@ ostream & Encomenda::print_resumo(ostream & os) const
 {
 	os << "Origem: " << this->farmaciaOrigem << endl;
 	os << "Data da encomenda: " << this->stamp.getTstamp() << endl;
-	os << "Numero de produtos: " << this->getQuantidadeProdutos() << "Valor: " << this->getValor() << endl;
+	os << "Numero de produtos: " << this->getQuantidadeProdutos() << " Valor: " << this->getValor() << endl;
 
 	return os;
 }
