@@ -10,11 +10,11 @@
  * \author Luis Cunha
  */
 
- /** @defgroup Cadeia Cadeia
-  * @{
-  *
-  * Classe cadeia
-  */
+/** @defgroup Cadeia Cadeia
+ * @{
+ *
+ * Classe cadeia
+ */
 
 
 #include <string>
@@ -23,20 +23,29 @@
 #include <fstream>
 #include <sstream>
 #include <algorithm>
+#include <set>
 
 #include "Farmacia.h"
 #include "Cliente.h"
 #include "Empregado.h"
 #include "Excecoes.h"
-#include "Fornecedor.h"
 #include "util.h"
 
 using namespace std;
 
+struct compareClientePtr {
+	bool operator()(const Cliente* lhs, const Cliente* rhs) const {
+		return (*lhs < *rhs);
+	}
+};
+
+typedef set<Cliente*, compareClientePtr> clientesSet;
+
+
 /**
  * @brief Classe que representa uma cadeia de farmacias
  */
-class Cadeia {
+class Cadeia{
 public:
 	/**
 	* @brief Construtor por defeito da classe Cadeia, inicia a cadeia com o nome "SEM_NOME"
@@ -73,7 +82,6 @@ public:
 	*/
 	bool addEmpregado(Empregado* empregado);
 
-
 	/**
 	* @brief Adiciona um fornecedor a lista de fornecedores da cadeia e a farmacia a que pertence
 	* @param fornecedor			Apontador para o fornecedor a ser adicionado a lista
@@ -96,7 +104,7 @@ public:
 
 	/**
 	* @brief Remove o empregado com o ID inidcado no seu parametro da lista de empregados
-	* @param ID					ID do empregado a ser removido da lista
+	* @param ID					ID do empregado a ser removido da lista 
 	*/
 	void removeEmpregado(uint ID);
 
@@ -114,17 +122,16 @@ public:
 	Farmacia* getFarmacia(string nome) const;
 	/**
 	* @brief Devolve um apontador para o cliente com o ID indicado no parametro
-	* @param ID					ID do cliente que vai ser retornado
+	* @param NIF				NIF do cliente que vai ser retornado
 	* @return					Apontador para o cliente com o ID indicado no parametro
 	*/
-	Cliente* getCliente(uint  ID) const;
+	Cliente* getCliente(uint  NIF, string nome, string distrito) const;
 	/**
 	* @brief Devolve um apontador para o empregado com o ID indicado no parametro
 	* @param ID					ID do empregado que vai ser retornado
 	* @return					Apontador para o empregado com o ID indicado no parametro
 	*/
 	Empregado* getEmpregado(uint ID) const;
-
 
 	/**
 	* @brief Devolve um apontador para o fornecedor com o nome indicado no parametro
@@ -145,6 +152,8 @@ public:
 	* @return					Vetor de apontadores para objetos da classe Empregado que pertencem a cadeia e que tem o nome indicao no parametro
 	*/
 	vector<Empregado*> getEmpregados(string nome) const;
+
+	const vector<Fornecedor*>  getFornecedores() const;
 
 	/**
 	* @brief Devolve o numero de farmacias da cadeia
@@ -183,13 +192,13 @@ public:
 	* @brief Ordena a lista de clientes de acordo com o modo indicado no parametro
 	* @param modo				Modo em que a lista de clientes vai ser ordenada
 	*/
-	void sortClientes(ord_pessoas modo);
+	void sortClientes(ord_clientes modo);
 
 	/**
 	* @brief Ordena a lista de empregados de acordo com o modo indicado no parametro
 	* @param modo				Modo em que a lista de empregados vai ser ordenada
 	*/
-	void sortEmpregados(ord_pessoas modo);
+	void sortEmpregados(ord_empregados modo);
 
 	/**
 	* @brief Ordena a lista de fornecedores de acordo com o modo indicado no parametro
@@ -246,23 +255,31 @@ private:
 	 * @brief Vector de apontadores para objetos do tipo Farmacia, ordenadas por ordem alfabetica de nome
 	 */
 	vector< Farmacia* > farmacias;
+
 	/**
-	 * @brief Vector de apontadores para objetos do tipo Cliente, ordenados pelo numero de ID de cada cliente
+	 * @brief Vetor de apontadores para objetos do tipo Cliente, usado para ordenar de diferentes formas os clientes
 	 */
-	vector< Cliente* > clientes;
+	vector< Cliente* > clientesSort; 
+
+	/**
+	* @brief Set de apontadores para objetos do tipo Cliente, ordenados por ordem crescente de distrito e alfabeticamente
+	*/
+	clientesSet clientes;
+
+
 	/**
 	 * @brief Vector de apontadores para objetos do tipo Empregado, ordenados pelo numero de ID de cada cliente
 	 */
-	vector< Empregado* > empregados;
-
-	/**
-	 * @brief Vector de apontadores para objetos do tipo Fornecedor, ordenados pelo nome dos mesmos
-	 */
-	vector<Fornecedor* > fornecedores;
-
+	vector< Empregado* > empregados; 
 	/**
 	 * @brief Nome da cadeia de farmacias
 	 */
+
+	 /**
+	* @brief Vector de apontadores para objetos do tipo Fornecedor, ordenados pelo nome dos mesmos
+	*/
+	vector<Fornecedor* > fornecedores;
+
 	string nome;
 
 	// parte 2

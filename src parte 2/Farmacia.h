@@ -29,20 +29,20 @@ using namespace std;
  * \author Luis Cunha
  */
 
-/** @defgroup Farmacia Farmacia
- * @{
- *
- * Farmacia 
- */
+ /** @defgroup Farmacia Farmacia
+  * @{
+  *
+  * Farmacia
+  */
 
 
-/**
- * @brief Classe que representa uma farmacia
- * 
- */
+  /**
+   * @brief Classe que representa uma farmacia
+   *
+   */
 
 typedef priority_queue<Fornecedor*, vector<Fornecedor*>, fornecedor_heap_sort_func> HeapFornecedores;
-typedef priority_queue<pair<Produto*, uint>> HeapStock;
+typedef priority_queue<pair<Produto*, uint>, vector<pair<Produto*, uint>>, produtos_heap_sort_func> HeapStock;
 
 
 class Farmacia {
@@ -58,8 +58,8 @@ public:
 	* @param simp String com as informacoes sobre a farmacia no formato escrito pelo programa num ficheiro de texto
 	*/
 	Farmacia(string simp);
-	/** 
-	*  @brief Destrutor da classe Farmacia. Liberta da memoria o gerente, o vetor de empregados, os produtos e as vendas 
+	/**
+	*  @brief Destrutor da classe Farmacia. Liberta da memoria o gerente, o vetor de empregados, os produtos e as vendas
 	*/
 	virtual ~Farmacia();
 	/**
@@ -70,7 +70,7 @@ public:
 	void addProduto(Produto *produto, int quantidade);
 	/**
 	* @brief Adiciona o empregado indicado no argumento a lista de empregados da farmacia
-	* @param empregado Apontador para empregado que vai ser adicionado a lista de empregados da farmacia 
+	* @param empregado Apontador para empregado que vai ser adicionado a lista de empregados da farmacia
 	*/
 	bool addEmpregado(Empregado* empregado);
 	/**
@@ -92,7 +92,7 @@ public:
 	*/
 	bool setGerente(Empregado* novoGerente, string novoCargo);
 	/**
-	* @brief Remove a quantidade indicada no segundo parametro de produto com o codigo indicado no primeiro parametro do stock da farmacia. 
+	* @brief Remove a quantidade indicada no segundo parametro de produto com o codigo indicado no primeiro parametro do stock da farmacia.
 	* Lanca uma excecao se o produto nao existe em stock
 	* @param codigo Codigo do produto no qual a quantidade em stock vai ser reduzida
 	* @param quantidade Quantidade de produto a diminuir ao stock
@@ -134,6 +134,11 @@ public:
 	* @return Vetor de apontadores para empregados com o nome indicado no parametro que trabalham na farmacia
 	*/
 	vector<Empregado*> getEmpregados(string nome) const;
+
+	vector<Fornecedor*> getFornecedores() const;
+
+	Fornecedor* getFornecedor(string nome) const;
+
 	/**
 	* @brief Devolve o numero de empregados que trabalham na farmacia
 	* @return Numero de empregados da farmacia
@@ -164,7 +169,7 @@ public:
 	 */
 	const vector<Venda *>& getVendas() const;
 
-	/** 
+	/**
 	* @brief Devolve o numero total de produtos em stock, incluindo os produtos repetidos
 	* @return Numero total de produtos em stock
 	*/
@@ -192,7 +197,7 @@ public:
 	*/
 	bool operator == (const Farmacia & ph1) const;
 	/**
-	* @brief Compara a prioridade de duas farmacias. Uma farmacia tem prioridade sobre outra se o seu nome tiver prioridade alfabetica. 
+	* @brief Compara a prioridade de duas farmacias. Uma farmacia tem prioridade sobre outra se o seu nome tiver prioridade alfabetica.
 	* Se as duas farmacias tem nomes iguais, a que tem prioridade e aquela com menor tamanho de stock
 	* @param ph1 Farmacia a ser comparada com o proprio objeto
 	* @return True se o proprio objeto e menor que a farmacia no seu parametro
@@ -203,7 +208,7 @@ public:
 	* @brief Ordena a lista de empregados de acordo com o modo indicado no seu parametro
 	* @param modo Modo no qual a lista de empregados vai ser ordenada
 	*/
-	void sortEmpregados(ord_pessoas modo);
+	void sortEmpregados(ord_empregados modo);
 
 	/**
 	* @brief Escreve num ficheiro as informacoes relativas a farmacia para preservar esta informacao e ser posteriormente carregada
@@ -223,12 +228,15 @@ public:
 	* @brief Mostra alguns atributos de todos os produtos em stock no ecra e ainda as suas quantidades
 	*/
 	void mostrarStock() const;
+
+	void mostrarPrioridadeEncomenda_listForm(uint quantidade_minima) const;
+
 	/**
 	 * @brief Mostra vendas da farmacia no ecra
 	 */
 	void mostrarVendas() const;
 	/**
-	* @brief Mostra no ecra as quantidades em stock de todos os produtos 
+	* @brief Mostra no ecra as quantidades em stock de todos os produtos
 	*/
 	void consultarQuantidades() const;
 	/**
@@ -240,6 +248,7 @@ public:
 	void constroiFilaPrioridade();
 
 	void repoeStock(uint quantidade_limite, int quantidade_nova = -1);
+	void efetuaEncomenda(Produto* produto, uint quantidade);
 
 	void esvaziaFilaReabastecimento();
 
@@ -247,14 +256,17 @@ public:
 
 	bool addFornecedor(Fornecedor* novo_fornecedor);
 	bool removeFornecedor(Fornecedor * fornecedor);
+	ostream& print_lista_fornecedores(ostream& os);
 
+	bool temFornecedorMed();
+	bool temFornecedorProd();
 
 	//--------------------------------------------------------------------
 
 private:
 	/**
 	 * @brief Nome da farmacia
-	 * 
+	 *
 	 */
 	string nome;
 	/**
@@ -275,7 +287,7 @@ private:
 
 	/**
 	 * @brief Map que representa o stock da farmacia (key = apontador para produto, value = quantidade)
-	 * 
+	 *
 	 */
 	map< Produto *, unsigned int> stock;
 	/**
@@ -285,13 +297,14 @@ private:
 
 	//--------------------------------------------------------------------
 	vector<Encomenda> encomendas;
+	vector<Fornecedor*> fornecedores;
 	HeapFornecedores fornecedores_medicamentos;
 	HeapFornecedores fornecedores_produtos;
 	HeapStock prioridade_reabastecimento;
 	//--------------------------------------------------------------------
 };
 
-bool operator>(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
+bool operator<(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
 
 bool operator==(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);
 

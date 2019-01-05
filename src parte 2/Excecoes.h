@@ -10,11 +10,11 @@
  * \author Luis Cunha
  */
 
-/** @defgroup Excecoes Excecoes
- * @{
- *
- * Excecoes 
- */
+ /** @defgroup Excecoes Excecoes
+  * @{
+  *
+  * Excecoes
+  */
 
 
 #include <String>
@@ -45,9 +45,9 @@ public:
 
 /**
  * @brief Excecao que ocorre quando o utilizador escolhe uma opcao invalida num menu
- * 
+ *
  */
-class OpcaoInvalida: public ExcecaoGeral {
+class OpcaoInvalida : public ExcecaoGeral {
 public:
 	/**
 	 * @brief Cria uma excecao com a informacao passada por argumento
@@ -60,7 +60,7 @@ public:
 /**
  * @brief Excecao que ocorre quando um ficheiro nao e encontrado
  */
-class FicheiroNaoEncontrado: public ExcecaoGeral {
+class FicheiroNaoEncontrado : public ExcecaoGeral {
 public:
 	/**
 	 * @brief Cria uma excecao com a informacao passada por argumento
@@ -72,7 +72,7 @@ public:
 
 /**
  * @brief Excecao que ocorre quando uma farmacia nao existe
- * 
+ *
  */
 class FarmaciaNaoExiste : public ExcecaoGeral {
 public:
@@ -101,7 +101,7 @@ public:
 
 /**
  * @brief Excecao que ocorre quando um cliente nao existe
- * 
+ *
  */
 class ClienteNaoExiste : public ExcecaoGeral {
 public:
@@ -115,7 +115,7 @@ public:
 
 /**
  * @brief Excecao que ocorre quando empregado nao existe
- * 
+ *
  */
 class EmpregadoNaoExiste : public ExcecaoGeral {
 public:
@@ -129,7 +129,7 @@ public:
 
 /**
  * @brief Excecao que ocorre quando um produto nao existe
- * 
+ *
  */
 class ProdutoNaoExiste : public ExcecaoGeral {
 public:
@@ -143,7 +143,7 @@ public:
 
 /**
  * @brief Excecao que ocorre quando um produto e repetido
- * 
+ *
  */
 class ProdutoRepetido : public ExcecaoGeral {
 public:
@@ -157,7 +157,7 @@ public:
 
 /**
  * @brief Excecao quando ocorre quando se tenta adicionar a uma venda um numero de produtos que o stock de uma farmacia nao consegue satisfazer
- * 
+ *
  */
 class ProdutosInsuficientes : public ExcecaoGeral {
 public:
@@ -171,7 +171,7 @@ public:
 
 /**
  * @brief Excecao que ocorre quando uma data e invalida
- * 
+ *
  */
 class DataInvalida : public ExcecaoGeral {
 public:
@@ -185,7 +185,7 @@ public:
 
 /**
  * @brief Excecao que ocorre quando um cargo e invalido
- * 
+ *
  */
 class CargoInvalido : public ExcecaoGeral {
 public:
@@ -199,7 +199,7 @@ public:
 
 /**
  * @brief Excecao que ocorre quando uma morada e invalida
- * 
+ *
  */
 class MoradaInvalida : public ExcecaoGeral {
 public:
@@ -213,7 +213,7 @@ public:
 
 /**
  * @brief Excecao que ocorre quando um hora e invalida
- * 
+ *
  */
 class TimeInvalido : public ExcecaoGeral {
 public:

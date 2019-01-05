@@ -1,6 +1,6 @@
 #include "Venda.h"
 
-Venda::Venda(uint cID, string client, uint eID, string empreg, string farm, string time) : idCliente(cID), nomeCliente(client), idEmpregado(eID), nomeEmpregado(empreg), nomeFarmacia(farm) {
+Venda::Venda(uint cNIF, string client, uint eID, string empreg, string farm, string time) : clienteNIF(cNIF), nomeCliente(client), idEmpregado(eID), nomeEmpregado(empreg), nomeFarmacia(farm) {
 
 	preco = 0;
 	if (time == "") {
@@ -136,7 +136,7 @@ ostream & Venda::print(ostream & os) const
 	os << endl << "RECIBO VENDA" << endl << endl;
 	os << timestamp_venda << endl;
 	os << "Farmacia: " << nomeFarmacia << endl;
-	os << "Cliente - ID: " << idCliente << "     Nome: " << nomeCliente << endl;
+	os << "Cliente - NIF: " << clienteNIF << "     Nome: " << nomeCliente << endl;
 	os << "Empregado - ID: " << idEmpregado << "     Nome: " << nomeEmpregado << endl;
 	os << "Produtos: " << endl;
 
@@ -152,7 +152,7 @@ ostream & Venda::print(ostream & os) const
 
 ostream & Venda::printSimp(ostream & os) const
 {
-	os << preco << "\\" << timestamp_venda << "\\" << nomeFarmacia << "\\" << idCliente << "\\" << nomeCliente << "\\" << idEmpregado << "\\" << nomeEmpregado << "\\";
+	os << preco << "\\" << timestamp_venda << "\\" << nomeFarmacia << "\\" << clienteNIF << "\\" << nomeCliente << "\\" << idEmpregado << "\\" << nomeEmpregado << "\\";
 
 	for (map<Produto *, unsigned int>::const_iterator it = produtos.begin(); it != produtos.end(); it++) {
 

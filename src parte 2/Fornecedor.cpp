@@ -76,6 +76,14 @@ ostream & Fornecedor::print_encomendas_resumo(ostream & os) const
 	return os;
 }
 
+ostream & Fornecedor::print_resumo_lista(ostream & os) const
+{
+	os << "Nome: " << setw(10) << nome;
+	cout << " Tipo: "  << setw(12) << ((this->tipo == medicamentos) ? "medicamentos" : "produtos");
+	cout << " Numero encomendas: " << this->getNumEncomendas() << endl;
+	return os;
+}
+
 bool Fornecedor::operator<(Fornecedor & f2)
 {
 	return this->nome < f2.getNome();

@@ -162,7 +162,7 @@ private:
 	/**
 	 * @brief ID do cliente que realizou a compra
 	 */
-	const uint idCliente;
+	const uint clienteNIF;
 };
 
 /** @} */

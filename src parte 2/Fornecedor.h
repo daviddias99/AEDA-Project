@@ -33,6 +33,7 @@ public:
 	*/
 	ostream& print(ostream& os) const;
 	ostream& print_encomendas_resumo(ostream& os) const;
+	ostream& print_resumo_lista(ostream& os) const;
 	bool operator<(Fornecedor& f2);
 	bool operator==(Fornecedor& f2);
 };
@@ -48,7 +49,7 @@ bool fornecedor_SortFunc_NumEncomendas_Decrescente(Fornecedor * f1, Fornecedor *
 
 struct fornecedor_heap_sort_func {
 	bool operator()(const Fornecedor* lhs, const Fornecedor* rhs) {
-		return lhs->getNumEncomendas() < lhs->getNumEncomendas();
+		return lhs->getNumEncomendas() > rhs->getNumEncomendas();
 	}
 };
 
