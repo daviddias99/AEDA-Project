@@ -158,7 +158,7 @@ Empregado* user_getEmpregado(Cadeia& cadeia, pair<bool, string> newFOverride) {
 
 	dataContratacao = user_getData("Data de contracao (DD/MM/AAAA): ", "Data invalida.", false);
 
-	Empregado* newEmp = new Empregado(nome, (long unsigned int) NIF, dataNascimento, morada, (uint)salario, farmaciaNome, cargo, dataContratacao);
+	Empregado* newEmp = new Empregado((long unsigned int) NIF, nome,  dataNascimento, morada, (uint)salario, farmaciaNome, cargo, dataContratacao);
 
 	return newEmp;
 }
@@ -1206,7 +1206,7 @@ void menuEmpregados(Cadeia& cadeia)
 		cout << "1 - Resumo empregados" << endl;
 		cout << "2 - Gerir empregado" << endl;
 		cout << "3 - Adicionar empregado" << endl;
-		cout << "4 - Remover empregado" << endl;
+		cout << "4 - Despedir empregado" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -1235,7 +1235,7 @@ void menuEmpregados(Cadeia& cadeia)
 			adicionarEmpregado(cadeia);
 			break;
 		case 4:
-			removerEmpregado(cadeia);
+			despedirEmpregado(cadeia);
 			break;
 		case 0:
 			continuarNesteMenu = false;
@@ -1314,13 +1314,13 @@ void adicionarEmpregado(Cadeia& cadeia)
 	}
 }
 
-void removerEmpregado(Cadeia& cadeia)
+void despedirEmpregado(Cadeia& cadeia)
 {
 	string nomeEmpregado;
-	uint ID;
+	uint NIF;
 
-	cout << "REMOVER EMPREGADO" << endl << endl;
-
+	cout << "DESPEDIR EMPREGADO" << endl << endl;
+	/*
 	//get nome do empregado a remover
 	cout << "Nome do empregado: ";
 	getline(cin, nomeEmpregado);
@@ -1331,24 +1331,22 @@ void removerEmpregado(Cadeia& cadeia)
 	// imprime empregados encontrados
 	for (size_t i = 0; i < empregados_busca.size(); i++) {
 
-		cout << "ID: " << empregados_busca.at(i)->getID()
+		cout << "NIF: " << empregados_busca.at(i)->getID()
 			<< "| Nome: " << empregados_busca.at(i)->getNome()
 			<< "| Farmacia: " << empregados_busca.at(i)->getNomeFarmacia()
 			<< "| Cargo: " << empregados_busca.at(i)->getCargo() << endl;
-
-
 	}
 
 	cout << endl;
 
-	// se n�o encontrar nenhum empregado com o nome dado, retorna
+	// se nao encontrar nenhum empregado com o nome dado, retorna
 	if (empregados_busca.size() == 0) {
 
 		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
 		return;
 	}
 
-	// se s� existir um empregado com o nome dado, remover esse empregado
+	// se so existir um empregado com o nome dado, remover esse empregado
 	// caso contrario, pedir o ID do empregado a remover
 	if (empregados_busca.size() != 1) {
 
@@ -1399,12 +1397,33 @@ void removerEmpregado(Cadeia& cadeia)
 		cout << "Erro: Nao pode remover o gerente de uma farmacia." << endl;
 		return;
 
+	}*/
+
+	cout << "NIF do empregado a despedir: ";
+
+	while (!(cin >> NIF) || (NIF < 100000000 || NIF > 999999999))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "NIF invalido." << endl << endl;
+		cout << "NIF do empregado a despedir: ";
 	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
 
 	// remover empregado
 	try {
-		cadeia.removeEmpregado(ID);
-		cout << "Cliente removido" << endl;
+		cadeia.despedirEmpregado(NIF);
+		cout << "Empregado despedido" << endl;
 	}
 	catch (EmpregadoNaoExiste &c1) {
 		cout << c1.getInfo() << endl;
@@ -2029,7 +2048,7 @@ void farmacia_consultarEmpregados(Farmacia& farmacia) {
 
 	farmacia.mostrarEmpregados();
 
-	farmacia.sortEmpregados(id_cres);
+	//farmacia.sortEmpregados(id_cres);
 }
 
 void farmacia_consultarProdutos(Farmacia & farmacia)

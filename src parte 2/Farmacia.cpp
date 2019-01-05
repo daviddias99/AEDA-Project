@@ -102,7 +102,7 @@ bool Farmacia::addEmpregado(Empregado* empregado)
 
 
 
-	if (!empregados2.insert(empregado).second) return false;
+	if (!empregados.insert(empregado).second) return false;
 
 	if (empregado->getCargo() == "gerente") {
 		if (gerente != NULL)
@@ -148,13 +148,16 @@ void Farmacia::remProduto(long unsigned int codigo)
 
 void Farmacia::remEmpregado(uint ID)
 {
+	// TO DO
+
+	/*
 	int i = procura(this->empregados, ID);
 
 	if (i != -1) {
 		empregados.erase(empregados.begin() + i);
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
 	}
-	else throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");
+	else throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");*/
 
 }
 
@@ -211,7 +214,7 @@ vector<Empregado*> Farmacia::getEmpregados(string nome) const
 	vector<Empregado*> v1;
 	vector<Empregado*>::const_iterator it;
 
-	for (it = empregados.begin(); it != empregados.end(); it++) {
+	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
 		if ((*it)->getNome() == nome) v1.push_back(*it);
 	}
 
@@ -690,6 +693,7 @@ bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2)
 		return false;
 }
 
+/*
 void Farmacia::sortEmpregados(ord_empregados modo)
 {
 	switch (modo) {
@@ -730,7 +734,7 @@ void Farmacia::sortEmpregados(ord_empregados modo)
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Decrescente);
 		break;
 	}
-}
+}*/
 
 ostream& Farmacia::printSimp(ostream& os) const {
 
@@ -762,7 +766,7 @@ ostream& Farmacia::print(ostream & os) const
 
 void Farmacia::mostrarEmpregados() const
 {
-	for (empregadoHashTable::const_iterator it = empregados2.begin(); it != empregados2.end(); it++) {
+	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
 		(*it)->print(cout) << endl << endl;
 	}
 }
@@ -794,5 +798,12 @@ void Farmacia::mostrarVendas() const
 		vendas[i]->print(cout) << endl << endl;
 }
 
+void Farmacia::despedirEmpregado(Empregado* emp) {
+
+	empregadoHashTable::const_iterator it = empregados.find(emp);
+
+	if (it == empregados.end()) return;
+	empregados.erase(emp);
+}
 
 

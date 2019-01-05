@@ -15,8 +15,8 @@ Cadeia::~Cadeia()
 
 	for (size_t i = 0; i < this->farmacias.size(); i++)
 		delete this->farmacias.at(i);
-	for (size_t i = 0; i < this->empregados.size(); i++)
-		delete this->empregados.at(i);
+	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++)
+		delete *it;
 }
 
 bool Cadeia::addFarmacia(Farmacia* farmacia)
@@ -53,7 +53,7 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 	this->farmacias.at(i)->addEmpregado(empregado);*/
 
 
-	if (!empregados2.insert(empregado).second) return false;
+	if (!empregados.insert(empregado).second) return false;
 
 	return true;
 }
@@ -91,13 +91,16 @@ void Cadeia::removeCliente(uint ID)
 }
 
 void Cadeia::removeEmpregado(uint ID)
-{
+{ 
+	// TO DO
+
+	/*
 	int i = procura(empregados, ID);
 	if(i != -1) { //Empregado encontrado
 		empregados.erase(empregados.begin()+i);
 		
 	}
-	else throw EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
+	else throw EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");*/
 }
 
 void Cadeia::removeFornecedor(string nome)
@@ -140,12 +143,17 @@ Cliente* Cadeia::getCliente(uint NIF, string nome, string distrito) const
 }
 
 Empregado* Cadeia::getEmpregado(uint ID) const
-{
+{	
+	// TO DO
+	/*
 	int i = procura(empregados, ID);
 	if(i != -1) //Empregado encontrado
-		return empregados[i];
+		return empregados[i];*/
 
-	throw  EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");
+	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
+		if ((*it)->getID() == ID)
+			return *it;
+	}
 }
 
 Fornecedor * Cadeia::getFornecedor(string nome) const
@@ -184,10 +192,10 @@ vector<Empregado*> Cadeia::getEmpregados(string nome) const
 {
 	vector<Empregado*> resultado;
 
-	for (size_t i = 0; i < this->empregados.size(); i++) {
+	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
 
-		if (this->empregados.at(i)->getNome() == nome) {
-			resultado.push_back(this->empregados.at(i));
+		if ((*it)->getNome() == nome) {
+			resultado.push_back(*it);
 		}
 
 	}
@@ -286,6 +294,7 @@ void Cadeia::sortClientes(ord_clientes modo)
 	}
 }
 
+/*
 void Cadeia::sortEmpregados(ord_empregados modo)
 {
 	switch (modo) {
@@ -326,7 +335,7 @@ void Cadeia::sortEmpregados(ord_empregados modo)
 		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Decrescente);
 		break;
 	}
-}
+}*/
 
 void Cadeia::sortFornecedores(ord_fornece modo)
 {
@@ -375,7 +384,7 @@ void Cadeia::mostrarEmpregados() const
 	for (size_t i = 0; i < empregados.size(); i++)
 		empregados.at(i)->print(cout) << endl << endl;*/
 
-	for (empregadoHashTable::const_iterator it = empregados2.begin(); it != empregados2.end(); it++) {
+	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
 		(*it)->print(cout) << endl << endl;
 	}
 }
@@ -421,7 +430,7 @@ void Cadeia::guardarDados() const
 	ofstream fichEmpregados;
 	fichEmpregados.open(nomeFichEmpregados);
 
-	for (empregadoHashTable::const_iterator it = empregados2.begin(); it != empregados2.end(); it++) {
+	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
 		(*it)->printSimp(fichEmpregados) << endl;
 	}
 
@@ -558,7 +567,7 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 
 
 		// alterar
-		novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
+		novoEmp = new Empregado(NIF, nome, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
 	
 		addEmpregado(novoEmp);
 		getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
@@ -592,7 +601,7 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 
 
 			// alterar
-			novoEmp = new Empregado(nome, NIF, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
+			novoEmp = new Empregado(NIF, nome, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
 
 			addEmpregado(novoEmp);
 			getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
@@ -764,4 +773,33 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 	}
 }
 
+
+
+void Cadeia::despedirEmpregado(long int nifEmp) {
+
+	Empregado* tmpEmp = new Empregado(nifEmp);
+
+
+	empregadoHashTable::const_iterator it = empregados.find(tmpEmp);
+
+
+	if (it == empregados.end())  throw EmpregadoNaoExiste("O empregado com o nif " + to_string(nifEmp) + " nao existe.");
+
+	tmpEmp = *it;
+	empregados.erase(it);
+
+	for (size_t i = 0; i < farmacias.size(); i++) {
+		
+		cout << i << endl;
+
+		if (tmpEmp->getNomeFarmacia() == farmacias.at(i)->getNome()) {
+
+			farmacias.at(i)->despedirEmpregado(tmpEmp);
+		}
+	}
+
+	tmpEmp->despedir();
+
+	empregados.insert(tmpEmp);
+}
 

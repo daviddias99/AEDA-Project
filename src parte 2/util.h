@@ -204,6 +204,8 @@ protected:
 
 };
 
+int mesesEntre(const Data& d1, const Data& d2);
+
 
 /**
  * @brief Classe que representa uma hora do dia (horas, minutos, segundos)

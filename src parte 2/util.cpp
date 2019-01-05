@@ -284,6 +284,11 @@ ostream & operator<<(ostream & os, const Data & d)
 	return os;
 }
 
+int mesesEntre(const Data & d1, const Data & d2)
+{
+	return (d2.getAno() - d1.getAno()) * 12 - d1.getMes() + d2.getMes();
+}
+
 ostream & operator<<(ostream & os, const Time & d)
 {
 	os << setfill('0') << setw(2) << d.hora << ":" << setfill('0') << setw(2) << d.minuto << ":" << setw(2) << d.segundo;

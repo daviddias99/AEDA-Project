@@ -262,6 +262,7 @@ public:
 	bool temFornecedorProd();
 
 	//--------------------------------------------------------------------
+	void despedirEmpregado(Empregado* emp);
 
 private:
 	/**
@@ -280,9 +281,9 @@ private:
 	/**
 	 * @brief Vetor de apontadores para os empregados da farmacia
 	 */
-	vector< Empregado* > empregados;
+	//vector< Empregado* > empregados;
 
-	empregadoHashTable empregados2;
+	empregadoHashTable empregados;
 
 
 	/**

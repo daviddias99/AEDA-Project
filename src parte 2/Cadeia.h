@@ -235,6 +235,11 @@ public:
 	* @brief Carrega os dados das farmacias, empregados e clientes de um ficheiro txt e permite a continuacao da gerencia dessa cadeia carregada
 	*/
 	void carregarDados();
+
+
+
+
+	void despedirEmpregado(long int nifEmp);
 private:
 	/**
 	* @brief Carrega a lista de clientes do ficheiro indicado no seu parametro
@@ -275,7 +280,7 @@ private:
 	/**
 	 * @brief Vector de apontadores para objetos do tipo Empregado, ordenados pelo numero de ID de cada cliente
 	 */
-	vector< Empregado* > empregados; 
+	//vector< Empregado* > empregados; 
 
 	/**
 	* @brief Vector de apontadores para objetos do tipo Fornecedor, ordenados pelo nome dos mesmos
@@ -289,7 +294,7 @@ private:
 	string nome;
 
 	// parte 2
-	empregadoHashTable empregados2;
+	empregadoHashTable empregados;
 };
 
 /** @} */

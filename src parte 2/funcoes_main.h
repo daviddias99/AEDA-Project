@@ -168,11 +168,11 @@ void resumoEmpregados(Cadeia& cadeia);
  */
 void adicionarEmpregado(Cadeia& cadeia);
 /**
- * @brief Remover um empregado da cadeia passada como argumento
+ * @brief Despedir um empregado da cadeia passada como argumento
  * 
  * @param cadeia Cadeia da qual se quer remover um empregado
  */
-void removerEmpregado(Cadeia& cadeia);
+void despedirEmpregado(Cadeia& cadeia);
 /**
  * @brief Funcao que permite gerir atributos de um empregado e consultar as suas vendas
  * 

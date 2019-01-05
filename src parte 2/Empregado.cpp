@@ -3,7 +3,7 @@
 
 uint Empregado::currentID = 0;
 
-Empregado::Empregado(string nome, uint nif, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo, Data dataContratacao, Data dataDespedimento, uint mesesLigacao, int ID) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
+Empregado::Empregado(uint nif ,string nome, Data dataNasc, Morada morada, uint sal, string farmaciaNome, string cargo, Data dataContratacao, Data dataDespedimento, uint mesesLigacao, int ID) : Pessoa(nome, nif, dataNasc, morada), farmaciaNome(farmaciaNome), salario(sal)
 {
 	this->cargo = cargo;
 
@@ -112,6 +112,13 @@ ostream & Empregado::printSimp(ostream & os) const
 bool Empregado::trabalhaAtualmente() const
 {
 	return ultimaDataDespedimento == Data::NULLData; // caso o empregado não tenha sido despedido, é porque e um trabalhador atual da farmacia
+}
+
+void Empregado::despedir()
+{
+	ultimaDataDespedimento = Data();
+	mesesLigacaoAnterior = mesesEntre(ultimaDataContratacao, ultimaDataDespedimento);
+	farmaciaNome = "";
 }
 
 
