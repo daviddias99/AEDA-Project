@@ -153,6 +153,11 @@ public:
 	*/
 	vector<Empregado*> getEmpregados(string nome) const;
 
+	/**
+	 * @brief Retorna um vector com apontadores para todos os fornecedores da cadeia
+	 * 
+	 * @return const vector<Fornecedor*> 		Vetor com todos os fornecedores da cadeia
+	 */
 	const vector<Fornecedor*>  getFornecedores() const;
 
 	/**
@@ -271,14 +276,15 @@ private:
 	 * @brief Vector de apontadores para objetos do tipo Empregado, ordenados pelo numero de ID de cada cliente
 	 */
 	vector< Empregado* > empregados; 
-	/**
-	 * @brief Nome da cadeia de farmacias
-	 */
 
-	 /**
+	/**
 	* @brief Vector de apontadores para objetos do tipo Fornecedor, ordenados pelo nome dos mesmos
 	*/
 	vector<Fornecedor* > fornecedores;
+
+	/**
+	 * @brief Nome da cadeia de farmacias
+	 */
 
 	string nome;
 

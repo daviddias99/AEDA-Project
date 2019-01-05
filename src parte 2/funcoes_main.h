@@ -34,8 +34,10 @@ const long long MAX_STREAM_SIZE = numeric_limits<streamsize>::max();
  */
 Morada user_getMorada();
 /**
- * @brief Le uma data do utilizador
+ * @brief Le uma data do utilizador apresentando a mensagem dada como primeiro argumento e apresentando a segunda mensagem em caso de input de uma Data invalida
  * 
+ * @param msg				mensagem dada para pedir a data ao user
+ * @param msgErr			mensagem apresentada no caso de input de uma data invalida
  * @return Data lida do utilizador
  */
 Data user_getData(string msg = "Data de nascimento (DD/MM/AAAA): ", string msgErr = "Data de nascimento invalida.");
@@ -196,6 +198,12 @@ void resumoFornecedores(Cadeia& cadeia);
  */
 void adicionarFornecedor(Cadeia& cadeia);
 
+
+/**
+ * @brief Funcao que permite ao utilizador adicionar um fornecedor a cadeia
+ *
+ * @param cadeia        Cadeia onde se pretende adicionar o fornecedor
+ */
 void consultarFornecedor(Cadeia& cadeia);
 
 /**
@@ -270,14 +278,39 @@ void farmacia_adicionarProduto(Farmacia& farmacia);
  */
 void farmacia_removerProduto(Farmacia& farmacia);
 
+/**
+ * @brief Funcao usada para executar o utilitario de adicionar um fornecedor a uma farmacia.
+ * 
+ * @param cadeia        cadeia que contem a  farmacia a alterar
+ */
 void farmacia_adicionarFornecedor(Cadeia& cadeia);
 
+/**
+ * @brief Funcao usada para executar o utilitario de remover um fornecedor a uma farmacia.
+ * 
+ * @param cadeia           cadeia que contem a  farmacia a alterar
+ */
 void farmacia_removerFornecedor(Cadeia& cadeia);
 
+/**
+ * @brief Funcao usada para executar o utilitario de consultar os fornecedores de uma farmacia.
+ * 
+ * @param farmacia          farmacia a consultar
+ */
 void farmacia_consultaFornecedores(Farmacia& farmacia);
 
+/**
+ * @brief Funcao usada para executar o utilitario de repor o stock de uma farmacia.
+ * 
+ * @param farmacia          farmacia onde o stock sera reposto
+ */
 void farmacia_reposicaoStock(Farmacia& farmacia);
 
+/**
+ * @brief Executa a operação de consultar uma encomenda de um fornecedor. A encomenda e encontrada atraves da data da sua realizacao.
+ * 
+ * @param fornecedor        fornecedor a consultar
+ */
 void fornecedor_consultarEncomenda(Fornecedor& fornecedor);
 
 /** @} */

@@ -495,14 +495,14 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 
 		encomendaMedicamentos.terminaEncomenda();
 		fornecedor_medicamentos->satisfazEncomenda(encomendaMedicamentos);
-		this->encomendas.push_back(encomendaMedicamentos);
+		//this->encomendas.push_back(encomendaMedicamentos);
 	}
 
 	if (!produtos.empty()) {
 
 		encomendaProdutos.terminaEncomenda();
 		fornecedor_produtos->satisfazEncomenda(encomendaProdutos);
-		this->encomendas.push_back(encomendaProdutos);
+		//this->encomendas.push_back(encomendaProdutos);
 	}
 
 	// readicionar os fornecedores aos heaps
@@ -546,14 +546,14 @@ void Farmacia::efetuaEncomenda(Produto * produto, uint quantidade)
 
 		encomenda.terminaEncomenda();
 		fornecedor->satisfazEncomenda(encomenda);
-		this->encomendas.push_back(encomenda);
+		//this->encomendas.push_back(encomenda);
 		fornecedores_medicamentos.push(fornecedor);
 	}
 	else {
 
 		encomenda.terminaEncomenda();
 		fornecedor->satisfazEncomenda(encomenda);
-		this->encomendas.push_back(encomenda);
+		//this->encomendas.push_back(encomenda);
 		fornecedores_produtos.push(fornecedor);
 	}
 

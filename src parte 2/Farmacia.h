@@ -291,13 +291,33 @@ private:
 	 */
 	vector <Venda *> vendas;
 
-	//--------------------------------------------------------------------
-	vector<Encomenda> encomendas;
+
+	//vector<Encomenda> encomendas;
+
+	/**
+	 * @brief Vetor que contem todos os fornecedores da farmacia
+	 * 
+	 */
 	vector<Fornecedor*> fornecedores;
+
+	/**
+	 * @brief Heap que contem os fornecedores de medicamentos da farmacia. A prioridade no heap e definida pelo numero de encomendas que o fornecedor possui.
+	 * 
+	 */
 	HeapFornecedores fornecedores_medicamentos;
+
+	/**
+	 * @brief Heap que contem os fornecedores de produtos da farmacia. A prioridade no heap e definida pelo numero de encomendas que o fornecedor possui.
+	 * 
+	 */
 	HeapFornecedores fornecedores_produtos;
+
+	/**
+	 * @brief Heap que contem os produtos existentes na farmacia: A prioridade no heap e definida pela quantidade existente em stock dos produtos.
+	 * 
+	 */
 	HeapStock prioridade_reabastecimento;
-	//--------------------------------------------------------------------
+
 };
 
 bool operator<(pair<Produto*, uint>& p1, pair<Produto*, uint>& p2);

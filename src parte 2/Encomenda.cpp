@@ -84,14 +84,17 @@ string Encomenda::getNomeFornecedor()
 
 Timestamp Encomenda::getTStamp() const
 {
+	if(!this->terminada)
+		return Timestamp(Data(0,0,0), Time(0,0,0));
+
 	return this->stamp;
 }
 
-uint Encomenda::getQuantidadeProdutos()
+uint Encomenda::getQuantidadeProdutos() const
 {
 
-	ListaProdutos::iterator it = this->listaProdutos.begin();
-	ListaProdutos::iterator ite = this->listaProdutos.end();
+	ListaProdutos::const_iterator it = this->listaProdutos.begin();
+	ListaProdutos::const_iterator ite = this->listaProdutos.end();
 	uint resultado = 0;
 
 	while (it != ite) {
@@ -117,7 +120,7 @@ ostream & Encomenda::print_resumo(ostream & os) const
 {
 	os << "Origem: " << this->farmaciaOrigem << endl;
 	os << "Data da encomenda: " << this->stamp.getTstamp() << endl;
-	os << "Valor: " << this->getValor() << endl;
+	os << "Numero de produtos: " << this->getQuantidadeProdutos() << "Valor: " << this->getValor() << endl;
 
 	return os;
 }
@@ -146,6 +149,7 @@ Encomenda::Encomenda(string nomeFarmacia, string nomeFornecedor) {
 	this->terminada = false;
 	this->farmaciaOrigem = nomeFarmacia;
 	this->fornecedorOrigem = nomeFornecedor;
+	this->stamp = Timestamp(Data(0,0,0), Time(0,0,0));
 	this->valorEncomenda = 0;
 
 }

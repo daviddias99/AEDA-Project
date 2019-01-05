@@ -1,6 +1,8 @@
 #include "Fornecedor.h"
 
 
+
+
 Fornecedor::Fornecedor(string nome, Morada morada_sede, TipoFornecedor tipo) {
 
 	this->nome = nome;
