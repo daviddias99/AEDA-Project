@@ -167,6 +167,8 @@ void resumoEmpregados(Cadeia& cadeia);
  * @param cadeia Cadeia a qual se quer adicionar um empregado
  */
 void adicionarEmpregado(Cadeia& cadeia);
+
+void recontratarEmpregado(Cadeia& cadeia);
 /**
  * @brief Despedir um empregado da cadeia passada como argumento
  * 

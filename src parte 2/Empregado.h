@@ -140,6 +140,8 @@ public:
 
 	void despedir();
 
+	void recontratar(string farmNome, string cargo, uint sal);
+
 private:
 	/**
 	 * @brief Salario do empregado

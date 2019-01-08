@@ -121,6 +121,16 @@ void Empregado::despedir()
 	farmaciaNome = "";
 }
 
+void Empregado::recontratar(string farmNome, string cargo, uint sal)
+{
+	this->ultimaDataContratacao = Data();
+	this->ultimaDataDespedimento = Data::NULLData;
+
+	this->cargo = cargo;
+	this->farmaciaNome = farmNome;
+	this->salario = sal;
+}
+
 
 bool operator<(const Empregado & e1, const Empregado & e2)
 {

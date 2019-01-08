@@ -156,6 +156,22 @@ Empregado* Cadeia::getEmpregado(uint ID) const
 	}
 }
 
+bool Cadeia::empregadoSemContrato(long int NIF) const {
+
+	Empregado* tmpEmp = new Empregado(NIF);
+
+
+	empregadoHashTable::const_iterator it = empregados.find(tmpEmp);
+
+	if (it == empregados.end())
+		return false;
+
+	if ((*it)->trabalhaAtualmente())
+		return false;
+
+	return true;
+}
+
 Fornecedor * Cadeia::getFornecedor(string nome) const
 {
 	unsigned int i = procura(fornecedores, nome);
@@ -465,6 +481,8 @@ void Cadeia::carregarDados() {
 	if (!(fich_farm.is_open() && fich_cli.is_open() && fich_emp.is_open() && fich_vend.is_open()))
 		throw FicheiroNaoEncontrado("Ficheiros da cadeia \"" + nome + "\" nao encontrados.");
 
+
+
 	carregarFarmacias(fich_farm);
 
 	carregarEmpregados(fich_emp);
@@ -607,8 +625,15 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 			// alterar
 			novoEmp = new Empregado(NIF, nome, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
 
+			Farmacia* farm;
+
 			addEmpregado(novoEmp);
-			getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
+			try {
+				getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
+			}
+			catch (FarmaciaNaoExiste &f) {
+
+			}
 		}
 	}
 }
@@ -806,4 +831,39 @@ void Cadeia::despedirEmpregado(long int nifEmp) {
 
 	empregados.insert(tmpEmp);
 }
+
+void Cadeia::recontratarEmpregado(long int nifEmp, string farmNome, string cargo, uint sal)
+{
+	Empregado* tmpEmp = new Empregado(nifEmp);
+
+
+	empregadoHashTable::const_iterator it = empregados.find(tmpEmp);
+
+
+	if (it == empregados.end())  throw EmpregadoNaoExiste("O empregado com o nif " + to_string(nifEmp) + " nao existe.");
+
+	tmpEmp = *it;
+	empregados.erase(it);
+
+	for (size_t i = 0; i < farmacias.size(); i++) {
+
+		if (farmNome == farmacias.at(i)->getNome()) {
+
+			tmpEmp->recontratar(farmNome, cargo, sal);
+
+			farmacias.at(i)->addEmpregado(tmpEmp);
+			break;
+		}	
+
+		if (i == farmacias.size() - 1) {
+			empregados.insert(tmpEmp);
+			throw FarmaciaNaoExiste("Nao existe nenhuma farmacia com o nome " + farmNome + ". ");
+		}
+	}
+
+
+	empregados.insert(tmpEmp);
+}
+
+
 

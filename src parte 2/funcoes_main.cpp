@@ -1207,6 +1207,7 @@ void menuEmpregados(Cadeia& cadeia)
 		cout << "2 - Gerir empregado" << endl;
 		cout << "3 - Adicionar empregado" << endl;
 		cout << "4 - Despedir empregado" << endl;
+		cout << "5 - Recontratar empregado" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -1214,7 +1215,7 @@ void menuEmpregados(Cadeia& cadeia)
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 4);
+				opcao = getInputNumber(0, 5);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -1237,6 +1238,9 @@ void menuEmpregados(Cadeia& cadeia)
 		case 4:
 			despedirEmpregado(cadeia);
 			break;
+		case 5:
+			recontratarEmpregado(cadeia);
+			break;					
 		case 0:
 			continuarNesteMenu = false;
 			break;
@@ -1428,6 +1432,89 @@ void despedirEmpregado(Cadeia& cadeia)
 	catch (EmpregadoNaoExiste &c1) {
 		cout << c1.getInfo() << endl;
 	}
+}
+
+void recontratarEmpregado(Cadeia& cadeia) {
+
+	cout << endl << "RECONTRATAR EMPREGADO" << endl << endl;
+
+	long int NIF;
+	string farmaciaNome;
+	string cargo;
+	int salario;
+
+	
+
+
+	cout << "NIF: ";
+
+	// validar input do NIF
+	while (!(cin >> NIF) || (NIF < 100000000 || NIF > 999999999))
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+
+		cout << "NIF invalido." << endl << endl;
+		cout << "NIF: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+	if (!cadeia.empregadoSemContrato(NIF)) {
+		cout << "Nao existe um empregado sem contrato com esse nome." << endl;
+	}
+
+	
+
+	while (true) {
+
+		farmaciaNome = getInputString("Farmacia: ", "Nome de farmacia invalido.");
+
+		try
+		{
+			cadeia.getFarmacia(farmaciaNome);
+		}
+		catch (FarmaciaNaoExiste& f)
+		{
+			cout << f.getInfo() << endl;
+			continue;
+		}
+		break;
+	}
+
+	cargo = getInputString("Cargo: ", "Cargo invalido.");
+
+
+	cout << "Salario: ";
+
+	// validar input do salario
+	while (!(cin >> salario) || salario < 0)
+	{
+		if (cin.eof())
+		{
+			cin.clear();
+		}
+		else
+		{
+			cin.clear();
+			cin.ignore(MAX_STREAM_SIZE, '\n');
+		}
+		cout << "Salario invalido." << endl << endl;
+		cout << "Salario: ";
+	}
+
+	cin.ignore(MAX_STREAM_SIZE, '\n');
+
+
+	cadeia.recontratarEmpregado(NIF, farmaciaNome, cargo, salario);
+
 }
 
 void gerirEmpregado(Cadeia & cadeia)
@@ -2724,5 +2811,7 @@ void adicionarFarmacia(Cadeia& cadeia)
 	cout << endl << "Gerente adicionado, farmacia criada." << endl;
 
 }
+
+
 
 

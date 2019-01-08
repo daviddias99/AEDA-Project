@@ -236,10 +236,12 @@ public:
 	*/
 	void carregarDados();
 
-
-
-
 	void despedirEmpregado(long int nifEmp);
+
+	bool empregadoSemContrato(long int NIF) const;
+
+	void recontratarEmpregado(long int nifEmp, string farmNome, string cargo, uint sal);
+
 private:
 	/**
 	* @brief Carrega a lista de clientes do ficheiro indicado no seu parametro
