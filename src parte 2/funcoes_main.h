@@ -246,14 +246,7 @@ void consultarFarmacia(Cadeia& cadeia);
  * 
  * @param cadeia       cadeia que contem a farmacia cujo stock se pretende gerir 
  */
-void farmacia_gerirStock(Cadeia& cadeia);
-
-/**
- * @brief Consultar os produtos da farmacia, em forma de lista, ordenados pela prioridade com que devem ser encomendados
- *
- * @param farmacia Farmacia cujas vendas se pretende consultar
- */
-void farmacia_verPrioridadeEncomendas(Farmacia& farmacia);
+void gerirStock(Cadeia& cadeia);
 
 /**
  * @brief Alterar o gerente de uma farmacia a escolher pelo user para outro empregado dessa mesma farmacia. A função atribui

@@ -29,6 +29,11 @@ string Cliente::getDistrito() const
 	return this->distrito;
 }
 
+void Cliente::setDistrito(string distrito)
+{
+	this->distrito = distrito;
+}
+
 ostream & Cliente::print(ostream & os) const
 {
 	//os << "ID: " << ID << endl;

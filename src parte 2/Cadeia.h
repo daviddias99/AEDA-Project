@@ -97,10 +97,10 @@ public:
 	void removeFarmacia(string nome);
 
 	/**
-	* @brief Remove o cliente com o ID indicado no seu parametro da lista de clientes
-	* @param ID					ID do cliente a ser removido da lista
+	* @brief Remove o cliente apontado pelo seu argumento
+	* @param cliente			Apontador para o cliente a ser removido
 	*/
-	void removeCliente(uint ID);
+	void removeCliente(Cliente* cliente);
 
 	/**
 	* @brief Remove o empregado com o ID inidcado no seu parametro da lista de empregados

@@ -81,16 +81,17 @@ void Cadeia::removeFarmacia(string nome)
 	else throw FarmaciaNaoExiste(nome);
 }
 
-void Cadeia::removeCliente(uint ID)
+void Cadeia::removeCliente(Cliente* cliente)
 {
-	/*int i = procura(clientes, ID);
-	if(i != -1) { //Cliente encontrado
-		clientes.erase(clientes.begin() +i);
+	clientes.erase(cliente);
+
+	cout << "1" << endl;
+
+	for (size_t i = 0; i < clientesSort.size(); i++) {
+		if (clientesSort[i]->getNIF() == cliente->getNIF())
+			clientesSort.erase(clientesSort.begin() + i);
+	}
 		
-	} 
-	else throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");*/
-
-
 }
 
 void Cadeia::removeEmpregado(uint ID)
@@ -128,14 +129,6 @@ Farmacia* Cadeia::getFarmacia(string nome) const
 
 Cliente* Cadeia::getCliente(uint NIF, string nome, string distrito) const
 {
-	/*int i = procura(clientes, ID);
-	if(i != -1) //Cliente encontrado
-		return clientes[i];
-
-	clientesSet::iterator it = clientes.find(cliente);
-
-	throw ClienteNaoExiste("O cliente com o ID " + to_string(ID) + " nao existe");*/
-
 	Cliente* c1 = new Cliente(nome, NIF, Data(), Morada(), distrito);
 	clientesSet::iterator it = clientes.find(c1);
 
@@ -495,7 +488,7 @@ void Cadeia::carregarDados() {
 void Cadeia::carregarClientes(ifstream& ficheiro)
 {
 	string linha;
-	int ID;
+	string distrito;
 	string nome;
 	int NIF;
 	Morada morada;
@@ -506,7 +499,7 @@ void Cadeia::carregarClientes(ifstream& ficheiro)
 	getline(ficheiro, linha);
 	if (linha != "") {
 
-		ID = stoi(linha.substr(0, linha.find_first_of('\\')));
+		distrito = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		nome = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
@@ -517,16 +510,17 @@ void Cadeia::carregarClientes(ifstream& ficheiro)
 		morada = linha;
 		
 
-		//novoCli = new Cliente(nome, NIF, data, morada, distrito);
+		novoCli = new Cliente(nome, NIF, data, morada, distrito);
 
-		//clientes.insert(novoCli);
+		clientes.insert(novoCli);
+		clientesSort.push_back(novoCli);
 	}
 
 	while (!ficheiro.eof()) {
 		getline(ficheiro, linha);
 		if (linha != "") {
 
-			ID = stoi(linha.substr(0, linha.find_first_of('\\')));
+			distrito = linha.substr(0, linha.find_first_of('\\'));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			nome = linha.substr(0, linha.find_first_of('\\'));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
@@ -536,9 +530,10 @@ void Cadeia::carregarClientes(ifstream& ficheiro)
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			morada = linha;
 
-			//novoCli = new Cliente(nome, NIF, data, morada, distrito);
+			novoCli = new Cliente(nome, NIF, data, morada, distrito);
 
-			//clientes.insert(novoCli);
+			clientes.insert(novoCli);
+			clientesSort.push_back(novoCli);
 		}
 	}
 }
@@ -684,7 +679,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia, timestamp);
 		novaVenda->setPreco(precoVenda);
 
-		while (linha != "!" && linha != "") {
+		while (linha != "!" && linha != "\\") {
 			linha = linha.substr(1);
 			produtoSimp = linha.substr(0, linha.find_first_of('#'));
 			quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));

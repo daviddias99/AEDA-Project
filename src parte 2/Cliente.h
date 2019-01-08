@@ -62,12 +62,19 @@ public:
 	string getDistrito() const;
 
 	/**
+	* @brief Altera o distrito atual do cliente
+	* @param distrito Novo distrito de residencia do cliente
+	*/
+	void setDistrito(string distrito);
+
+	/**
 	 * @brief Imprime as informacoes do cliente num formato legivel
 	 * 
 	 * @param os Stream onde sao imprimidas as informacoes
 	 * @return Stream onde foram imprimidas as informacoes
 	 */
 	ostream& print(ostream& os) const;
+
 	/**
 	 * @brief Imprime as informacoes do cliente num formato simplificado, utilizado para guardar informacoes das pessoas em ficheiro de texto
 	 * 
@@ -75,6 +82,7 @@ public:
 	 * @return Stream onde foram imprimidas as informacoes
 	 */
 	ostream& printSimp(ostream& os) const;
+
 	/**
 	* @brief Overload do operador <, os clientes sao comparados por NIF
 	*
@@ -83,6 +91,7 @@ public:
 	* @return True caso o NIF do cliente da esquerda seja menor que o NIF do da direita
 	*/
 	friend bool operator<(const  Cliente& c1, const Cliente & c2);
+
 	/**
 	 * @brief Overload do operador ==, os clientes sao comparados por NIF
 	 *
@@ -91,6 +100,7 @@ public:
 	 * @return True caso o NIF do cliente da esquerda seja igual ao NIF do da direita
 	 */
 	friend bool operator==(const  Cliente& c1, const Cliente & c2);
+
 private:
 	/**
 	 * @brief Vector de apontadores para vendas, que guarda o historico de compras do cliente
@@ -101,6 +111,7 @@ private:
 	 * @brief Variavel static utilizada para determinar o ID de um novo cliente
 	 */
 	static uint currentID;
+
 	/**
 	* @brief Distrito de residencia do cliente
 	*/
