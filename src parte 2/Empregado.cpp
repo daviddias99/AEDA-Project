@@ -131,6 +131,16 @@ void Empregado::recontratar(string farmNome, string cargo, uint sal)
 	this->salario = sal;
 }
 
+uint Empregado::getMesesLig() const
+{
+	int res = mesesLigacaoAnterior;
+
+	if (!(ultimaDataDespedimento == Data::NULLData))
+		res += mesesEntre(ultimaDataContratacao, Data());
+
+	return res;
+}
+
 
 bool operator<(const Empregado & e1, const Empregado & e2)
 {
@@ -229,6 +239,36 @@ bool Empregado_SortFunc_numVendas_Decrescente(Empregado* p1, Empregado* p2) {
 	if (p1->getNumVendas() > p2->getNumVendas())
 		return true;
 	else if (p1->getNumVendas() == p2->getNumVendas())
+	{
+		if (p1->getNome() < p2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool Empregado_SortFunc_MesesLig_Crescente(Empregado* p1, Empregado* p2) {
+
+	if (p1->getMesesLig() > p2->getMesesLig())
+		return true;
+	else if (p1->getMesesLig() == p2->getMesesLig())
+	{
+		if (p1->getNome() < p2->getNome())
+			return true;
+		else
+			return false;
+	}
+	else
+		return false;
+}
+
+bool Empregado_SortFunc_MesesLig_Decrescente(Empregado* p1, Empregado* p2) {
+
+	if (p1->getMesesLig() < p2->getMesesLig())
+		return true;
+	else if (p1->getMesesLig() == p2->getMesesLig())
 	{
 		if (p1->getNome() < p2->getNome())
 			return true;

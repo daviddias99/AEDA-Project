@@ -55,6 +55,9 @@ bool Cadeia::addEmpregado(Empregado* empregado)
 
 	if (!empregados.insert(empregado).second) return false;
 
+	if (empregado->getNomeFarmacia() != "")
+		getFarmacia(empregado->getNomeFarmacia())->addEmpregado(empregado);
+
 	return true;
 }
 
@@ -310,48 +313,6 @@ void Cadeia::sortClientes(ord_clientes modo)
 	}
 }
 
-/*
-void Cadeia::sortEmpregados(ord_empregados modo)
-{
-	switch (modo) {
-	case id_cres:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
-		break;
-	case id_dec:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Decrescente);
-		break;
-	case empregado_idade_cres:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Crescente);
-		break;
-	case empregado_idade_dec:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Decrescente);
-		break;
-	case empregado_nome_cres:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Crescente);
-		break;
-	case empregado_nome_dec:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Decrescente);
-		break;
-	case empregado_nif_cres:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
-		break;
-	case empregado_nif_dec:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Decrescente);
-		break;
-	case n_vendas_cres:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Crescente);
-		break;
-	case n_vendas_dec:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Decrescente);
-		break;
-	case sal_cres:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Crescente);
-		break;
-	case sal_dec:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Decrescente);
-		break;
-	}
-}*/
 
 void Cadeia::sortFornecedores(ord_fornece modo)
 {
@@ -396,14 +357,31 @@ void Cadeia::mostrarClientes() const
 
 void Cadeia::mostrarEmpregados() const
 {	
-	/*
-	for (size_t i = 0; i < empregados.size(); i++)
-		empregados.at(i)->print(cout) << endl << endl;*/
-
 	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
 		(*it)->print(cout) << endl << endl;
 	}
 }
+
+void Cadeia::getEmpregadosVec(vector<Empregado*>& res) const {
+
+
+	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
+		
+		cout << "iteracao do getempregados\n";
+
+		res.push_back(*it);
+	}
+}
+
+void Cadeia::getEmpregadosSemContratoVec(vector<Empregado*>& res) const {
+
+
+	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
+		if (! (*it)->trabalhaAtualmente())
+			res.push_back(*it);
+	}
+}
+
 
 void Cadeia::mostraFornecedores()
 {
@@ -607,9 +585,11 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 
 		// alterar
 		novoEmp = new Empregado(NIF, nome, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
-	
+
+		Farmacia* farm;
+
 		addEmpregado(novoEmp);
-		getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
+		
 	}
 
 	while (!ficheiro.eof()) {
@@ -645,12 +625,7 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 			Farmacia* farm;
 
 			addEmpregado(novoEmp);
-			try {
-				getFarmacia(novoEmp->getNomeFarmacia())->addEmpregado(novoEmp);
-			}
-			catch (FarmaciaNaoExiste &f) {
-
-			}
+		
 		}
 	}
 }

@@ -1207,7 +1207,8 @@ void menuEmpregados(Cadeia& cadeia)
 		cout << "2 - Gerir empregado" << endl;
 		cout << "3 - Adicionar empregado" << endl;
 		cout << "4 - Despedir empregado" << endl;
-		cout << "5 - Recontratar empregado" << endl;
+		cout << "5 - Consultar empregados  s/ contrato" << endl;
+		cout << "6 - Recontratar empregado" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -1239,6 +1240,9 @@ void menuEmpregados(Cadeia& cadeia)
 			despedirEmpregado(cadeia);
 			break;
 		case 5:
+			consultarEmpregadosSemContrato(cadeia);
+			break;
+		case 6:
 			recontratarEmpregado(cadeia);
 			break;					
 		case 0:
@@ -1252,7 +1256,6 @@ void resumoEmpregados(Cadeia& cadeia)
 {
 	cout << endl << "RESUMO EMPREGADOS" << endl << endl;
 
-	/*
 
 	if (cadeia.getNumEmpregados() == 0) {
 		cout << "A cadeia \"" << cadeia.getNome() << "\" ainda nao tem empregados." << endl;
@@ -1274,6 +1277,8 @@ void resumoEmpregados(Cadeia& cadeia)
 	cout << "9 - numero de vendas (decrescente)" << endl;
 	cout << "10 - salario (crescente)" << endl;
 	cout << "11 - salario (decrescente)" << endl;
+	cout << "12 - meses de ligacao (crescente)" << endl;
+	cout << "13 - meses de ligacao (decrescente)" << endl;
 
 
 	bool opcaoInvalida = true;
@@ -1281,7 +1286,7 @@ void resumoEmpregados(Cadeia& cadeia)
 
 		try {
 			cout << "Opcao: ";
-			opcao = getInputNumber(0, 11);
+			opcao = getInputNumber(0, 13);
 		}
 		catch (OpcaoInvalida& opIn) {
 			cout << opIn.getInfo() << endl;
@@ -1293,13 +1298,13 @@ void resumoEmpregados(Cadeia& cadeia)
 
 	cout << endl << endl;
 
-	cadeia.sortEmpregados( (ord_empregados) opcao);
-
-	*/
-
-	cadeia.mostrarEmpregados();
-
-	//cadeia.sortEmpregados(id_cres);
+	vector<Empregado*> emps;
+	cadeia.getEmpregadosVec(emps);
+	sortEmpregados(emps, (ord_empregados) opcao);
+	cout << "emps size : " << emps.size() << endl;
+	for (size_t i = 0; i < emps.size(); i++) {
+		emps.at(i)->print(cout);
+	}
 }
 
 void adicionarEmpregado(Cadeia& cadeia)
@@ -1324,84 +1329,7 @@ void despedirEmpregado(Cadeia& cadeia)
 	uint NIF;
 
 	cout << "DESPEDIR EMPREGADO" << endl << endl;
-	/*
-	//get nome do empregado a remover
-	cout << "Nome do empregado: ";
-	getline(cin, nomeEmpregado);
-
-	// get empregados com o nome dado
-	vector<Empregado*> empregados_busca = cadeia.getEmpregados(nomeEmpregado);
-
-	// imprime empregados encontrados
-	for (size_t i = 0; i < empregados_busca.size(); i++) {
-
-		cout << "NIF: " << empregados_busca.at(i)->getID()
-			<< "| Nome: " << empregados_busca.at(i)->getNome()
-			<< "| Farmacia: " << empregados_busca.at(i)->getNomeFarmacia()
-			<< "| Cargo: " << empregados_busca.at(i)->getCargo() << endl;
-	}
-
-	cout << endl;
-
-	// se nao encontrar nenhum empregado com o nome dado, retorna
-	if (empregados_busca.size() == 0) {
-
-		cout << "Nao foi encontrado nenhum empregado com esse nome." << endl;
-		return;
-	}
-
-	// se so existir um empregado com o nome dado, remover esse empregado
-	// caso contrario, pedir o ID do empregado a remover
-	if (empregados_busca.size() != 1) {
-
-		// get ID da pessoa
-		cout << "ID: ";
-
-		while (!(cin >> ID))
-		{
-			if (cin.eof())
-			{
-				cin.clear();
-			}
-			else
-			{
-				cin.clear();
-				cin.ignore(MAX_STREAM_SIZE, '\n');
-			}
-
-			cout << "ID: ";
-		}
-
-		cin.ignore(MAX_STREAM_SIZE, '\n');
-
-		// verificar se o ID dado pertence a alguma das pessoas com o nome dado
-		for (size_t i = 0; i < empregados_busca.size(); i++) {
-
-			if (empregados_busca.at(i)->getID() == ID) {
-				break;
-			}
-			if (i == empregados_busca.size() - 1) {
-
-				cout << "Nao existe nenhum empregado com esse par Nome/ID." << endl;
-				return;
-
-			}
-		}
-
-
-	}
-	else {
-
-		ID = empregados_busca.at(0)->getID();
-	}
-
-	// se o empregado que se tenta remover for um gerente, nao remover
-	if (cadeia.getEmpregado(ID)->getCargo() == "gerente") {
-
-		cout << "Erro: Nao pode remover o gerente de uma farmacia." << endl;
-		return;
-
-	}*/
+	
 
 	cout << "NIF do empregado a despedir: ";
 
@@ -1431,6 +1359,61 @@ void despedirEmpregado(Cadeia& cadeia)
 	}
 	catch (EmpregadoNaoExiste &c1) {
 		cout << c1.getInfo() << endl;
+	}
+}
+
+void consultarEmpregadosSemContrato(Cadeia& cadeia) {
+
+	cout << endl << "RESUMO EMPREGADOS" << endl << endl;
+
+	vector<Empregado*> emps;
+	cadeia.getEmpregadosVec(emps);
+
+	if (emps.size() == 0) {
+		cout << "A cadeia \"" << cadeia.getNome() << "\" nao tem empregados sem contrato." << endl;
+		return;
+	}
+
+	int opcao;
+
+	cout << "Ordenar por: " << endl;
+	cout << "0 - ID (crescente)" << endl;
+	cout << "1 - ID (decrescente)" << endl;
+	cout << "2 - idade (crescente)" << endl;
+	cout << "3 - idade (decrescente)" << endl;
+	cout << "4 - nome (crescente)" << endl;
+	cout << "5 - nome (decrescente)" << endl;
+	cout << "6 - NIF (crescente)" << endl;
+	cout << "7 - NIF (decrescente)" << endl;
+	cout << "8 - numero de vendas (crescente)" << endl;
+	cout << "9 - numero de vendas (decrescente)" << endl;
+	cout << "10 - salario (crescente)" << endl;
+	cout << "11 - salario (decrescente)" << endl;
+	cout << "12 - meses de ligacao (crescente)" << endl;
+	cout << "13 - meses de ligacao (decrescente)" << endl;
+
+
+	bool opcaoInvalida = true;
+	while (opcaoInvalida) {
+
+		try {
+			cout << "Opcao: ";
+			opcao = getInputNumber(0, 13);
+		}
+		catch (OpcaoInvalida& opIn) {
+			cout << opIn.getInfo() << endl;
+			continue;
+		}
+
+		opcaoInvalida = false;
+	}
+
+	cout << endl << endl;
+
+	sortEmpregados(emps, (ord_empregados)opcao);
+
+	for (size_t i = 0; i < emps.size(); i++) {
+		emps.at(i)->print(cout);
 	}
 }
 
@@ -2812,6 +2795,52 @@ void adicionarFarmacia(Cadeia& cadeia)
 
 }
 
-
+void sortEmpregados(vector<Empregado*>& empregados, ord_empregados modo)
+{
+	switch (modo) {
+	case id_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
+		break;
+	case id_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Decrescente);
+		break;
+	case empregado_idade_cres:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Crescente);
+		break;
+	case empregado_idade_dec:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Decrescente);
+		break;
+	case empregado_nome_cres:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Crescente);
+		break;
+	case empregado_nome_dec:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Decrescente);
+		break;
+	case empregado_nif_cres:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
+		break;
+	case empregado_nif_dec:
+		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Decrescente);
+		break;
+	case n_vendas_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Crescente);
+		break;
+	case n_vendas_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Decrescente);
+		break;
+	case sal_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Crescente);
+		break;
+	case sal_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Decrescente);
+		break;
+	case meses_lig_cres:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_MesesLig_Crescente);
+		break;
+	case meses_lig_dec:
+		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_MesesLig_Decrescente);
+		break;
+	}
+}
 
 

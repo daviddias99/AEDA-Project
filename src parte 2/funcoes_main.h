@@ -175,6 +175,7 @@ void recontratarEmpregado(Cadeia& cadeia);
  * @param cadeia Cadeia da qual se quer remover um empregado
  */
 void despedirEmpregado(Cadeia& cadeia);
+void consultarEmpregadosSemContrato(Cadeia & cadeia);
 /**
  * @brief Funcao que permite gerir atributos de um empregado e consultar as suas vendas
  * 
@@ -229,6 +230,8 @@ void resumoFarmacias(Cadeia& cadeia);
  * @param cadeia        Cadeia onde se pretende adicionar a farmacia
  */
 void adicionarFarmacia(Cadeia& cadeia);
+
+void sortEmpregados(vector<Empregado*>& empregados, ord_empregados modo);
 
 /**
  * @brief Funcao que permite consultar todas as informaçoes acerca de uma farmacia(a escolher pelo user). Sendo elas, os empregados, os protdutos e as vendas

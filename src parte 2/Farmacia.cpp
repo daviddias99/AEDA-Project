@@ -83,25 +83,6 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 
 bool Farmacia::addEmpregado(Empregado* empregado)
 {	
-	/*
-		int i = procura(empregados, empregado);
-
-		if (i == -1) {
-			if (empregado->getCargo() == "gerente") {
-				if (gerente != NULL)
-					cout << "O cargo do antigo gerente " << gerente->getNome() << " passou para empregado." << endl;
-				setGerente(empregado, "empregado");
-			}
-
-			empregados.push_back(empregado);
-			this->sortEmpregados(id_cres);
-			return true;
-		}
-		else return false;
-	*/
-
-
-
 	if (!empregados.insert(empregado).second) return false;
 
 	if (empregado->getCargo() == "gerente") {

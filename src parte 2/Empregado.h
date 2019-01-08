@@ -142,6 +142,8 @@ public:
 
 	void recontratar(string farmNome, string cargo, uint sal);
 
+	uint getMesesLig() const;
+
 private:
 	/**
 	 * @brief Salario do empregado
@@ -216,6 +218,9 @@ bool Empregado_SortFunc_numVendas_Crescente(Empregado* p1, Empregado* p2);
 * retorna true se o empregado p1 tem menor nome do que o empregado p2
 */
 bool Empregado_SortFunc_numVendas_Decrescente(Empregado* p1, Empregado* p2);
+
+bool Empregado_SortFunc_MesesLig_Crescente(Empregado * p1, Empregado * p2);
+bool Empregado_SortFunc_MesesLig_Decrescente(Empregado * p1, Empregado * p2);
 
 /** @} */
 

@@ -223,6 +223,8 @@ public:
 	* @brief Mostra no ecra alguns membros-dado de todas os empregados pertencentes a lista
 	*/
 	void mostrarEmpregados() const;
+	void getEmpregadosVec(vector<Empregado*>& res) const;
+	void getEmpregadosSemContratoVec(vector<Empregado*>& res) const;
 	/**
 	* @brief Mostra no ecra alguns membros - dado de todas os fornecedores pertencentes a lista
 	*/

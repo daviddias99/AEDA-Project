@@ -19,7 +19,7 @@ typedef unsigned int uint;
  *
  */
 enum ord_clientes { distrito_cres = 0, distrito_dec, cliente_idade_cres, cliente_idade_dec, cliente_nome_cres, cliente_nome_dec, cliente_nif_cres, cliente_nif_dec, n_comp_cres, n_comp_dec };
-enum ord_empregados { id_cres = 0, id_dec, empregado_idade_cres, empregado_idade_dec, empregado_nome_cres, empregado_nome_dec, empregado_nif_cres, empregado_nif_dec, n_vendas_cres, n_vendas_dec, sal_cres, sal_dec };
+enum ord_empregados { id_cres = 0, id_dec, empregado_idade_cres, empregado_idade_dec, empregado_nome_cres, empregado_nome_dec, empregado_nif_cres, empregado_nif_dec, n_vendas_cres, n_vendas_dec, sal_cres, sal_dec, meses_lig_cres, meses_lig_dec };
 enum ord_fornece { nome_cres_f = 0, nome_dec_f, n_enc_cres_f, n_enc_dec_f, tipo_cres_f, tipo_dec_f };
 
 // ----------Classes----------
