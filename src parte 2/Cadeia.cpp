@@ -417,6 +417,18 @@ void Cadeia::guardarDados() const
 
 	fichFarmacias.close();
 
+	string nomeFichFornecedores = nome + "-fornecedores.txt";
+
+	ofstream fichFornecedores;
+	fichFornecedores.open(nomeFichFornecedores);
+
+	for (vector<Fornecedor *>::const_iterator it = fornecedores.begin(); it != fornecedores.end(); it++) {
+
+		(*it)->printSimp(fichFornecedores) << endl;
+	}
+
+	fichFarmacias.close();
+
 	string nomeFichClientes = nome + "-clientes.txt";
 
 	ofstream fichClientes;
@@ -456,14 +468,17 @@ void Cadeia::guardarDados() const
 
 void Cadeia::carregarDados() {
 
-	ifstream fich_farm, fich_emp, fich_cli, fich_vend;
+	ifstream fich_farm, fich_emp, fich_cli, fich_vend,fich_forn;
 	fich_farm.open(nome + "-farmacias.txt");
 	fich_emp.open(nome + "-empregados.txt");
 	fich_cli.open(nome + "-clientes.txt");
 	fich_vend.open(nome + "-vendas.txt");
+	fich_forn.open(nome + "-fornecedores.txt");
 
 	if (!(fich_farm.is_open() && fich_cli.is_open() && fich_emp.is_open() && fich_vend.is_open()))
 		throw FicheiroNaoEncontrado("Ficheiros da cadeia \"" + nome + "\" nao encontrados.");
+
+	carregarFornecedores(fich_forn);
 
 	carregarFarmacias(fich_farm);
 
@@ -473,10 +488,13 @@ void Cadeia::carregarDados() {
 
 	carregarVendas(fich_vend);
 
+	
+
 	fich_cli.close();
 	fich_farm.close();
 	fich_emp.close();
 	fich_vend.close();
+	fich_forn.close();
 }
 
 void Cadeia::carregarClientes(ifstream& ficheiro)
@@ -773,6 +791,26 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 			getFarmacia(nomeFarmacia)->addVenda(novaVenda);
 			//getCliente(idCliente)->adicionaCompra(novaVenda);
 			getEmpregado(idEmpregado)->addVenda(novaVenda);
+		}
+	}
+}
+
+void Cadeia::carregarFornecedores(ifstream & ficheiro)
+{
+
+	string linha;
+
+	getline(ficheiro, linha);
+	if (linha != "") {
+		Fornecedor * fornecedor = new Fornecedor(linha);
+		fornecedores.push_back(fornecedor);
+	}
+
+	while (!ficheiro.eof()) {
+		getline(ficheiro, linha);
+		if (linha != "") {
+			Fornecedor * fornecedor = new Fornecedor(linha);
+			fornecedores.push_back(fornecedor);
 		}
 	}
 }

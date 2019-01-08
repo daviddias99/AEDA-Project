@@ -37,6 +37,8 @@ public:
 	 */
 	Encomenda(string nomeFarmacia, string nomeFornecedor);
 
+	Encomenda(string simp);
+
 	/**
 	 * @brief Adiciona o produto dado como argumento a lista de produtos da encomenda. Se o produto ja existe na encomenda atualiza a quantidade. Atualiza tambem o valor da encomenda.
 	 * 
@@ -130,6 +132,8 @@ public:
 	 * @return ostream& 				stream passada como argumento
 	 */
 	ostream& print_full(ostream& os) const;
+
+	ostream& printSimp(ostream& os) const;
 
 
 private:
