@@ -77,6 +77,8 @@ public:
 	 */
 	Fornecedor(string nome, Morada morada_sede, TipoFornecedor tipo);
 
+	Fornecedor(string simp);
+
 	/**
 	 * @brief Adiciona a a encomenda ao vetor de encomendas satisfeitas.
 	 * 
@@ -152,6 +154,8 @@ public:
 	 * @return ostream& 					Stream de argumento.
 	 */
 	ostream& print_resumo_lista(ostream& os) const;
+
+	ostream& printSimp(ostream& os) const;
 
 	/**
 	 * @brief Compara dois fornecedores. Um fornecedor e menor que outro se o seu nome for menor alfabeticamente.

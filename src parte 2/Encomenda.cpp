@@ -1,4 +1,5 @@
 #include "Encomenda.h"
+#include "Medicamento.h";
 
 bool Encomenda::adicionaProduto(Produto* novoProduto, uint quantidade)
 {
@@ -144,6 +145,20 @@ ostream & Encomenda::print_full(ostream & os) const
 	return os;
 }
 
+ostream & Encomenda::printSimp(ostream & os) const
+{
+	os << farmaciaOrigem << "\\" << this->fornecedorOrigem << "\\";
+	os << valorEncomenda << "\\" << this->stamp << "\\";
+	
+	for (ListaProdutos::const_iterator it = listaProdutos.begin(); it != listaProdutos.end(); it++) {
+			
+		it->first->printSimp(os);
+		os << "#" << it->second << "!";
+	}
+
+	return os;
+}
+
 Encomenda::Encomenda(string nomeFarmacia, string nomeFornecedor) {
 
 	this->terminada = false;
@@ -152,6 +167,66 @@ Encomenda::Encomenda(string nomeFarmacia, string nomeFornecedor) {
 	this->stamp = Timestamp(Data(0,0,0), Time(0,0,0));
 	this->valorEncomenda = 0;
 
+}
+
+Encomenda::Encomenda(string simp) {
+
+	string linha = simp;
+	string produtoSimp, nome_prod, desc_prod;
+	float preco_prod, iva_prod, desc_receita;
+	unsigned long int cod_produto;
+	bool vend_sem_rec, pode_ser_rec;
+	uint quant;
+
+	this->farmaciaOrigem = linha.substr(0, linha.find_first_of('\\'));
+	linha = linha.substr(linha.find_first_of('\\') + 1);
+
+	this->fornecedorOrigem = linha.substr(0, linha.find_first_of('\\'));
+	linha = linha.substr(linha.find_first_of('\\') + 1);
+
+	this->valorEncomenda = stof(linha.substr(0, linha.find_first_of('\\')));
+	linha = linha.substr(linha.find_first_of('\\') + 1);
+
+	this->stamp = Timestamp(linha.substr(0, linha.find_first_of('\\')));
+	linha = linha.substr(linha.find_first_of('\\'));
+	this->terminada = true;
+	if (linha != "\\") {
+		while (linha != "!") {
+			linha = linha.substr(1);
+			produtoSimp = linha.substr(0, linha.find_first_of('#'));
+			quant = stoul(linha.substr(linha.find_first_of('#') + 1, linha.find_first_of('!')));
+			linha = linha.substr(linha.find_first_of('!'));
+
+			bool isMed = false;
+			if (count(produtoSimp.begin(), produtoSimp.end(), '&') > 4)
+				isMed = true;
+
+			cod_produto = stoul(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+			nome_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+			desc_prod = produtoSimp.substr(0, produtoSimp.find_first_of('&'));
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+			preco_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+			produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+			iva_prod = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
+
+			if (!isMed) {
+				this->listaProdutos.insert(listaProdutos.begin(), pair<Produto *, uint>(new Produto(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod), quant));
+			}
+			else {
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				vend_sem_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				pode_ser_rec = stoi(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+				produtoSimp = produtoSimp.substr(produtoSimp.find_first_of('&') + 1);
+				desc_receita = stof(produtoSimp.substr(0, produtoSimp.find_first_of('&')));
+
+				this->listaProdutos.insert(listaProdutos.begin(), pair<Produto *, uint>(new Medicamento(cod_produto, nome_prod, desc_prod, preco_prod, iva_prod, vend_sem_rec, pode_ser_rec, desc_receita), quant));
+			}
+		}
+	}
 }
 
 bool operator==(const ItemListaProdutos& p1, const ItemListaProdutos& p2) {

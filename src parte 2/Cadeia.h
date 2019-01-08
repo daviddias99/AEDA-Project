@@ -263,6 +263,13 @@ private:
 	* @param ficheiro			Ficheiro de leitura de onde vai ser lida a informacao sobre as vendas
 	*/
 	void carregarVendas(ifstream& ficheiro);
+
+	/**
+	* @brief Carrega os fornecedores do ficheiro indicado como parametro
+	* @param ficheiro			Ficheiro de leitura de onde vai ser lida a informacao sobre os fornecedores
+	*/
+	void carregarFornecedores(ifstream& ficheiro);
+
 	/**
 	 * @brief Vector de apontadores para objetos do tipo Farmacia, ordenadas por ordem alfabetica de nome
 	 */

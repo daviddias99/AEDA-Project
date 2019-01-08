@@ -11,6 +11,36 @@ Fornecedor::Fornecedor(string nome, Morada morada_sede, TipoFornecedor tipo) {
 
 }
 
+Fornecedor::Fornecedor(string simp)
+{
+	string tipo, linha,encomendaSimp;
+
+	linha = simp;
+	this->nome = linha.substr(0, linha.find_first_of('\\'));
+	linha = linha.substr(linha.find_first_of('\\') + 1);
+	this->morada_sede = Morada(linha.substr(0, linha.find_first_of('\\')));
+	linha = linha.substr(linha.find_first_of('\\') + 1);
+	tipo = linha.substr(0, linha.find_first_of('\\'));
+
+	if (tipo == "medicamentos")
+		this->tipo = medicamentos;
+	else
+		this->tipo = produtos;
+
+	linha = linha.substr(linha.find_first_of('\\'));
+
+	if (linha != "\\") {
+		while (linha != "?") {
+			linha = linha.substr(1);
+			encomendaSimp = linha.substr(0, linha.find_first_of('?'));
+			Encomenda newEncomenda(encomendaSimp);
+			this->encomendas_satisfeitas.push_back(newEncomenda);
+			linha = linha.substr(linha.find_first_of('?'));
+		}
+	}
+
+}
+
 void Fornecedor::adicionaEncomenda(Encomenda encomenda)
 {
 	this->encomendas_satisfeitas.insert(this->encomendas_satisfeitas.begin(), encomenda);
@@ -57,7 +87,9 @@ vector<Encomenda> Fornecedor::getEncomendas(Data data) const
 
 	for (size_t i = 0; i < this->encomendas_satisfeitas.size(); i++) {
 
-		if (this->encomendas_satisfeitas.at(i).getTStamp().getDataObj() == data)
+		Timestamp tstamp = this->encomendas_satisfeitas.at(i).getTStamp();
+		Data dataObj = tstamp.getDataObj();
+		if (dataObj == data)
 			resultado.push_back(this->encomendas_satisfeitas.at(i));
 
 	}
@@ -65,7 +97,25 @@ vector<Encomenda> Fornecedor::getEncomendas(Data data) const
 	return resultado;
 }
 
+ostream& Fornecedor::printSimp(ostream& os) const {
 
+	os << nome << "\\";
+	this->morada_sede.printSimp(os);
+	os << "\\";
+
+	if (this->tipo == medicamentos)
+		os << "medicamentos" << "\\";
+	else
+		os << "produtos" << "\\";
+
+	for (int i = 0; i < this->encomendas_satisfeitas.size(); i++) {
+
+		encomendas_satisfeitas.at(i).printSimp(os);
+		os << "?";
+	}
+
+	return os;
+}
 
 ostream& Fornecedor::print(ostream& os) const {
 
