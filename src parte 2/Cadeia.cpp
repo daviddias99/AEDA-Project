@@ -483,7 +483,7 @@ void Cadeia::carregarDados() {
 
 	carregarVendas(fich_vend);
 
-	
+	atribuiFornecedores();
 
 	fich_cli.close();
 	fich_farm.close();
@@ -814,7 +814,28 @@ void Cadeia::carregarFornecedores(ifstream & ficheiro)
 	}
 }
 
+void Cadeia::atribuiFornecedores()
+{
+	for (size_t i = 0; i < this->farmacias.size(); i++) {
 
+		Farmacia* fAtual = this->farmacias.at(i);
+		string fornecedores = fAtual->getFornecedoresStr();
+
+		while (fornecedores != "") {
+
+			string nomeFornecedor = fornecedores.substr(0, fornecedores.find_first_of(','));
+			fAtual->addFornecedor(this->getFornecedor(nomeFornecedor));
+			fornecedores = fornecedores.substr(fornecedores.find_first_of(',') + 1);
+
+		}
+		vector<Fornecedor*> forn = fAtual->getFornecedores();
+		sort(forn.begin(), forn.end(), fornecedor_SortFunc_Nome_Crescente);
+	}
+
+
+
+
+}
 
 void Cadeia::despedirEmpregado(long int nifEmp) {
 

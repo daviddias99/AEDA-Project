@@ -174,6 +174,10 @@ public:
 	* @return Numero total de produtos em stock
 	*/
 	unsigned int getTotalProdutos() const;
+
+	string getFornecedoresStr() const;
+
+
 	/**
 	* @brief Devolve o numero de produtos diferentes em stock
 	* @return Numero de produtos diferentes em stock
@@ -285,7 +289,6 @@ private:
 
 	empregadoHashTable empregados;
 
-
 	/**
 	 * @brief Map que representa o stock da farmacia (key = apontador para produto, value = quantidade)
 	 *
@@ -322,6 +325,8 @@ private:
 	 * 
 	 */
 	HeapStock prioridade_reabastecimento;
+
+	string fornecedoresStringFicheiro;
 
 };
 

@@ -15,6 +15,8 @@ Farmacia::Farmacia(string simp)
 	this->nome = linha.substr(0, linha.find_first_of('\\'));
 	linha = linha.substr(linha.find_first_of('\\') + 1);
 	this->morada = Morada(linha.substr(0, linha.find_first_of('\\')));
+	linha = linha.substr(linha.find_first_of('\\') + 1);
+	this->fornecedoresStringFicheiro = linha.substr(0, linha.find_first_of('\\'));
 	linha = linha.substr(linha.find_first_of('\\'));
 
 	if (linha != "\\") {
@@ -259,6 +261,11 @@ unsigned int Farmacia::getTotalProdutos() const
 	return soma;
 }
 
+string Farmacia::getFornecedoresStr() const
+{
+	return this->fornecedoresStringFicheiro;
+}
+
 bool Farmacia::operator == (const Farmacia & ph1) const
 {
 	if (this->nome == ph1.getNome()) return true;
@@ -292,7 +299,6 @@ void Farmacia::addVenda(Venda * venda)
 {
 	vendas.push_back(venda);
 }
-
 
 
 void Farmacia::constroiFilaPrioridade()
@@ -338,6 +344,7 @@ bool Farmacia::addFornecedor(Fornecedor * novo_fornecedor)
 		return false;
 	}
 
+	sort(this->fornecedores.begin(), this->fornecedores.end(), fornecedor_SortFunc_Nome_Crescente);
 
 	return true;
 }
@@ -523,8 +530,8 @@ void Farmacia::efetuaEncomenda(Produto * produto, uint quantidade)
 	}
 	else {
 
-		fornecedor = fornecedores_medicamentos.top();
-		fornecedores_medicamentos.pop();
+		fornecedor = fornecedores_produtos.top();
+		fornecedores_produtos.pop();
 	}
 
 	// criar uma nova encomenda
@@ -721,6 +728,13 @@ ostream& Farmacia::printSimp(ostream& os) const {
 
 	os << nome << "\\";
 	morada.printSimp(os);
+	os << "\\";
+
+	for (size_t i = 0; i < this->fornecedores.size(); i++) {
+
+		os << this->fornecedores.at(i)->getNome() << ",";
+	}
+
 	os << "\\";
 
 	for (map<Produto *, unsigned int>::const_iterator it = stock.begin(); it != stock.end(); it++) {

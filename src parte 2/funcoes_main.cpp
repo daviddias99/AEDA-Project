@@ -1871,7 +1871,8 @@ void consultarFornecedor(Cadeia& cadeia) {
 		cout << endl << "CONSULTAR FORNECEDOR" << endl << endl;
 		fornecedor->print(cout) << endl;
 		cout << "1 - Resumo encomendas" << endl;
-		cout << "2 - Consultar encomenda" << endl;
+		cout << "2 - Consultar encomendas por data" << endl;
+		cout << "3 - Consultar encomendas por farmacia" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -1879,7 +1880,7 @@ void consultarFornecedor(Cadeia& cadeia) {
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 2);
+				opcao = getInputNumber(0, 3);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -1895,8 +1896,10 @@ void consultarFornecedor(Cadeia& cadeia) {
 			fornecedor->print_encomendas_resumo(cout);
 			break;
 		case 2:
-			fornecedor_consultarEncomenda(*fornecedor);
+			fornecedor_consultarEncomendaData(*fornecedor);
 			break;
+		case 3:
+			fornecedor_consultarEncomendaFarmacia(*fornecedor);
 		case 0:
 			continuarNesteMenu = false;
 			break;
@@ -1905,7 +1908,7 @@ void consultarFornecedor(Cadeia& cadeia) {
 
 }
 
-void fornecedor_consultarEncomenda(Fornecedor & fornecedor)
+void fornecedor_consultarEncomendaData(Fornecedor & fornecedor)
 {
 	if (fornecedor.getNumEncomendas() == 0) {
 
@@ -1920,6 +1923,35 @@ void fornecedor_consultarEncomenda(Fornecedor & fornecedor)
 	if (encomendas.empty()) {
 
 		cout << "Nao existem encomendas nessa data." << endl;
+		return;
+	}
+
+	cout << endl;
+	for (int i = 0; i < encomendas.size(); i++) {
+
+
+		encomendas.at(i).print_full(cout);
+
+		cout << endl;
+	}
+
+}
+
+void fornecedor_consultarEncomendaFarmacia(Fornecedor & fornecedor)
+{
+	if (fornecedor.getNumEncomendas() == 0) {
+
+		cout << "O fornecedor " << fornecedor.getNome() << " ainda nao tem encomendas." << endl;
+		return;
+	}
+
+
+	string nomeFarmacia = getInputString("Consultar encomendas da farmacia: ", "farmacia invalida");
+	vector<Encomenda> encomendas = fornecedor.getEncomendas(nomeFarmacia);
+
+	if (encomendas.empty()) {
+
+		cout << "Nao existem encomendas dessa farmacia." << endl;
 		return;
 	}
 
@@ -2294,7 +2326,7 @@ void farmacia_reposicaoStock(Farmacia& farmacia) {
 
 			try {
 				cout << "Nova quantidade dos produtos: ";
-				quantidade_nova = getInputNumber(quantidade_minima, 9999);
+				quantidade_nova = getInputNumber(quantidade_minima, 9999,false);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -2547,6 +2579,7 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 			}
 			catch (ProdutoNaoExiste& e) {
 				cout << e.getInfo() << endl;
+				break;
 			}
 
 

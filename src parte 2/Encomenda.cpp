@@ -73,12 +73,12 @@ float Encomenda::getValor() const
 	return this->valorEncomenda;
 }
 
-string Encomenda::getNomeFarmacia()
+string Encomenda::getNomeFarmacia() const
 {
 	return this->farmaciaOrigem;
 }
 
-string Encomenda::getNomeFornecedor()
+string Encomenda::getNomeFornecedor() const
 {
 	return this->fornecedorOrigem;
 }
@@ -128,6 +128,7 @@ ostream & Encomenda::print_resumo(ostream & os) const
 
 ostream & Encomenda::print_full(ostream & os) const
 {
+	cout << "---------------" << endl;
 	this->print_resumo(os);
 	cout << endl << "Produtos:" << endl;
 
