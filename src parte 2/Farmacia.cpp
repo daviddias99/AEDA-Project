@@ -74,13 +74,13 @@ void Farmacia::addProduto(Produto *produto, int quantidade)
 	for (it = stock.begin(); it != stock.end(); it++) {
 		if (*(it->first) == *produto) {
 			it->second += quantidade;
-			this->constroiFilaPrioridade();
+			this->constroiFilaReabastecimento();
 			return;
 		}
 	}
 
 	stock[produto] = quantidade;
-	this->constroiFilaPrioridade();
+	this->constroiFilaReabastecimento();
 }
 
 bool Farmacia::addEmpregado(Empregado* empregado)
@@ -106,7 +106,7 @@ void Farmacia::removeQuantidade(long unsigned int codigo, uint quantidade)
 			}
 			else {
 				it->second -= quantidade;
-				this->constroiFilaPrioridade();
+				this->constroiFilaReabastecimento();
 				return;
 			}
 		}
@@ -122,7 +122,7 @@ void Farmacia::remProduto(long unsigned int codigo)
 			Produto* prod = it->first;
 			stock.erase(it);
 			delete prod;
-			this->constroiFilaPrioridade();
+			this->constroiFilaReabastecimento();
 			return;
 		}
 	}
@@ -160,7 +160,7 @@ void Farmacia::addQuantidade(long unsigned int codigo, uint quantidade)
 	for (it = stock.begin(); it != stock.end(); it++) {
 		if (it->first->getCodigo() == codigo) {
 			it->second += quantidade;
-			this->constroiFilaPrioridade();
+			this->constroiFilaReabastecimento();
 			return;
 		}
 	}
@@ -214,7 +214,7 @@ Fornecedor * Farmacia::getFornecedor(string nome) const
 	int fornecedorPos = procura(this->fornecedores, nome);
 
 	if (fornecedorPos == -1)
-		throw FornecedorNaoExiste("O fornecedor nao existe");
+		throw FornecedorNaoExiste("O fornecedor com o nome " + nome +" nao existe");
 	else
 		return fornecedores.at(fornecedorPos);
 
@@ -301,7 +301,7 @@ void Farmacia::addVenda(Venda * venda)
 }
 
 
-void Farmacia::constroiFilaPrioridade()
+void Farmacia::constroiFilaReabastecimento()
 {
 	if (!this->prioridade_reabastecimento.empty())
 		this->esvaziaFilaReabastecimento();
@@ -493,7 +493,7 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 		itm++;
 	}
 
-	// adicionar registo das encomendas ao fornecedor e à farmacia
+	// adicionar registo das encomendas ao fornecedor e ï¿½ farmacia
 	// terminar encomenda parar registar o timestamp
 
 	if (!medicamentos.empty()) {
@@ -544,7 +544,7 @@ void Farmacia::efetuaEncomenda(Produto * produto, uint quantidade)
 	//this->prioridade_reabastecimento.push(this->getProduto(produto->getCodigo()));
 
 
-	// adicionar registo das encomendas ao fornecedor e à farmacia
+	// adicionar registo das encomendas ao fornecedor e ï¿½ farmacia
 	// terminar encomenda parar registar o timestamp
 
 	if (mediTemp != NULL) {
@@ -773,7 +773,7 @@ void Farmacia::mostrarStock() const
 	}
 }
 
-void Farmacia::mostrarPrioridadeEncomenda_listForm(uint quantidade_minima) const
+void Farmacia::mostrarPrioridadeEncomenda_listForm(uint quantidade_minima, bool mostraTodos) const
 {
 	HeapStock heapCopia = this->prioridade_reabastecimento;
 
@@ -781,8 +781,12 @@ void Farmacia::mostrarPrioridadeEncomenda_listForm(uint quantidade_minima) const
 
 		ItemListaProdutos atual = heapCopia.top();
 		heapCopia.pop();
-		if (atual.second >= quantidade_minima)
-			break;
+		if(mostraTodos == false){
+
+			if (atual.second >= quantidade_minima)
+				break;
+		}
+			
 		atual.first->printListForm(cout) << " #Quantidade: " << atual.second << endl;
 	}
 }

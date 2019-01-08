@@ -2305,7 +2305,7 @@ void farmacia_reposicaoStock(Farmacia& farmacia) {
 		opcaoInvalida = false;
 	}
 
-	farmacia.constroiFilaPrioridade();
+	farmacia.constroiFilaReabastecimento();
 	cout << "Produtos a repor:" << endl << endl;
 	farmacia.mostrarPrioridadeEncomenda_listForm((uint)quantidade_minima);
 	cout << endl << endl;
@@ -2543,7 +2543,7 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 		else {
 			long unsigned int codigo;
 			unsigned int quantidade;
-			farmacia.constroiFilaPrioridade();
+			farmacia.constroiFilaReabastecimento();
 			cout << "Qual o codigo do produto? ";
 
 			// validar input do codigo

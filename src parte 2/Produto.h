@@ -96,6 +96,12 @@ public:
 	*/
 	virtual ostream& printSimp(ostream& os) const;
 
+	/**
+	 * @brief Mostra na stream dada o produto num formato de lista. Nome: NOME Codigo: CODIGO Tipo: produto
+	 * 
+	 * @param os 				stream onde a informacao sera escrita
+	 * @return ostream& 		mesma stream de entrada
+	 */
 	virtual ostream& printListForm(ostream& os) const;
 
 

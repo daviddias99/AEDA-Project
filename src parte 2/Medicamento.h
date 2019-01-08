@@ -56,14 +56,26 @@ public:
 
 	/**
 	* @brief Copia para um ficheiro indicado no seu argumento os atributos do objeto de forma a ser facilmente carregado
+	*
+	* @param os 				stream onde a informacao sera escrita
+	* @return ostream& 		mesma stream de entrada
 	*/
 	ostream& printSimp(ostream& os) const;
 
 	/**
 	* @brief Mostra no ecra os atributos do medicamento
+	*
+	* @param os 				stream onde a informacao sera escrita
+	* @return ostream& 		mesma stream de entrada
 	*/
 	ostream& print(ostream& os) const;
 
+	/**
+	 * @brief Mostra na stream dada o medicamento num formato de lista. Nome: NOME Codigo: CODIGO Tipo: medicamento
+	 * 
+	 * @param os 				stream onde a informacao sera escrita
+	 * @return ostream& 		mesma stream de entrada
+	 */
 	ostream& printListForm(ostream& os) const;
 
 private:

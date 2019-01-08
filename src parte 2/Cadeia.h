@@ -109,7 +109,7 @@ public:
 	void removeEmpregado(uint ID);
 
 	/**
-	* @brief Remove o fornecedor com o nome indicado no seu parametro da lista de fornecedores
+	* @brief Remove o fornecedor com o nome indicado no seu parametro da lista de fornecedores. Faz throw da exceção "FornecedorNaoExiste".
 	* @param nome				Nome do fornecedor a ser removido
 	*/
 	void removeFornecedor(string nome);
@@ -267,11 +267,15 @@ private:
 	void carregarVendas(ifstream& ficheiro);
 
 	/**
-	* @brief Carrega os fornecedores do ficheiro indicado como parametro
+	* @brief Carrega os fornecedores do ficheiro indicado como parametro para a cadeia.
 	* @param ficheiro			Ficheiro de leitura de onde vai ser lida a informacao sobre os fornecedores
 	*/
 	void carregarFornecedores(ifstream& ficheiro);
 
+	/**
+	 * @brief Utiliza o membro "fornecedoresStringFicheiro" das farmácias da cadeia para lhes atribuir os fornecedores correspondentes da cadeia.
+	 * 
+	 */
 	void atribuiFornecedores();
 
 	/**

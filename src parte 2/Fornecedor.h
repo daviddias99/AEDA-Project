@@ -77,6 +77,11 @@ public:
 	 */
 	Fornecedor(string nome, Morada morada_sede, TipoFornecedor tipo);
 
+	/**
+	 * @brief Cria um novo objeto Fornecedor atraves da string dada que devera estar no formato indicado para leitura de ficheiros.
+	 * 
+	 * @param simp 
+	 */
 	Fornecedor(string simp);
 
 	/**
@@ -131,7 +136,12 @@ public:
 	 */
 	vector<Encomenda> getEncomendas(Data data) const;
 
-
+	/**
+	 * @brief Obter as encomendas satisfeitas pelo fornecedor a uma determinada farmacia.
+	 * 
+	 * @param farmacia 						Farmacia de origem das encomendas.
+	 * @return vector<Encomenda> 			Encomendas feitas pela Farmacia dada.
+	 */
 	vector<Encomenda> getEncomendas(string farmacia) const;
 
 	/**
@@ -158,6 +168,12 @@ public:
 	 */
 	ostream& print_resumo_lista(ostream& os) const;
 
+	/**
+	 * @brief Escreve na stream passada como argumento o forneceddor num formato utilizado para a leitura de fornecedores de ficheiros.
+	 * 
+	 * @param os 							Stream onde a informacao vai ser escrita.
+	 * @return ostream& 					Stream de argumento.
+	 */
 	ostream& printSimp(ostream& os) const;
 
 	/**
