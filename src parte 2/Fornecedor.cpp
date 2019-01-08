@@ -113,8 +113,6 @@ vector<Encomenda> Fornecedor::getEncomendas(string farmacia) const
 	return resultado;
 }
 
-
-
 ostream& Fornecedor::printSimp(ostream& os) const {
 
 	os << nome << "\\";

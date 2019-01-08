@@ -286,8 +286,8 @@ public:
 	void mostrarStock() const;
 
 	/**
-	 * @brief Mostra no ecra, em formato lista, os produtos da fila de prioridade de reabastecimento que tem stock abaixo da quantidade minima. Tambem pode ser escolhido mostrar todos os produtos.
-	 * 
+	 * @brief Mostra no ecra, em formato lista, os produtos da fila de prioridade de reabastecimento que tem stock abaixo da quantidade minima. Tambem pode ser escolhido mostrar todos os produtos
+	 *
 	 * @param quantidade_minima 				quantidade minima dos produtos a serem mostrados
 	 * @param mostraTodos 						verdadeiro se for pretendido mostrar todos (neste caso o valor do primeiro argumento é irrelevante)
 	 */

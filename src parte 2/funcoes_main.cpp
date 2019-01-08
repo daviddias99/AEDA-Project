@@ -2012,7 +2012,7 @@ void menuFarmacias(Cadeia& cadeia)
 			adicionarFarmacia(cadeia);
 			break;
 		case 4:
-			gerirStock(cadeia);
+			farmacia_gerirStock(cadeia);
 			break;
 		case 5:
 			farmacia_alterarGerente(cadeia);
@@ -2066,7 +2066,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 		return;
 	}
 
-
+	farmacia->constroiFilaReabastecimento();
 	bool continuarNesteMenu = true;
 	while (continuarNesteMenu) {
 		int opcao;
@@ -2075,9 +2075,10 @@ void consultarFarmacia(Cadeia& cadeia) {
 		cout << "Consultar: " << endl;
 		cout << "1 - Empregados" << endl;
 		cout << "2 - Produtos" << endl;
-		cout << "3 - Vendas" << endl;
-		cout << "4 - Fornecedores" << endl;
-		cout << "5 - Outra farmacia" << endl;
+		cout << "3 - Prioridade de Encomendas" << endl;
+		cout << "4 - Vendas" << endl;
+		cout << "5 - Fornecedores" << endl;
+		cout << "6 - Outra farmacia" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -2103,9 +2104,15 @@ void consultarFarmacia(Cadeia& cadeia) {
 			farmacia_consultarProdutos(*farmacia);
 			break;
 		case 3:
+			farmacia_verPrioridadeEncomendas(*farmacia);
+			break;
+		case 4:
 			farmacia_consultarVendas(*farmacia);
 			break;
 		case 5:
+			farmacia_consultaFornecedores(*farmacia);
+			break;
+		case 6:
 			cout << "Farmacia: ";
 			getline(cin, farmaciaNome);
 
@@ -2119,9 +2126,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 				return;
 			}
 			break;
-		case 4:
-			farmacia_consultaFornecedores(*farmacia);
-			break;
+
 		case 0:
 			continuarNesteMenu = false;
 		}
@@ -2186,7 +2191,7 @@ void farmacia_consultarProdutos(Farmacia & farmacia)
 	farmacia.mostrarStock();
 }
 
-void gerirStock(Cadeia& cadeia) {
+void farmacia_gerirStock(Cadeia& cadeia) {
 
 	cout << endl;
 
@@ -2283,6 +2288,12 @@ void gerirStock(Cadeia& cadeia) {
 		}
 	}
 
+}
+
+void farmacia_verPrioridadeEncomendas(Farmacia& farmacia) {
+
+	cout << endl << "PRIORIDADE DE ENCOMENDAS" << endl << endl;
+	farmacia.mostrarPrioridadeEncomenda_listForm(0,true);
 }
 
 void farmacia_reposicaoStock(Farmacia& farmacia) {
