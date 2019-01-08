@@ -270,6 +270,8 @@ private:
 	*/
 	void carregarFornecedores(ifstream& ficheiro);
 
+	void atribuiFornecedores();
+
 	/**
 	 * @brief Vector de apontadores para objetos do tipo Farmacia, ordenadas por ordem alfabetica de nome
 	 */

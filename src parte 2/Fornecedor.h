@@ -131,6 +131,9 @@ public:
 	 */
 	vector<Encomenda> getEncomendas(Data data) const;
 
+
+	vector<Encomenda> getEncomendas(string farmacia) const;
+
 	/**
 	 * @brief Imprime na stream dada o fornecedor. E imprimido apenas o seu nome, morada, tipo e numero de encomendas.
 	 * 

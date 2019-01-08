@@ -312,11 +312,19 @@ void farmacia_consultaFornecedores(Farmacia& farmacia);
 void farmacia_reposicaoStock(Farmacia& farmacia);
 
 /**
- * @brief Executa a operação de consultar uma encomenda de um fornecedor. A encomenda e encontrada atraves da data da sua realizacao.
+ * @brief Executa a operação de consultar encomendas de um fornecedor. As encomendas sao encontradas atraves da data da sua realizacao.
  * 
  * @param fornecedor        fornecedor a consultar
  */
-void fornecedor_consultarEncomenda(Fornecedor& fornecedor);
+void fornecedor_consultarEncomendaData(Fornecedor& fornecedor);
+
+
+/**
+ * @brief Executa a operação de consultar encomendas de um fornecedor. As encomendas sao encontradas atraves da farmacia de onde originaram.
+ *
+ * @param fornecedor        fornecedor a consultar
+ */
+void fornecedor_consultarEncomendaFarmacia(Fornecedor& fornecedor);
 
 /** @} */
 

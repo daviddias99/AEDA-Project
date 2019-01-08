@@ -97,6 +97,24 @@ vector<Encomenda> Fornecedor::getEncomendas(Data data) const
 	return resultado;
 }
 
+vector<Encomenda> Fornecedor::getEncomendas(string farmacia) const
+{
+	vector<Encomenda> resultado;
+
+	for (size_t i = 0; i < this->encomendas_satisfeitas.size(); i++) {
+
+		string nome = this->encomendas_satisfeitas.at(i).getNomeFarmacia();
+		
+		if (nome == farmacia)
+			resultado.push_back(this->encomendas_satisfeitas.at(i));
+
+	}
+
+	return resultado;
+}
+
+
+
 ostream& Fornecedor::printSimp(ostream& os) const {
 
 	os << nome << "\\";

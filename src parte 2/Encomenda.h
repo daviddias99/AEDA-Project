@@ -80,14 +80,14 @@ public:
 	 * 
 	 * @return string 					nome da farmacia associada a encomenda
 	 */
-	string getNomeFarmacia();
+	string getNomeFarmacia() const;
 
 	/**
 	 * @brief Obter nome do fornecedor associado a encomenda.
 	 * 
 	 * @return string 					nome do fornecedor associado a encomenda
 	 */
-	string getNomeFornecedor();
+	string getNomeFornecedor() const;
 
 	/**
 	 * @brief Devolve o timestamp associado a encomenda. Se a encomenda ainda n tiver sido terminada retorna um time stamp com valor 0 em todos os campos.
