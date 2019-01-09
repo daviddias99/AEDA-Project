@@ -316,12 +316,13 @@ public:
 	 * @brief Atraves da fila de prioridade de encomendas, esta funcao repoe o stock da farmacia dos produtos que se encontram abaixo da quantidade limite dada como parametro.
 	 * A nova quantidade dos produtos e definida pelo segundo argumento que, por defeito, adiciona a quantidade necessaria para a nova quantidade ser igual a quantidade minima dada.
 	 * Esta funcao efetua tambem as encomendas aos fornecedores da farmacia. Conforme a reposicao possui produtos gerais e/ou medicamentos e feita uma encomenda aos fornecedores dos topos das filas de 
-	 * prioridade de medicamentos e produtos, de forma a praticar "comercio justo".
+	 * prioridade de medicamentos e produtos, de forma a praticar "comercio justo". Retorna os nomes dos fornecedores intervenientes.
 	 * 
 	 * @param quantidade_limite 			produtos com uma quantidade inferior a esta sao repostos pela funcao
 	 * @param quantidade_nova 				nova quantidade dos produtos repostos
+	 * @return								par contendo os nomes dos fornecedores a quem foi feita a encomenda (first ou second "NULL" se houve apenas um)
 	 */
-	void repoeStock(uint quantidade_limite, int quantidade_nova = -1);
+	pair<string, string> repoeStock(uint quantidade_limite, int quantidade_nova = -1);
 
 	/**
 	 * @brief Efetua uma encomenda de um produto apenas, utilizando o fornecedor adequado (fornecedor com maior prioridade na fila de medicamentos ou produtos, dependendo do tipo de produto do argumento).
@@ -329,8 +330,9 @@ public:
 	 * 
 	 * @param produto 						apontador para o produto a encomendar
 	 * @param quantidade 					quantidade a encomendar
+	 * @return								nome do fornecedor que satisfez a encomenda
 	 */
-	void efetuaEncomenda(Produto* produto, uint quantidade);
+	string efetuaEncomenda(Produto* produto, uint quantidade);
 
 	/**
 	 * @brief Esvazia a fila de prioridade de produtos

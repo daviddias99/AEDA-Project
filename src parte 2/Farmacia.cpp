@@ -415,7 +415,11 @@ void Farmacia::esvaziaFilaReabastecimento()
 		this->prioridade_reabastecimento.pop();
 }
 
-void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
+pair<string,string> Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
+
+	// criar resultado
+
+	pair<string, string> resultado = { "NULL","NULL" };
 
 	// obter o fornecedor de cada tipo
 	Fornecedor* fornecedor_produtos = fornecedores_produtos.top();
@@ -427,11 +431,9 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 	Encomenda encomendaProdutos(this->getNome(), fornecedor_produtos->getNome());
 	Encomenda encomendaMedicamentos(this->getNome(), fornecedor_medicamentos->getNome());
 
-	// construir a heap ALTERAR ISTO
-	//this->constroiFilaPrioridade();
 
 	if (this->prioridade_reabastecimento.empty())
-		return;
+		return resultado;
 
 	while ((!this->prioridade_reabastecimento.empty()) && (this->prioridade_reabastecimento.top().second < quantidade_limite)) {
 
@@ -500,6 +502,7 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 
 		encomendaMedicamentos.terminaEncomenda();
 		fornecedor_medicamentos->satisfazEncomenda(encomendaMedicamentos);
+		resultado.second = fornecedor_medicamentos->getNome();
 		//this->encomendas.push_back(encomendaMedicamentos);
 	}
 
@@ -507,16 +510,17 @@ void Farmacia::repoeStock(uint quantidade_limite, int quantidade_nova) {
 
 		encomendaProdutos.terminaEncomenda();
 		fornecedor_produtos->satisfazEncomenda(encomendaProdutos);
+		resultado.first = fornecedor_produtos->getNome();
 		//this->encomendas.push_back(encomendaProdutos);
 	}
 
 	// readicionar os fornecedores aos heaps
 	fornecedores_produtos.push(fornecedor_produtos);
 	fornecedores_medicamentos.push(fornecedor_medicamentos);
-
+	return resultado;
 }
 
-void Farmacia::efetuaEncomenda(Produto * produto, uint quantidade)
+string Farmacia::efetuaEncomenda(Produto * produto, uint quantidade)
 {
 
 	// verificar que tipo de produto se trata
@@ -562,7 +566,7 @@ void Farmacia::efetuaEncomenda(Produto * produto, uint quantidade)
 		fornecedores_produtos.push(fornecedor);
 	}
 
-
+	return fornecedor->getNome();
 }
 
 

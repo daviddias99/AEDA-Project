@@ -2352,9 +2352,15 @@ void farmacia_reposicaoStock(Farmacia& farmacia) {
 			opcaoInvalida = false;
 		}
 
-		farmacia.repoeStock(quantidade_minima, quantidade_nova);
+		pair<string,string> fornecedoresIntervenientes = farmacia.repoeStock(quantidade_minima, quantidade_nova);
 		cout << "Encomenda efetuada." << endl;
 
+		if (fornecedoresIntervenientes.first == "NULL")
+			cout << "Encomenda satisfeita pelo fornecedor " << fornecedoresIntervenientes.second << "." << endl;
+		else if (fornecedoresIntervenientes.second == "NULL")
+			cout << "Encomenda satisfeita pelo fornecedor " << fornecedoresIntervenientes.first << "." << endl;
+		else
+			cout << "Encomenda satisfeita pelo fornecedor " << fornecedoresIntervenientes.first << " e " << fornecedoresIntervenientes.second  << "." << endl;
 
 
 	}
@@ -2554,7 +2560,8 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 			}
 			cin.ignore(MAX_STREAM_SIZE, '\n');
 
-			farmacia.efetuaEncomenda(produto, quantidade);
+			string fornecedor = farmacia.efetuaEncomenda(produto, quantidade);
+			cout << "Encomenda satisfeita pelo fornecedor " << fornecedor << "." << endl;
 		}
 		else {
 			long unsigned int codigo;
@@ -2623,7 +2630,8 @@ void farmacia_adicionarProduto(Farmacia& farmacia) {
 
 			try {
 				pair<Produto*,uint> produto_encomendar = farmacia.getProduto(codigo);
-				farmacia.efetuaEncomenda(produto_encomendar.first, quantidade);
+				string fornecedor = farmacia.efetuaEncomenda(produto_encomendar.first, quantidade);
+				cout << "Encomenda satisfeita pelo fornecedor " << fornecedor << "." << endl;
 			}
 			catch (ProdutoNaoExiste& e) {
 				cout << e.getInfo() << endl;
