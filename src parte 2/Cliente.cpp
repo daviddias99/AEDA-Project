@@ -34,7 +34,6 @@ void Cliente::setDistrito(string distrito)
 
 ostream & Cliente::print(ostream & os) const
 {
-	//os << "ID: " << ID << endl;
 	os << "Distrito: " << this->distrito << endl;
 	Pessoa::print(os) << endl << "Numero de compras: " << getNumCompras() ;
 
@@ -43,7 +42,7 @@ ostream & Cliente::print(ostream & os) const
 
 ostream & Cliente::printSimp(ostream & os) const
 {
-	//os << ID << "\\";
+	os << distrito << "\\";
 	Pessoa::printSimp(os);
 
 	return os;

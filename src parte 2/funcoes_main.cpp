@@ -1232,7 +1232,7 @@ void menuEmpregados(Cadeia& cadeia)
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 5);
+				opcao = getInputNumber(0, 6);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
