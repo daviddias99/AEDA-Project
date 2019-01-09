@@ -37,6 +37,13 @@ using namespace std;
 * @brief Struct com função para comparar dois apontadores para objetos da classe Cliente. Usada para criar um set de apontadores de clientes
 */
 struct compareClientePtr {
+	/**
+	* @brief Funcao que compara dois clientes
+	*
+	* @param lhs	um dos clientes a comparar
+	* @param rhs	outro cliente
+	* @return		True caso o cliente passado em primeiro lugar seja menor que o segundo
+	*/
 	bool operator()(const Cliente* lhs, const Cliente* rhs) const {
 		return (*lhs < *rhs);
 	}
@@ -84,7 +91,7 @@ public:
 
 	/**
 	* @brief Adiciona um empregado a lista de empregados da cadeia e � farmacia a que pertence
-	* @param cliente			Apontador para o empregado a ser adicionado a lista
+	* @param empregado			Apontador para o empregado a ser adicionado a lista
 	* @return					true se o empregado foi adicionado a lista com sucesso
 	*							false se o empregado nao foi adicionado porque ja existe na lista
 	*/
@@ -132,7 +139,7 @@ public:
 	Cliente* getCliente(uint  NIF, string nome, string distrito) const;
 	/**
 	* @brief Devolve um apontador para o empregado com o ID indicado no parametro
-	* @param distrito			Distrito de residencia do cliente
+	* @param	 ID				ID do empregado a procurar
 	* @return					Apontador para o empregado com o ID indicado no parametro
 	*/
 	Empregado* getEmpregado(uint ID) const;
@@ -221,7 +228,13 @@ public:
 	* @brief Mostra no ecra alguns membros-dado de todas os empregados pertencentes a lista
 	*/
 	void mostrarEmpregados() const;
+	/**
+	* @brief Preenche o vetor passado como argumento com apontadores para os empregados da cadeia
+	*/
 	void getEmpregadosVec(vector<Empregado*>& res) const;
+	/**
+	* @brief Preenche o vetor passado como argumento com apontadores para os empregados sem contrato da cadeia
+	*/
 	void getEmpregadosSemContratoVec(vector<Empregado*>& res) const;
 	/**
 	* @brief Mostra no ecra alguns membros - dado de todas os fornecedores pertencentes a lista

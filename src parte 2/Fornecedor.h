@@ -273,4 +273,6 @@ struct fornecedor_heap_sort_func {
 	}
 };
 
+/** @} */
+
 #endif

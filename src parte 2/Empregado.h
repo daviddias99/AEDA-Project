@@ -35,6 +35,8 @@ public:
 	 * @param farmaciaNome Nome da farmacia onde trabalha o empregado
 	 * @param cargo Cargo do empregado
 	 * @param dataContratacao Data em que o empregado foi contratado
+	 * @param dataDespedimento Data em que o empregado terminou a ultima ligacao com a cadeia (00-00-0000) caso nao tenha terminado
+	 * @param mesesLigacao Numero de meses em que o empregado esteve ligado a cadeia, sem contar com a ligacao atual
 	 * @param ID numero de identificacao, tem valor por omissao -1 para gerar ID automaticamente para quando se criam empregados durante a execucao do programa
 	 */
 	Empregado(uint nif = 0, string nome = "NOME_DEFAULT",  Data dataNasc = Data(), Morada morada = Morada(), uint  sal = 0, string farmaciaNome = "FARMACIA_DEFAULT", string cargo = "CARGO_DEFAULT",  Data dataContratacao = Data(), Data dataDespedimento = Data::NULLData, uint mesesLigacao = 0, int ID = -1);

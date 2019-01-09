@@ -209,4 +209,6 @@ private:
  */
 bool operator==(const ItemListaProdutos& p1, const ItemListaProdutos& p2);
 
+/** @} */
+
 #endif
