@@ -14,12 +14,30 @@ using namespace std;
 
 typedef unsigned int uint;
 
+/** @defgroup Util Util
+ * @{
+ *
+ * Contem classes e funcoes auxiliares do programa. Implementa a classe Data, Time, TimeStamp, Morada e funções auxiliares.
+ * Implementa também funcoes de pesquisa.
+ */
+
+
 /**
  * @brief Enumeracao que contem os modos de ordenacao de uma lista de pessoas
  *
  */
 enum ord_clientes { distrito_cres = 0, distrito_dec, cliente_idade_cres, cliente_idade_dec, cliente_nome_cres, cliente_nome_dec, cliente_nif_cres, cliente_nif_dec, n_comp_cres, n_comp_dec };
+
+/**
+ * @brief Enumeracao que contem os modos de ordenacao de uma lista de empregados
+ *
+ */
 enum ord_empregados { id_cres = 0, id_dec, empregado_idade_cres, empregado_idade_dec, empregado_nome_cres, empregado_nome_dec, empregado_nif_cres, empregado_nif_dec, n_vendas_cres, n_vendas_dec, sal_cres, sal_dec, meses_lig_cres, meses_lig_dec };
+
+/**
+ * @brief Enumeracao que contem os modos de ordenacao de uma lista de fornecedores
+ *
+ */
 enum ord_fornece { nome_cres_f = 0, nome_dec_f, n_enc_cres_f, n_enc_dec_f, tipo_cres_f, tipo_dec_f };
 
 // ----------Classes----------
@@ -184,6 +202,10 @@ public:
 	*/
 	friend ostream& operator<<(ostream& os, const Data& d);
 
+	/**
+	 * @brief Representa uma data associada a um erro. (valor 0 para todos os membros)
+	 * 
+	 */
 	static Data NULLData;
 
 protected:
@@ -204,6 +226,13 @@ protected:
 
 };
 
+/**
+ * @brief Obter o numero de meses entre as datas indicadas.
+ * 
+ * @param d1 			data 1
+ * @param d2 			data 2
+ * @return int 			numero de meses entre d1 e d2
+ */
 int mesesEntre(const Data& d1, const Data& d2);
 
 
@@ -377,8 +406,8 @@ int daysInMonth(int month, int year);
 /**
 * @brief verfica se o codigo postal dado e valido, isto e, se esta no formato DDDD-DDD, em que D e um digito
 *
-* @param	codigPostal		string com o codigo postal a verificiar
-* @return					true se o codigo postal e valido, falso caso contrario
+* @param	codigoPostal		string com o codigo postal a verificiar
+* @return						true se o codigo postal e valido, falso caso contrario
 */
 bool codigoPostalValido(string codigoPostal);
 

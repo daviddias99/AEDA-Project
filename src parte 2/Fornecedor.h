@@ -30,6 +30,10 @@ typedef enum TipoFornecedor{medicamentos			///< Fornecedor de medicamentos.
 							,produtos				///< Fornecedor de produtos gerais.
 							} TipoFornecedor;
 
+/**
+ * @brief Classe Fornecedor. Um fornecedor representa uma entidade que atende encomendas efetuadas por farmacias. Um fornecedor pode fornecer medicamentos ou produtos gerais. Guarda a informacao sobre as encomendas que realizou.
+ * 
+ */
 class Fornecedor {
 
 private:
@@ -79,8 +83,9 @@ public:
 
 	/**
 	 * @brief Cria um novo objeto Fornecedor atraves da string dada que devera estar no formato indicado para leitura de ficheiros.
+	 * O formato e o mesmo que e escrito em ficheiros quando o programa termina e a cadeia e guardada em ficheiros de texto.
 	 * 
-	 * @param simp 
+	 * @param simp 					string no formato de leitura de ficheiro
 	 */
 	Fornecedor(string simp);
 
@@ -169,7 +174,7 @@ public:
 	ostream& print_resumo_lista(ostream& os) const;
 
 	/**
-	 * @brief Escreve na stream passada como argumento o forneceddor num formato utilizado para a leitura de fornecedores de ficheiros.
+	 * @brief Escreve na stream passada como argumento o fornecedor num formato utilizado para a leitura de fornecedores de ficheiros.
 	 * 
 	 * @param os 							Stream onde a informacao vai ser escrita.
 	 * @return ostream& 					Stream de argumento.
@@ -255,6 +260,14 @@ bool fornecedor_SortFunc_NumEncomendas_Decrescente(Fornecedor * f1, Fornecedor *
  * 
  */
 struct fornecedor_heap_sort_func {
+	/**
+	 * @brief Funcao que ordena os fornecedores num heap.
+	 * 
+	 * @param lhs 				fornecedor 1
+	 * @param rhs 				fornecedor 2
+	 * @return true 			o fornecedor 1 tem maior prioridade que o fornecedor 2
+	 * @return false 			o fornecedor 1 nao tem maior prioridade que o fornecedor 2
+	 */
 	bool operator()(const Fornecedor* lhs, const Fornecedor* rhs) {
 		return lhs->getNumEncomendas() > rhs->getNumEncomendas();
 	}

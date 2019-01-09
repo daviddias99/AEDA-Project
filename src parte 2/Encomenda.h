@@ -19,12 +19,25 @@
 /** @defgroup Encomenda Encomenda
  * @{
  *
- * Classe Encomenda. Uma encomenda representa um pedido de produtos entre um fornecedor e uma farmacia.
+ * Classe Encomenda, typedefs e operadores usados.
  */
 
+/**
+ * @brief Elemento de uma lista de produtos. Contem um apontador para o produto(first) e quantidade desse produto(second).
+ * 
+ */
 typedef pair<Produto*, uint> ItemListaProdutos;
+
+/**
+ * @brief Representa uma "list"  de varios ItemListaProdutos.
+ * 
+ */
 typedef list<ItemListaProdutos>ListaProdutos;
 
+/**
+ * @brief Classe Encomenda. Uma encomenda representa um pedido de produtos entre um fornecedor e uma farmacia.
+ * 
+ */
 class Encomenda {
 
 public:
@@ -37,6 +50,12 @@ public:
 	 */
 	Encomenda(string nomeFarmacia, string nomeFornecedor);
 
+	/**
+	 * @brief Cria um novo objeto Encomenda atraves da string dada que devera estar no formato indicado para leitura de ficheiros.
+	 *  O formato e o mesmo que e escrito em ficheiros quando o programa termina e a cadeia e guardada em ficheiros de texto.
+	 * 
+	 * @param simp 						string no formato de leitura de ficheiro					
+	 */
 	Encomenda(string simp);
 
 	/**
@@ -133,6 +152,12 @@ public:
 	 */
 	ostream& print_full(ostream& os) const;
 
+	/**
+	 * @brief Escreve na stream passada como argumento a encomenda num formato utilizado para a leitura de encomendas de ficheiros.
+	 * 
+	 * @param os 							Stream onde a informacao vai ser escrita.
+	 * @return ostream& 					Stream de argumento.
+	 */
 	ostream& printSimp(ostream& os) const;
 
 

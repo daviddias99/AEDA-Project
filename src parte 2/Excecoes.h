@@ -225,6 +225,11 @@ public:
 	TimeInvalido(string i) : ExcecaoGeral(i) {}
 };
 
+
+/**
+ * @brief Escecao que ocorre quando uma Encomenda e invalida.
+ * 
+ */
 class EncomendaInvalida : public ExcecaoGeral {
 
 public:

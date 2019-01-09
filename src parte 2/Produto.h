@@ -128,7 +128,21 @@ protected:
 	float iva;
 };
 
+/**
+ * @brief Contem funcao usada para defenir a ordem de um par Produto-Quantidade na fila de prioridade de reabastecimento de uma farmacia.
+ * Um par aparece primeiro no heap se a quantidade associada esse par e menor.
+ * 
+ */
 struct produtos_heap_sort_func {
+
+		/**
+	 * @brief Funcao que ordena os pares produto-quantidade num heap.
+	 * 
+	 * @param lhs 				par 1
+	 * @param rhs 				par 2
+	 * @return true 			o par 1 tem maior prioridade que o par 2
+	 * @return false 			o par 1 nao tem maior prioridade que o par 2
+	 */
 	bool operator()(const pair<Produto*, uint> lhs, const pair<Produto*, uint> rhs) {
 		return lhs.second > rhs.second;
 	}
