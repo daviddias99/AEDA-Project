@@ -32,7 +32,7 @@ public:
 	* @param nif NIF do cliente. E zero se nao for indicado
 	* @param dataNasc Data de nascimento do cliente
 	* @param morada Morada atual do cliente
-	* @param ID numero de identificacao, tem valor por omissao -1 para gerar ID automaticamente para quando se criam clientes durante a execucao do programa
+	* @param distrito Distrito de residencia do cliente
 	*/
 	Cliente(string nome = "NOME_DEFAULT", uint nif = 0, Data dataNasc = Data(), Morada morada = Morada(), string distrito = "");
 
@@ -106,11 +106,6 @@ private:
 	 * @brief Vector de apontadores para vendas, que guarda o historico de compras do cliente
 	 */
 	vector<Venda*> historicoCompras;
-
-	/**
-	 * @brief Variavel static utilizada para determinar o ID de um novo cliente
-	 */
-	static uint currentID;
 
 	/**
 	* @brief Distrito de residencia do cliente

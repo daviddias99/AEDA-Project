@@ -33,12 +33,18 @@
 
 using namespace std;
 
+/**
+* @brief Struct com função para comparar dois apontadores para objetos da classe Cliente. Usada para criar um set de apontadores de clientes
+*/
 struct compareClientePtr {
 	bool operator()(const Cliente* lhs, const Cliente* rhs) const {
 		return (*lhs < *rhs);
 	}
 };
 
+/**
+* @brief Typedef para um set de apontadores para clientes.
+*/
 typedef set<Cliente*, compareClientePtr> clientesSet;
 
 
@@ -67,6 +73,7 @@ public:
 	* false se farmacia nao foi adicionada porque esta ja existe na lista de farmacias
 	*/
 	bool addFarmacia(Farmacia* farmacia);
+
 	/**
 	* @brief Adciona um cliente a lista de clientes da cadeia. Mantem os clientes ordenados por ID
 	* @param cliente	Apontador para o cliente a ser adicionado a lista
@@ -74,9 +81,10 @@ public:
 	* false se o cliente nao foi adicionado porque ja existe na lista de clientes
 	*/
 	bool addCliente(Cliente* cliente);
+
 	/**
 	* @brief Adiciona um empregado a lista de empregados da cadeia e � farmacia a que pertence
-	* @param empregado			Apontador para o empregado a ser adicionado a lista
+	* @param cliente			Apontador para o empregado a ser adicionado a lista
 	* @return					true se o empregado foi adicionado a lista com sucesso
 	*							false se o empregado nao foi adicionado porque ja existe na lista
 	*/
@@ -123,12 +131,14 @@ public:
 	/**
 	* @brief Devolve um apontador para o cliente com o ID indicado no parametro
 	* @param NIF				NIF do cliente que vai ser retornado
+	* @param nome				Nome do cliente a ser retornado
+	* @param distrito			Distrito de residencia do cliente a ser retornado
 	* @return					Apontador para o cliente com o ID indicado no parametro
 	*/
 	Cliente* getCliente(uint  NIF, string nome, string distrito) const;
 	/**
 	* @brief Devolve um apontador para o empregado com o ID indicado no parametro
-	* @param ID					ID do empregado que vai ser retornado
+	* @param distrito			Distrito de residencia do cliente
 	* @return					Apontador para o empregado com o ID indicado no parametro
 	*/
 	Empregado* getEmpregado(uint ID) const;
