@@ -358,7 +358,11 @@ public:
 	 */
 	bool temFornecedorProd();
 
-	//--------------------------------------------------------------------
+	/**
+	* @brief Despede um empregado, retirando da tabela de dispersão que contem os empregados da farmacia
+	*
+	* @param emp	Empregado a despedir
+	*/
 	void despedirEmpregado(Empregado* emp);
 
 private:
@@ -376,10 +380,8 @@ private:
 	 */
 	Empregado* gerente;
 	/**
-	 * @brief Vetor de apontadores para os empregados da farmacia
+	 * @brief Tabela de dispersao contendo apontadores para os empregados da farmacia
 	 */
-	//vector< Empregado* > empregados;
-
 	empregadoHashTable empregados;
 
 	/**

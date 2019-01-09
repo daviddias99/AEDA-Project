@@ -129,19 +129,29 @@ public:
 	 * @return True caso o NIF do empregado da esquerda seja igual ao NIF do da direita
 	 */
 	friend bool operator==(const  Empregado& e1, const Empregado & e2);
-
 	/**
 	* @brief Verifica se um empregado é um trabalhador atual da cadeia de farmacias
 	*
 	* @return True caso ele esteja empregado, falso caso esteja livre
 	*/
 	bool trabalhaAtualmente() const;
-
-
+	/**
+	 * @brief Despede um empregado, removendo a farmacia onde trabalha, atualizando o numero de meses de ligaçao 
+	 */
 	void despedir();
-
+	/**
+	 * @brief Recontrata um empregado para uma nova farmacia, com um novo cargo e novo salario
+	 *
+	 * @param farmNome	Nome da nova farmacia para onde o empregado vai trabalhar
+	 * @param cargo		Novo cargo do empregado
+	 * @param sal		Novo salario do empregado
+	 */
 	void recontratar(string farmNome, string cargo, uint sal);
-
+	/**
+	* @brief Devolve o numero de meses de ligacao do empregado com a cadeia de farmacias, incluindo os meses atuais
+	*
+	* @return	Numero de meses de ligaçao
+	*/
 	uint getMesesLig() const;
 
 private:
@@ -169,11 +179,17 @@ private:
 	 * @brief Variavel static usada para determinar o ID de um novo empregado
 	 */
 	static uint currentID;
-
-
+	/**
+	* @brief Meses de ligaçao do empregado com a cadeia de farmacias, excluindo o contrato atual
+	*/
 	uint mesesLigacaoAnterior;
-
+	/**
+	* @brief Data em que foi efetuada a ultima contratacao
+	*/
 	Data ultimaDataContratacao;
+	/**
+	* @brief Data em que terminou a ultima ligacao do emprego com a cadeia de farmacias, caso a data seja 00-00-0000, significa que o empregado esta atualmente contratado
+	*/
 	Data ultimaDataDespedimento;
 };
 	
@@ -219,27 +235,45 @@ bool Empregado_SortFunc_numVendas_Crescente(Empregado* p1, Empregado* p2);
 */
 bool Empregado_SortFunc_numVendas_Decrescente(Empregado* p1, Empregado* p2);
 
+/**
+* @brief Usada para ordenar a lista de empregados da cadeia. Compara dois empregados
+* @return True se o empregado p1 tem numero de meses de ligacao maior do que o empregado p2
+*/
 bool Empregado_SortFunc_MesesLig_Crescente(Empregado * p1, Empregado * p2);
+/**
+* @brief Usada para ordenar a lista de empregados da cadeia. Compara dois empregados
+* @return True se o empregado p1 tem numero de meses de ligacao menor do que o empregado p2
+*/
 bool Empregado_SortFunc_MesesLig_Decrescente(Empregado * p1, Empregado * p2);
 
 /** @} */
 
 
 
-
+/**
+* @brief Contem as funcoes usadas na estrutura de dados unordered_set
+*/
 struct empregadoHash
-{
+{	
+	/**
+	* @brief Funcao de dispersao
+	*/
 	int operator() (const Empregado* emp) const
 	{
 		return emp->getNIF() % 37;
 	}
-
+	/**
+	* @brief Verifica a igualdade entre dois empregados
+	*/
 	bool operator() (const Empregado* emp1, const Empregado* emp2) const
 	{
 		return emp1->getNIF() == emp2->getNIF();
 	}
 };
 
+/**
+* @brief Estrutura de dados usada para guardar empregados
+*/
 typedef unordered_set<Empregado*, empregadoHash, empregadoHash> empregadoHashTable;
 
 

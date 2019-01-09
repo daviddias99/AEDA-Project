@@ -235,11 +235,27 @@ public:
 	* @brief Carrega os dados das farmacias, empregados e clientes de um ficheiro txt e permite a continuacao da gerencia dessa cadeia carregada
 	*/
 	void carregarDados();
-
+	/**
+	* @brief Despede um empregado da cadeia de farmacias
+	*
+	* @param nifEmp		NIF do empregado a despedir
+	*/
 	void despedirEmpregado(long int nifEmp);
-
+	/**
+	* @brief Verifica se um empregado está sem contrato
+	*
+	* @param	NIF		NIF do empregado a verificar se esta contratado
+	* @return	True caso o empregado n tenha contrato
+	*/
 	bool empregadoSemContrato(long int NIF) const;
-
+	/**
+	* @brief Recontrata um empregado para uma determinada farmacia
+	*
+	* @param	nifEmp		NIF do empregado a recontratar
+	* @param	farmNome	Nome da farmacia para onde o empregado foi contratado
+	* @param	cargo		Cargo do novo empregado
+	* @param	sal			Novo salario do empregado
+	*/
 	void recontratarEmpregado(long int nifEmp, string farmNome, string cargo, uint sal);
 
 private:
@@ -291,12 +307,6 @@ private:
 	*/
 	clientesSet clientes;
 
-
-	/**
-	 * @brief Vector de apontadores para objetos do tipo Empregado, ordenados pelo numero de ID de cada cliente
-	 */
-	//vector< Empregado* > empregados; 
-
 	/**
 	* @brief Vector de apontadores para objetos do tipo Fornecedor, ordenados pelo nome dos mesmos
 	*/
@@ -308,7 +318,9 @@ private:
 
 	string nome;
 
-	// parte 2
+	/**
+	* @brief Tabela de dispersao contendo apontadores para os empregados da cadeia
+	*/
 	empregadoHashTable empregados;
 };
 

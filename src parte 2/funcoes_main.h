@@ -167,7 +167,11 @@ void resumoEmpregados(Cadeia& cadeia);
  * @param cadeia Cadeia a qual se quer adicionar um empregado
  */
 void adicionarEmpregado(Cadeia& cadeia);
-
+/**
+* @brief Recontratar um empregado com ligacao anterior a cadeia de farmacias
+*
+* @param	cadeia	Cadeia na qual se pretende recontratar um empregado
+*/
 void recontratarEmpregado(Cadeia& cadeia);
 /**
  * @brief Despedir um empregado da cadeia passada como argumento
@@ -175,6 +179,11 @@ void recontratarEmpregado(Cadeia& cadeia);
  * @param cadeia Cadeia da qual se quer remover um empregado
  */
 void despedirEmpregado(Cadeia& cadeia);
+/**
+* @brief Consultar os empregados sem contrato da cadeia de farmacias
+*
+* @param cadeia Cadeia da qual se prentende consultar os empregados sem contrato
+*/
 void consultarEmpregadosSemContrato(Cadeia & cadeia);
 /**
  * @brief Funcao que permite gerir atributos de um empregado e consultar as suas vendas
@@ -230,7 +239,12 @@ void resumoFarmacias(Cadeia& cadeia);
  * @param cadeia        Cadeia onde se pretende adicionar a farmacia
  */
 void adicionarFarmacia(Cadeia& cadeia);
-
+/**
+* @brief Ordena um vetor de empregados pelo modo especificado
+*
+* @param	empregados		vetor de empregados a ordenar
+* @param	modo			modo de ordenacao
+*/
 void sortEmpregados(vector<Empregado*>& empregados, ord_empregados modo);
 
 /**
