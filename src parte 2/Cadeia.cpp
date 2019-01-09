@@ -6,9 +6,6 @@ Cadeia::Cadeia(string n) : nome(n) {}
 
 Cadeia::~Cadeia() 
 {
-	/*for (size_t i = 0; i < this->clientes.size(); i++) 
-		delete this->clientes.at(i);*/
-
 	set<Cliente*>::iterator it;
 	for (it = clientes.begin(); it != clientes.end(); it++)
 		delete (*it);
@@ -74,26 +71,11 @@ void Cadeia::removeCliente(Cliente* cliente)
 {
 	clientes.erase(cliente);
 
-	cout << "1" << endl;
-
 	for (size_t i = 0; i < clientesSort.size(); i++) {
 		if (clientesSort[i]->getNIF() == cliente->getNIF())
 			clientesSort.erase(clientesSort.begin() + i);
 	}
 		
-}
-
-void Cadeia::removeEmpregado(uint ID)
-{ 
-	// TO DO
-
-	/*
-	int i = procura(empregados, ID);
-	if(i != -1) { //Empregado encontrado
-		empregados.erase(empregados.begin()+i);
-		
-	}
-	else throw EmpregadoNaoExiste("O empregado com o ID " + to_string(ID) + " nao existe");*/
 }
 
 void Cadeia::removeFornecedor(string nome)
@@ -549,12 +531,7 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		dataDesp = Data(linha);
 		
-
-
-		// alterar
 		novoEmp = new Empregado(NIF, nome, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
-
-		Farmacia* farm;
 
 		addEmpregado(novoEmp);
 		
@@ -586,11 +563,7 @@ void Cadeia::carregarEmpregados(ifstream& ficheiro)
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			dataDesp = Data(linha);
 
-
-			// alterar
 			novoEmp = new Empregado(NIF, nome, data, morada, salario, farmaciaNome, cargo, dataContr, dataDesp, mesesLig, ID);
-
-			Farmacia* farm;
 
 			addEmpregado(novoEmp);
 		

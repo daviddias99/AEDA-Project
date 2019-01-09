@@ -111,12 +111,6 @@ public:
 	void removeCliente(Cliente* cliente);
 
 	/**
-	* @brief Remove o empregado com o ID inidcado no seu parametro da lista de empregados
-	* @param ID					ID do empregado a ser removido da lista 
-	*/
-	void removeEmpregado(uint ID);
-
-	/**
 	* @brief Remove o fornecedor com o nome indicado no seu parametro da lista de fornecedores. Faz throw da exceção "FornecedorNaoExiste".
 	* @param nome				Nome do fornecedor a ser removido
 	*/
@@ -208,12 +202,6 @@ public:
 	* @param modo				Modo em que a lista de clientes vai ser ordenada
 	*/
 	void sortClientes(ord_clientes modo);
-
-	/**
-	* @brief Ordena a lista de empregados de acordo com o modo indicado no parametro
-	* @param modo				Modo em que a lista de empregados vai ser ordenada
-	*/
-	void sortEmpregados(ord_empregados modo);
 
 	/**
 	* @brief Ordena a lista de fornecedores de acordo com o modo indicado no parametro

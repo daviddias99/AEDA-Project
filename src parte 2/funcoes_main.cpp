@@ -1187,7 +1187,7 @@ void gerirCliente(Cadeia & cadeia)
 			break;
 		case 4:
 			cadeia.removeCliente(cliente);
-			cout << "Removido." << endl;
+			cout << "Cliente removido." << endl;
 
 			return;
 		case 0:
