@@ -42,17 +42,6 @@ bool Cadeia::addCliente(Cliente* cliente)
 
 bool Cadeia::addEmpregado(Empregado* empregado)
 {	
-	/*
-	if(procuraseq(empregados, empregado) != -1) return false; //Empregado ja existe
-
-	empregados.push_back(empregado);
-	sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
-
-	size_t i = procura(farmacias, empregado->getNomeFarmacia());
-
-	this->farmacias.at(i)->addEmpregado(empregado);*/
-
-
 	if (!empregados.insert(empregado).second) return false;
 
 	if (empregado->getNomeFarmacia() != "")
@@ -140,12 +129,6 @@ Cliente* Cadeia::getCliente(uint NIF, string nome, string distrito) const
 
 Empregado* Cadeia::getEmpregado(uint ID) const
 {	
-	// TO DO
-	/*
-	int i = procura(empregados, ID);
-	if(i != -1) //Empregado encontrado
-		return empregados[i];*/
-
 	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
 		if ((*it)->getID() == ID)
 			return *it;
@@ -180,14 +163,6 @@ Fornecedor * Cadeia::getFornecedor(string nome) const
 vector<Cliente*> Cadeia::getClientes(string nome) const
 {
 	vector<Cliente*> resultado;
-
-	/*for (size_t i = 0; i < this->clientes.size(); i++) {
-
-		if (this->clientes.at(i)->getNome() == nome) {
-			resultado.push_back(this->clientes.at(i));
-		}
-
-	}*/
 	
 	clientesSet::iterator it;
 	for (it = clientes.begin(); it != clientes.end(); it++) {
@@ -359,8 +334,6 @@ void Cadeia::getEmpregadosVec(vector<Empregado*>& res) const {
 
 
 	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
-		
-		cout << "iteracao do getempregados\n";
 
 		res.push_back(*it);
 	}
@@ -830,10 +803,6 @@ void Cadeia::atribuiFornecedores()
 		vector<Fornecedor*> forn = fAtual->getFornecedores();
 		sort(forn.begin(), forn.end(), fornecedor_SortFunc_Nome_Crescente);
 	}
-
-
-
-
 }
 
 void Cadeia::despedirEmpregado(long int nifEmp) {
@@ -850,8 +819,6 @@ void Cadeia::despedirEmpregado(long int nifEmp) {
 	empregados.erase(it);
 
 	for (size_t i = 0; i < farmacias.size(); i++) {
-		
-		cout << i << endl;
 
 		if (tmpEmp->getNomeFarmacia() == farmacias.at(i)->getNome()) {
 
@@ -892,7 +859,6 @@ void Cadeia::recontratarEmpregado(long int nifEmp, string farmNome, string cargo
 			throw FarmaciaNaoExiste("Nao existe nenhuma farmacia com o nome " + farmNome + ". ");
 		}
 	}
-
 
 	empregados.insert(tmpEmp);
 }

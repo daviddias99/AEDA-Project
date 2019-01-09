@@ -1,5 +1,5 @@
 #include "Encomenda.h"
-#include "Medicamento.h";
+#include "Medicamento.h"
 
 bool Encomenda::adicionaProduto(Produto* novoProduto, uint quantidade)
 {
@@ -235,3 +235,4 @@ bool operator==(const ItemListaProdutos& p1, const ItemListaProdutos& p2) {
 
 	return p1.first->getCodigo() == p2.first->getCodigo();
 }
+

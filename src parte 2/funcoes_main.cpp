@@ -1317,7 +1317,7 @@ void resumoEmpregados(Cadeia& cadeia)
 	vector<Empregado*> emps;
 	cadeia.getEmpregadosVec(emps);
 	sortEmpregados(emps, (ord_empregados) opcao);
-	cout << "emps size : " << emps.size() << endl;
+
 	for (size_t i = 0; i < emps.size(); i++) {
 		emps.at(i)->print(cout);
 	}
