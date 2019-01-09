@@ -115,6 +115,8 @@ Empregado* Cadeia::getEmpregado(uint ID) const
 		if ((*it)->getID() == ID)
 			return *it;
 	}
+
+	return NULL;
 }
 
 bool Cadeia::empregadoSemContrato(long int NIF) const {
@@ -666,7 +668,13 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		}
 
 		getFarmacia(nomeFarmacia)->addVenda(novaVenda);
-		getCliente(clienteNIF, nomeCliente, distritoCliente)->adicionaCompra(novaVenda);
+
+		try {
+			getCliente(clienteNIF, nomeCliente, distritoCliente)->adicionaCompra(novaVenda);
+		}
+		catch (ClienteNaoExiste) {};
+		
+
 		getEmpregado(idEmpregado)->addVenda(novaVenda);
 	}
 
@@ -733,7 +741,12 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 			}
 
 			getFarmacia(nomeFarmacia)->addVenda(novaVenda);
-			getCliente(clienteNIF, nomeCliente, distritoCliente)->adicionaCompra(novaVenda);
+
+			try {
+				getCliente(clienteNIF, nomeCliente, distritoCliente)->adicionaCompra(novaVenda);
+			}
+			catch (ClienteNaoExiste) {};
+
 			getEmpregado(idEmpregado)->addVenda(novaVenda);
 		}
 	}

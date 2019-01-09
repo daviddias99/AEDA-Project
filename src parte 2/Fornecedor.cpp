@@ -126,7 +126,7 @@ ostream& Fornecedor::printSimp(ostream& os) const {
 	else
 		os << "produtos" << "\\";
 
-	for (int i = 0; i < this->encomendas_satisfeitas.size(); i++) {
+	for (unsigned int i = 0; i < this->encomendas_satisfeitas.size(); i++) {
 
 		encomendas_satisfeitas.at(i).printSimp(os);
 		os << "?";

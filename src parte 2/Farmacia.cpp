@@ -373,7 +373,7 @@ bool Farmacia::removeFornecedor(Fornecedor * fornecedor) {
 
 	}
 
-	for (int i = 0; i < this->fornecedores.size(); i++) {
+	for (unsigned int i = 0; i < this->fornecedores.size(); i++) {
 
 		if (fornecedores.at(i) == fornecedor) {
 			fornecedores.erase(fornecedores.begin() + i);
@@ -447,7 +447,7 @@ pair<string,string> Farmacia::repoeStock(uint quantidade_limite, int quantidade_
 		if (mediTemp != NULL) {
 
 			// criar entrada na encomenda com a quantidade necessaria
-			if ((quantidade_nova == -1) || (quantidade_nova < quantidade_limite))
+			if ((quantidade_nova == -1) || ((uint) quantidade_nova < quantidade_limite))
 				encomendaMedicamentos.adicionaProduto(produtoTemp.first, quantidade_limite - produtoTemp.second);
 			else
 				encomendaMedicamentos.adicionaProduto(produtoTemp.first, quantidade_nova - produtoTemp.second);
@@ -455,7 +455,7 @@ pair<string,string> Farmacia::repoeStock(uint quantidade_limite, int quantidade_
 		else {
 
 			// criar entrada na encomenda com a quantidade necessaria
-			if ((quantidade_nova == -1) || (quantidade_nova < quantidade_limite))
+			if ((quantidade_nova == -1) || ((uint) quantidade_nova < quantidade_limite))
 				encomendaProdutos.adicionaProduto(produtoTemp.first, quantidade_limite - produtoTemp.second);
 			else
 				encomendaProdutos.adicionaProduto(produtoTemp.first, quantidade_nova - produtoTemp.second);

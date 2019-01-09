@@ -1943,7 +1943,7 @@ void fornecedor_consultarEncomendaData(Fornecedor & fornecedor)
 	}
 
 	cout << endl;
-	for (int i = 0; i < encomendas.size(); i++) {
+	for (unsigned int i = 0; i < encomendas.size(); i++) {
 
 
 		encomendas.at(i).print_full(cout);
@@ -1972,7 +1972,7 @@ void fornecedor_consultarEncomendaFarmacia(Fornecedor & fornecedor)
 	}
 
 	cout << endl;
-	for (int i = 0; i < encomendas.size(); i++) {
+	for (unsigned int i = 0; i < encomendas.size(); i++) {
 
 
 		encomendas.at(i).print_full(cout);
