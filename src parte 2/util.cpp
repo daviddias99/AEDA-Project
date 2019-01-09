@@ -292,14 +292,14 @@ int mesesEntre(const Data & d1, const Data & d2)
 ostream & operator<<(ostream & os, const Time & d)
 {
 	os << setfill('0') << setw(2) << d.hora << ":" << setfill('0') << setw(2) << d.minuto << ":" << setw(2) << d.segundo;
-
+	setfill(' ');
 	return os;
 }
 
 ostream & operator<<(ostream & os, const Timestamp & d)
 {
 	os << setfill('0') << setw(2) << d.dia << "-" << setfill('0') << setw(2) << d.mes << "-" << setw(4) << d.ano << "||" << setfill('0') << setw(2) << d.hora << ":" << setfill('0') << setw(2) << d.minuto << ":" << setw(2) << d.segundo;
-
+	setfill(' ');
 	return os;
 }
 
