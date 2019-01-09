@@ -280,7 +280,7 @@ ostream & operator<<(ostream & os, const Morada & mor)
 ostream & operator<<(ostream & os, const Data & d)
 {
 	os << setfill('0') << setw(2) << d.dia << "-" << setfill('0') << setw(2) << d.mes << "-" << setw(4) << d.ano;
-
+	setfill(' ');
 	return os;
 }
 
