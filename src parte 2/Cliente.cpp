@@ -1,7 +1,5 @@
 #include "Cliente.h"
 
-uint Cliente::currentID = 0;
-
 Cliente::Cliente(string nome, uint nif, Data dataNasc, Morada morada, string distrito) : Pessoa(nome, nif, dataNasc, morada), distrito(distrito)
 {}
 

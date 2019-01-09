@@ -647,8 +647,8 @@ void Cadeia::carregarFarmacias(ifstream& ficheiro) {
 void Cadeia::carregarVendas(ifstream & ficheiro)
 {
 	string linha;
-	int idCliente, idEmpregado;
-	string nomeFarmacia, nomeCliente, nomeEmpregado, nome_prod, desc_prod, produtoSimp;
+	int clienteNIF, idEmpregado;
+	string nomeFarmacia, nomeCliente, distritoCliente, nomeEmpregado, nome_prod, desc_prod, produtoSimp;
 	float preco_prod, iva_prod, desc_receita, precoVenda;
 	unsigned long int cod_produto;
 	bool vend_sem_rec, pode_ser_rec;
@@ -667,16 +667,18 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
-		idCliente = stoi(linha.substr(0, linha.find_first_of('\\')));
+		clienteNIF = stoi(linha.substr(0, linha.find_first_of('\\')));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		nomeCliente = linha.substr(0, linha.find_first_of('\\'));
+		linha = linha.substr(linha.find_first_of('\\') + 1);
+		distritoCliente = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		idEmpregado = stoi(linha.substr(0, linha.find_first_of('\\')));
 		linha = linha.substr(linha.find_first_of('\\') + 1);
 		nomeEmpregado = linha.substr(0, linha.find_first_of('\\'));
 		linha = linha.substr(linha.find_first_of('\\'));
 
-		novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia, timestamp);
+		novaVenda = new Venda(clienteNIF, nomeCliente, distritoCliente, idEmpregado, nomeEmpregado, nomeFarmacia, timestamp);
 		novaVenda->setPreco(precoVenda);
 
 		while (linha != "!" && linha != "\\") {
@@ -718,7 +720,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 		}
 
 		getFarmacia(nomeFarmacia)->addVenda(novaVenda);
-		//getCliente(idCliente)->adicionaCompra(novaVenda);
+		getCliente(clienteNIF, nomeCliente, distritoCliente)->adicionaCompra(novaVenda);
 		getEmpregado(idEmpregado)->addVenda(novaVenda);
 	}
 
@@ -732,16 +734,18 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			nomeFarmacia = linha.substr(0, linha.find_first_of('\\'));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
-			idCliente = stoi(linha.substr(0, linha.find_first_of('\\')));
+			clienteNIF = stoi(linha.substr(0, linha.find_first_of('\\')));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			nomeCliente = linha.substr(0, linha.find_first_of('\\'));
+			linha = linha.substr(linha.find_first_of('\\') + 1);
+			distritoCliente = linha.substr(0, linha.find_first_of('\\'));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			idEmpregado = stoi(linha.substr(0, linha.find_first_of('\\')));
 			linha = linha.substr(linha.find_first_of('\\') + 1);
 			nomeEmpregado = linha.substr(0, linha.find_first_of('\\'));
 			linha = linha.substr(linha.find_first_of('\\'));
 
-			novaVenda = new Venda(idCliente, nomeCliente, idEmpregado, nomeEmpregado, nomeFarmacia);
+			novaVenda = new Venda(clienteNIF, nomeCliente, distritoCliente, idEmpregado, nomeEmpregado, nomeFarmacia);
 			novaVenda->setPreco(precoVenda);
 
 			while (linha != "!" && linha != "") {
@@ -783,7 +787,7 @@ void Cadeia::carregarVendas(ifstream & ficheiro)
 			}
 
 			getFarmacia(nomeFarmacia)->addVenda(novaVenda);
-			//getCliente(idCliente)->adicionaCompra(novaVenda);
+			getCliente(clienteNIF, nomeCliente, distritoCliente)->adicionaCompra(novaVenda);
 			getEmpregado(idEmpregado)->addVenda(novaVenda);
 		}
 	}

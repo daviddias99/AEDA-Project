@@ -35,15 +35,16 @@ public:
 	/**
 	 * @brief Construir um objeto da classe venda 
 	 * 
-	 * @param cID ID do cliente
+	 * @param clienteNIF NIF do cliente
 	 * @param client Nome do cliente
+	 * @param distritoCliente Distrito de residencia do cliente
 	 * @param eID ID do empregado
 	 * @param empreg Nome do empregado
 	 * @param farm Nome da farmacia onde foi realizada a venda
 	 * @param time Data e hora a que foi realizada a venda, 
 	 * caso nao seja indicado (valor default = ""), utiliza data e hora atuais
 	 */
-	Venda(uint cID, string client, uint eID, string empreg, string farm, string time = "");
+	Venda(uint clienteNIF, string client, string distritoCliente, uint eID, string empreg, string farm, string time = "");
 	/**
 	 * @brief Adiciona os produtos receitados existentes numa receita a venda, atualizando o preco total da mesma
 	 * 
@@ -159,10 +160,16 @@ private:
 	 * @brief ID do empregado que realizou a venda
 	 */
 	const uint idEmpregado;
+
 	/**
-	 * @brief ID do cliente que realizou a compra
+	 * @brief NIF do cliente que realizou a compra
 	 */
 	const uint clienteNIF;
+
+	/**
+	* @brief Distrito de residencia do cliente
+	*/
+	const string distritoCliente;
 };
 
 /** @} */

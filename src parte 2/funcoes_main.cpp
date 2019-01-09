@@ -646,7 +646,7 @@ void realizarVenda(Cadeia & cadeia)
 		cout << "Cliente ja existe." << endl;
 
 	//criar uma nova venda
-	Venda* venda = new Venda(cliente->getNIF(), cliente->getNome(), empregado->getID(), empregado->getNome(), farmacia->getNome());
+	Venda* venda = new Venda(cliente->getNIF(), cliente->getNome(), cliente->getDistrito(), empregado->getID(), empregado->getNome(), farmacia->getNome());
 
 	//GET PRODUTOS
 
