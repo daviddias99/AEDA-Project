@@ -105,7 +105,7 @@ public:
 	/**
 	 * @brief Remove o fornecedor dado como argumento aos fornecedores da farmacia. (atualiza heap e vetor de fornecedores)
 	 * 
-	 * @param novo_fornecedor 			apontador para o fornecedor a remover
+	 * @param fornecedor	 			apontador para o fornecedor a remover
 	 * @return true 					se o fornecedor foi removido
 	 * @return false 					se o fornecedor nao foi removido ( nao existe na farmacia ou e invalido)
 	 */
@@ -251,12 +251,6 @@ public:
 	* @return True se o proprio objeto e menor que a farmacia no seu parametro
 	*/
 	bool operator < (const Farmacia & ph1) const;
-
-	/**
-	* @brief Ordena a lista de empregados de acordo com o modo indicado no seu parametro
-	* @param modo Modo no qual a lista de empregados vai ser ordenada
-	*/
-	void sortEmpregados(ord_empregados modo);
 
 	/**
 	* @brief Escreve num ficheiro as informacoes relativas a farmacia para preservar esta informacao e ser posteriormente carregada.

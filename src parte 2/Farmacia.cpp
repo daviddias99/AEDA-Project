@@ -685,48 +685,6 @@ bool farmacia_SortFunc_NumVendas_Decrescente(Farmacia *f1, Farmacia *f2)
 		return false;
 }
 
-/*
-void Farmacia::sortEmpregados(ord_empregados modo)
-{
-	switch (modo) {
-	case id_cres:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Crescente);
-		break;
-	case id_dec:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_ID_Decrescente);
-		break;
-	case empregado_idade_cres:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Crescente);
-		break;
-	case empregado_idade_dec:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Idade_Decrescente);
-		break;
-	case empregado_nome_cres:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Crescente);
-		break;
-	case empregado_nome_dec:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_Nome_Decrescente);
-		break;
-	case empregado_nif_cres:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Crescente);
-		break;
-	case empregado_nif_dec:
-		sort(empregados.begin(), empregados.end(), Pessoa_SortFunc_NIF_Decrescente);
-		break;
-	case n_comp_cres:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Crescente);
-		break;
-	case n_comp_dec:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_numVendas_Decrescente);
-		break;
-	case sal_cres:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Crescente);
-		break;
-	case sal_dec:
-		sort(empregados.begin(), empregados.end(), Empregado_SortFunc_Salario_Decrescente);
-		break;
-	}
-}*/
 
 ostream& Farmacia::printSimp(ostream& os) const {
 
