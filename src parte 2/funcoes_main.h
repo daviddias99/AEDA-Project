@@ -343,6 +343,13 @@ void fornecedor_consultarEncomendaData(Fornecedor& fornecedor);
  */
 void fornecedor_consultarEncomendaFarmacia(Fornecedor& fornecedor);
 
+/**
+ * @brief Consultar os produtos da farmacia, em forma de lista, ordenados pela prioridade com que devem ser encomendados
+ *
+ * @param farmacia Farmacia cujas vendas se pretende consultar
+ */
+void farmacia_verPrioridadeEncomendas(Farmacia& farmacia);
+
 /** @} */
 
 #endif

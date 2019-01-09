@@ -2081,7 +2081,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 		cout << f.getInfo() << endl;
 		return;
 	}
-
+	farmacia->constroiFilaReabastecimento();
 
 	bool continuarNesteMenu = true;
 	while (continuarNesteMenu) {
@@ -2091,9 +2091,10 @@ void consultarFarmacia(Cadeia& cadeia) {
 		cout << "Consultar: " << endl;
 		cout << "1 - Empregados" << endl;
 		cout << "2 - Produtos" << endl;
-		cout << "3 - Vendas" << endl;
-		cout << "4 - Fornecedores" << endl;
-		cout << "5 - Outra farmacia" << endl;
+		cout << "3 - Prioridade de Encomendas" << endl;
+		cout << "4 - Vendas" << endl;
+		cout << "5 - Fornecedores" << endl;
+		cout << "6 - Outra farmacia" << endl;
 		cout << "0 - Menu anterior" << endl;
 
 		bool opcaoInvalida = true;
@@ -2101,7 +2102,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 
 			try {
 				cout << "Opcao: ";
-				opcao = getInputNumber(0, 5);
+				opcao = getInputNumber(0, 6);
 			}
 			catch (OpcaoInvalida& opIn) {
 				cout << opIn.getInfo() << endl;
@@ -2119,9 +2120,12 @@ void consultarFarmacia(Cadeia& cadeia) {
 			farmacia_consultarProdutos(*farmacia);
 			break;
 		case 3:
+			farmacia_verPrioridadeEncomendas(*farmacia);
+			break;
+		case 4:
 			farmacia_consultarVendas(*farmacia);
 			break;
-		case 5:
+		case 6:
 			cout << "Farmacia: ";
 			getline(cin, farmaciaNome);
 
@@ -2135,7 +2139,7 @@ void consultarFarmacia(Cadeia& cadeia) {
 				return;
 			}
 			break;
-		case 4:
+		case 5:
 			farmacia_consultaFornecedores(*farmacia);
 			break;
 		case 0:
@@ -2820,6 +2824,13 @@ void farmacia_consultaFornecedores(Farmacia& farmacia) {
 	farmacia.print_lista_fornecedores(cout);
 	cout << endl;
 }
+
+void farmacia_verPrioridadeEncomendas(Farmacia& farmacia) {
+
+	cout << endl << "PRIORIDADE DE ENCOMENDAS" << endl << endl;
+	farmacia.mostrarPrioridadeEncomenda_listForm(0, true);
+}
+
 
 void adicionarFarmacia(Cadeia& cadeia)
 {
