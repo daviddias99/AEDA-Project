@@ -679,7 +679,7 @@ void realizarVenda(Cadeia & cadeia)
 		{
 			cadeia.getCliente(cliente->getNIF(), cliente->getNome(), cliente->getDistrito());
 		}
-		catch (const ClienteNaoExiste &c1)
+		catch (ClienteNaoExiste )
 		{
 			cadeia.addCliente(cliente);
 		}
