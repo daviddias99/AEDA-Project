@@ -512,7 +512,7 @@ void realizarVenda(Cadeia & cadeia)
 	vector<Empregado*> empregados_busca = farmacia->getEmpregados(nomeEmpregado);
 
 	// imprime empregados encontrados
-	if (empregados_busca.size() == 1) {
+	if (empregados_busca.size() >= 1) {
 		for (size_t i = 0; i < empregados_busca.size(); i++) {
 
 			cout << "ID: " << empregados_busca.at(i)->getID()
@@ -1319,7 +1319,7 @@ void resumoEmpregados(Cadeia& cadeia)
 	sortEmpregados(emps, (ord_empregados) opcao);
 
 	for (size_t i = 0; i < emps.size(); i++) {
-		emps.at(i)->print(cout);
+		emps.at(i)->print(cout) << endl;
 	}
 }
 
@@ -1383,7 +1383,7 @@ void consultarEmpregadosSemContrato(Cadeia& cadeia) {
 	cout << endl << "RESUMO EMPREGADOS" << endl << endl;
 
 	vector<Empregado*> emps;
-	cadeia.getEmpregadosVec(emps);
+	cadeia.getEmpregadosSemContratoVec(emps);
 
 	if (emps.size() == 0) {
 		cout << "A cadeia \"" << cadeia.getNome() << "\" nao tem empregados sem contrato." << endl;

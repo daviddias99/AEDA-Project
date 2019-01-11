@@ -326,6 +326,7 @@ void Cadeia::getEmpregadosVec(vector<Empregado*>& res) const {
 void Cadeia::getEmpregadosSemContratoVec(vector<Empregado*>& res) const {
 
 
+
 	for (empregadoHashTable::const_iterator it = empregados.begin(); it != empregados.end(); it++) {
 		if (! (*it)->trabalhaAtualmente())
 			res.push_back(*it);
