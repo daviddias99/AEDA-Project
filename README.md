@@ -14,6 +14,8 @@
 
 **Technologies:** C++, STL
 
+**Skills:** Data structures, algorithms, inheritance, polymorphism
+
 **Grade:** *19.4/20*
 
 ---
@@ -23,5 +25,7 @@
 **Description:** This project was built on top of the first one and the goal was to alter the first solution to use non-linear data-structures (sets, trees,...). A detailed report on the project can be found in `docs/report_project_2.pdf` (it's written in portuguese though). The detailed specification can be found in `docs/specification_project_2.pdf`.
 
 **Technologies:** C++, STL
+
+**Skills:** Data structures, algorithms, inheritance, polymorphism
 
 **Grade:** *19.6/20*
